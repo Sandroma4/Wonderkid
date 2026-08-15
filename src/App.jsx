@@ -1,0 +1,1039 @@
+import { useState, useEffect } from 'react';
+import { CharacterCreation } from './components/CharacterCreation';
+import { Dashboard } from './components/Dashboard';
+import { MainMenu } from './components/MainMenu';
+import { GlobalPalmares } from './components/GlobalPalmares';
+import { Achievements } from './components/Achievements';
+import { Leaderboard } from './components/Leaderboard';
+import { CareerHistory } from './components/CareerHistory';
+import { CardCollection } from './components/CardCollection';
+import { playSound } from './utils/audio';
+import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection } from './utils/storage';
+import { PseudonymModal } from './components/PseudonymModal';
+import { checkAchievements } from './utils/achievementsData';
+import { simulateTournaments, calculateAwards, updateClubOvr } from './utils/awards';
+import { RoleSelectionModal } from './components/RoleSelectionModal';
+import { supabase } from './supabaseClient';
+import { calculateCareerScore } from './utils/scoreCalculator';
+import { 
+  calculateOVR, 
+  calculatePlayerStatus, 
+  generate6ClubOffers, 
+  getRandomSeasonEvents, 
+  simulateSeasonStats, 
+  generateInterSeasonOffers,
+  generateRival,
+  updateRival,
+  INTERACTIVE_MATCH_SCENARIOS,
+  playInteractiveMatch,
+  PERKS_LIST,
+  calculatePlayerValue,
+  calculateSalaryOffer,
+  distributeExcessStats,
+  updatePlayerBestCard,
+  COUNTRIES
+} from './utils/gameData';
+
+export default function App() {
+  const [appView, setAppView] = useState('mainMenu'); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
+  const [gameState, setGameState] = useState(null);
+  const [activeOutcome, setActiveOutcome] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [showPseudoModal, setShowPseudoModal] = useState(false);
+  const [currentPseudonym, setCurrentPseudonym] = useState('');
+
+  // Check on mount if pseudo already chosen
+  useEffect(() => {
+    const existing = getPseudonym();
+    if (!existing) {
+      setShowPseudoModal(true);
+    } else {
+      setCurrentPseudonym(existing);
+    }
+  }, []);
+
+  const handlePseudoConfirm = (pseudo) => {
+    setCurrentPseudonym(pseudo);
+    setShowPseudoModal(false);
+  };
+
+  useEffect(() => {
+    const saveState = async () => {
+      if (gameState !== null) {
+        saveGameStateLocal(gameState);
+        await saveGameStateCloud(gameState);
+      }
+    };
+    saveState();
+  }, [gameState]);
+
+  const handleLoadGame = async () => {
+    let savedState = loadGameStateLocal();
+    if (!savedState) {
+      savedState = await loadGameStateCloud();
+    }
+    if (savedState) {
+      setGameState(savedState);
+      setAppView('career');
+    }
+  };
+
+  const handleStartGame = (playerData) => {
+    let tempPlayer = {
+      ...playerData,
+      age: 15,
+      currentYear: 2024,
+      valueHistory: [],
+      form: 85,
+      morale: 80,
+      coachTrust: 75,
+      nationalCaps: 0,
+      injuryDuration: 0,
+      inventory: [],
+      palmares: [],
+      careerOvrSum: 0,
+      careerSeasons: 0,
+      careerRatingSum: 0,
+      careerMaxOvr: 0,
+      nationalStatus: 'BANC'
+    };
+    tempPlayer.ovr = calculateOVR(tempPlayer);
+    tempPlayer = updatePlayerBestCard(tempPlayer, null);
+    tempPlayer.statusText = "Joueur en phase d'intégration 🟡";
+
+    const clubOffers = generate6ClubOffers(tempPlayer);
+    const initialCompletedEvents = [];
+    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents);
+    const rival = generateRival(tempPlayer);
+
+    setGameState({
+      player: tempPlayer,
+      club: null,
+      clubOffers,
+      season: 2026,
+      bankBalance: Number(tempPlayer.bankBalance) || 12000,
+      completedEvents: initialCompletedEvents,
+      eventsList: seasonEvents,
+      currentEvent: seasonEvents[0],
+      eventStep: 1,
+      totalEvents: seasonEvents.length,
+      seasonStats: null,
+      transferMarketOffers: null,
+      palmares: [],
+      rival: rival,
+      isInteractiveMatch: false,
+      interactiveMatchScenario: null,
+      interactiveMatchResult: null,
+      interactiveMatchFinalOutcome: null,
+      rivalConfrontations: { won: 0, lost: 0, drawn: 0 }
+    });
+  };
+
+  const handleChooseClub = (selectedClub) => {
+    setGameState((prev) => {
+      let updatedPlayer = { ...prev.player };
+      updatedPlayer.statusText = calculatePlayerStatus(updatedPlayer, selectedClub);
+      updatedPlayer.salary = calculateSalaryOffer(updatedPlayer, selectedClub);
+      updatedPlayer.currency = '€';
+      updatedPlayer.conversionRate = 1.0;
+      
+      const initialValue = calculatePlayerValue(updatedPlayer, selectedClub);
+      updatedPlayer.valueHistory = [{ year: updatedPlayer.currentYear, age: updatedPlayer.age, value: initialValue }];
+      
+      // Update bestCard club
+      if (updatedPlayer.bestCard) {
+        updatedPlayer.bestCard = {
+          ...updatedPlayer.bestCard,
+          club: {
+            name: selectedClub.name,
+            primary: selectedClub.primary,
+            secondary: selectedClub.secondary,
+            id: selectedClub.id,
+            origin: selectedClub.origin
+          }
+        };
+      } else {
+        updatedPlayer = updatePlayerBestCard(updatedPlayer, selectedClub);
+      }
+
+      const newUnlocks = checkAchievements(updatedPlayer, null, selectedClub);
+      newUnlocks.forEach(achId => unlockAchievement(achId));
+
+      return { ...prev, club: selectedClub, player: updatedPlayer, currentEvent: prev.eventsList[0] };
+    });
+  };
+
+  const handleSelectOption = (optionIndex) => {
+    if (!gameState || !gameState.currentEvent) return;
+    const selectedOption = gameState.currentEvent.options[optionIndex];
+    let outcome = selectedOption.outcome;
+
+    if (Array.isArray(outcome)) {
+      let totalProb = 0;
+      const computedProbs = outcome.map(o => {
+        let p = typeof o.probability === 'function' ? o.probability(gameState.player) : (o.probability || (1 / outcome.length));
+        p = Math.max(0.01, p); // on s'assure qu'il y a toujours au moins 1% de chance
+        totalProb += p;
+        return p;
+      });
+
+      const rand = Math.random() * totalProb;
+      let cumulative = 0;
+      for (let i = 0; i < outcome.length; i++) {
+        cumulative += computedProbs[i];
+        if (rand <= cumulative) {
+          outcome = outcome[i];
+          break;
+        }
+      }
+      if (Array.isArray(outcome)) outcome = outcome[outcome.length - 1]; // fallback
+    }
+
+    let updatedPlayer = { ...gameState.player };
+    const prevAttributes = { ...(gameState.player.attributes || {}) };
+    const playerAge = gameState.player.age || 17;
+
+    if (typeof outcome.applyStats === 'function') {
+      updatedPlayer = outcome.applyStats(updatedPlayer);
+    }
+
+    // Multiplicateur d'âge pour les gains de stats lors des événements
+    // Même courbe que la progression de fin de saison
+    let ageMultiplier = 1.0;
+    if (playerAge <= 18) {
+      ageMultiplier = 2.5;   // 15-18 ans : explosion des stats
+    } else if (playerAge <= 21) {
+      ageMultiplier = 1.6;   // 19-21 ans : croissance soutenue
+    } else if (playerAge <= 24) {
+      ageMultiplier = 1.1;
+    } else if (playerAge <= 28) {
+      ageMultiplier = 0.8;
+    } else {
+      ageMultiplier = 0.5;
+    }
+
+    // Appliquer le multiplicateur d'âge sur les gains d'attributs positifs
+    const STAT_KEYS = ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
+    let currentAttributes = { ...(updatedPlayer.attributes || prevAttributes) };
+    const boostedEffects = []; // Pour afficher les gains réels boostés
+
+    if (ageMultiplier !== 1.0) {
+      STAT_KEYS.forEach(attr => {
+        const prev = prevAttributes[attr] ?? 0;
+        const after = currentAttributes[attr] ?? 0;
+        const rawGain = after - prev;
+        if (rawGain > 0) {
+          const boostedGain = Math.max(rawGain, Math.round(rawGain * ageMultiplier));
+          const extra = boostedGain - rawGain;
+          if (extra > 0) {
+            currentAttributes[attr] = after + extra;
+            boostedEffects.push({ attr, rawGain, boostedGain, extra });
+          }
+        }
+      });
+    }
+
+    // Gérer les statistiques excédentaires (> 99) et les redistribuer
+    let excessPool = 0;
+
+    STAT_KEYS.forEach(attr => {
+      if ((currentAttributes[attr] || 0) > 99) {
+        excessPool += ((currentAttributes[attr] || 0) - 99);
+        currentAttributes[attr] = 99;
+      }
+    });
+
+    // Redistribuer les points excédentaires et tracer les stats converties
+    const convertedStats = {};
+    if (excessPool > 0) {
+      const nonMaxed = STAT_KEYS.filter(k => (currentAttributes[k] || 0) < 99);
+      while (excessPool > 0 && nonMaxed.length > 0) {
+        const idx = Math.floor(Math.random() * nonMaxed.length);
+        const statKey = nonMaxed[idx];
+        currentAttributes[statKey] = (currentAttributes[statKey] || 50) + 1;
+        convertedStats[statKey] = (convertedStats[statKey] || 0) + 1;
+        excessPool--;
+        if (currentAttributes[statKey] >= 99) {
+          nonMaxed.splice(idx, 1);
+        }
+      }
+    }
+
+    updatedPlayer.attributes = currentAttributes;
+    updatedPlayer.ovr = calculateOVR(updatedPlayer);
+    updatedPlayer = updatePlayerBestCard(updatedPlayer, gameState.club);
+    updatedPlayer.statusText = calculatePlayerStatus(updatedPlayer, gameState.club);
+
+    // Construire les effets boostés à afficher
+    const statLabelsMap = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
+    const boostedDisplayEffects = boostedEffects.map(({ attr, boostedGain }) => ({
+      text: `+${boostedGain} ${statLabelsMap[attr] || attr}`,
+      style: 'positive',
+      isBoosted: true
+    }));
+
+    // Remplacer les effets de stats dans l'outcome par les versions boostées
+    let finalEffects = outcome.effects ? [...outcome.effects] : [];
+    if (boostedDisplayEffects.length > 0) {
+      // Remplacer les effets de stat +X par les versions boostées, garder les effets non-stat
+      const nonStatEffects = finalEffects.filter(eff => {
+        if (!eff || eff.style !== 'positive') return true;
+        const match = eff.text?.match(/^\+\d+\s*[A-Za-zÀ-ÖØ-öø-ÿ]+$/);
+        return !match; // garder les effets qui ne sont pas "+X StatNom"
+      });
+      finalEffects = [...nonStatEffects, ...boostedDisplayEffects];
+    }
+
+    // Attacher les effets convertis et boostés à l'outcome
+    const outcomeWithConverted = {
+      ...outcome,
+      effects: finalEffects,
+      convertedStats: Object.keys(convertedStats).length > 0 ? convertedStats : undefined,
+      ageBoostApplied: boostedEffects.length > 0 ? playerAge : undefined
+    };
+
+    setActiveOutcome(outcomeWithConverted);
+    setGameState((prev) => ({ ...prev, player: updatedPlayer }));
+  };
+
+  const finalizeSeasonDirectly = (prev, tournamentStats, interactiveMatchResult, updatedCompletedEvents, nextStep) => {
+    const calculatedStats = simulateSeasonStats(prev.player, prev.club, interactiveMatchResult);
+    
+    if (prev.pendingStats && prev.pendingStats.finalKey && interactiveMatchResult) {
+      // L'issue du match interactif décide du sort de la finale !
+      const key = prev.pendingStats.finalKey;
+      if (tournamentStats[key]) {
+        tournamentStats[key].stage = interactiveMatchResult.success ? 'Vainqueur' : 'Finaliste';
+      }
+    }
+
+    const { awards, ballonDorRank } = calculateAwards(prev.player, prev.club, calculatedStats, tournamentStats, prev.season);
+    
+    const fullStats = {
+      ...calculatedStats,
+      tournaments: tournamentStats,
+      awards: awards,
+      ballonDorRank: ballonDorRank
+    };
+
+    playSound('levelUp');
+    
+    const interSeasonOffers = generateInterSeasonOffers(prev.player, prev.club);
+    return {
+      ...prev,
+      completedEvents: updatedCompletedEvents || prev.completedEvents,
+      eventStep: nextStep || prev.eventStep,
+      currentEvent: null,
+      isInteractiveMatch: false,
+      interactiveMatchScenario: null,
+      interactiveMatchResult: null,
+      interactiveMatchFinalOutcome: null,
+      seasonStats: fullStats,
+      lastSeasonStats: fullStats,
+      transferMarketOffers: interSeasonOffers,
+      pendingStats: null
+    };
+  };
+
+  const handleContinueFromOutcome = () => {
+    setActiveOutcome(null);
+    setGameState((prev) => {
+      const currentEventId = prev.currentEvent?.id;
+      const updatedCompletedEvents = currentEventId && !prev.completedEvents.includes(currentEventId) ? [...prev.completedEvents, currentEventId] : prev.completedEvents;
+
+      const nextStep = prev.eventStep + 1;
+      const isEnded = nextStep > prev.totalEvents;
+
+      if (isEnded) {
+        const dummyStats = simulateSeasonStats(prev.player, prev.club, null);
+        const tournamentStats = simulateTournaments(prev.player, prev.club, dummyStats, prev.season, prev.lastSeasonStats);
+        
+        const finalsToPlay = Object.keys(tournamentStats).filter(key => 
+          tournamentStats[key] && (tournamentStats[key].stage === 'Finaliste' || tournamentStats[key].stage === 'Vainqueur')
+        );
+
+        if (finalsToPlay.length > 0) {
+            const finalKey = finalsToPlay[0];
+            let finalName = '';
+            if (finalKey === 'championsLeague') finalName = 'Ligue des Champions';
+            else if (finalKey === 'europaLeague') finalName = 'Ligue Europa';
+            else if (finalKey === 'conferenceLeague') finalName = 'Conference League';
+            else if (finalKey === 'worldCup') finalName = 'Coupe du Monde';
+            else if (finalKey === 'euro') finalName = 'Euro';
+            else if (finalKey === 'domesticCup') finalName = 'Coupe Nationale';
+            
+            const compatibleScenarios = INTERACTIVE_MATCH_SCENARIOS.filter(scen => {
+              if (scen.targetPosition === 'ALL') return true;
+              const playerPos = (prev.player.position || '').toUpperCase();
+              if (scen.targetPosition.startsWith('!')) return !playerPos.includes(scen.targetPosition.substring(1));
+              return playerPos.includes(scen.targetPosition);
+            });
+            
+            const shuffledScenarios = compatibleScenarios.sort(() => 0.5 - Math.random());
+            const matchPhases = [
+              { ...shuffledScenarios[0], time: '15ème Minute', title: `Début de Finale : ${finalName}` },
+              { ...shuffledScenarios[1 % shuffledScenarios.length], time: '60ème Minute', title: `Le Tournant : ${finalName}` },
+              { ...shuffledScenarios[2 % shuffledScenarios.length], time: '89ème Minute', title: `Fin de Match : ${finalName}` }
+            ];
+
+            return {
+              ...prev,
+              completedEvents: updatedCompletedEvents,
+              eventStep: nextStep,
+              currentEvent: null,
+              isInteractiveMatch: true,
+              interactiveMatchPhases: matchPhases,
+              interactiveMatchCurrentPhaseIndex: 0,
+              interactiveMatchScore: 0,
+              interactiveMatchResult: null,
+              interactiveMatchFinalOutcome: null,
+              pendingStats: { tournamentStats, finalKey, finalName }
+            };
+        } else {
+          return finalizeSeasonDirectly(prev, tournamentStats, null, updatedCompletedEvents, nextStep);
+        }
+      } else {
+         const triggerDerbyStep = Math.floor(prev.totalEvents / 2);
+         if (nextStep === triggerDerbyStep && prev.rival && prev.rival.club && prev.club) {
+            const sameTier = prev.club.tier === prev.rival.club.tier;
+            const sameOrigin = prev.club.origin === prev.rival.club.origin;
+            const sameLeague = sameTier && sameOrigin;
+            const isClContender = prev.club.tier === 1 && prev.rival.club.tier === 1;
+            
+            if (sameLeague || (isClContender && Math.random() < 0.3)) {
+                const compatibleScenarios = INTERACTIVE_MATCH_SCENARIOS.filter(scen => {
+                  if (scen.targetPosition === 'ALL') return true;
+                  const playerPos = (prev.player.position || '').toUpperCase();
+                  if (scen.targetPosition.startsWith('!')) return !playerPos.includes(scen.targetPosition.substring(1));
+                  return playerPos.includes(scen.targetPosition);
+                });
+                const shuffledScenarios = compatibleScenarios.sort(() => 0.5 - Math.random());
+                const matchPhases = [
+                  { ...shuffledScenarios[0], time: '15ème Minute', title: `Derby contre ${prev.rival.name}` },
+                  { ...shuffledScenarios[1 % shuffledScenarios.length], time: '60ème Minute', title: `Le Tournant du Derby` },
+                  { ...shuffledScenarios[2 % shuffledScenarios.length], time: '89ème Minute', title: `Fin du Derby` }
+                ];
+                return {
+                  ...prev,
+                  completedEvents: updatedCompletedEvents,
+                  eventStep: nextStep,
+                  currentEvent: null,
+                  isInteractiveMatch: true,
+                  interactiveMatchPhases: matchPhases,
+                  interactiveMatchCurrentPhaseIndex: 0,
+                  interactiveMatchScore: 0,
+                  interactiveMatchResult: null,
+                  interactiveMatchFinalOutcome: null,
+                  pendingStats: { isDerby: true }
+                };
+            }
+         }
+      }
+
+      return {
+        ...prev,
+        completedEvents: updatedCompletedEvents,
+        eventStep: nextStep,
+        currentEvent: prev.eventsList[nextStep - 1] || null
+      };
+    });
+  };
+
+  const handlePlayInteractiveMatch = (optionIndex) => {
+    setGameState((prev) => {
+      const currentPhase = prev.interactiveMatchPhases[prev.interactiveMatchCurrentPhaseIndex];
+      const result = playInteractiveMatch(currentPhase, optionIndex, prev.player);
+      
+      const newScore = prev.interactiveMatchScore + (result.success ? 1 : -1);
+      
+      return { 
+        ...prev, 
+        interactiveMatchResult: result,
+        interactiveMatchScore: newScore
+      };
+    });
+  };
+
+  const handleContinueFromInteractiveMatch = () => {
+    setGameState((prev) => {
+      // Si on n'a pas fini les 3 phases
+      if (prev.interactiveMatchCurrentPhaseIndex < 2) {
+        return {
+          ...prev,
+          interactiveMatchCurrentPhaseIndex: prev.interactiveMatchCurrentPhaseIndex + 1,
+          interactiveMatchResult: null
+        };
+      }
+
+      // Fin du match
+      const isWinner = prev.interactiveMatchScore > 0 || (prev.interactiveMatchScore === 0 && Math.random() > 0.5); // Tirs au but 50/50 si égalité
+      
+      return {
+        ...prev,
+        interactiveMatchFinalOutcome: isWinner ? 'win' : 'loss'
+      };
+    });
+  };
+
+  const handleCloseInteractiveMatch = () => {
+    setGameState((prev) => {
+      const isWinner = prev.interactiveMatchFinalOutcome === 'win';
+
+      if (prev.pendingStats?.isDerby) {
+        const confs = { ...(prev.rivalConfrontations || { won: 0, lost: 0, drawn: 0 }) };
+        let newMorale = prev.player.morale || 80;
+        
+        if (isWinner) {
+          confs.won += 1;
+          newMorale = Math.min(100, newMorale + 15);
+        } else if (prev.interactiveMatchScore === 0) {
+          confs.drawn += 1;
+        } else {
+          confs.lost += 1;
+          newMorale = Math.max(0, newMorale - 15);
+        }
+
+        return {
+          ...prev,
+          isInteractiveMatch: false,
+          interactiveMatchResult: null,
+          interactiveMatchFinalOutcome: null,
+          interactiveMatchPhases: null,
+          interactiveMatchCurrentPhaseIndex: 0,
+          interactiveMatchScore: 0,
+          rivalConfrontations: confs,
+          player: { ...prev.player, morale: newMorale },
+          pendingStats: null,
+          currentEvent: prev.eventsList[prev.eventStep - 1] || null
+        };
+      }
+
+      const tStats = prev.pendingStats?.tournamentStats || {};
+      const finalKey = prev.pendingStats?.finalKey;
+      
+      if (finalKey && tStats[finalKey]) {
+        tStats[finalKey].stage = isWinner ? 'Vainqueur' : 'Finaliste';
+      }
+      
+      return finalizeSeasonDirectly(prev, tStats, { success: isWinner, narrative: isWinner ? "Victoire Historique !" : "Défaite amère..." }, prev.completedEvents, prev.eventStep);
+    });
+  };
+
+  const handleAcceptTransferOffer = (newClub) => {
+    setGameState((prev) => {
+      const updatedPlayer = { ...prev.player };
+      updatedPlayer.statusText = newClub.status || calculatePlayerStatus(updatedPlayer, newClub);
+      updatedPlayer.salary = newClub.salary;
+      updatedPlayer.currency = newClub.currency;
+      updatedPlayer.conversionRate = newClub.conversionRate;
+      
+      return {
+        ...prev,
+        club: newClub,
+        player: updatedPlayer,
+        transferMarketOffers: null
+      };
+    });
+    handleProceedToNextSeasonFinal();
+  };
+
+  const handleRejectTransferOffer = (clubId) => {
+    setGameState((prev) => ({
+      ...prev,
+      transferMarketOffers: prev.transferMarketOffers.filter(c => c.id !== clubId)
+    }));
+  };
+
+  const handleStayCurrentClub = () => {
+    handleProceedToNextSeasonFinal();
+  };
+
+  const handleProceedToNextSeasonFinal = () => {
+    setGameState((prev) => {
+      const statsToUse = prev.seasonStats || prev.lastSeasonStats;
+      let updatedAttributes = { ...prev.player.attributes };
+
+      const currentOvr = prev.player.ovr;
+      const currentRating = statsToUse ? parseFloat(statsToUse.rating) : 6.0;
+
+      if (statsToUse && statsToUse.statGains) {
+        let excessPool = 0;
+        const cappedStats = []; // stats qui ont atteint 99
+        Object.entries(statsToUse.statGains).forEach(([attr, val]) => {
+          if (updatedAttributes[attr] !== undefined) {
+            const newVal = updatedAttributes[attr] + val;
+            if (newVal > 99) {
+              excessPool += (newVal - 99);
+              cappedStats.push(attr); // stocker la clé brute, traduite à l'affichage
+              updatedAttributes[attr] = 99;
+            } else {
+              updatedAttributes[attr] = newVal;
+            }
+          }
+        });
+        
+        const overflowDist = {}; // tracking des stat qui reçoivent le surplus
+        if (excessPool > 0) {
+           const nonMaxedStats = Object.keys(updatedAttributes).filter(key => updatedAttributes[key] < 99);
+           while (excessPool > 0 && nonMaxedStats.length > 0) {
+              const randomStat = nonMaxedStats[Math.floor(Math.random() * nonMaxedStats.length)];
+              updatedAttributes[randomStat]++;
+              overflowDist[randomStat] = (overflowDist[randomStat] || 0) + 1;
+              excessPool--;
+              if (updatedAttributes[randomStat] >= 99) {
+                  nonMaxedStats.splice(nonMaxedStats.indexOf(randomStat), 1);
+              }
+           }
+        }
+        // Stocker le détail du surplus pour l'affichage dans le bilan
+        statsToUse.statOverflow = Object.keys(overflowDist).length > 0 ? overflowDist : null;
+        statsToUse.cappedStats = cappedStats.length > 0 ? cappedStats : null;
+      }
+
+      const newAge = prev.player.age + 1;
+      const newCurrentYear = (prev.player.currentYear || 2024) + 1;
+      const newSeason = prev.season + 1;
+      const declineAge = prev.player.declineAge || 32;
+      
+      if (newAge >= declineAge) {
+        const yearsPastPeak = newAge - declineAge + 1;
+        
+        // Physique/Vitesse chute plus vite mais moins brutalement qu'avant
+        // Ex: 32 ans -> 1-2 pts, 35 ans -> 3-4 pts
+        const physicalDecline = Math.ceil(Math.pow(yearsPastPeak, 1.2) * 0.5) + Math.floor(Math.random() * 2);
+        
+        // Technique chute plus doucement et aléatoirement
+        // Ex: 32 ans -> 0-1 pt, 35 ans -> 1-2 pts
+        const technicalDecline = Math.floor(yearsPastPeak * 0.4) + (Math.random() > 0.7 ? 1 : 0);
+        
+        if (updatedAttributes.pace !== undefined) updatedAttributes.pace = Math.max(1, updatedAttributes.pace - physicalDecline);
+        if (updatedAttributes.physical !== undefined) updatedAttributes.physical = Math.max(1, updatedAttributes.physical - physicalDecline);
+        if (updatedAttributes.dribbling !== undefined) updatedAttributes.dribbling = Math.max(1, updatedAttributes.dribbling - technicalDecline);
+        if (updatedAttributes.finishing !== undefined) updatedAttributes.finishing = Math.max(1, updatedAttributes.finishing - technicalDecline);
+        if (updatedAttributes.passing !== undefined) updatedAttributes.passing = Math.max(1, updatedAttributes.passing - technicalDecline);
+        if (updatedAttributes.defense !== undefined) updatedAttributes.defense = Math.max(1, updatedAttributes.defense - technicalDecline);
+      }
+
+      let salaryEarnings = 0;
+      if (prev.player.salary) {
+        salaryEarnings = prev.player.salary * 52 * (prev.player.conversionRate || 1.0);
+      } else {
+        salaryEarnings = 5000 * 52;
+      }
+      
+      const perfEarnings = statsToUse ? parseFloat(statsToUse.earnings || 0) * 1000000 : 0;
+      const newBankBalance = prev.bankBalance + salaryEarnings + perfEarnings;
+
+      const newPalmares = [...(prev.palmares || [])];
+      let globalTrophies = [];
+
+      if (statsToUse) {
+        // Promotion ne donne plus de trophée dans la vitrine
+        if (statsToUse.leaguePosition === 1) {
+          const t = { season: prev.season, text: `Champion de ${prev.club.leagueName}`, icon: '🏆', playerName: prev.player.name, type: 'collective' };
+          newPalmares.push(t);
+          globalTrophies.push(t);
+        }
+        if (statsToUse.tournaments) {
+          if (statsToUse.tournaments.championsLeague?.stage === 'Vainqueur') {
+            const t = { season: prev.season, text: 'Vainqueur de la Ligue des Champions', icon: '🏆', playerName: prev.player.name, type: 'collective' };
+            newPalmares.push(t);
+            globalTrophies.push(t);
+          }
+          if (statsToUse.tournaments.europaLeague?.stage === 'Vainqueur') {
+            const t = { season: prev.season, text: 'Vainqueur de la Ligue Europa', icon: '🏆', playerName: prev.player.name, type: 'collective' };
+            newPalmares.push(t);
+            globalTrophies.push(t);
+          }
+          if (statsToUse.tournaments.conferenceLeague?.stage === 'Vainqueur') {
+            const t = { season: prev.season, text: 'Vainqueur de la Conference League', icon: '🏆', playerName: prev.player.name, type: 'collective' };
+            newPalmares.push(t);
+            globalTrophies.push(t);
+          }
+          if (statsToUse.tournaments.domesticCup?.stage === 'Vainqueur') {
+            const t = { season: prev.season, text: 'Vainqueur de la Coupe Nationale', icon: '🏆', playerName: prev.player.name, type: 'collective' };
+            newPalmares.push(t);
+            globalTrophies.push(t);
+          }
+          if (statsToUse.tournaments.worldCup?.stage === 'Vainqueur') {
+            const t = { season: prev.season, text: 'Vainqueur de la Coupe du Monde', icon: '🌎', playerName: prev.player.name, type: 'collective' };
+            newPalmares.push(t);
+            globalTrophies.push(t);
+          }
+          if (statsToUse.tournaments.euro?.stage === 'Vainqueur') {
+            const t = { season: prev.season, text: 'Vainqueur de l\'Euro', icon: '🇪🇺', playerName: prev.player.name, type: 'collective' };
+            newPalmares.push(t);
+            globalTrophies.push(t);
+          }
+        }
+        if (statsToUse.awards && statsToUse.awards.length > 0) {
+           statsToUse.awards.forEach(aw => {
+             const t = { season: prev.season, text: aw.text, icon: aw.icon, playerName: prev.player.name, type: 'individual' };
+             newPalmares.push(t);
+             globalTrophies.push(t);
+           });
+        }
+      }
+
+      if (globalTrophies.length > 0) {
+        saveToGlobalPalmares(globalTrophies);
+      }
+
+      const updatedPlayer = {
+        ...prev.player,
+        age: newAge,
+        currentYear: newCurrentYear,
+        attributes: updatedAttributes,
+        form: 85,
+        morale: 80,
+        nationalCaps: (prev.player.nationalCaps || 0) + (statsToUse?.nationalCallup ? 3 : 0),
+        injuryDuration: 0,
+        palmares: newPalmares,
+        careerOvrSum: (prev.player.careerOvrSum || 0) + currentOvr,
+        careerSeasons: (prev.player.careerSeasons || 0) + 1,
+        careerRatingSum: (prev.player.careerRatingSum || 0) + currentRating,
+        careerMaxOvr: Math.max(prev.player.careerMaxOvr || 0, currentOvr),
+        careerHistory: [...(prev.player.careerHistory || []), {
+          year: prev.player.currentYear || 2024,
+          age: prev.player.age || 15,
+          club: prev.club.name,
+          origin: prev.club.origin,
+          league: prev.club.leagueName,
+          tier: prev.club.tier,
+          ovr: currentOvr,
+          goals: statsToUse?.goals || 0,
+          assists: statsToUse?.assists || 0,
+          rating: currentRating,
+          tournaments: statsToUse?.tournaments || {}
+        }]
+      };
+
+      let newNationalStatus = prev.player.nationalStatus || 'BANC';
+      let gainedCaptain = false;
+      if (currentOvr >= 90 && newAge >= 25 && newNationalStatus !== 'CAPITAINE') {
+        newNationalStatus = 'CAPITAINE';
+        gainedCaptain = true;
+        // Boost de stats permanent au passage capitaine avec redistribution des surplus
+        updatedPlayer.attributes = distributeExcessStats(updatedPlayer.attributes, {
+          passing: 2,
+          physical: 1,
+          defense: 1
+        });
+      } else if (currentOvr >= 80 && newNationalStatus === 'BANC') {
+        newNationalStatus = 'TITULAIRE';
+      }
+      updatedPlayer.nationalStatus = newNationalStatus;
+
+      updatedPlayer.ovr = calculateOVR(updatedPlayer);
+      const finalUpdatedPlayer = updatePlayerBestCard(updatedPlayer, prev.club);
+      finalUpdatedPlayer.statusText = calculatePlayerStatus(finalUpdatedPlayer, prev.club);
+      finalUpdatedPlayer.salary = calculateSalaryOffer(finalUpdatedPlayer, prev.club);
+      
+      const newValue = calculatePlayerValue(finalUpdatedPlayer, prev.club);
+      finalUpdatedPlayer.valueHistory = [...(prev.player.valueHistory || []), { year: newCurrentYear, age: newAge, value: newValue }];
+
+      const newUnlocks = checkAchievements(finalUpdatedPlayer, statsToUse, prev.club);
+      newUnlocks.forEach(achId => unlockAchievement(achId));
+
+      const is18 = newAge === 18 && !finalUpdatedPlayer.roleId;
+
+      const matchesPlayed = statsToUse ? (statsToUse.matches || 0) : 38;
+      let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, statsToUse?.tournaments);
+      const hasPlayerWonBallonDor = statsToUse?.awards?.some(a => a.text === "Ballon d'Or");
+      const hasPlayerWonCL = statsToUse?.tournaments?.championsLeague?.stage === 'Vainqueur';
+      const updatedRival = updateRival(prev.rival, finalUpdatedPlayer.ovr, prev.club.tier, hasPlayerWonBallonDor, hasPlayerWonCL);
+
+      if (updatedRival && updatedRival.justWonBallonDor) {
+        seasonEvents.unshift({
+          id: `rival_ballondor_${newCurrentYear}`,
+          category: 'RIVALITÉ',
+          tag: 'Ballon d\'Or',
+          description: `Votre rival historique, ${updatedRival.name}, vient de remporter le Ballon d'Or. La presse attend votre réaction.`,
+          options: [
+            { text: "Le féliciter publiquement (Classe)", outcome: { narrative: "Vous montrez beaucoup de classe. Le monde du foot apprécie.", effects: [{text: "+15 Confiance", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 15) }) } },
+            { text: "L'ignorer totalement (Froid)", outcome: { narrative: "Vous restez silencieux. La rivalité grandit.", effects: [{text: "+5 Moral", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 5) }) } },
+            { text: "Critiquer le vote (Rageux)", outcome: { narrative: "Vous dites que c'est un scandale. Ça fait le buzz mais ça ne passe pas très bien.", effects: [{text: "-20 Moral", style: "negative"}, {text: "-10 Confiance", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, p.morale - 20), coachTrust: Math.max(0, p.coachTrust - 10) }) } }
+          ]
+        });
+      }
+
+      if (gainedCaptain) {
+        seasonEvents.unshift({
+          id: `captain_${newCurrentYear}`,
+          category: 'ÉQUIPE NATIONALE',
+          tag: 'Capitaine',
+          description: `Vous avez été nommé Capitaine de l'équipe nationale ! Un immense honneur et une grande responsabilité.`,
+          options: [
+            { text: "Assumer le rôle avec fierté", outcome: { narrative: "Vous rassemblez le groupe. Le sélectionneur compte sur vous.", effects: [{text: "+15 Moral", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 15) }) } }
+          ]
+        });
+      }
+
+      // Événements de sélection en équipe nationale
+      const isFirstCallup = (prev.player.nationalCaps || 0) === 0 && Boolean(statsToUse?.nationalCallup);
+      const hasCallupThisSeason = Boolean(statsToUse?.nationalCallup);
+      const playerNationId = typeof prev.player.origin === 'object' ? prev.player.origin.id : prev.player.origin;
+      const countryObj = COUNTRIES.find(c => c.id === playerNationId);
+      const countryName = countryObj ? countryObj.name : (prev.player.nationality || 'Sélection Nationale');
+
+      if (isFirstCallup) {
+        seasonEvents.unshift({
+          id: `first_national_callup_${newCurrentYear}`,
+          category: 'ÉQUIPE NATIONALE',
+          tag: 'Première Sélection 🌟',
+          description: `Incroyable consécration ! Le sélectionneur national vient de vous convoquer pour la toute première fois en équipe de ${countryName}. Vos proches sont en larmes et la nation entière a les yeux rivés sur vos débuts internationaux.`,
+          options: [
+            {
+              text: "Jouer libéré et impressionner le groupe (Audace)",
+              outcome: {
+                narrative: "Vous brillez dès vos premières minutes ! Votre insouciance et votre qualité technique enchantent les supporters et le staff.",
+                effects: [{ text: "+20 Moral", style: "positive" }, { text: "+15 Confiance", style: "positive" }, { text: "+2 Tir", style: "positive" }],
+                applyStats: (p) => ({
+                  ...p,
+                  morale: Math.min(100, p.morale + 20),
+                  coachTrust: Math.min(100, p.coachTrust + 15),
+                  attributes: { ...p.attributes, finishing: (p.attributes?.finishing || 50) + 2 }
+                })
+              }
+            },
+            {
+              text: "Rester humble et écouter les cadres (Maturité)",
+              outcome: {
+                narrative: "Les cadres du vestiaire adorent votre attitude respectueuse et vous intègrent immédiatement au groupe.",
+                effects: [{ text: "+15 Moral", style: "positive" }, { text: "+10 Forme", style: "positive" }, { text: "+2 Passe", style: "positive" }],
+                applyStats: (p) => ({
+                  ...p,
+                  morale: Math.min(100, p.morale + 15),
+                  form: Math.min(100, p.form + 10),
+                  attributes: { ...p.attributes, passing: (p.attributes?.passing || 50) + 2 }
+                })
+              }
+            },
+            {
+              text: "Dédier cette sélection à votre famille (Émotion)",
+              outcome: {
+                narrative: "Vous offrez votre tout premier maillot national à vos parents. Une fierté inestimable.",
+                effects: [{ text: "+30 Moral", style: "positive" }],
+                applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 30) })
+              }
+            }
+          ]
+        });
+      } else if (hasCallupThisSeason && (newCurrentYear % 2 === 0 || Math.random() < 0.35)) {
+        seasonEvents.unshift({
+          id: `national_callup_camp_${newCurrentYear}`,
+          category: 'ÉQUIPE NATIONALE',
+          tag: 'Rassemblement International 🌍',
+          description: `Sélection nationale : Vous rejoignez le rassemblement de l'équipe de ${countryName} pour les éliminatoires internationaux.`,
+          options: [
+            {
+              text: "Prendre les rênes de l'attaque et frapper au but",
+              outcome: {
+                narrative: "Vous marquez un but capital qui qualifie votre pays dans l'euphorie générale !",
+                effects: [{ text: "+15 Moral", style: "positive" }, { text: "+2 Tir", style: "positive" }],
+                applyStats: (p) => ({
+                  ...p,
+                  morale: Math.min(100, p.morale + 15),
+                  attributes: { ...p.attributes, finishing: (p.attributes?.finishing || 50) + 2 }
+                })
+              }
+            },
+            {
+              text: "Privilégier le jeu collectif et les automatismes",
+              outcome: {
+                narrative: "Excellente prestation d'équipe, vous délivrez une passe décisive millimétrée.",
+                effects: [{ text: "+10 Moral", style: "positive" }, { text: "+10 Confiance", style: "positive" }, { text: "+2 Passe", style: "positive" }],
+                applyStats: (p) => ({
+                  ...p,
+                  morale: Math.min(100, p.morale + 10),
+                  coachTrust: Math.min(100, p.coachTrust + 10),
+                  attributes: { ...p.attributes, passing: (p.attributes?.passing || 50) + 2 }
+                })
+              }
+            }
+          ]
+        });
+      }
+
+      // Mise à jour dynamique de l'OVR du club
+      const updatedClub = updateClubOvr(prev.club, finalUpdatedPlayer, statsToUse);
+
+      const isForcedRetirement = newAge >= 45;
+      
+      if (isForcedRetirement) {
+        submitScoreToLeaderboard(finalUpdatedPlayer, newPalmares);
+      }
+
+      return {
+        ...prev,
+        player: finalUpdatedPlayer,
+        club: updatedClub,
+        season: newSeason,
+        bankBalance: newBankBalance,
+        eventsList: seasonEvents,
+        currentEvent: seasonEvents[0],
+        eventStep: 1,
+        totalEvents: seasonEvents.length,
+        seasonStats: null,
+        lastSeasonStats: statsToUse,
+        transferMarketOffers: null,
+        palmares: newPalmares,
+        rival: updatedRival,
+        isRetired: isForcedRetirement,
+        needsTraitSelection: is18
+      };
+    });
+  };
+
+  const submitScoreToLeaderboard = async (player, palmares, rivalConfrontations) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      const { totalScore, maxOvr } = calculateCareerScore(player, rivalConfrontations);
+      const pseudo = getPseudonym() || 'Anonyme';
+      
+      // Save card to local Hall of Fame collection (prime version)
+      saveCardToCollection(player, palmares, maxOvr);
+      
+      const realName = player.name;
+      const nationality = typeof player.origin === 'object' ? player.origin?.id : player.origin;
+      
+      const majorTrophiesNames = ["Ballon d'Or", "Vainqueur de la Coupe du Monde", "Vainqueur de l'Euro", "Vainqueur de la Copa America", "Vainqueur de la Ligue des Champions"];
+      const major_trophies = palmares ? palmares.filter(t => majorTrophiesNames.includes(t.text)).length : 0;
+
+      const payload = {
+        player_name: realName,
+        pseudo: pseudo,
+        nationality: nationality,
+        major_trophies: major_trophies,
+        score: totalScore,
+        ovr: maxOvr
+      };
+      
+      if (session) {
+        payload.user_id = session.user.id;
+      }
+
+      await supabase.from('leaderboard').insert([payload]);
+    } catch (e) {
+      console.error("Failed to submit score:", e);
+    }
+  };
+
+  const handleRetire = () => {
+    setGameState((prev) => {
+      submitScoreToLeaderboard(prev.player, prev.palmares, prev.rivalConfrontations);
+      return {
+        ...prev,
+        isRetired: true
+      };
+    });
+  };
+
+  const handleRestartGame = () => {
+    setGameState(null);
+    setAppView('mainMenu');
+  };
+
+  const handleBuyLifestyleItem = (item) => {
+    setGameState((prev) => {
+      if (prev.bankBalance < item.cost) return prev;
+      let updatedPlayer = item.effect ? item.effect(prev.player) : { ...prev.player };
+      updatedPlayer.inventory = [...(updatedPlayer.inventory || []), item.id];
+      updatedPlayer.ovr = calculateOVR(updatedPlayer);
+      updatedPlayer = updatePlayerBestCard(updatedPlayer, prev.club);
+
+      const newUnlocks = checkAchievements(updatedPlayer, null, prev.club);
+      newUnlocks.forEach(achId => unlockAchievement(achId));
+
+      return {
+        ...prev,
+        bankBalance: prev.bankBalance - item.cost,
+        player: updatedPlayer
+      };
+    });
+  };
+
+  if (appView === 'mainMenu') {
+    return (
+      <>
+        {showPseudoModal && <PseudonymModal onConfirm={handlePseudoConfirm} />}
+        <MainMenu onNavigate={setAppView} onLoadGame={handleLoadGame} />
+      </>
+    );
+  }
+
+  if (appView === 'globalPalmares') {
+    return <GlobalPalmares onBack={() => setAppView('mainMenu')} />;
+  }
+
+  if (appView === 'achievements') {
+    return <Achievements onBack={() => setAppView('mainMenu')} />;
+  }
+
+  if (appView === 'leaderboard') {
+    return <Leaderboard onBack={() => setAppView('mainMenu')} />;
+  }
+
+  if (appView === 'cardCollection') {
+    return <CardCollection onBack={() => setAppView('mainMenu')} />;
+  }
+
+  if (appView === 'careerHistory') {
+    return <CareerHistory onBack={() => setAppView('mainMenu')} />;
+  }
+
+  const handleRoleSelection = (role) => {
+    setGameState(prev => ({
+      ...prev,
+      needsTraitSelection: false,
+      player: {
+        ...prev.player,
+        roleId: role.id,
+        roleName: role.name
+      }
+    }));
+  };
+
+  if (appView === 'career' && !gameState) {
+    return <CharacterCreation onStartGame={handleStartGame} />;
+  }
+
+  return (
+    <>
+      <Dashboard
+        gameState={gameState}
+      activeOutcome={activeOutcome}
+      onChooseClub={handleChooseClub}
+      onSelectOption={handleSelectOption}
+      onContinueFromOutcome={handleContinueFromOutcome}
+      onPlayInteractiveMatch={handlePlayInteractiveMatch}
+      onContinueFromInteractiveMatch={handleContinueFromInteractiveMatch}
+      onCloseInteractiveMatch={handleCloseInteractiveMatch}
+      onNextSeason={() => {
+        if (gameState.transferMarketOffers && gameState.transferMarketOffers.length > 0) {
+          setGameState((prev) => ({ ...prev, seasonStats: null }));
+        } else {
+          handleProceedToNextSeasonFinal();
+        }
+      }}
+      onAcceptTransferOffer={handleAcceptTransferOffer}
+      onRejectTransferOffer={handleRejectTransferOffer}
+      onStayCurrentClub={handleStayCurrentClub}
+      onBuyLifestyleItem={handleBuyLifestyleItem}
+      onRetire={handleRetire}
+      onRestartGame={handleRestartGame}
+      onQuit={handleRestartGame}
+    />
+    {showPseudoModal && (
+      <PseudonymModal 
+        onSave={() => setShowPseudoModal(false)}
+        onClose={() => setShowPseudoModal(false)}
+      />
+    )}
+    {gameState?.needsTraitSelection && (
+      <RoleSelectionModal onSelect={handleRoleSelection} playerPosition={gameState.player.position} />
+    )}
+    </>
+  );
+}

@@ -1,0 +1,37 @@
+﻿                        <p className="text-[8px] text-slate-500 italic">Aucune distinction individuelle.</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* STATS DÃ‰TAILLÃ‰ES (Toujours visible) */}
+                <div className="bg-slate-900 border border-slate-700/50 rounded-2xl p-3 shadow-2xl">
+                  <div className="heading-typography text-[9px] font-bold text-slate-300 uppercase tracking-wider flex items-center mb-3">
+                    <span className="flex items-center gap-1.5">ðŸ“Š Stats DÃ©taillÃ©es</span>
+                  </div>
+                  <div className="border-t border-slate-700/50 pt-3 grid grid-cols-2 gap-1.5">
+                    {['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical'].map((attr) => {
+                      const val = player.attributes?.[attr] || 0;
+                      const eff = effectiveStats[attr] || val;
+                      const diff = eff - val;
+                      return (
+                        <div key={attr} className="bg-slate-800 px-2 py-1.5 rounded-md border border-slate-700/50 flex justify-between items-center shadow-sm">
+                          <span className="text-[9px] text-slate-400 capitalize font-medium">{statLabels[attr] || attr}</span>
+                          <div className="flex items-center gap-1">
+                            <span className="heading-typography font-bold text-[10px] text-slate-100">{val}</span>
+                            {diff !== 0 && (
+                              <span className={`heading-typography font-bold text-[9px] ${diff > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                ({diff > 0 ? `+${diff}` : diff})
+                             </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* ONGLET : TERRAIN (EVENTS) */}
+              <div className={`${activeMobileTab !== 'terrain' ? 'hidden md:flex' : 'flex'} lg:col-span-2 flex-col space-y-4`}>
+                
