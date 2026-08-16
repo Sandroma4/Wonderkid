@@ -511,9 +511,9 @@ export function Dashboard({
                  {interactiveMatchPhases[interactiveMatchCurrentPhaseIndex]?.options.map((opt, idx) => {
                    const statLabels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
                    return (
-                   <button key={idx} onClick={() => { playSound('click'); onPlayInteractiveMatch(idx); }} className="w-full text-left p-5 rounded-2xl bg-slate-800 border-2 border-slate-700 hover:border-amber-400 hover:bg-slate-700 transition-all group flex items-center justify-between">
-                     <span className="font-semibold text-lg text-white">{opt.text}</span>
-                     <span className="text-amber-500 text-xs font-bold uppercase tracking-wider opacity-50 group-hover:opacity-100">Test {statLabels[opt.stat] || opt.stat}</span>
+                   <button key={idx} onClick={() => { playSound('click'); onPlayInteractiveMatch(idx); }} className="w-full text-left p-3 md:p-4 rounded-xl bg-slate-800 border border-slate-700 hover:border-emerald-500 hover:bg-slate-700 transition-all duration-150 flex items-center justify-between group shadow-sm">
+                     <span className="font-semibold text-[10px] md:text-sm text-white">{opt.text}</span>
+                     <span className="text-slate-400 group-hover:text-emerald-500 text-[9px] md:text-xs font-bold uppercase tracking-wider flex-shrink-0 transition-transform group-hover:translate-x-1">Test {statLabels[opt.stat] || opt.stat}</span>
                    </button>
                  )})}
                </div>
@@ -934,11 +934,11 @@ export function Dashboard({
                         <button 
                           key={idx} 
                           onClick={() => { playSound('click'); onSelectOption(idx); }} 
-                          className="w-full text-left px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-xl bg-slate-800 border border-slate-700 hover:border-emerald-500 hover:bg-slate-700 transition-all duration-150 flex items-center justify-between group shadow-sm"
+                          className="w-full text-left p-3 md:p-4 rounded-xl bg-slate-800 border border-slate-700 hover:border-emerald-500 hover:bg-slate-700 transition-all duration-150 flex items-center justify-between group shadow-sm"
                         >
                           <div className="flex items-center gap-2 md:gap-3 pr-2">
                             <span className="heading-typography text-[8px] md:text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-slate-950 text-emerald-400 shadow-sm flex-shrink-0">{option.typeTag}</span>
-                            <span className="text-[10px] md:text-xs font-medium text-slate-200 leading-tight">{option.text}</span>
+                            <span className="font-semibold text-[10px] md:text-sm text-white leading-tight">{option.text}</span>
                           </div>
                           <span className="text-slate-400 group-hover:text-emerald-500 text-[10px] md:text-xs transition-transform group-hover:translate-x-1 flex-shrink-0">➔</span>
                         </button>

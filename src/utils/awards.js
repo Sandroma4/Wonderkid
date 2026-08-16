@@ -52,7 +52,7 @@ export const simulateTournaments = (player, club, seasonStats, seasonIndex, last
   // ═══════════════════════════════════════════════════
   // CHAMPIONNATS INTERNATIONAUX (CDM / Euro)
   // ═══════════════════════════════════════════════════
-  if (isInternationalYear && seasonStats.nationalCallup) {
+  if (isInternationalYear && seasonStats.nationalCallup && (player.nationalCaps || 0) > 0) {
     // Probabilité de victoire basée sur l'OVR du joueur
     // Un joueur de 50 OVR a ~1% de chance de gagner, un joueur de 90 OVR a ~12%
     const winChance = clamp((playerOvr - 60) * 0.004, 0.005, 0.12);
@@ -324,6 +324,8 @@ export const calculateAwards = (player, club, seasonStats, tournaments, seasonIn
   // ═══════════════════════════════════════════════════
   const clWinner = tournaments.championsLeague?.stage === 'Vainqueur';
   const intlWinner = intl?.stage === 'Vainqueur';
+  const wcWinner = tournaments.worldCup?.stage === 'Vainqueur';
+  const otherIntlWinner = intlWinner && !wcWinner;
   
   // Le score global prend désormais lourdement en compte les statistiques et les titres
   const leagueWinner = seasonStats.leaguePosition === 1;
@@ -334,21 +336,21 @@ export const calculateAwards = (player, club, seasonStats, tournaments, seasonIn
     ? ((seasonStats.cleanSheets || 0) / 10) // 20 CS = +2.0
     : ((goals / 25) + (assists / 20)); // 50G, 20A = +3.0
 
-  // On recentre la note sur 6.0 pour éviter qu'une bonne note suffise à elle seule
-    // Nouveau calcul du Ballon d'Or avec plus de poids pour les performances (G/A) et l'OVR (rputation)
+  // Nouveau calcul du Ballon d'Or avec une forte importance des trophées collectifs
   let scoreGlobal = (rating > 6.0 ? (rating - 6.0) * 1.5 : 0)
-    + (perfPoints * 1.5) // Augmente drastiquement l'importance des G/A et Clean Sheets
-    + (Math.max(0, ovr - 80) * 0.2) // L'aura et la rputation du joueur l'aide  gagner (+3 pts pour 95 OVR)
-    + (clWinner ? 1.5 : 0) // Moins dcisif  lui seul (de 2.5  1.5)
-    + (intlWinner ? 2.0 : 0) 
-    + (leagueWinner ? 1.0 : 0)
-    + (domesticCupWinner ? 0.2 : 0)
+    + (perfPoints * 1.5) 
+    + (Math.max(0, ovr - 80) * 0.15) 
+    + (wcWinner ? 4.0 : 0) // Hiérarchie stricte: Coupe du Monde
+    + (clWinner ? 3.0 : 0) // Ligue des Champions
+    + (otherIntlWinner ? 2.0 : 0) // Euro / Copa
+    + (leagueWinner ? 1.5 : 0) // Championnat
+    + (domesticCupWinner ? 0.5 : 0) // Coupe Nationale
     + (isUefaPoty ? 1.0 : 0) 
     + (wonIntlBestPlayer ? 1.0 : 0);
   
-  // Ballon d'Or: Priorité aux PERFORMANCES et TITRES. OVR n'est plus restrictif à 85.
-  // Seuil fixé à 10.0 avec la nouvelle formule (très difficile sans Ligue des Champions ou CDM)
-  if (tier === 1 && ovr >= 75 && scoreGlobal >= 10.0) {
+  // Ballon d'Or: Priorité aux PERFORMANCES et TITRES.
+  // Seuil fixé à 11.0 avec les nouveaux poids très lourds pour les titres
+  if (tier === 1 && ovr >= 75 && scoreGlobal >= 11.0) {
     awards.push({ text: 'Ballon d\'Or', icon: '⭐' });
     awards.push({ text: 'The Best – Joueur de la FIFA', icon: '⭐' });
   }

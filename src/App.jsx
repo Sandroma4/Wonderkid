@@ -292,6 +292,13 @@ export default function App() {
       ageBoostApplied: boostedEffects.length > 0 ? playerAge : undefined
     };
 
+    // Vérification de la confiance du coach à 0%
+    if (updatedPlayer.coachTrust !== undefined && updatedPlayer.coachTrust <= 0) {
+      updatedPlayer.morale = 0;
+      updatedPlayer.statusText = "Banni de l'équipe première (Transfert forcé)";
+      outcomeWithConverted.narrative = (outcomeWithConverted.narrative || "") + "\n\n🚨 RUPTURE TOTALE : Le coach ne vous fait plus aucune confiance ! Vous êtes banni de l'équipe première et placé sur la liste des transferts (Moral tombé à 0).";
+    }
+
     setActiveOutcome(outcomeWithConverted);
     setGameState((prev) => ({ ...prev, player: updatedPlayer }));
   };
@@ -526,6 +533,7 @@ export default function App() {
       updatedPlayer.salary = newClub.salary;
       updatedPlayer.currency = newClub.currency;
       updatedPlayer.conversionRate = newClub.conversionRate;
+      updatedPlayer.coachTrust = 60;
       
       return {
         ...prev,
@@ -558,13 +566,15 @@ export default function App() {
 
       if (statsToUse && statsToUse.statGains) {
         let excessPool = 0;
-        const cappedStats = []; // stats qui ont atteint 99
+        const cappedStats = []; 
+        const oldAttributes = { ...updatedAttributes };
+        
         Object.entries(statsToUse.statGains).forEach(([attr, val]) => {
           if (updatedAttributes[attr] !== undefined) {
             const newVal = updatedAttributes[attr] + val;
             if (newVal > 99) {
               excessPool += (newVal - 99);
-              cappedStats.push(attr); // stocker la clé brute, traduite à l'affichage
+              cappedStats.push(attr); 
               updatedAttributes[attr] = 99;
             } else {
               updatedAttributes[attr] = newVal;
@@ -572,22 +582,30 @@ export default function App() {
           }
         });
         
-        const overflowDist = {}; // tracking des stat qui reçoivent le surplus
         if (excessPool > 0) {
            const nonMaxedStats = Object.keys(updatedAttributes).filter(key => updatedAttributes[key] < 99);
            while (excessPool > 0 && nonMaxedStats.length > 0) {
               const randomStat = nonMaxedStats[Math.floor(Math.random() * nonMaxedStats.length)];
               updatedAttributes[randomStat]++;
-              overflowDist[randomStat] = (overflowDist[randomStat] || 0) + 1;
               excessPool--;
               if (updatedAttributes[randomStat] >= 99) {
                   nonMaxedStats.splice(nonMaxedStats.indexOf(randomStat), 1);
               }
            }
         }
-        // Stocker le détail du surplus pour l'affichage dans le bilan
-        statsToUse.statOverflow = Object.keys(overflowDist).length > 0 ? overflowDist : null;
-        statsToUse.cappedStats = cappedStats.length > 0 ? cappedStats : null;
+        
+        // Recalculer le gain de stat RÉEL (différence exacte)
+        statsToUse.statGains = {};
+        Object.keys(updatedAttributes).forEach(attr => {
+          const diff = updatedAttributes[attr] - oldAttributes[attr];
+          if (diff > 0) {
+            statsToUse.statGains[attr] = diff;
+          }
+        });
+        
+        // On supprime les variables d'UI complexes qui ne sont plus nécessaires
+        statsToUse.statOverflow = null;
+        statsToUse.cappedStats = null;
       }
 
       const newAge = prev.player.age + 1;

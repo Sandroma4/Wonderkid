@@ -1817,7 +1817,8 @@ export const calculatePlayerValue = (player, club) => {
   } else if (age <= 28) {
     ageMultiplier = 1.0; // Prime
   } else {
-    ageMultiplier = Math.max(0.05, 1 - (age - 28) * 0.15); // Ex: 33 ans = x0.25
+    // Malus réduit : la décote est beaucoup plus douce
+    ageMultiplier = Math.max(0.20, 1 - (age - 28) * 0.08); // Ex: 33 ans = x0.60 au lieu de x0.25
   }
 
   // Facteurs annexes (Forme, Moral, Standing du club)
@@ -2134,7 +2135,9 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
   
   const ovrMultiplier = ovr > 90 ? 0.3 : ovr > 85 ? 0.5 : ovr > 80 ? 0.8 : 1.0;
   const tierMultiplier = tier === 1 ? 1.2 : tier === 2 ? 0.8 : 0.5;
-  const growthFactor = ovrMultiplier * tierMultiplier;
+  const age = player.age || 18;
+  const ageMultiplier = age >= 32 ? 0.2 : age >= 29 ? 0.5 : age >= 25 ? 0.8 : 1.0;
+  const growthFactor = ovrMultiplier * tierMultiplier * ageMultiplier;
   
   let primaryGain = rating >= 7.8 ? 4 : rating >= 7.0 ? 3 : rating >= 6.0 ? 2 : 1;
   let secondaryGain = rating >= 7.5 ? 3 : rating >= 6.5 ? 2 : 1;
@@ -2453,13 +2456,27 @@ export const generateRival = (player) => {
   const name = `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${lastNames[Math.floor(Math.random() * lastNames.length)]}`;
   const ovr = (player.ovr || 50) + Math.floor(Math.random() * 5); // Rival starts slightly better or equal
   
+  const pos = (player.position || 'ATT').toUpperCase();
+  let baseStats = { pace: ovr, finishing: ovr, passing: ovr, dribbling: ovr, defense: ovr, physical: ovr };
+  
+  // Pondération logique selon le poste du rival
+  if (pos.includes('ATT') || pos.includes('ST')) {
+    baseStats = { ...baseStats, finishing: ovr + 12, pace: ovr + 8, defense: ovr - 15 };
+  } else if (pos.includes('MID') || pos.includes('MIL')) {
+    baseStats = { ...baseStats, passing: ovr + 12, dribbling: ovr + 8, finishing: ovr - 5 };
+  } else if (pos.includes('DEF') || pos.includes('ARR')) {
+    baseStats = { ...baseStats, defense: ovr + 15, physical: ovr + 10, finishing: ovr - 20 };
+  } else if (pos.includes('GK') || pos.includes('GB')) {
+    baseStats = { ...baseStats, defense: ovr + 15, physical: ovr + 5, pace: ovr - 20, finishing: ovr - 25 };
+  }
+
   const attributes = {
-    pace: Math.max(30, Math.min(99, ovr + Math.floor(Math.random() * 15) - 7)),
-    shooting: Math.max(30, Math.min(99, ovr + Math.floor(Math.random() * 15) - 7)),
-    passing: Math.max(30, Math.min(99, ovr + Math.floor(Math.random() * 15) - 7)),
-    dribbling: Math.max(30, Math.min(99, ovr + Math.floor(Math.random() * 15) - 7)),
-    defense: Math.max(30, Math.min(99, ovr + Math.floor(Math.random() * 15) - 7)),
-    physical: Math.max(30, Math.min(99, ovr + Math.floor(Math.random() * 15) - 7)),
+    pace: Math.max(1, Math.min(99, baseStats.pace + Math.floor(Math.random() * 10) - 5)),
+    finishing: Math.max(1, Math.min(99, baseStats.finishing + Math.floor(Math.random() * 10) - 5)),
+    passing: Math.max(1, Math.min(99, baseStats.passing + Math.floor(Math.random() * 10) - 5)),
+    dribbling: Math.max(1, Math.min(99, baseStats.dribbling + Math.floor(Math.random() * 10) - 5)),
+    defense: Math.max(1, Math.min(99, baseStats.defense + Math.floor(Math.random() * 10) - 5)),
+    physical: Math.max(1, Math.min(99, baseStats.physical + Math.floor(Math.random() * 10) - 5)),
   };
 
   const age = player.age || 18;
