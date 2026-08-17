@@ -455,7 +455,7 @@ export function Dashboard({
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-3xl w-full bg-slate-900/95 border border-slate-700/50 backdrop-blur-md rounded-2xl md:rounded-3xl p-3 md:p-7 shadow-2xl z-10 flex flex-col md:flex-row gap-2 md:gap-6 items-center justify-center h-[95%] md:h-auto overflow-hidden">
             
-            <div className="flex flex-col items-center scale-[0.65] md:scale-100 origin-center -mt-16 md:mt-0 shrink-0">
+            <div className="flex flex-col items-center scale-[0.55] md:scale-100 origin-center -mt-24 md:mt-0 shrink-0">
               <PlayerCard player={player} club={club} cardType={cardStyle} />
             </div>
 
@@ -464,43 +464,43 @@ export function Dashboard({
                 <span className="heading-typography text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm bg-slate-900 text-white">
                   Bilan de la Saison {season} • {club.name}
                 </span>
-                <h3 className="heading-typography text-2xl font-bold text-white mt-4 leading-snug">{seasonStats.headline}</h3>
+                <h3 className="heading-typography text-lg md:text-2xl font-bold text-white mt-1 md:mt-4 leading-snug">{seasonStats.headline}</h3>
                 {player.injuryDuration > 0 && (
                   <p className="text-xs font-medium text-rose-600 mt-2">🚑 Vous avez manqué quelques semaines pour cause de blessure.</p>
                 )}
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-3">
+                <div className="bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
                   <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider block">Matchs</span>
                   <span className="heading-typography text-lg font-bold text-white mt-0.5 block">{seasonStats.matches}</span>
                 </div>
                 
                 {isGoalkeeper ? (
-                  <div className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
+                  <div className="bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
                     <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider block">Clean Sheets</span>
                     <span className="heading-typography text-lg font-bold text-emerald-400 mt-0.5 block">{seasonStats.cleanSheets}</span>
                   </div>
                 ) : (
                   <>
-                    <div className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
+                    <div className="bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
                       <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider block">Buts</span>
                       <span className="heading-typography text-lg font-bold text-emerald-400 mt-0.5 block">{seasonStats.goals}</span>
                     </div>
-                    <div className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
+                    <div className="bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
                       <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider block">Passes D.</span>
                       <span className="heading-typography text-lg font-bold text-cyan-400 mt-0.5 block">{seasonStats.assists}</span>
                     </div>
                   </>
                 )}
 
-                <div className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
+                <div className="bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-700/50 text-center shadow-inner">
                   <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider block">Note Moy.</span>
                   <span className="heading-typography text-lg font-bold text-amber-400 mt-0.5 block">{seasonStats.rating}</span>
                 </div>
               </div>
 
-              <div className="bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700/50 space-y-1 shadow-inner text-xs overflow-y-auto">
+              <div className="bg-slate-800/80 p-2 md:p-3.5 rounded-2xl border border-slate-700/50 space-y-0.5 md:space-y-1 shadow-inner text-xs overflow-y-auto">
                 <p className="font-medium text-slate-100">📢 {seasonStats.promotionRelegationText}</p>
                 <p className="text-slate-400">Classement final : <span className="heading-typography text-amber-400 font-semibold">{seasonStats.leaguePosition}e</span> | Gains : <span className="heading-typography text-emerald-400 font-semibold">+{seasonStats.earnings} M€</span></p>
                 {seasonStats.ballonDorRank && (
@@ -510,7 +510,7 @@ export function Dashboard({
 
               
               {seasonStats.tournaments && (
-                <div className="bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700/50 shadow-inner text-xs space-y-1.5 hidden md:block">
+                <div className="bg-slate-800/80 p-2 md:p-3.5 rounded-2xl border border-slate-700/50 shadow-inner text-xs space-y-1 md:space-y-1.5 hidden md:block">
                   <p className="font-bold text-slate-100 mb-1 uppercase tracking-wider text-[10px]">Tournois Disputés</p>
                   {seasonStats.tournaments.worldCup && <p className="text-slate-200">🌍 Coupe du Monde : <span className="font-semibold">{seasonStats.tournaments.worldCup.stage}</span></p>}
                   {seasonStats.tournaments.euro && <p className="text-slate-200">🇪🇺 Euro : <span className="font-semibold">{seasonStats.tournaments.euro.stage}</span></p>}
@@ -520,8 +520,8 @@ export function Dashboard({
               )}
 
               {seasonStats.statGains && Object.keys(seasonStats.statGains).length > 0 && (
-                <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 shadow-inner text-xs space-y-3 mt-4">
-                  <p className="font-bold text-slate-100 mb-2 uppercase tracking-wider text-[11px] border-b border-slate-700 pb-2">Bilan de Progression Physique & Technique</p>
+                <div className="bg-slate-800/80 p-2 md:p-4 rounded-2xl border border-slate-700/50 shadow-inner text-xs space-y-1.5 md:space-y-3 mt-1.5 md:mt-4">
+                  <p className="font-bold text-slate-100 mb-1 md:mb-2 uppercase tracking-wider text-[10px] md:text-[11px] border-b border-slate-700 pb-1 md:pb-2">Bilan de Progression Physique & Technique</p>
                   <div className="grid grid-cols-2 gap-3">
                     {Object.entries(seasonStats.statGains).map(([attr, gain]) => {
                       const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
@@ -548,7 +548,7 @@ export function Dashboard({
               <div className="flex gap-3 mt-auto shrink-0">
                 <button 
                   onClick={() => { playSound('click'); onNextSeason(); }} 
-                  className="heading-typography flex-1 py-3.5 font-semibold text-white rounded-2xl shadow-lg transition-transform active:scale-95 hover:brightness-110 tracking-wider uppercase text-xs"
+                  className="heading-typography flex-1 py-2.5 md:py-3.5 font-semibold text-white rounded-2xl shadow-lg transition-transform active:scale-95 hover:brightness-110 tracking-wider uppercase text-xs"
                   style={{ backgroundColor: theme.btnBg }}
                 >
                   Continuer vers le Mercato 🚀
@@ -556,7 +556,7 @@ export function Dashboard({
                 {player.age >= 31 && (
                   <button 
                     onClick={() => { playSound('click'); if(window.confirm('Voulez-vous vraiment prendre votre retraite ?')) onRetire(); }} 
-                    className="heading-typography flex-shrink-0 px-5 py-3.5 font-semibold text-white bg-rose-600 rounded-2xl shadow-lg transition-transform active:scale-95 hover:bg-rose-500 tracking-wider uppercase text-xs"
+                    className="heading-typography flex-shrink-0 px-4 md:px-5 py-2.5 md:py-3.5 font-semibold text-white bg-rose-600 rounded-2xl shadow-lg transition-transform active:scale-95 hover:bg-rose-500 tracking-wider uppercase text-xs"
                   >
                     Retraite 🛑
                   </button>
