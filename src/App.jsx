@@ -130,7 +130,7 @@ export default function App() {
 
     const clubOffers = generate6ClubOffers(tempPlayer);
     const initialCompletedEvents = [];
-    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, 38, {}, tempClub.tier);
+    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, 38, {}, null);
     const rival = generateRival(tempPlayer);
 
     setGameState({
