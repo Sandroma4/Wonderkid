@@ -19,30 +19,32 @@ export function LifestyleShopModal({ isOpen, onClose, bankBalance, player, onBuy
           <span className="text-lg font-black text-emerald-400">{bankBalance.toLocaleString('fr-FR')} €</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto pr-1">
+        <div className="grid grid-cols-2 gap-2 max-h-[75vh] overflow-y-auto pr-1">
           {LIFESTYLE_ITEMS.map((item) => {
             const isOwned = player.inventory?.includes(item.id);
             const canAfford = bankBalance >= item.cost;
             const hasUpkeep = item.upkeep < 0;
             const isProfitable = item.upkeep > 0;
             return (
-              <div key={item.id} className="p-3 bg-slate-950 rounded-2xl border border-slate-800 flex flex-col justify-between gap-2 group hover:border-emerald-500/50 transition-colors">
+              <div key={item.id} className="p-2 sm:p-3 bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-800 flex flex-col justify-between gap-1 sm:gap-2 group hover:border-emerald-500/50 transition-colors">
                 <div>
-                  <h4 className="font-bold text-xs text-white flex flex-wrap gap-1 items-center mb-1">
-                    {item.name}
-                    {isProfitable && <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Rentable</span>}
-                    {hasUpkeep && <span className="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">Frais/an</span>}
+                  <h4 className="font-bold text-[9px] sm:text-xs text-white flex flex-col sm:flex-row flex-wrap gap-1 sm:items-center mb-1">
+                    <span className="leading-tight">{item.name}</span>
+                    <div className="flex gap-1">
+                      {isProfitable && <span className="text-[7px] sm:text-[9px] px-1 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Rentable</span>}
+                      {hasUpkeep && <span className="text-[7px] sm:text-[9px] px-1 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">Frais/an</span>}
+                    </div>
                   </h4>
-                  <p className="text-[10px] text-slate-400 leading-tight">{item.desc}</p>
+                  <p className="text-[8px] sm:text-[10px] text-slate-400 leading-tight">{item.desc}</p>
                 </div>
-                <div className="flex justify-between items-center mt-2 pt-2 border-t border-slate-800/50">
-                  <span className="text-xs font-black text-emerald-400">
+                <div className="flex flex-col sm:flex-row justify-between items-center mt-1 sm:mt-2 pt-1.5 sm:pt-2 border-t border-slate-800/50 gap-1.5 sm:gap-0">
+                  <span className="text-[9px] sm:text-xs font-black text-emerald-400">
                     {item.cost >= 1000000 ? `${(item.cost / 1000000).toFixed(1)}M €` : `${(item.cost / 1000).toFixed(0)}k €`}
                   </span>
                   <button
                     disabled={isOwned || !canAfford}
                     onClick={() => onBuyItem(item)}
-                    className={`py-1.5 px-3 rounded-xl font-black text-[10px] uppercase tracking-wider transition-all flex-shrink-0 ${
+                    className={`w-full sm:w-auto py-1 sm:py-1.5 px-2 sm:px-3 rounded-lg sm:rounded-xl font-black text-[8px] sm:text-[10px] uppercase tracking-wider transition-all flex-shrink-0 ${
                       isOwned
                         ? 'bg-slate-800 text-slate-400 cursor-default'
                         : canAfford
