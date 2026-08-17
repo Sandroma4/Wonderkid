@@ -819,6 +819,7 @@ export default function App() {
           ovr: currentOvr,
           goals: statsToUse?.goals || 0,
           assists: statsToUse?.assists || 0,
+          cleanSheets: statsToUse?.cleanSheets || 0,
           rating: currentRating,
           tournaments: statsToUse?.tournaments || {}
         }]
@@ -994,7 +995,7 @@ export default function App() {
       const isForcedRetirement = newAge >= 45;
       
       if (isForcedRetirement) {
-        submitScoreToLeaderboard(finalUpdatedPlayer, newPalmares);
+        submitScoreToLeaderboard({ ...finalUpdatedPlayer, bankBalance: newBankBalance }, newPalmares, prev.rivalConfrontations);
       }
 
       return {
@@ -1055,7 +1056,7 @@ export default function App() {
 
   const handleRetire = () => {
     setGameState((prev) => {
-      submitScoreToLeaderboard(prev.player, prev.palmares, prev.rivalConfrontations);
+      submitScoreToLeaderboard({ ...prev.player, bankBalance: prev.bankBalance }, prev.palmares, prev.rivalConfrontations);
       return {
         ...prev,
         isRetired: true

@@ -19,8 +19,45 @@ export const calculateCareerScore = (player, rivalConfrontations = null) => {
     });
   }
 
-  // Averages
+
+  // 1. Economy (Bank Balance)
+  const bankBalance = player.bankBalance || 0;
+  if (bankBalance > 0) {
+    score += Math.floor(bankBalance / 1000); // 1000 pts per 1 Million (bankBalance is in K or actual euros? The game uses numbers like 10000 for 10k. So 1M is 1000000. 1000000 / 1000 = 1000 points).
+  }
+
+  // 2. Longevity (Seasons played)
   const seasons = player.careerSeasons || 1;
+  score += seasons * 1000;
+
+  // 3. Legacy (Career History Stats)
+  if (player.careerHistory && player.careerHistory.length > 0) {
+    let totalGoals = 0;
+    let totalAssists = 0;
+    let totalCleanSheets = 0;
+
+    player.careerHistory.forEach(season => {
+      totalGoals += season.goals || 0;
+      totalAssists += season.assists || 0;
+      totalCleanSheets += season.cleanSheets || 0;
+    });
+
+    const pos = (player.position || '').toUpperCase();
+    if (pos.includes('ATT') || pos.includes('ST') || pos.includes('WING')) {
+      score += totalGoals * 20;
+    } else if (pos.includes('MID') || pos.includes('MOC') || pos.includes('MDC')) {
+      score += totalAssists * 30;
+      score += totalGoals * 5; // Little bonus for mid goals
+    } else if (pos.includes('DEF') || pos.includes('GK') || pos.includes('DC') || pos.includes('DD') || pos.includes('DG')) {
+      score += totalCleanSheets * 50;
+      score += totalGoals * 10; // Defender goals are rare
+    } else {
+      // Default fallback
+      score += totalGoals * 10 + totalAssists * 10;
+    }
+  }
+
+  // Averages
   const avgOvr = (player.careerOvrSum || player.ovr) / seasons;
   const avgRating = (player.careerRatingSum || 6.0) / seasons;
   const maxOvr = player.careerMaxOvr || player.ovr;
