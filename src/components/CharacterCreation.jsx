@@ -211,7 +211,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
             <div className="space-y-5 sm:space-y-6">
               <div>
                 <label className="text-xs font-bold text-slate-400 uppercase block mb-3 text-center">Sexe du joueur</label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-2 sm:gap-4">
                   {GENDERS.map((g) => {
                     const isSelected = gender.id === g.id;
                     return (
@@ -219,7 +219,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                         key={g.id}
                         type="button"
                         onClick={() => handleSelectGender(g)}
-                        className={`p-4 sm:p-6 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-3 relative overflow-hidden group ${
+                        className={`p-2 sm:p-6 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-1 sm:gap-3 relative overflow-hidden group ${
                           isSelected
                             ? 'border-emerald-400 bg-emerald-500/20 shadow-[0_0_35px_rgba(16,185,129,0.35)] scale-[1.02]'
                             : 'border-slate-800 bg-slate-950/80 hover:border-emerald-400/50 hover:bg-emerald-500/10'
@@ -227,7 +227,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                       >
                         {/* Glowing radial halo backdrop */}
                         <div
-                          className={`absolute w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full blur-3xl transition-all duration-300 pointer-events-none ${
+                          className={`absolute w-24 h-24 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full blur-3xl transition-all duration-300 pointer-events-none ${
                             isSelected
                               ? 'bg-emerald-400/45 opacity-100 scale-110'
                               : 'bg-emerald-500/20 opacity-50 group-hover:opacity-90 group-hover:scale-105'
@@ -238,7 +238,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                           <img
                             src={g.id === 'F' ? "/female_silhouette.png" : "/male_silhouette.png"}
                             alt={g.name}
-                            className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 object-contain filter drop-shadow-[0_0_20px_rgba(52,211,153,0.85)] drop-shadow-[0_0_45px_rgba(16,185,129,0.6)] brightness-110 contrast-125 transition-transform duration-300 group-hover:scale-105"
+                            className="w-24 h-24 sm:w-48 sm:h-48 md:w-64 md:h-64 object-contain filter drop-shadow-[0_0_20px_rgba(52,211,153,0.85)] drop-shadow-[0_0_45px_rgba(16,185,129,0.6)] brightness-110 contrast-125 transition-transform duration-300 group-hover:scale-105"
                           />
                         </div>
 

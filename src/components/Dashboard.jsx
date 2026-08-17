@@ -1277,17 +1277,17 @@ export function Dashboard({
                          </div>
                       </div>
                       
-                      <div className="w-full flex flex-col md:flex-row items-center md:justify-around bg-slate-800/50 p-2 rounded-xl border border-slate-700 relative z-10 gap-2 md:gap-0">
-                        <div className="flex flex-row md:flex-col items-center justify-start md:justify-center gap-2 md:gap-0 w-full text-left md:text-center px-4 md:px-0">
-                          <span className="text-lg block w-8 md:w-auto text-center">🌟</span>
+                      <div className="w-full flex flex-row items-center justify-around bg-slate-800/50 p-2 rounded-xl border border-slate-700 relative z-10 gap-1 md:gap-0">
+                        <div className="flex flex-col items-center justify-center gap-0.5 md:gap-0 w-full text-center">
+                          <span className="text-sm md:text-lg block text-center">🌟</span>
                           <span className="text-white font-bold text-sm">{rival.ballonDorCount || 0} <span className="md:hidden text-[10px] text-slate-400 font-normal ml-1">Ballons d'Or</span></span>
                         </div>
-                        <div className="flex flex-row md:flex-col items-center justify-start md:justify-center gap-2 md:gap-0 w-full text-left md:text-center md:border-l md:border-slate-600 md:pl-4 border-t border-slate-600 pt-2 md:pt-0 md:border-t-0 px-4 md:px-0">
-                          <span className="text-lg block w-8 md:w-auto text-center">🏆</span>
+                        <div className="flex flex-col items-center justify-center gap-0.5 md:gap-0 w-full text-center border-l border-slate-600/50">
+                          <span className="text-sm md:text-lg block text-center">🏆</span>
                           <span className="text-white font-bold text-sm">{rival.trophiesCount || 0} <span className="md:hidden text-[10px] text-slate-400 font-normal ml-1">Trophées</span></span>
                         </div>
-                        <div className="flex flex-row md:flex-col items-center justify-start md:justify-center gap-2 md:gap-0 w-full text-left md:text-center md:border-l md:border-slate-600 md:pl-4 border-t border-slate-600 pt-2 md:pt-0 md:border-t-0 px-4 md:px-0">
-                          <span className="text-lg block w-8 md:w-auto text-center">⚔️</span>
+                        <div className="flex flex-col items-center justify-center gap-0.5 md:gap-0 w-full text-center border-l border-slate-600/50">
+                          <span className="text-sm md:text-lg block text-center">⚔️</span>
                           <span className="text-white font-bold text-[10px]">
                             {gameState.rivalConfrontations?.won || 0}V - {gameState.rivalConfrontations?.drawn || 0}N - {gameState.rivalConfrontations?.lost || 0}D
                           </span>
