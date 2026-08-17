@@ -925,23 +925,7 @@ export function Dashboard({
                     </div>
                   </div>
                 )}
-                {multiplayerContext && (
-                  <div className="flex justify-center mt-4">
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        playSound('click');
-                        if (window.confirm("Êtes-vous sûr de vouloir quitter le mode 1v1 ? Toute progression non sauvegardée de cette saison sera perdue.")) {
-                          onRestartGame();
-                        }
-                      }}
-                      className="bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-bold uppercase tracking-wider py-2 px-6 rounded-lg shadow-lg backdrop-blur-md transition-colors border border-rose-500/50 flex items-center justify-center"
-                    >
-                      Quitter
-                    </button>
-                  </div>
-                )}
-</div>
+                </div>
               </div>
 
               {/* ONGLET : TERRAIN (EVENTS) */}
@@ -1334,6 +1318,23 @@ export function Dashboard({
                         );
                       })}
                     </div>
+                  </div>
+                )}
+                
+                {multiplayerContext && (
+                  <div className="flex md:hidden justify-center mt-4 mb-4">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        playSound('click');
+                        if (window.confirm("Êtes-vous sûr de vouloir quitter le mode 1v1 ? Toute progression non sauvegardée de cette saison sera perdue.")) {
+                          onRestartGame();
+                        }
+                      }}
+                      className="bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-bold uppercase tracking-wider py-3 px-6 rounded-xl shadow-lg backdrop-blur-md transition-colors border border-rose-500/50 flex items-center justify-center w-full"
+                    >
+                      Quitter
+                    </button>
                   </div>
                 )}
               </div>
