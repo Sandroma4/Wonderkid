@@ -33,6 +33,7 @@ import {
   updatePlayerBestCard,
   COUNTRIES
 } from './utils/gameData';
+import { getRoleById } from './utils/rolesData';
 
 export default function App() {
   const [appView, setAppView] = useState('mainMenu'); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
@@ -213,26 +214,35 @@ export default function App() {
       ageMultiplier = 0.5;
     }
 
-    // Appliquer le multiplicateur d'âge sur les gains d'attributs positifs
     const STAT_KEYS = ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
     let currentAttributes = { ...(updatedPlayer.attributes || prevAttributes) };
     const boostedEffects = []; // Pour afficher les gains réels boostés
+    
+    const role = updatedPlayer.roleId ? getRoleById(updatedPlayer.roleId) : null;
 
-    if (ageMultiplier !== 1.0) {
-      STAT_KEYS.forEach(attr => {
-        const prev = prevAttributes[attr] ?? 0;
-        const after = currentAttributes[attr] ?? 0;
-        const rawGain = after - prev;
-        if (rawGain > 0) {
-          const boostedGain = Math.max(rawGain, Math.round(rawGain * ageMultiplier));
-          const extra = boostedGain - rawGain;
-          if (extra > 0) {
+    STAT_KEYS.forEach(attr => {
+      const prev = prevAttributes[attr] ?? 0;
+      const after = currentAttributes[attr] ?? 0;
+      const rawGain = after - prev;
+      if (rawGain > 0) {
+        const roleMultiplier = role?.multipliers?.[attr] || 1.0;
+        const totalMultiplier = ageMultiplier * roleMultiplier;
+        
+        if (totalMultiplier !== 1.0) {
+          const finalGain = rawGain * totalMultiplier;
+          const extra = finalGain - rawGain;
+          if (extra !== 0) {
             currentAttributes[attr] = after + extra;
-            boostedEffects.push({ attr, rawGain, boostedGain, extra });
+            
+            // Pour l'affichage, on garde des entiers propres
+            const finalGainFloor = Math.floor(finalGain);
+            if (finalGainFloor !== rawGain) {
+              boostedEffects.push({ attr, rawGain, boostedGain: finalGainFloor, extra: finalGainFloor - rawGain });
+            }
           }
         }
-      });
-    }
+      }
+    });
 
     // Gérer les statistiques excédentaires (> 99) et les redistribuer
     let excessPool = 0;
@@ -570,9 +580,13 @@ export default function App() {
         const cappedStats = []; 
         const oldAttributes = { ...updatedAttributes };
         
+        const role = prev.player.roleId ? getRoleById(prev.player.roleId) : null;
+        
         Object.entries(statsToUse.statGains).forEach(([attr, val]) => {
           if (updatedAttributes[attr] !== undefined) {
-            const newVal = updatedAttributes[attr] + val;
+            const roleMultiplier = role?.multipliers?.[attr] || 1.0;
+            const modifiedGain = val * roleMultiplier;
+            const newVal = updatedAttributes[attr] + modifiedGain;
             if (newVal > 99) {
               excessPool += (newVal - 99);
               cappedStats.push(attr); 

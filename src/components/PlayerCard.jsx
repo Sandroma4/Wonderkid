@@ -54,19 +54,19 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
 
   const attrs = player.attributes || {};
   const stats = isGk ? [
-    { label: 'PLO', val: attrs.defense || 50 },
-    { label: 'RÉF', val: Math.min(99, Math.round(((attrs.defense || 50) + (attrs.pace || 50)) / 2)) },
-    { label: 'JDM', val: attrs.physical || 50 },
-    { label: 'VIT', val: attrs.pace || 50 },
-    { label: 'DÉG', val: attrs.passing || 50 },
-    { label: 'POS', val: attrs.dribbling || 50 }
+    { label: 'PLO', val: Math.floor(attrs.defense || 50) },
+    { label: 'RÉF', val: Math.min(99, Math.floor(((attrs.defense || 50) + (attrs.pace || 50)) / 2)) },
+    { label: 'JDM', val: Math.floor(attrs.physical || 50) },
+    { label: 'VIT', val: Math.floor(attrs.pace || 50) },
+    { label: 'DÉG', val: Math.floor(attrs.passing || 50) },
+    { label: 'POS', val: Math.floor(attrs.dribbling || 50) }
   ] : [
-    { label: 'VIT', val: attrs.pace || 50 },
-    { label: 'DRI', val: attrs.dribbling || 50 },
-    { label: 'TIR', val: attrs.finishing || 50 },
-    { label: 'DÉF', val: attrs.defense || 50 },
-    { label: 'PAS', val: attrs.passing || 50 },
-    { label: 'PHY', val: attrs.physical || 50 }
+    { label: 'VIT', val: Math.floor(attrs.pace || 50) },
+    { label: 'DRI', val: Math.floor(attrs.dribbling || 50) },
+    { label: 'TIR', val: Math.floor(attrs.finishing || 50) },
+    { label: 'DÉF', val: Math.floor(attrs.defense || 50) },
+    { label: 'PAS', val: Math.floor(attrs.passing || 50) },
+    { label: 'PHY', val: Math.floor(attrs.physical || 50) }
   ];
 
   let countryCode = typeof player.origin === 'object' ? player.origin?.id : (player.origin || 'FR');

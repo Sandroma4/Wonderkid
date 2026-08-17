@@ -471,10 +471,11 @@ export function Dashboard({
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {Object.entries(seasonStats.statGains).map(([attr, gain]) => {
                       const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
-                      if (gain === 0) return null;
+                      const newVal = Math.floor(player.attributes[attr]);
+                      const oldVal = Math.floor(player.attributes[attr] - gain);
+                      const displayGain = newVal - oldVal;
                       
-                      const newVal = player.attributes[attr];
-                      const oldVal = newVal - gain;
+                      if (displayGain === 0) return null;
                       
                       return (
                         <AnimatedStatBar 
@@ -482,7 +483,7 @@ export function Dashboard({
                           label={labels[attr] || attr} 
                           oldVal={oldVal} 
                           newVal={newVal} 
-                          gain={gain} 
+                          gain={displayGain} 
                         />
                       );
                     })}
@@ -750,8 +751,8 @@ export function Dashboard({
                   </div>
                   <div className="border-t border-slate-700/50 pt-3 grid grid-cols-2 gap-1.5">
                     {['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical'].map((attr) => {
-                      const val = player.attributes?.[attr] || 0;
-                      const eff = effectiveStats[attr] || val;
+                      const val = Math.floor(player.attributes?.[attr] || 0);
+                      const eff = Math.floor(effectiveStats[attr] || val);
                       const diff = eff - val;
                       return (
                         <div key={attr} className="bg-slate-800 px-2 py-1.5 rounded-md border border-slate-700/50 flex justify-between items-center shadow-sm">
@@ -1040,8 +1041,8 @@ export function Dashboard({
                   <div className={`transition-all duration-300 overflow-hidden ${isMobileStatsOpen ? 'max-h-[500px] opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'}`}>
                   <div className="border-t border-slate-700/50 pt-3 grid grid-cols-2 gap-1.5">
                     {['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical'].map((attr) => {
-                      const val = player.attributes?.[attr] || 0;
-                      const eff = effectiveStats[attr] || val;
+                      const val = Math.floor(player.attributes?.[attr] || 0);
+                      const eff = Math.floor(effectiveStats[attr] || val);
                       const diff = eff - val;
                       return (
                         <div key={attr} className="bg-slate-800 px-2 py-1.5 rounded-md border border-slate-700/50 flex justify-between items-center shadow-sm">

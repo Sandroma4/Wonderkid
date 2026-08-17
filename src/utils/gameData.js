@@ -2014,10 +2014,8 @@ export const getEffectiveStats = (player) => {
     const totalBonus = ((attr === 'pace' || attr === 'physical') ? formBonus : moraleBonus) + bonus;
     let baseEffective = numericVal + totalBonus;
     
-    // Application du multiplicateur passif du rôle
-    if (role && role.multipliers && role.multipliers[attr]) {
-      baseEffective = baseEffective * role.multipliers[attr];
-    }
+    // Le rôle n'applique plus de passif direct sur le calcul de la stat
+    // (le multiplicateur s'applique dorénavant uniquement lors des gains de stats)
     
     effective[attr] = Math.min(99, Math.max(1, Math.round(baseEffective)));
   });
