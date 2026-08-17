@@ -35,7 +35,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
   useEffect(() => {
     if (isWaitingForOpponent && multiplayerContext?.players && playerDataReady) {
       const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
-      if (opponent && opponent.characterCreated) {
+      if (opponent && (opponent.characterCreated || opponent.season >= 2026)) {
         onStartGame(playerDataReady);
       }
     }

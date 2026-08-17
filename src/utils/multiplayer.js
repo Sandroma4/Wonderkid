@@ -10,6 +10,7 @@ export const generateRoomCode = () => {
 };
 
 export const createMultiplayerRoom = (roomId, playerId, initialPlayerState, initialOnStateChange) => {
+  let localState = { ...initialPlayerState };
   const callbacks = {
     onStateChange: initialOnStateChange
   };
@@ -37,13 +38,14 @@ export const createMultiplayerRoom = (roomId, playerId, initialPlayerState, init
     })
     .subscribe(async (status) => {
       if (status === 'SUBSCRIBED') {
-        await channel.track({ playerId, ...initialPlayerState });
+        await channel.track({ playerId, ...localState });
       }
     });
 
   const updateState = async (newState) => {
+    localState = { ...localState, ...newState };
     if (channel.state === 'joined') {
-      await channel.track({ playerId, ...newState });
+      await channel.track({ playerId, ...localState });
     }
   };
 
