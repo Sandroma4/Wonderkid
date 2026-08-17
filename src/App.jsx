@@ -104,6 +104,21 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    if (gameState?.isWaitingForMercato && multiplayerContext?.players) {
+      const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
+      if (!opponent || opponent.mercatoFinished) {
+        // Both are ready or opponent left, proceed
+        setGameState(prev => ({ ...prev, isWaitingForMercato: false }));
+        // Reset our state for next season
+        if (multiplayerContext.roomObj) {
+          multiplayerContext.roomObj.updateState({ mercatoFinished: false });
+        }
+        handleProceedToNextSeasonFinal();
+      }
+    }
+  }, [multiplayerContext?.players, gameState?.isWaitingForMercato]);
+
   const handleStartGame = (playerData) => {
     let tempPlayer = {
       ...playerData,
@@ -131,7 +146,21 @@ export default function App() {
     const clubOffers = generate6ClubOffers(tempPlayer);
     const initialCompletedEvents = [];
     const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, 38, {}, null);
-    const rival = generateRival(tempPlayer);
+    let rival = null;
+    if (multiplayerContext?.players) {
+      const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
+      if (opponent) {
+        rival = {
+          name: opponent.name,
+          ovr: opponent.ovr,
+          club: opponent.club || 'Club Inconnu',
+          isOnlineOpponent: true
+        };
+      }
+    }
+    if (!rival) {
+      rival = generateRival(tempPlayer);
+    }
 
     setGameState({
       player: tempPlayer,
@@ -581,14 +610,24 @@ export default function App() {
       updatedPlayer.coachTrust = 60;
       updatedPlayer.clubYears = 0;
       
-      return {
+      const newState = {
         ...prev,
         club: newClub,
         player: updatedPlayer,
-        transferMarketOffers: null
+        transferMarketOffers: null,
       };
+      
+      if (multiplayerContext) {
+        newState.isWaitingForMercato = true;
+      }
+      return newState;
     });
-    handleProceedToNextSeasonFinal();
+    
+    if (multiplayerContext?.roomObj) {
+      multiplayerContext.roomObj.updateState({ mercatoFinished: true });
+    } else {
+      handleProceedToNextSeasonFinal();
+    }
   };
 
   const handleRejectTransferOffer = (clubId) => {
@@ -599,7 +638,14 @@ export default function App() {
   };
 
   const handleStayCurrentClub = () => {
-    handleProceedToNextSeasonFinal();
+    if (multiplayerContext) {
+      setGameState(prev => ({ ...prev, isWaitingForMercato: true, transferMarketOffers: null }));
+      if (multiplayerContext.roomObj) {
+        multiplayerContext.roomObj.updateState({ mercatoFinished: true });
+      }
+    } else {
+      handleProceedToNextSeasonFinal();
+    }
   };
 
   const handleProceedToNextSeasonFinal = () => {
@@ -1173,7 +1219,7 @@ export default function App() {
   };
 
   if (appView === 'career' && !gameState) {
-    return <CharacterCreation onStartGame={handleStartGame} />;
+    return <CharacterCreation onStartGame={handleStartGame} multiplayerContext={multiplayerContext} />;
   }
 
   return (

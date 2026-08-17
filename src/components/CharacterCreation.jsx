@@ -19,7 +19,7 @@ const getContinentForCountry = (countryId) => {
   return 'Europe';
 };
 
-export function CharacterCreation({ onStartGame }) {
+export function CharacterCreation({ onStartGame, multiplayerContext }) {
   const [step, setStep] = useState(1);
   const totalSteps = 7;
 
@@ -28,6 +28,19 @@ export function CharacterCreation({ onStartGame }) {
   const [gender, setGender] = useState(GENDERS[0]);
   const [playerName, setPlayerName] = useState(getRandomName(COUNTRIES[0].id, GENDERS[0].id));
   const [user, setUser] = useState(null);
+  const [isWaitingForOpponent, setIsWaitingForOpponent] = useState(false);
+  const [playerDataReady, setPlayerDataReady] = useState(null);
+
+  // Sync effect
+  useEffect(() => {
+    if (isWaitingForOpponent && multiplayerContext?.players && playerDataReady) {
+      const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
+      if (opponent && opponent.characterCreated) {
+        onStartGame(playerDataReady);
+      }
+    }
+  }, [multiplayerContext?.players, isWaitingForOpponent, playerDataReady, onStartGame]);
+
   const [challenge, setChallenge] = useState(null);
   
   // Initialize playerName on mount
@@ -106,12 +119,32 @@ export function CharacterCreation({ onStartGame }) {
       palmares: []
     };
 
-    onStartGame(playerData);
+    if (multiplayerContext?.roomObj) {
+      multiplayerContext.roomObj.updateState({ characterCreated: true });
+      setPlayerDataReady(playerData);
+      setIsWaitingForOpponent(true);
+      // Fallback if opponent is already ready or left, will be handled by useEffect or we check directly
+      const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
+      if (opponent && opponent.characterCreated) {
+        onStartGame(playerData);
+      }
+    } else {
+      onStartGame(playerData);
+    }
   };
 
   return (
     <div className="min-h-[100dvh] bg-[#0F172A] text-slate-100 flex flex-col justify-center items-center p-3 sm:p-6 relative overflow-y-auto font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
+      {isWaitingForOpponent ? (
+      <div className="w-full max-w-2xl bg-slate-900/90 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl relative overflow-hidden z-10 my-auto">
+        <div className="flex flex-col items-center justify-center p-12 text-center space-y-6">
+          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+          <h2 className="text-2xl font-bold text-white tracking-widest uppercase">En attente du joueur 2...</h2>
+          <p className="text-slate-400">Ton rival est encore en train de lacer ses crampons.</p>
+        </div>
+      </div>
+) : (
       <div className="w-full max-w-2xl bg-slate-900/90 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl relative overflow-hidden z-10 my-auto max-h-[95dvh] overflow-y-auto">
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-slate-800">
           <div 
@@ -397,6 +430,7 @@ export function CharacterCreation({ onStartGame }) {
           )}
         </div>
       </div>
+      )}
     </div>
   );
 }

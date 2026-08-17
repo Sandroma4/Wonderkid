@@ -142,7 +142,7 @@ export function Dashboard({
     isInteractiveMatch, interactiveMatchPhases, interactiveMatchCurrentPhaseIndex, 
     interactiveMatchScore, interactiveMatchResult, interactiveMatchFinalOutcome, isRetired, 
     seasonStats, lastSeasonStats, 
-    transferMarketOffers, clubOffers, bankBalance, palmares,
+    transferMarketOffers, clubOffers, bankBalance, palmares, isWaitingForMercato,
     rival, rivalConfrontations, isSelectingPerk
   } = gameState || {};
 
@@ -695,6 +695,15 @@ export function Dashboard({
                 ))}
              </div>
            </div>
+        </div>
+      ) : isWaitingForMercato ? (
+        <div className="app-typography min-h-[100dvh] text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-slate-950">
+          <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
+          <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">
+            <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            <h2 className="heading-typography text-2xl font-black text-white uppercase tracking-widest">En attente...</h2>
+            <p className="text-sm text-slate-400">En attente de la dǸcision de votre adversaire pour le mercato d'ǸtǸ.</p>
+          </div>
         </div>
       ) : transferMarketOffers && transferMarketOffers.length > 0 ? (
         <div className="app-typography min-h-[100dvh] text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto" style={clubBackgroundStyle}>
