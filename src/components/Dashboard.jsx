@@ -132,6 +132,7 @@ export function Dashboard({
   const [activeMobileTab, setActiveMobileTab] = useState('terrain');
   const [isMobileStatsOpen, setIsMobileStatsOpen] = useState(false);
   const [isTrophiesOpen, setIsTrophiesOpen] = useState(false);
+  const [isShopOpen, setIsShopOpen] = useState(false);
   const [selectedOfferClub, setSelectedOfferClub] = useState(null);
   const playerCardRef = useRef(null);
   
