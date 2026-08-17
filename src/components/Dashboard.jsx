@@ -113,6 +113,7 @@ const formatEventCategory = (cat) => {
 
 export function Dashboard({
   gameState,
+  multiplayerContext,
   activeOutcome,
   onChooseClub,
   onSelectOption,
