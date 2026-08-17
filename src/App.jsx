@@ -1279,7 +1279,7 @@ export default function App() {
   };
 
   if (appView === 'career' && !gameState) {
-    return <CharacterCreation onStartGame={handleStartGame} multiplayerContext={multiplayerContext} />;
+    return <CharacterCreation onStartGame={handleStartGame} multiplayerContext={multiplayerContext} onRestartGame={handleRestartGame} />;
   }
 
   return (

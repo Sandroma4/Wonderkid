@@ -233,6 +233,35 @@ export function Dashboard({
     <>
       <style>{`.app-typography { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; } .heading-typography { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }`}</style>
 
+      {/* GLOBAL MULTIPLAYER HUD & QUIT BUTTON */}
+      {multiplayerContext && !isRetired && (
+        <div className="fixed top-2 right-2 md:top-4 md:right-4 z-[9999] flex flex-col items-end gap-2 pointer-events-none">
+          {opponent && (
+            <div className="bg-slate-900/90 border border-cyan-500/50 p-2 md:p-3 rounded-xl shadow-lg text-xs text-white backdrop-blur-md pointer-events-auto">
+              <p className="text-[9px] text-cyan-400 font-bold uppercase tracking-wider mb-1">Rival en ligne</p>
+              <p className="font-semibold">{opponent.name}</p>
+              <p className="text-slate-300">OVR: <span className="text-amber-400 font-bold">{opponent.ovr || '?'}</span> | {opponent.club?.name || opponent.club || 'Sans club'}</p>
+              <p className="text-[9px] text-slate-400 mt-1">
+                {opponent.isRetired ? 'Carri\u00e8re termin\u00e9e' : (opponent.readyForNextSeason ? 'Attente de votre fin de saison...' : `Saison ${opponent.season || 'en cours'}`)}
+              </p>
+            </div>
+          )}
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              playSound('click');
+              if (window.confirm("Êtes-vous sûr de vouloir quitter le mode 1v1 ? Toute progression non sauvegardée de cette saison sera perdue.")) {
+                onRestartGame();
+              }
+            }}
+            className="bg-rose-600/90 hover:bg-rose-500 text-white text-[10px] md:text-xs font-bold uppercase tracking-wider py-1.5 px-3 md:py-2 md:px-4 rounded-lg shadow-lg backdrop-blur-md transition-colors border border-rose-500/50 pointer-events-auto flex items-center justify-center"
+          >
+            Quitter le 1v1
+          </button>
+        </div>
+      )}
+
+
       {/* CHOIX DU PREMIER CLUB */}
       {/* ÉCRAN DE FIN DE CARRIÈRE */}
       {isRetired ? (
@@ -504,16 +533,7 @@ export function Dashboard({
         /* BILAN DE LA SAISON AVEC AFFICHAGE DE LA CARTE */
         <div className="app-typography h-[100dvh] text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-hidden" style={clubBackgroundStyle}>
 
-      {multiplayerContext && opponent && !isRetired && (
-        <div className="absolute top-2 right-2 md:top-4 md:right-4 bg-slate-900/90 border border-cyan-500/50 p-2 md:p-3 rounded-xl shadow-lg z-50 text-xs text-white backdrop-blur-md">
-          <p className="text-[9px] text-cyan-400 font-bold uppercase tracking-wider mb-1">Rival en ligne</p>
-          <p className="font-semibold">{opponent.name}</p>
-          <p className="text-slate-300">OVR: <span className="text-amber-400 font-bold">{opponent.ovr || '?'}</span> | {opponent.club || 'Sans club'}</p>
-          <p className="text-[9px] text-slate-400 mt-1">
-            {opponent.isRetired ? 'Carrière terminée' : (opponent.readyForNextSeason ? 'Attente de votre fin de saison...' : `Saison ${opponent.season || 'en cours'}`)}
-          </p>
-        </div>
-      )}
+      
 
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-3xl w-full bg-slate-900/95 border border-slate-700/50 backdrop-blur-md rounded-2xl md:rounded-3xl p-3 md:p-7 shadow-2xl z-10 flex flex-col md:flex-row gap-2 md:gap-6 items-center justify-center h-[95%] md:h-auto overflow-hidden">

@@ -142,6 +142,16 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
           <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
           <h2 className="text-2xl font-bold text-white tracking-widest uppercase">En attente du joueur 2...</h2>
           <p className="text-slate-400">Ton rival est encore en train de lacer ses crampons.</p>
+          <button
+            onClick={() => {
+              if (window.confirm("Êtes-vous sûr de vouloir quitter le 1v1 ?")) {
+                if (onRestartGame) onRestartGame();
+              }
+            }}
+            className="mt-6 px-6 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-xl text-sm tracking-wider uppercase transition-colors border border-rose-500/50"
+          >
+            Quitter le 1v1
+          </button>
         </div>
       </div>
 ) : (
