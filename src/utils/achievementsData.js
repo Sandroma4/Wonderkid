@@ -1,3 +1,4 @@
+import { calculateCareerScore } from './scoreCalculator';
 export const ACHIEVEMENTS = [
   {
     id: 'ach_first_contract',
@@ -269,6 +270,69 @@ export const checkAchievements = (player, seasonStats, currentClub, palmares = [
 
   if (player.inventory && player.inventory.includes('jet_prive')) {
     newUnlocks.push('ach_jet');
+  }
+
+
+  // Nouveaux succès hardcore
+  if (player.careerHistory) {
+    const ballonsDor = player.careerHistory.filter(h => h.tournaments?.awards?.some(a => a.text === "Ballon d'Or") || (palmares.some(p => p.text === "Ballon d'Or"))).length;
+    // Approximation: if they have 5 in palmares
+    const ballonsDorPalmares = palmares.filter(p => p.text === "Ballon d'Or").length;
+    if (ballonsDorPalmares >= 5) {
+      newUnlocks.push('ach_goat');
+    }
+
+    // Treble and Grand Slam check for current season
+    const wonLeague = palmares.some(p => p.text === "Vainqueur du Championnat" && p.season === seasonStats?.year);
+    const wonCup = seasonStats?.tournaments?.domesticCup?.stage === 'Vainqueur';
+    const wonUCL = seasonStats?.tournaments?.championsLeague?.stage === 'Vainqueur';
+    const wonWC = seasonStats?.tournaments?.worldCup?.stage === 'Vainqueur';
+    const wonEuro = seasonStats?.tournaments?.euro?.stage === 'Vainqueur';
+
+    if (wonLeague && wonCup && wonUCL) {
+      newUnlocks.push('ach_treble');
+      if (wonWC || wonEuro) {
+        newUnlocks.push('ach_grand_slam');
+      }
+    }
+
+    // Emperor: 3 different clubs UCL
+    const uclWinningClubs = new Set(
+      player.careerHistory
+        .filter(h => h.tournaments?.championsLeague?.stage === 'Vainqueur')
+        .map(h => h.club)
+    );
+    if (wonUCL && currentClub) uclWinningClubs.add(currentClub.name);
+    if (uclWinningClubs.size >= 3) {
+      newUnlocks.push('ach_emperor');
+    }
+
+    // Phoenix
+    if (player.careerHistory.length > 0) {
+      const firstClubTier = player.careerHistory[0].tier;
+      if (firstClubTier >= 3 && ballonsDorPalmares >= 1) {
+        newUnlocks.push('ach_phoenix');
+      }
+    }
+  }
+
+  if (player.bankBalance >= 1000000000) {
+    newUnlocks.push('ach_billionaire');
+  }
+
+  if (player.clubYears >= 20) {
+    newUnlocks.push('ach_loyalty');
+  }
+
+  try {
+    const scoreData = calculateCareerScore(player, []);
+    if (scoreData.totalScore >= 100000) {
+      newUnlocks.push('ach_perfect_score');
+    }
+  } catch (e) {}
+
+  if (seasonStats?.awards?.some(a => a.text === "Ballon d'Or") && player.coachTrust < 30) {
+    newUnlocks.push('ach_misunderstood');
   }
 
   return newUnlocks;
