@@ -131,6 +131,7 @@ export function Dashboard({
   const [cardStyle, setCardStyle] = useState('auto');
   const [activeMobileTab, setActiveMobileTab] = useState('terrain');
   const [isMobileStatsOpen, setIsMobileStatsOpen] = useState(false);
+  const [isTrophiesOpen, setIsTrophiesOpen] = useState(false);
   const [selectedOfferClub, setSelectedOfferClub] = useState(null);
   const playerCardRef = useRef(null);
   
@@ -700,77 +701,79 @@ export function Dashboard({
                   <button onClick={() => window.print()} className="w-full mb-2 text-xs font-bold uppercase tracking-wider bg-slate-800 text-white py-1.5 rounded-xl shadow-md hover:bg-slate-700 transition-colors">📸 Exporter ma Carte</button>
                   <PlayerCard player={player} club={club} cardType="auto" />
                 </div>
-                
-                {/* TROPHÉES — en format badges */}
-                <div className="bg-slate-900 border border-slate-700/50 rounded-2xl p-3 shadow-2xl">
-                  <h4 className="heading-typography text-[9px] font-bold text-slate-300 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-                    <span>🏆 Vitrine à Trophées</span>
-                  </h4>
-                  <div className="space-y-3">
-                    <div>
-                      <h4 className="heading-typography text-[8px] font-bold text-emerald-500 uppercase tracking-wider mb-1.5">🛡️ Collectifs</h4>
-                      {collectiveTrophies.length > 0 ? (
-                        <div className="flex flex-wrap gap-1">
-                          {collectiveTrophies.map((trophy, idx) => (
-                            <span key={`col-${idx}`} className="bg-emerald-900/40 border border-emerald-700 px-1.5 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
-                              <span className="text-[10px]">{trophy.icon}</span>
-                              <span className="heading-typography text-[8px] text-emerald-400 font-semibold">{trophy.text}</span>
-                              {trophy.count > 1 && <span className="heading-typography font-black text-emerald-500 text-[8px]">×{trophy.count}</span>}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-[8px] text-slate-500 italic mb-2">Aucun trophée collectif.</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <h4 className="heading-typography text-[8px] font-bold text-amber-500 uppercase tracking-wider mb-1.5">🏅 Individuels</h4>
-                      {individualTrophies.length > 0 ? (
-                        <div className="flex flex-wrap gap-1">
-                          {individualTrophies.map((trophy, idx) => (
-                            <span key={`ind-${idx}`} className="bg-amber-900/40 border border-amber-700 px-1.5 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
-                              <span className="text-[10px]">{trophy.icon}</span>
-                              <span className="heading-typography text-[8px] text-amber-400 font-semibold">{trophy.text}</span>
-                              {trophy.count > 1 && <span className="heading-typography font-black text-amber-500 text-[8px]">×{trophy.count}</span>}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-[8px] text-slate-500 italic">Aucune distinction individuelle.</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
                 <div className="hidden md:block">
-{/* STATS DÉTAILLÉES (Toujours visible) */}
-                <div className="bg-slate-900 border border-slate-700/50 rounded-2xl p-3 shadow-2xl">
-                  <div className="heading-typography text-[9px] font-bold text-slate-300 uppercase tracking-wider flex items-center mb-3">
-                    <span className="flex items-center gap-1.5">📊 Stats Détaillées</span>
-                  </div>
-                  <div className="border-t border-slate-700/50 pt-3 grid grid-cols-2 gap-1.5">
-                    {['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical'].map((attr) => {
-                      const val = Math.floor(player.attributes?.[attr] || 0);
-                      const eff = Math.floor(effectiveStats[attr] || val);
-                      const diff = eff - val;
-                      return (
-                        <div key={attr} className="bg-slate-800 px-2 py-1.5 rounded-md border border-slate-700/50 flex justify-between items-center shadow-sm">
-                          <span className="text-[9px] text-slate-400 capitalize font-medium">{statLabels[attr] || attr}</span>
-                          <div className="flex items-center gap-1">
-                            <span className="heading-typography font-bold text-[10px] text-slate-100">{val}</span>
-                            {diff !== 0 && (
-                              <span className={`heading-typography font-bold text-[9px] ${diff > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
-                                ({diff > 0 ? `+${diff}` : diff})
-                             </span>
-                            )}
+                  {/* STATS DÉTAILLÉES (Toujours visible sur desktop) */}
+                  <div className="bg-slate-900 border border-slate-700/50 rounded-2xl p-3 shadow-2xl">
+                    <div className="heading-typography text-[9px] font-bold text-slate-300 uppercase tracking-wider flex items-center mb-3">
+                      <span className="flex items-center gap-1.5">📊 Stats Détaillées</span>
+                    </div>
+                    <div className="border-t border-slate-700/50 pt-3 grid grid-cols-2 gap-1.5">
+                      {['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical'].map((attr) => {
+                        const val = Math.floor(player.attributes?.[attr] || 0);
+                        const eff = Math.floor(effectiveStats[attr] || val);
+                        const diff = eff - val;
+                        return (
+                          <div key={attr} className="bg-slate-800 px-2 py-1.5 rounded-md border border-slate-700/50 flex justify-between items-center shadow-sm">
+                            <span className="text-[9px] text-slate-400 capitalize font-medium">{statLabels[attr] || attr}</span>
+                            <div className="flex items-center gap-1">
+                              <span className="heading-typography font-bold text-[10px] text-slate-100">{val}</span>
+                              {diff !== 0 && (
+                                <span className={`heading-typography font-bold text-[9px] ${diff > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                  ({diff > 0 ? `+${diff}` : diff})
+                               </span>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-</div>
+
+                {/* TROPHÉES — en format accordéon */}
+                <div className="bg-slate-900 border border-slate-700/50 rounded-2xl p-3 shadow-2xl">
+                  <button onClick={() => setIsTrophiesOpen(!isTrophiesOpen)} className="w-full heading-typography text-[10px] font-bold text-slate-300 uppercase tracking-wider flex justify-between items-center bg-slate-800 p-2 rounded-xl">
+                    <span className="flex items-center gap-1.5">🏆 Vitrine à Trophées</span>
+                    <span className="text-amber-500 text-sm">{isTrophiesOpen ? '▲' : '▼'}</span>
+                  </button>
+                  <div className={`transition-all duration-300 overflow-hidden ${isTrophiesOpen ? 'max-h-[1000px] opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'}`}>
+                    <div className="space-y-3 pt-2 border-t border-slate-700/50">
+                      <div>
+                        <h4 className="heading-typography text-[8px] font-bold text-emerald-500 uppercase tracking-wider mb-1.5">🛡️ Collectifs</h4>
+                        {collectiveTrophies.length > 0 ? (
+                          <div className="flex flex-wrap gap-1">
+                            {collectiveTrophies.map((trophy, idx) => (
+                              <span key={`col-${idx}`} className="bg-emerald-900/40 border border-emerald-700 px-1.5 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
+                                <span className="text-[10px]">{trophy.icon}</span>
+                                <span className="heading-typography text-[8px] text-emerald-400 font-semibold">{trophy.text}</span>
+                                {trophy.count > 1 && <span className="heading-typography font-black text-emerald-500 text-[8px]">×{trophy.count}</span>}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-[8px] text-slate-500 italic mb-2">Aucun trophée collectif.</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <h4 className="heading-typography text-[8px] font-bold text-amber-500 uppercase tracking-wider mb-1.5">🏅 Individuels</h4>
+                        {individualTrophies.length > 0 ? (
+                          <div className="flex flex-wrap gap-1">
+                            {individualTrophies.map((trophy, idx) => (
+                              <span key={`ind-${idx}`} className="bg-amber-900/40 border border-amber-700 px-1.5 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
+                                <span className="text-[10px]">{trophy.icon}</span>
+                                <span className="heading-typography text-[8px] text-amber-400 font-semibold">{trophy.text}</span>
+                                {trophy.count > 1 && <span className="heading-typography font-black text-amber-500 text-[8px]">×{trophy.count}</span>}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-[8px] text-slate-500 italic">Aucune distinction individuelle.</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
 <div className="block md:hidden">
 {/* GRAPH VALEUR MARCHANDE */}
                 {player.valueHistory && player.valueHistory.length > 0 && (
