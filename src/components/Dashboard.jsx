@@ -154,6 +154,7 @@ export function Dashboard({
       ...rival,
       name: opponent.name || rival.name,
       ovr: opponent.ovr || rival.ovr,
+      attributes: opponent.attributes || rival.attributes,
       club: opponent.club || rival.club,
       ballonDorCount: opponent.ballonDorCount || rival.ballonDorCount || 0,
       trophiesCount: opponent.trophiesCount || rival.trophiesCount || 0,

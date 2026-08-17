@@ -109,6 +109,7 @@ export default function App() {
       multiplayerContext.roomObj.updateState({
         name: gameState.player.name,
         ovr: gameState.player.ovr,
+        attributes: gameState.player.attributes,
         club: gameState.club,
         season: gameState.season,
         readyForNextSeason: !!gameState.seasonStats,
