@@ -23,17 +23,25 @@ export function LifestyleShopModal({ isOpen, onClose, bankBalance, player, onBuy
           {LIFESTYLE_ITEMS.map((item) => {
             const isOwned = player.inventory?.includes(item.id);
             const canAfford = bankBalance >= item.cost;
+            const hasUpkeep = item.upkeep < 0;
+            const isProfitable = item.upkeep > 0;
             return (
-              <div key={item.id} className="p-4 bg-slate-950 rounded-2xl border border-slate-800 flex justify-between items-center gap-4">
+              <div key={item.id} className="p-4 bg-slate-950 rounded-2xl border border-slate-800 flex justify-between items-center gap-4 group hover:border-emerald-500/50 transition-colors">
                 <div className="flex-1">
-                  <h4 className="font-bold text-sm text-white">{item.name}</h4>
-                  <p className="text-xs text-slate-400 mt-0.5">{item.desc}</p>
-                  <span className="text-xs font-bold text-emerald-400 block mt-1">{item.cost.toLocaleString('fr-FR')} €</span>
+                  <h4 className="font-bold text-sm text-white flex items-center gap-2">
+                    {item.name}
+                    {isProfitable && <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Rentable</span>}
+                    {hasUpkeep && <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">Frais/an</span>}
+                  </h4>
+                  <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">{item.desc}</p>
+                  <span className="text-sm font-black text-emerald-400 block mt-2">
+                    {item.cost >= 1000000 ? `${(item.cost / 1000000).toFixed(1)}M €` : `${(item.cost / 1000).toFixed(0)}k €`}
+                  </span>
                 </div>
                 <button
                   disabled={isOwned || !canAfford}
                   onClick={() => onBuyItem(item)}
-                  className={`py-2 px-4 rounded-xl font-black text-xs uppercase tracking-wider transition-all ${
+                  className={`py-2 px-4 rounded-xl font-black text-xs uppercase tracking-wider transition-all flex-shrink-0 ${
                     isOwned
                       ? 'bg-slate-800 text-slate-400 cursor-default'
                       : canAfford

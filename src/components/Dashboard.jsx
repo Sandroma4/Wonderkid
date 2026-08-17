@@ -20,7 +20,7 @@ const getTheme = (primary = '#2563EB', secondary = '#60A5FA') => {
   };
 };
 
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import { PlayerCard } from './PlayerCard';
 import { LifestyleShopModal } from './LifestyleShopModal';
@@ -33,6 +33,48 @@ import { getTraitDetails } from '../utils/traitsData';
 
 import { COUNTRIES } from '../utils/gameData';
 import { FlagIcon } from './FlagIcon';
+
+const AnimatedStatBar = ({ label, oldVal, newVal, gain }) => {
+  const [currentVal, setCurrentVal] = useState(oldVal);
+  const [displayVal, setDisplayVal] = useState(oldVal);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentVal(newVal);
+      
+      if (gain > 0) {
+        let currentNumber = oldVal;
+        const stepTime = 1000 / gain;
+        const counter = setInterval(() => {
+          currentNumber += 1;
+          setDisplayVal(currentNumber);
+          if (currentNumber >= newVal) clearInterval(counter);
+        }, stepTime);
+      } else {
+        setDisplayVal(newVal);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [oldVal, newVal, gain]);
+
+  return (
+    <div className="flex flex-col gap-1.5 w-full max-w-[160px] bg-slate-900/80 p-2.5 rounded-xl border border-slate-700/50 shadow-inner">
+      <div className="flex justify-between items-center text-[9px] uppercase font-black tracking-wider">
+        <span className="text-slate-300">{label}</span>
+        <span className={gain > 0 ? "text-emerald-400" : "text-rose-400"}>
+          {gain > 0 ? `+${gain}` : gain} <span className="text-white text-[11px] ml-1">{displayVal}</span>
+        </span>
+      </div>
+      <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden relative">
+         <div 
+           className={`absolute top-0 left-0 h-full ${gain > 0 ? 'bg-emerald-500' : 'bg-rose-500'} transition-all ease-out`} 
+           style={{ width: `${Math.min(99, Math.max(0, currentVal))}%`, transitionDuration: '1000ms' }} 
+         />
+      </div>
+    </div>
+  );
+};
 
 const LeagueLabel = ({ club }) => {
   if (!club) return null;
@@ -424,16 +466,24 @@ export function Dashboard({
               )}
 
               {seasonStats.statGains && Object.keys(seasonStats.statGains).length > 0 && (
-                <div className="bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700/50 shadow-inner text-xs space-y-1.5 hidden md:block">
-                  <p className="font-bold text-slate-100 mb-1 uppercase tracking-wider text-[10px]">Progression</p>
-                  <div className="flex flex-wrap gap-2">
+                <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 shadow-inner text-xs space-y-3 mt-4">
+                  <p className="font-bold text-slate-100 mb-2 uppercase tracking-wider text-[11px] border-b border-slate-700 pb-2">Bilan de Progression Physique & Technique</p>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {Object.entries(seasonStats.statGains).map(([attr, gain]) => {
                       const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
                       if (gain === 0) return null;
+                      
+                      const newVal = player.attributes[attr];
+                      const oldVal = newVal - gain;
+                      
                       return (
-                        <span key={attr} className={`px-2 py-1 rounded font-bold ${gain > 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}`}>
-                          {labels[attr] || attr} {gain > 0 ? `+${gain}` : gain}
-                        </span>
+                        <AnimatedStatBar 
+                          key={attr} 
+                          label={labels[attr] || attr} 
+                          oldVal={oldVal} 
+                          newVal={newVal} 
+                          gain={gain} 
+                        />
                       );
                     })}
                   </div>

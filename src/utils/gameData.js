@@ -1714,16 +1714,12 @@ export const ALL_CLUBS = [
 ];
 
 export const LIFESTYLE_ITEMS = [
-  { id: 'coach', name: 'Entraîneur personnel', cost: 15000, desc: '+1 bonus permanent sur vos gains d\'entraînement', effect: (p) => ({ ...p, trainingBonus: (p.trainingBonus || 0) + 1 }) },
-  { id: 'physio', name: 'Physiothérapeute privé', cost: 25000, desc: 'Récupération de forme et immunité contre les blessures légères', effect: (p) => ({ ...p, injuryResistance: true }) },
-  { id: 'car', name: 'Voiture de sport', cost: 50000, desc: '+15 Moral instantané et statut social', effect: (p) => ({ ...p, morale: Math.min(100, p.morale + 15) }) },
-
-
-
-
-
-  { id: 'villa', name: 'Villa d\'architecte avec piscine', cost: 150000, desc: 'Repos parfait : +10 Forme et +10 Moral permanents', effect: (p) => ({ ...p, form: Math.min(100, p.form + 10), morale: Math.min(100, p.morale + 10) }) },
-  { id: 'agent', name: 'Agent Superstar de classe mondiale', cost: 200000, desc: '+15% de chances de recevoir des offres des grands clubs', effect: (p) => ({ ...p, superAgent: true }) }
+  { id: 'cryo', name: 'Chambre Hyperbare & Cryothérapie', cost: 1000000, upkeep: -100000, desc: 'Réduit drastiquement le risque de blessure grave. (Entretien: -100k€/an)' },
+  { id: 'training_center', name: 'Centre d\'Entraînement Privé', cost: 15000000, upkeep: 0, desc: '+1 Garanti en Physique ou Vitesse chaque saison.' },
+  { id: 'startup', name: 'Start-up Tech/Crypto', cost: 3000000, upkeep: 0, desc: '10% de chance de gagner 30M€/an. 20% de faillite (perte de l\'item).' },
+  { id: 'charity', name: 'Fondation Caritative', cost: 5000000, upkeep: -500000, desc: '+10 Confiance Coach par an. (Coût: -500k€/an)' },
+  { id: 'nightclub', name: 'Franchise de Boîtes de Nuit', cost: 8000000, upkeep: 2000000, desc: 'Génère +2M€/an et Moral minimum 50. Malus: -15 Confiance/an.' },
+  { id: 'buy_club', name: 'Rachat d\'un club de foot (D3)', cost: 25000000, upkeep: -1000000, desc: 'Débloque la fin "Propriétaire". (Investissement: -1M€/an)' }
 ];
 
 const POSITION_WEIGHTS = {

@@ -90,6 +90,7 @@ export default function App() {
       nationalCaps: 0,
       injuryDuration: 0,
       inventory: [],
+      bankBalance: 0,
       palmares: [],
       careerOvrSum: 0,
       careerSeasons: 0,
@@ -639,8 +640,42 @@ export default function App() {
         salaryEarnings = 5000 * 52;
       }
       
+      let inventoryEarnings = 0;
+      let inventoryTrustChange = 0;
+      let newInventory = [...(prev.player.inventory || [])];
+      let minMorale = 0;
+      
+      if (newInventory.includes('cryo')) inventoryEarnings -= 100000;
+      if (newInventory.includes('training_center')) {
+        const statToBoost = Math.random() > 0.5 ? 'physical' : 'pace';
+        if (updatedAttributes[statToBoost] !== undefined && updatedAttributes[statToBoost] < 99) {
+          updatedAttributes[statToBoost] += 1;
+        }
+      }
+      if (newInventory.includes('nightclub')) {
+        inventoryEarnings += 2000000;
+        inventoryTrustChange -= 15;
+        minMorale = 50;
+      }
+      if (newInventory.includes('charity')) {
+        inventoryEarnings -= 500000;
+        inventoryTrustChange += 10;
+      }
+      if (newInventory.includes('buy_club')) {
+        inventoryEarnings -= 1000000;
+      }
+      if (newInventory.includes('startup')) {
+        const rand = Math.random();
+        if (rand < 0.10) {
+          inventoryEarnings += 30000000; // Jackpot
+        } else if (rand < 0.30) {
+          // 20% Faillite
+          newInventory = newInventory.filter(i => i !== 'startup');
+        }
+      }
+
       const perfEarnings = statsToUse ? parseFloat(statsToUse.earnings || 0) * 1000000 : 0;
-      const newBankBalance = prev.bankBalance + salaryEarnings + perfEarnings;
+      const newBankBalance = Math.max(0, prev.bankBalance + salaryEarnings + perfEarnings + inventoryEarnings);
 
       const newPalmares = [...(prev.palmares || [])];
       let globalTrophies = [];
@@ -699,11 +734,13 @@ export default function App() {
 
       const updatedPlayer = {
         ...prev.player,
+        inventory: newInventory,
         age: newAge,
         currentYear: newCurrentYear,
         attributes: updatedAttributes,
         form: 85,
-        morale: 80,
+        morale: Math.max(80, minMorale),
+        coachTrust: Math.max(0, Math.min(100, (prev.player.coachTrust ?? 75) + inventoryTrustChange)),
         nationalCaps: (prev.player.nationalCaps || 0) + (statsToUse?.nationalCallup ? 3 : 0),
         injuryDuration: 0,
         palmares: newPalmares,
