@@ -39,6 +39,7 @@ import { getRoleById } from './utils/rolesData';
 export default function App() {
   const [appView, setAppView] = useState('mainMenu'); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
   const [gameState, setGameState] = useState(null);
+  const [multiplayerContext, setMultiplayerContext] = useState(null);
 
   useEffect(() => {
     if (multiplayerContext?.roomObj) {
@@ -65,7 +66,6 @@ export default function App() {
   const [activeOutcome, setActiveOutcome] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [showPseudoModal, setShowPseudoModal] = useState(false);
-  const [multiplayerContext, setMultiplayerContext] = useState(null);
   const [currentPseudonym, setCurrentPseudonym] = useState('');
 
   // Check on mount if pseudo already chosen

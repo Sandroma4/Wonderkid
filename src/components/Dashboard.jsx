@@ -145,6 +145,9 @@ export function Dashboard({
     rival, rivalConfrontations, isSelectingPerk
   } = gameState || {};
 
+  const opponent = multiplayerContext?.players?.find(p => p.playerId !== multiplayerContext.playerId);
+
+
   const effectiveStats = getEffectiveStats(player);
 
   const statLabels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
