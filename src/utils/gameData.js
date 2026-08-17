@@ -2055,7 +2055,21 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
   if (form < 40) matchRatio = Math.max(0, matchRatio - 0.2);
   
   // Confiance absolue à 0 : le joueur est écarté de l'équipe
-  if (trust <= 0) matchRatio = 0;
+  // Mais il a peut-être joué avant (1 événement = 1 trimestre)
+  if (trust <= 0) {
+    if (player.bannedAtEventStep) {
+      const trimestersPlayed = Math.max(0, player.bannedAtEventStep - 1);
+      const scoreBeforeBan = ((ovr - clubOvr) * 1.5) + (50 * 0.60) + 40;
+      let ratioBeforeBan = 0.5;
+      if (scoreBeforeBan >= 68) ratioBeforeBan = 0.9;
+      else if (scoreBeforeBan >= 55) ratioBeforeBan = 0.6;
+      else if (scoreBeforeBan >= 42) ratioBeforeBan = 0.3;
+      
+      matchRatio = ratioBeforeBan * (trimestersPlayed / 3.0);
+    } else {
+      matchRatio = 0;
+    }
+  }
   
   // Bonus de confiance : même hors chouchou, une haute confiance aide
   if (trust >= 90) matchRatio = Math.min(1.0, matchRatio + 0.10);
@@ -2433,10 +2447,7 @@ export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlaye
     return true; 
   }); 
   
-  let numEvents = 1;
-  if (matchesPlayed >= 30) numEvents = 4;
-  else if (matchesPlayed >= 20) numEvents = 3;
-  else if (matchesPlayed >= 10) numEvents = 2;
+  let numEvents = 3;
   
   // Force tournament events if applicable
   const tournamentEvents = compatibleEvents.filter(ev => ['WORLD_CUP', 'EURO', 'CHAMPIONS_LEAGUE', 'CUP'].includes(ev.category));

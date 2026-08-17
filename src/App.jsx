@@ -310,6 +310,9 @@ export default function App() {
     if (updatedPlayer.coachTrust !== undefined && updatedPlayer.coachTrust <= 0) {
       updatedPlayer.morale = 0;
       updatedPlayer.statusText = "Banni de l'équipe première (Transfert forcé)";
+      if (!updatedPlayer.bannedAtEventStep) {
+          updatedPlayer.bannedAtEventStep = prev.eventStep;
+      }
       outcomeWithConverted.narrative = (outcomeWithConverted.narrative || "") + "\n\n🚨 RUPTURE TOTALE : Le coach ne vous fait plus aucune confiance ! Vous êtes banni de l'équipe première et placé sur la liste des transferts (Moral tombé à 0).";
     }
 
