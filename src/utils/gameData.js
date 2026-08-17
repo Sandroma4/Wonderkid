@@ -2054,6 +2054,9 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
   // Malus si la forme est catastrophique
   if (form < 40) matchRatio = Math.max(0, matchRatio - 0.2);
   
+  // Confiance absolue à 0 : le joueur est écarté de l'équipe
+  if (trust <= 0) matchRatio = 0;
+  
   // Bonus de confiance : même hors chouchou, une haute confiance aide
   if (trust >= 90) matchRatio = Math.min(1.0, matchRatio + 0.10);
   else if (trust >= 80) matchRatio = Math.min(1.0, matchRatio + 0.05);
