@@ -793,7 +793,7 @@ export default function App() {
         morale: Math.max(80, minMorale),
         sponsor: currentSponsor,
         clubYears: (prev.player.clubYears || 0) + 1,
-        coachTrust: updatedPlayer.traits?.some(t => t.id === 'legende_club') && inventoryTrustChange < 0
+        coachTrust: prev.player.traits?.some(t => t.id === 'legende_club') && inventoryTrustChange < 0
           ? prev.player.coachTrust ?? 75
           : Math.max(0, Math.min(100, (prev.player.coachTrust ?? 75) + inventoryTrustChange)),
         nationalCaps: (prev.player.nationalCaps || 0) + (statsToUse?.nationalCallup ? 3 : 0),
