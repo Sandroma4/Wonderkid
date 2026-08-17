@@ -191,13 +191,16 @@ export default function App() {
       if (Array.isArray(outcome)) outcome = outcome[outcome.length - 1]; // fallback
     }
 
-    let updatedPlayer = { ...gameState.player };
+    // Inject bankBalance into player
+    let updatedPlayer = { ...gameState.player, bankBalance: gameState.bankBalance };
     const prevAttributes = { ...(gameState.player.attributes || {}) };
     const playerAge = gameState.player.age || 17;
 
     if (typeof outcome.applyStats === 'function') {
       updatedPlayer = outcome.applyStats(updatedPlayer);
     }
+    const finalBankBalance = updatedPlayer.bankBalance !== undefined ? updatedPlayer.bankBalance : gameState.bankBalance;
+    delete updatedPlayer.bankBalance;
     if (updatedPlayer.traits?.some(t => t.id === 'legende_club') && updatedPlayer.coachTrust < (gameState.player.coachTrust || 50)) {
       updatedPlayer.coachTrust = gameState.player.coachTrust;
     }
