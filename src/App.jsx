@@ -105,7 +105,7 @@ export default function App() {
 
     const clubOffers = generate6ClubOffers(tempPlayer);
     const initialCompletedEvents = [];
-    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents);
+    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, 38, {}, tempClub.tier);
     const rival = generateRival(tempPlayer);
 
     setGameState({
@@ -317,7 +317,7 @@ export default function App() {
     }
 
     setActiveOutcome(outcomeWithConverted);
-    setGameState((prev) => ({ ...prev, player: updatedPlayer }));
+    setGameState((prev) => ({ ...prev, player: updatedPlayer, bankBalance: finalBankBalance }));
   };
 
   const finalizeSeasonDirectly = (prev, tournamentStats, interactiveMatchResult, updatedCompletedEvents, nextStep) => {
@@ -865,7 +865,7 @@ export default function App() {
       const is18 = newAge === 18 && !finalUpdatedPlayer.roleId;
 
       const matchesPlayed = statsToUse ? (statsToUse.matches || 0) : 38;
-      let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, statsToUse?.tournaments);
+      let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, statsToUse?.tournaments, prev.club.tier);
       const hasPlayerWonBallonDor = statsToUse?.awards?.some(a => a.text === "Ballon d'Or");
       const hasPlayerWonCL = statsToUse?.tournaments?.championsLeague?.stage === 'Vainqueur';
       const updatedRival = updateRival(prev.rival, finalUpdatedPlayer.ovr, prev.club.tier, hasPlayerWonBallonDor, hasPlayerWonCL);

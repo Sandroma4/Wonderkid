@@ -106,7 +106,7 @@ export const EXTRA_EVENTS = [
     ]
   },
   {
-    id: 'extra_8', category: 'CARRIÈRE', tag: 'Prêt', targetPosition: 'ALL', condition: (p) => p.age <= 21 && p.ovr < 75,
+    id: 'extra_8', category: 'CARRIÈRE', tag: 'Prêt', targetPosition: 'ALL', condition: (p, tier) => tier === 1 && p.age <= 21 && p.ovr < 75,
     description: "Le club veut vous prêter en D2 pour que vous preniez du temps de jeu et de l'expérience.",
     options: [
       { typeTag: 'Accepter', text: 'Aller s\'aguerrir en D2', outcome: [
@@ -116,6 +116,21 @@ export const EXTRA_EVENTS = [
       { typeTag: 'Refuser', text: 'Forcer pour rester et prouver', outcome: [
         { probability: 0.3, narrative: 'Vous gagnez votre place en équipe première !', effects: [{text: '+30 Confiance', style: 'positive'}], applyStats: p => ({...p, coachTrust: Math.min(100, p.coachTrust+30)}) },
         { probability: 0.7, narrative: 'Vous jouez avec la réserve toute l\'année.', effects: [{text: '-20 Moral', style: 'negative'}], applyStats: p => ({...p, morale: Math.max(0, p.morale-20)}) }
+      ] },
+      { typeTag: 'Patient', text: 'Demander à attendre le mercato hivernal', outcome: { narrative: 'Vous jouez la montre.', effects: [{text: '+5 Moral', style: 'positive'}], applyStats: p => ({...p, morale: Math.min(100, p.morale+5)}) } }
+    ]
+  },
+  {
+    id: 'extra_8_d3', category: 'CARRIÈRE', tag: 'Prêt', targetPosition: 'ALL', condition: (p, tier) => tier === 2 && p.age <= 21 && p.ovr < 70,
+    description: "Le club veut vous prêter en D3 pour que vous preniez du temps de jeu et de l'expérience.",
+    options: [
+      { typeTag: 'Accepter', text: 'Aller s\'aguerrir en D3', outcome: [
+        { probability: 0.6, narrative: 'Vous faites une saison pleine et revenez métamorphosé !', effects: [{text: '+30 Forme', style: 'positive'}, {text: '+20 Moral', style: 'positive'}], applyStats: p => ({...p, form: Math.min(100, p.form+30), morale: Math.min(100, p.morale+20)}) },
+        { probability: 0.4, narrative: 'Niveau technique faible, vous prenez des mauvais coups.', effects: [{text: '-25 Forme', style: 'negative'}], applyStats: p => ({...p, form: Math.max(0, p.form-25)}) }
+      ] },
+      { typeTag: 'Refuser', text: 'Forcer pour rester et prouver en D2', outcome: [
+        { probability: 0.3, narrative: 'Vous gagnez votre place en équipe première !', effects: [{text: '+30 Confiance', style: 'positive'}], applyStats: p => ({...p, coachTrust: Math.min(100, p.coachTrust+30)}) },
+        { probability: 0.7, narrative: 'Vous cirez le banc toute l\'année.', effects: [{text: '-20 Moral', style: 'negative'}], applyStats: p => ({...p, morale: Math.max(0, p.morale-20)}) }
       ] },
       { typeTag: 'Patient', text: 'Demander à attendre le mercato hivernal', outcome: { narrative: 'Vous jouez la montre.', effects: [{text: '+5 Moral', style: 'positive'}], applyStats: p => ({...p, morale: Math.min(100, p.morale+5)}) } }
     ]

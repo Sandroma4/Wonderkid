@@ -522,7 +522,7 @@ export function Dashboard({
               {seasonStats.statGains && Object.keys(seasonStats.statGains).length > 0 && (
                 <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 shadow-inner text-xs space-y-3 mt-4">
                   <p className="font-bold text-slate-100 mb-2 uppercase tracking-wider text-[11px] border-b border-slate-700 pb-2">Bilan de Progression Physique & Technique</p>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 gap-3">
                     {Object.entries(seasonStats.statGains).map(([attr, gain]) => {
                       const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
                       const newVal = Math.floor(player.attributes[attr]);
@@ -1033,14 +1033,7 @@ export function Dashboard({
                             {eff.text}
                           </span>
                         ))}
-                        {activeOutcome.convertedStats && Object.entries(activeOutcome.convertedStats).map(([statKey, pts]) => {
-                          const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
-                          return (
-                            <span key={`conv-${statKey}`} className="heading-typography text-[9px] md:text-[10px] font-semibold px-2 py-1 rounded-lg border shadow-sm bg-amber-100 text-amber-900 border-amber-400 flex items-center gap-1">
-                              <span>🔄</span> +{pts} {labels[statKey] || statKey} <span className="text-[8px] opacity-70 font-normal">(converti)</span>
-                            </span>
-                          );
-                        })}
+
                       </div>
                       {activeOutcome.ageBoostApplied && (
                         <p className="text-[9px] text-violet-700 font-semibold leading-relaxed flex items-center gap-1">
@@ -1053,11 +1046,7 @@ export function Dashboard({
                           </span>
                         </p>
                       )}
-                      {activeOutcome.convertedStats && (
-                        <p className="text-[9px] text-amber-700 font-medium italic leading-relaxed">
-                          🔄 Des points en surplus ont été automatiquement convertis vers d'autres statistiques.
-                        </p>
-                      )}
+
                       <button 
                         onClick={() => { playSound('click'); onContinueFromOutcome(); }} 
                         className="heading-typography w-full py-2 md:py-2.5 font-semibold text-white uppercase text-[10px] tracking-wider rounded-xl mt-2 shadow-lg transition-transform active:scale-95 hover:brightness-110"
