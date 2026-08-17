@@ -20,12 +20,12 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
 
   return (
     <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3">
-      <div className="bg-slate-900 border border-amber-500/30 rounded-2xl md:rounded-3xl p-5 md:p-8 max-w-4xl w-full shadow-[0_0_60px_rgba(245,158,11,0.15)] relative overflow-y-auto max-h-[92vh]">
+      <div className="bg-slate-900 border border-amber-500/30 rounded-2xl md:rounded-3xl p-3 md:p-8 max-w-4xl w-full shadow-[0_0_60px_rgba(245,158,11,0.15)] relative overflow-y-auto max-h-[92vh]">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 rounded-t-2xl"></div>
 
-        <div className="text-center mb-8 mt-2">
-          <span className="text-5xl mb-4 block drop-shadow-lg">👑</span>
-          <h2 className="heading-typography text-2xl md:text-3xl font-black text-white uppercase tracking-widest mb-3">
+        <div className="text-center mb-4 md:mb-8 mt-0">
+          <span className="text-4xl md:text-5xl mb-2 md:mb-4 block drop-shadow-lg">👑</span>
+          <h2 className="heading-typography text-lg md:text-3xl font-black text-white uppercase tracking-widest mb-3">
             18 Ans : L'Âge de Raison
           </h2>
           <p className="text-slate-400 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
@@ -36,7 +36,7 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
           </p>
         </div>
 
-        <div className={`grid gap-3 ${roles.length <= 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2 md:grid-cols-3'}`}>
+        <div className={`grid gap-2 sm:gap-3 ${roles.length <= 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-3'}`}>
           {roles.map((role) => {
             const positiveMultipliers = Object.entries(role.multipliers).filter(([, v]) => v > 1);
             const negativeMultipliers = Object.entries(role.multipliers).filter(([, v]) => v < 1);
@@ -50,32 +50,35 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
               <button
                 key={role.id}
                 onClick={() => onSelect(role)}
-                className="flex flex-col items-center p-3 bg-slate-800/60 border border-slate-700 rounded-2xl hover:bg-slate-800 hover:border-amber-500/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.1)] transition-all duration-200 group text-center relative overflow-hidden active:scale-95"
+                className="flex flex-row sm:flex-col items-center text-left sm:text-center p-2.5 sm:p-3 bg-slate-800/60 border border-slate-700 rounded-xl hover:bg-slate-800 hover:border-amber-500/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.1)] transition-all duration-200 group relative overflow-hidden active:scale-95 w-full"
               >
                 {/* Halo d'arrière-plan au survol */}
                 <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
-                <div className="text-3xl md:text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg relative z-10">
+                <div className="text-3xl sm:text-4xl sm:mb-2 mr-3 sm:mr-0 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg relative z-10 flex-shrink-0">
                   {role.icon}
                 </div>
-                <h3 className="heading-typography font-black text-white mb-1 text-sm relative z-10">
-                  {role.name}
-                </h3>
-                <p className="text-[10px] md:text-[11px] text-slate-400 mb-3 leading-tight relative z-10">
-                  {role.desc}
-                </p>
-
-                <div className="mt-auto w-full flex flex-wrap justify-center gap-1.5 relative z-10">
-                  {positiveMultipliers.map(([attr, val]) => (
-                    <div key={attr} className="bg-emerald-500/15 text-emerald-400 text-[10px] font-bold px-2 py-1 rounded-md border border-emerald-500/25 tracking-wide">
-                      {formatMultiplier(val)} {statLabels[attr] || attr}
-                    </div>
-                  ))}
-                  {negativeMultipliers.map(([attr, val]) => (
-                    <div key={attr} className="bg-rose-500/15 text-rose-400 text-[10px] font-bold px-2 py-1 rounded-md border border-rose-500/25 tracking-wide">
-                      {formatMultiplier(val)} {statLabels[attr] || attr}
-                    </div>
-                  ))}
+                
+                <div className="flex flex-col flex-1 relative z-10">
+                  <h3 className="heading-typography font-black text-white mb-0.5 sm:mb-1 text-xs sm:text-sm">
+                    {role.name}
+                  </h3>
+                  <p className="text-[9px] sm:text-[11px] text-slate-400 mb-1.5 sm:mb-3 leading-tight hidden sm:block">
+                    {role.desc}
+                  </p>
+                  
+                  <div className="sm:mt-auto w-full flex flex-wrap justify-start sm:justify-center gap-1 sm:gap-1.5">
+                    {positiveMultipliers.map(([attr, val]) => (
+                      <div key={attr} className="bg-emerald-500/15 text-emerald-400 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md border border-emerald-500/25 tracking-wide">
+                        {formatMultiplier(val)} {statLabels[attr] || attr}
+                      </div>
+                    ))}
+                    {negativeMultipliers.map(([attr, val]) => (
+                      <div key={attr} className="bg-rose-500/15 text-rose-400 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md border border-rose-500/25 tracking-wide">
+                        {formatMultiplier(val)} {statLabels[attr] || attr}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </button>
             );

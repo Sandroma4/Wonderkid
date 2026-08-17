@@ -874,9 +874,9 @@ export default function App() {
           tag: 'Ballon d\'Or',
           description: `Votre rival historique, ${updatedRival.name}, vient de remporter le Ballon d'Or. La presse attend votre réaction.`,
           options: [
-            { text: "Le féliciter publiquement (Classe)", outcome: { narrative: "Vous montrez beaucoup de classe. Le monde du foot apprécie.", effects: [{text: "+15 Confiance", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 15) }) } },
-            { text: "L'ignorer totalement (Froid)", outcome: { narrative: "Vous restez silencieux. La rivalité grandit.", effects: [{text: "+5 Moral", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 5) }) } },
-            { text: "Critiquer le vote (Rageux)", outcome: { narrative: "Vous dites que c'est un scandale. Ça fait le buzz mais ça ne passe pas très bien.", effects: [{text: "-20 Moral", style: "negative"}, {text: "-10 Confiance", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, p.morale - 20), coachTrust: Math.max(0, p.coachTrust - 10) }) } }
+            { typeTag: "Classe", text: "Le féliciter publiquement (Classe)", outcome: { narrative: "Vous montrez beaucoup de classe. Le monde du foot apprécie.", effects: [{text: "+15 Confiance", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 15) }) } },
+            { typeTag: "Froid", text: "L'ignorer totalement (Froid)", outcome: { narrative: "Vous restez silencieux. La rivalité grandit.", effects: [{text: "+5 Moral", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 5) }) } },
+            { typeTag: "Rage", text: "Critiquer le vote (Rageux)", outcome: { narrative: "Vous dites que c'est un scandale. Ça fait le buzz mais ça ne passe pas très bien.", effects: [{text: "-20 Moral", style: "negative"}, {text: "-10 Confiance", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, p.morale - 20), coachTrust: Math.max(0, p.coachTrust - 10) }) } }
           ]
         });
       }
@@ -888,7 +888,7 @@ export default function App() {
           tag: 'Capitaine',
           description: `Vous avez été nommé Capitaine de l'équipe nationale ! Un immense honneur et une grande responsabilité.`,
           options: [
-            { text: "Assumer le rôle avec fierté", outcome: { narrative: "Vous rassemblez le groupe. Le sélectionneur compte sur vous.", effects: [{text: "+15 Moral", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 15) }) } }
+            { typeTag: "Fierté", text: "Assumer le rôle avec fierté", outcome: { narrative: "Vous rassemblez le groupe. Le sélectionneur compte sur vous.", effects: [{text: "+15 Moral", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 15) }) } }
           ]
         });
       }
@@ -908,6 +908,7 @@ export default function App() {
           description: `Incroyable consécration ! Le sélectionneur national vient de vous convoquer pour la toute première fois en équipe de ${countryName}. Vos proches sont en larmes et la nation entière a les yeux rivés sur vos débuts internationaux.`,
           options: [
             {
+              typeTag: "Audace",
               text: "Jouer libéré et impressionner le groupe (Audace)",
               outcome: {
                 narrative: "Vous brillez dès vos premières minutes ! Votre insouciance et votre qualité technique enchantent les supporters et le staff.",
@@ -951,6 +952,7 @@ export default function App() {
           description: `Sélection nationale : Vous rejoignez le rassemblement de l'équipe de ${countryName} pour les éliminatoires internationaux.`,
           options: [
             {
+              typeTag: "Audace",
               text: "Prendre les rênes de l'attaque et frapper au but",
               outcome: {
                 narrative: "Vous marquez un but capital qui qualifie votre pays dans l'euphorie générale !",
@@ -963,6 +965,7 @@ export default function App() {
               }
             },
             {
+              typeTag: "Collectif",
               text: "Privilégier le jeu collectif et les automatismes",
               outcome: {
                 narrative: "Excellente prestation d'équipe, vous délivrez une passe décisive millimétrée.",
