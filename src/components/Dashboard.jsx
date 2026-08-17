@@ -924,6 +924,17 @@ export function Dashboard({
                   </div>
                 </div>
 
+                <button 
+                  onClick={() => { playSound('click'); setIsShopOpen(true); }}
+                  className="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-bold py-3 md:py-4 px-4 rounded-2xl shadow-lg transform transition hover:scale-[1.02] flex items-center justify-center gap-2 border border-emerald-400/50"
+                >
+                  <span className="text-lg md:text-xl">💎</span>
+                  <span className="heading-typography text-[10px] md:text-xs tracking-widest uppercase">Boutique d'Investissements</span>
+                  <span className="bg-slate-900/50 px-2 py-1 rounded-md text-[10px] font-black ml-2 shadow-inner">
+                    {bankBalance.toLocaleString('fr-FR')} €
+                  </span>
+                </button>
+
                 <div className="bg-slate-900 border border-slate-700/50 rounded-2xl p-4 md:p-5 shadow-2xl flex flex-col h-fit">
                   <div>
                     <div className="flex justify-between items-center mb-2 md:mb-3">
@@ -1197,6 +1208,13 @@ export function Dashboard({
         </div>
       )}
 
+      <LifestyleShopModal 
+        isOpen={isShopOpen} 
+        onClose={() => setIsShopOpen(false)} 
+        bankBalance={bankBalance} 
+        player={player} 
+        onBuyItem={onBuyLifestyleItem} 
+      />
       
     </>
   );
