@@ -157,3 +157,30 @@ export const loadGameStateCloud = async () => {
     return null;
   }
 };
+
+
+export const saveMultiplayerSession = (sessionData) => {
+  try {
+    if (sessionData) {
+      localStorage.setItem('wonderkid_mp_session', JSON.stringify(sessionData));
+    } else {
+      localStorage.removeItem('wonderkid_mp_session');
+    }
+  } catch (e) {
+    console.error("Erreur de sauvegarde de la session multijoueur:", e);
+  }
+};
+
+export const loadMultiplayerSession = () => {
+  try {
+    const data = localStorage.getItem('wonderkid_mp_session');
+    return data ? JSON.parse(data) : null;
+  } catch (e) {
+    console.error("Erreur de chargement de la session multijoueur:", e);
+    return null;
+  }
+};
+
+export const clearMultiplayerSession = () => {
+  localStorage.removeItem('wonderkid_mp_session');
+};

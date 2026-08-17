@@ -2,16 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { generateRoomCode, createMultiplayerRoom } from '../utils/multiplayer';
 import { playSound } from '../utils/audio';
 
-export const MultiplayerLobby = ({ onStart, onBack }) => {
-  const [roomId, setRoomId] = useState('');
+export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
+  const [roomId, setRoomId] = useState(multiplayerContext ? multiplayerContext.roomId : '');
   const [joinCode, setJoinCode] = useState('');
-  const [players, setPlayers] = useState([]);
-  const [playerId] = useState(() => Math.random().toString(36).substring(2, 9));
-  const [isHost, setIsHost] = useState(false);
-  const [status, setStatus] = useState('menu'); // 'menu', 'hosting', 'joining', 'lobby'
-  const [roomObj, setRoomObj] = useState(null);
+  const [players, setPlayers] = useState(multiplayerContext ? multiplayerContext.players : []);
+  const [playerId] = useState(() => multiplayerContext ? multiplayerContext.playerId : Math.random().toString(36).substring(2, 9));
+  const [isHost, setIsHost] = useState(multiplayerContext ? multiplayerContext.isHost : false);
+  const [status, setStatus] = useState(multiplayerContext ? 'lobby' : 'menu'); // 'menu', 'hosting', 'joining', 'lobby'
+  const [roomObj, setRoomObj] = useState(multiplayerContext ? multiplayerContext.roomObj : null);
   
   const [playerName, setPlayerName] = useState(localStorage.getItem('wonderkid_pseudo') || 'Joueur Inconnu');
+
+  // If restoring, attach setPlayers callback to roomObj
+  useEffect(() => {
+    if (multiplayerContext?.roomObj && status === 'lobby') {
+      multiplayerContext.roomObj.setOnStateChange((updatedPlayers) => {
+        setPlayers(updatedPlayers);
+      });
+      // also ensure our latest playerName is synced if we just reloaded
+      multiplayerContext.roomObj.updateState({ name: playerName });
+    }
+  }, [multiplayerContext?.roomObj, status, playerName]);
+
   const isStartingRef = React.useRef(false);
 
   useEffect(() => {
@@ -75,7 +87,7 @@ export const MultiplayerLobby = ({ onStart, onBack }) => {
       const hostStarting = players.find(p => p.isHost && p.starting);
       if (hostStarting) {
         isStartingRef.current = true;
-        onStart(roomObj, playerId, players);
+        onStart(roomObj, playerId, players, roomId, isHost);
       }
     }
   }, [players, status, onStart, roomObj, playerId]);

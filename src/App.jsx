@@ -9,7 +9,8 @@ import { Leaderboard } from './components/Leaderboard';
 import { CareerHistory } from './components/CareerHistory';
 import { CardCollection } from './components/CardCollection';
 import { playSound } from './utils/audio';
-import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection } from './utils/storage';
+import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession } from './utils/storage';
+import { createMultiplayerRoom } from './utils/multiplayer';
 import { PseudonymModal } from './components/PseudonymModal';
 import { checkAchievements } from './utils/achievementsData';
 import { simulateTournaments, calculateAwards, updateClubOvr } from './utils/awards';
@@ -40,6 +41,60 @@ export default function App() {
   const [appView, setAppView] = useState('mainMenu'); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
   const [gameState, setGameState] = useState(null);
   const [multiplayerContext, setMultiplayerContext] = useState(null);
+
+  // 1. Restore Multiplayer Session on Mount
+  useEffect(() => {
+    const savedSession = loadMultiplayerSession();
+    if (savedSession && savedSession.roomId && savedSession.playerId) {
+      // Recreate the room object
+      // We pass an empty state initially, or if we have a saved game state we can use that?
+      // Actually, if we restore the session, the local state is what we had.
+      // We'll let `Dashboard` or `CharacterCreation` sync the state back up when they mount.
+      const initialLocalState = savedSession.localState || { isHost: savedSession.isHost };
+      const roomObj = createMultiplayerRoom(savedSession.roomId, savedSession.playerId, initialLocalState, (updatedPlayers) => {
+        setMultiplayerContext(prev => prev ? { ...prev, players: updatedPlayers } : null);
+      });
+      
+      setMultiplayerContext({
+        roomObj,
+        playerId: savedSession.playerId,
+        players: savedSession.players || [],
+        roomId: savedSession.roomId,
+        isHost: savedSession.isHost
+      });
+
+      if (savedSession.appView === 'career') {
+        const savedState = loadGameStateLocal();
+        if (savedState) {
+          setGameState(savedState);
+          setAppView('career');
+        } else {
+          // If no game state, they were probably in character creation
+          setAppView('career'); // App logic routes to CharacterCreation if !gameState
+        }
+      } else if (savedSession.appView === 'multiplayerLobby') {
+        setAppView('multiplayerLobby');
+      }
+    }
+  }, []);
+
+  // 2. Save Multiplayer Session on Change
+  useEffect(() => {
+    if (multiplayerContext?.roomId && multiplayerContext?.playerId) {
+      // Save
+      saveMultiplayerSession({
+        roomId: multiplayerContext.roomId,
+        playerId: multiplayerContext.playerId,
+        isHost: multiplayerContext.isHost,
+        players: multiplayerContext.players,
+        appView: appView,
+        // We can optionally store localState if we track it, but isHost is the most important
+      });
+    } else if (multiplayerContext === null && appView === 'mainMenu') {
+      // clearMultiplayerSession is handled manually on quit
+    }
+  }, [multiplayerContext?.roomId, multiplayerContext?.playerId, multiplayerContext?.players, appView]);
+
 
   useEffect(() => {
     if (multiplayerContext?.roomObj) {
@@ -1141,6 +1196,7 @@ export default function App() {
     if (multiplayerContext?.roomObj) {
       multiplayerContext.roomObj.leaveRoom();
     }
+    clearMultiplayerSession();
     setMultiplayerContext(null);
     setGameState(null);
     setAppView('mainMenu');
@@ -1193,9 +1249,10 @@ export default function App() {
   
   if (appView === 'multiplayerLobby') {
     return <MultiplayerLobby 
+      multiplayerContext={multiplayerContext}
       onBack={() => setAppView('mainMenu')}
-      onStart={(roomObj, playerId, players) => {
-        setMultiplayerContext({ roomObj, playerId, players });
+      onStart={(roomObj, playerId, players, roomId, isHost) => {
+        setMultiplayerContext({ roomObj, playerId, players, roomId, isHost });
         setAppView('career');
         setGameState(null);
       }}
