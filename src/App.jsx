@@ -271,7 +271,7 @@ export default function App() {
         updatedPlayer = updatePlayerBestCard(updatedPlayer, selectedClub);
       }
 
-      const newUnlocks = checkAchievements(updatedPlayer, null, selectedClub);
+      const newUnlocks = checkAchievements(updatedPlayer, null, selectedClub, prev.palmares);
       newUnlocks.forEach(achId => unlockAchievement(achId));
 
       return { ...prev, club: selectedClub, player: updatedPlayer, currentEvent: prev.eventsList[0] };
@@ -993,7 +993,7 @@ export default function App() {
       const newValue = calculatePlayerValue(finalUpdatedPlayer, prev.club);
       finalUpdatedPlayer.valueHistory = [...(prev.player.valueHistory || []), { year: newCurrentYear, age: newAge, value: newValue }];
 
-      const newUnlocks = checkAchievements(finalUpdatedPlayer, statsToUse, prev.club);
+      const newUnlocks = checkAchievements(finalUpdatedPlayer, statsToUse, prev.club, prev.palmares);
       newUnlocks.forEach(achId => unlockAchievement(achId));
 
       const is18 = newAge === 18 && !finalUpdatedPlayer.roleId;
@@ -1214,7 +1214,7 @@ export default function App() {
       updatedPlayer.ovr = calculateOVR(updatedPlayer);
       updatedPlayer = updatePlayerBestCard(updatedPlayer, prev.club);
 
-      const newUnlocks = checkAchievements(updatedPlayer, null, prev.club);
+      const newUnlocks = checkAchievements(updatedPlayer, null, prev.club, prev.palmares);
       newUnlocks.forEach(achId => unlockAchievement(achId));
 
       return {

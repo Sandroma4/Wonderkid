@@ -1719,7 +1719,9 @@ export const LIFESTYLE_ITEMS = [
   { id: 'startup', name: 'Start-up Tech/Crypto', cost: 3000000, upkeep: 0, desc: '10% de chance de gagner 30M€/an. 20% de faillite (perte de l\'item).' },
   { id: 'charity', name: 'Fondation Caritative', cost: 5000000, upkeep: -500000, desc: '+10 Confiance Coach par an. (Coût: -500k€/an)' },
   { id: 'nightclub', name: 'Franchise de Boîtes de Nuit', cost: 8000000, upkeep: 2000000, desc: 'Génère +2M€/an et Moral minimum 50. Malus: -15 Confiance/an.' },
-  { id: 'buy_club', name: 'Rachat d\'un club de foot (D3)', cost: 25000000, upkeep: -1000000, desc: 'Débloque la fin "Propriétaire". (Investissement: -1M€/an)' }
+  { id: 'buy_club', name: 'Rachat d\'un club de foot (D3)', cost: 25000000, upkeep: -1000000, desc: 'Débloque la fin "Propriétaire". (Investissement: -1M€/an)' },
+  { id: 'villa', name: 'Villa d\'architecte avec piscine', cost: 4000000, upkeep: -150000, desc: '+5 Moral constant. (Entretien: -150k€/an)' },
+  { id: 'jet_prive', name: 'Jet Privé "Jet Stream"', cost: 12000000, upkeep: -1000000, desc: '+10 Forme par an grâce au confort des voyages. (Entretien: -1M€/an)' }
 ];
 
 const POSITION_WEIGHTS = {

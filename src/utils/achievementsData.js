@@ -96,10 +96,94 @@ export const ACHIEVEMENTS = [
     description: 'Connaître une relégation avec son club.',
     icon: '📉',
     rarity: 'rare'
-  }
+  },
+  {
+    id: 'ach_perfection',
+    title: 'Perfection Absolue',
+    description: 'Atteindre la note maximale (99) de Général.',
+    icon: '⭐',
+    rarity: 'legendary'
+  },
+  {
+    id: 'ach_polyvalent',
+    title: 'Joueur Polyvalent',
+    description: 'Avoir au moins 85 dans trois statistiques différentes.',
+    icon: '🔄',
+    rarity: 'epic'
+  },
+  {
+    id: 'ach_late_bloomer',
+    title: 'Gloire Tardive',
+    description: 'Remporter son premier Ballon d\'Or après 30 ans.',
+    icon: '🤓',
+    rarity: 'epic'
+  },
+  {
+    id: 'ach_veteran',
+    title: 'La Fin d\'une Ère',
+    description: 'Jouer 15 saisons ou plus dans votre carrière.',
+    icon: '👴',
+    rarity: 'rare'
+  },
+  {
+    id: 'ach_mercenary',
+    title: 'Mercenaire',
+    description: 'Connaître au moins 5 clubs différents.',
+    icon: '💸',
+    rarity: 'rare'
+  },
+  {
+    id: 'ach_one_club_man',
+    title: 'L\'Enfant du Club',
+    description: 'Passer 10 saisons consécutives dans le même club.',
+    icon: '🏠',
+    rarity: 'legendary'
+  },
+  {
+    id: 'ach_local_legend',
+    title: 'Légende Locale',
+    description: 'Remporter 5 fois le Championnat.',
+    icon: '🏅',
+    rarity: 'rare'
+  },
+  {
+    id: 'ach_wall_street',
+    title: 'Loup de Wall Street',
+    description: 'Amasser plus de 50 000 000 €.',
+    icon: '📈',
+    rarity: 'epic'
+  },
+  {
+    id: 'ach_collector',
+    title: 'Collectionneur Compulsif',
+    description: 'Acheter 10 investissements.',
+    icon: '🛍️',
+    rarity: 'legendary'
+  },
+  {
+    id: 'ach_benchwarmer',
+    title: 'Banc de Touche',
+    description: 'Avoir une confiance du coach inférieure à 20%.',
+    icon: '🪑',
+    rarity: 'common'
+  },
+  {
+    id: 'ach_charity',
+    title: 'Mécène',
+    description: 'Faire un don important (Acheter Mécénat).',
+    icon: '🤲',
+    rarity: 'rare'
+  },
+  {
+    id: 'ach_jet',
+    title: 'Flambeur',
+    description: 'Acheter le Jet Privé.',
+    icon: '✈️',
+    rarity: 'common'
+  },
 ];
 
-export const checkAchievements = (player, seasonStats, currentClub) => {
+export const checkAchievements = (player, seasonStats, currentClub, palmares = []) => {
   const newUnlocks = [];
   
   if (currentClub) {
@@ -133,6 +217,58 @@ export const checkAchievements = (player, seasonStats, currentClub) => {
 
   if (seasonStats && seasonStats.isRelegated) {
     newUnlocks.push('ach_relegation');
+  }
+
+
+  if (player.ovr >= 99) {
+    newUnlocks.push('ach_perfection');
+  }
+
+  const highStats = Object.values(player.attributes || {}).filter(val => val >= 85).length;
+  if (highStats >= 3) {
+    newUnlocks.push('ach_polyvalent');
+  }
+
+  if (player.age >= 30 && seasonStats?.awards?.some(a => a.text === "Ballon d'Or")) {
+    newUnlocks.push('ach_late_bloomer');
+  }
+
+  if (player.careerSeasons >= 15) {
+    newUnlocks.push('ach_veteran');
+  }
+
+  const uniqueClubs = new Set((player.careerHistory || []).map(h => h.club));
+  if (uniqueClubs.size >= 5) {
+    newUnlocks.push('ach_mercenary');
+  }
+
+  if (player.clubYears >= 10) {
+    newUnlocks.push('ach_one_club_man');
+  }
+
+  const leagueTitles = palmares.filter(p => p.text === 'Vainqueur du Championnat').length;
+  if (leagueTitles >= 5) {
+    newUnlocks.push('ach_local_legend');
+  }
+
+  if (player.bankBalance >= 50000000) {
+    newUnlocks.push('ach_wall_street');
+  }
+
+  if (player.inventory && player.inventory.length >= 10) {
+    newUnlocks.push('ach_collector');
+  }
+
+  if (player.coachTrust <= 20) {
+    newUnlocks.push('ach_benchwarmer');
+  }
+
+  if (player.inventory && player.inventory.includes('mecenat')) {
+    newUnlocks.push('ach_charity');
+  }
+
+  if (player.inventory && player.inventory.includes('jet_prive')) {
+    newUnlocks.push('ach_jet');
   }
 
   return newUnlocks;
