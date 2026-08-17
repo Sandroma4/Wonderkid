@@ -80,7 +80,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
     await supabase.auth.signOut();
   };
 
-    const [showSettings, setShowSettings] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
   const [showPlayOptions, setShowPlayOptions] = useState(false);
   const [incomingInvite, setIncomingInvite] = useState(null);
@@ -319,50 +319,75 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
         {/* Menu Buttons */}
         <div className="w-full space-y-4 animate-[slide-up_0.8s_ease-out]">
           
-          <button 
-            onClick={() => { playSound('start'); onNavigate('career'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 border border-emerald-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95"
-          >
-            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
-            <div className="flex items-center justify-between relative z-10">
-              <div className="flex items-center gap-3">
-                <span className="text-xl md:text-2xl">⚽</span>
-                <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Nouvelle Carrière</span>
-              </div>
-              <span className="text-emerald-300 group-hover:translate-x-1 transition-transform">➔</span>
-            </div>
-          </button>
+          {showPlayOptions ? (
+            <div className="space-y-4 animate-[fade-in_0.3s_ease-out]">
+              <button 
+                onClick={() => { playSound('click'); setShowPlayOptions(false); }}
+                className="w-full relative group overflow-hidden rounded-2xl bg-slate-800/80 border border-slate-700 p-3 transition-all duration-300 hover:bg-slate-700 active:scale-95 flex items-center gap-2 justify-center"
+              >
+                <span className="text-slate-400">⬅️</span>
+                <span className="heading-typography text-slate-300 font-bold text-sm tracking-wide uppercase">Retour</span>
+              </button>
 
-          <button 
-            onClick={() => { playSound('click'); onNavigate('multiplayerLobby'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-cyan-600 to-cyan-800 border border-cyan-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] active:scale-95"
-          >
-            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
-            <div className="flex items-center justify-between relative z-10">
-              <div className="flex items-center gap-3">
-                <span className="text-xl md:text-2xl">⚔️</span>
-                <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Course à la Carrière (1v1)</span>
-              </div>
-              <span className="text-cyan-300 group-hover:translate-x-1 transition-transform">➔</span>
-            </div>
-          </button>
-
-
-          {hasSave && (
-            <button 
-              onClick={() => { playSound('click'); onLoadGame(); }}
-              className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 to-amber-700 border border-amber-400/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] active:scale-95"
-            >
-              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
-              <div className="flex items-center justify-between relative z-10">
-                <div className="flex items-center gap-3">
-                  <span className="text-xl md:text-2xl">⏳</span>
-                  <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Continuer la Carrière</span>
+              <button 
+                onClick={() => { playSound('start'); onNavigate('career'); }}
+                className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 border border-emerald-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl md:text-2xl">⚽</span>
+                    <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Nouvelle Carrière</span>
+                  </div>
+                  <span className="text-emerald-300 group-hover:translate-x-1 transition-transform">➔</span>
                 </div>
-                <span className="text-amber-300 group-hover:translate-x-1 transition-transform">➔</span>
-              </div>
-            </button>
-          )}
+              </button>
+
+              <button 
+                onClick={() => { playSound('click'); onNavigate('multiplayerLobby'); }}
+                className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-cyan-600 to-cyan-800 border border-cyan-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] active:scale-95"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl md:text-2xl">⚔️</span>
+                    <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Course à la Carrière (1v1)</span>
+                  </div>
+                  <span className="text-cyan-300 group-hover:translate-x-1 transition-transform">➔</span>
+                </div>
+              </button>
+
+              {hasSave && (
+                <button 
+                  onClick={() => { playSound('click'); onLoadGame(); }}
+                  className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 to-amber-700 border border-amber-400/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] active:scale-95"
+                >
+                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                  <div className="flex items-center justify-between relative z-10">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl md:text-2xl">⏳</span>
+                      <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Continuer la Carrière</span>
+                    </div>
+                    <span className="text-amber-300 group-hover:translate-x-1 transition-transform">➔</span>
+                  </div>
+                </button>
+              )}
+            </div>
+          ) : (
+            <>
+              <button 
+                onClick={() => { playSound('click'); setShowPlayOptions(true); }}
+                className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 border border-emerald-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl md:text-2xl">🎮</span>
+                    <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Jouer</span>
+                  </div>
+                  <span className="text-emerald-300 group-hover:translate-x-1 transition-transform">➔</span>
+                </div>
+              </button>
 
           <button 
             onClick={() => { playSound('click'); onNavigate('globalPalmares'); }}
@@ -428,6 +453,8 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
               <span className="text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
           </button>
+            </>
+          )}
         </div>
         
         <div className="mt-12 text-slate-400 text-xs font-semibold uppercase tracking-widest opacity-60">
