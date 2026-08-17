@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { CharacterCreation } from './components/CharacterCreation';
 import { Dashboard } from './components/Dashboard';
 import { MainMenu } from './components/MainMenu';
+import { MultiplayerLobby } from './components/MultiplayerLobby';
 import { GlobalPalmares } from './components/GlobalPalmares';
 import { Achievements } from './components/Achievements';
 import { Leaderboard } from './components/Leaderboard';
@@ -38,9 +39,33 @@ import { getRoleById } from './utils/rolesData';
 export default function App() {
   const [appView, setAppView] = useState('mainMenu'); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
   const [gameState, setGameState] = useState(null);
+
+  useEffect(() => {
+    if (multiplayerContext?.roomObj) {
+      multiplayerContext.roomObj.setOnStateChange((updatedPlayers) => {
+        setMultiplayerContext(prev => ({ ...prev, players: updatedPlayers }));
+      });
+    }
+  }, [multiplayerContext?.roomObj]);
+
+  useEffect(() => {
+    if (multiplayerContext?.roomObj && gameState?.player) {
+      multiplayerContext.roomObj.updateState({
+        name: gameState.player.name,
+        ovr: gameState.player.ovr,
+        club: gameState.club?.name,
+        season: gameState.season,
+        readyForNextSeason: !!gameState.seasonStats,
+        isRetired: !!gameState.isRetired,
+        finalScore: gameState.isRetired ? calculateCareerScore(gameState.player, gameState.rivalConfrontations).totalScore : 0
+      });
+    }
+  }, [gameState?.player?.ovr, gameState?.club?.name, gameState?.season, !!gameState?.seasonStats, !!gameState?.isRetired]);
+
   const [activeOutcome, setActiveOutcome] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [showPseudoModal, setShowPseudoModal] = useState(false);
+  const [multiplayerContext, setMultiplayerContext] = useState(null);
   const [currentPseudonym, setCurrentPseudonym] = useState('');
 
   // Check on mount if pseudo already chosen
@@ -997,6 +1022,7 @@ export default function App() {
       if (isForcedRetirement) {
         submitScoreToLeaderboard({ ...finalUpdatedPlayer, bankBalance: newBankBalance }, newPalmares, prev.rivalConfrontations);
       }
+      const forcedScore = isForcedRetirement ? calculateCareerScore({ ...finalUpdatedPlayer, bankBalance: newBankBalance }, prev.rivalConfrontations) : null;
 
       return {
         ...prev,
@@ -1059,7 +1085,8 @@ export default function App() {
       submitScoreToLeaderboard({ ...prev.player, bankBalance: prev.bankBalance }, prev.palmares, prev.rivalConfrontations);
       return {
         ...prev,
-        isRetired: true
+        isRetired: true,
+        score: calculateCareerScore({ ...prev.player, bankBalance: prev.bankBalance }, prev.rivalConfrontations)
       };
     });
   };
@@ -1113,6 +1140,18 @@ export default function App() {
     return <CardCollection onBack={() => setAppView('mainMenu')} />;
   }
 
+  
+  if (appView === 'multiplayerLobby') {
+    return <MultiplayerLobby 
+      onBack={() => setAppView('mainMenu')}
+      onStart={(roomObj, playerId, players) => {
+        setMultiplayerContext({ roomObj, playerId, players });
+        setAppView('career');
+        setGameState(null);
+      }}
+    />;
+  }
+
   if (appView === 'careerHistory') {
     return <CareerHistory onBack={() => setAppView('mainMenu')} />;
   }
@@ -1137,6 +1176,7 @@ export default function App() {
     <>
       <Dashboard
         gameState={gameState}
+        multiplayerContext={multiplayerContext}
       activeOutcome={activeOutcome}
       onChooseClub={handleChooseClub}
       onSelectOption={handleSelectOption}

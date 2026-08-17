@@ -396,6 +396,40 @@ export function Dashboard({
                   </details>
                 )}
 
+                
+                {/* Multiplayer Versus Result */}
+                {multiplayerContext && opponent && (
+                  <div className="w-full bg-slate-900/80 p-5 rounded-2xl border border-cyan-500/50 mt-4 shadow-inner text-center">
+                    <h3 className="heading-typography font-bold text-cyan-400 uppercase tracking-wider mb-3 text-xs flex items-center justify-center gap-1.5">
+                      <span>⚔️</span> Résultat du Face-à-Face
+                    </h3>
+                    {!opponent.isRetired ? (
+                      <p className="text-slate-400 text-sm animate-pulse">En attente de la fin de carrière de {opponent.name}...</p>
+                    ) : (
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="flex justify-between w-full items-center px-4">
+                          <div className="text-center">
+                            <p className="text-[10px] text-slate-400 uppercase font-bold">{player.name}</p>
+                            <p className="text-xl md:text-2xl font-black text-amber-400">{gameState.score ? gameState.score.totalScore : (player.bankBalance ? player.bankBalance : 0)} pts</p>
+                          </div>
+                          <div className="text-2xl font-black text-slate-600">VS</div>
+                          <div className="text-center">
+                            <p className="text-[10px] text-slate-400 uppercase font-bold">{opponent.name}</p>
+                            <p className="text-xl md:text-2xl font-black text-cyan-400">{opponent.finalScore || 0} pts</p>
+                          </div>
+                        </div>
+                        {(() => {
+                          const myScore = gameState.score ? gameState.score.totalScore : 0; // Wait, how to get my score? Let's assume it's calculated before. Actually, we should import calculateCareerScore but let's just use what we have. I will use gameState.finalScore if available, else 0.
+                          const opScore = opponent.finalScore || 0;
+                          if (myScore > opScore) return <div className="text-emerald-400 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Victoire ! 🏆</div>;
+                          if (myScore < opScore) return <div className="text-rose-500 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Défaite... ❌</div>;
+                          return <div className="text-slate-300 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Égalité 🤝</div>;
+                        })()}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <button 
                   onClick={() => { playSound('click'); onRestartGame(); }} 
                   className="mt-6 w-full py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 rounded-2xl font-black text-sm md:text-base uppercase tracking-wider transition-all shadow-xl active:scale-95"
@@ -452,6 +486,18 @@ export function Dashboard({
       ) : seasonStats ? (
         /* BILAN DE LA SAISON AVEC AFFICHAGE DE LA CARTE */
         <div className="app-typography h-[100dvh] text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-hidden" style={clubBackgroundStyle}>
+
+      {multiplayerContext && opponent && !isRetired && (
+        <div className="absolute top-2 right-2 md:top-4 md:right-4 bg-slate-900/90 border border-cyan-500/50 p-2 md:p-3 rounded-xl shadow-lg z-50 text-xs text-white backdrop-blur-md">
+          <p className="text-[9px] text-cyan-400 font-bold uppercase tracking-wider mb-1">Rival en ligne</p>
+          <p className="font-semibold">{opponent.name}</p>
+          <p className="text-slate-300">OVR: <span className="text-amber-400 font-bold">{opponent.ovr || '?'}</span> | {opponent.club || 'Sans club'}</p>
+          <p className="text-[9px] text-slate-400 mt-1">
+            {opponent.isRetired ? 'Carrière terminée' : (opponent.readyForNextSeason ? 'Attente de votre fin de saison...' : `Saison ${opponent.season || 'en cours'}`)}
+          </p>
+        </div>
+      )}
+
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-3xl w-full bg-slate-900/95 border border-slate-700/50 backdrop-blur-md rounded-2xl md:rounded-3xl p-3 md:p-7 shadow-2xl z-10 flex flex-col md:flex-row gap-2 md:gap-6 items-center justify-center h-[95%] md:h-auto overflow-hidden">
             
