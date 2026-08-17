@@ -143,10 +143,22 @@ export function Dashboard({
     interactiveMatchScore, interactiveMatchResult, interactiveMatchFinalOutcome, isRetired, 
     seasonStats, lastSeasonStats, 
     transferMarketOffers, clubOffers, bankBalance, palmares, isWaitingForMercato,
-    rival, rivalConfrontations, isSelectingPerk
+    rival: baseRival, rivalConfrontations, isSelectingPerk
   } = gameState || {};
 
   const opponent = multiplayerContext?.players?.find(p => p.playerId !== multiplayerContext.playerId);
+
+  let rival = baseRival;
+  if (opponent && rival?.isOnlineOpponent) {
+    rival = {
+      ...rival,
+      name: opponent.name || rival.name,
+      ovr: opponent.ovr || rival.ovr,
+      club: opponent.club || rival.club,
+      ballonDorCount: opponent.ballonDorCount || rival.ballonDorCount || 0,
+      trophiesCount: opponent.trophiesCount || rival.trophiesCount || 0,
+    };
+  }
 
 
   const effectiveStats = getEffectiveStats(player);

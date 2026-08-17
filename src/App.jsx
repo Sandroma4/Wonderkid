@@ -109,14 +109,16 @@ export default function App() {
       multiplayerContext.roomObj.updateState({
         name: gameState.player.name,
         ovr: gameState.player.ovr,
-        club: gameState.club?.name,
+        club: gameState.club,
         season: gameState.season,
         readyForNextSeason: !!gameState.seasonStats,
         isRetired: !!gameState.isRetired,
-        finalScore: gameState.isRetired ? calculateCareerScore(gameState.player, gameState.rivalConfrontations).totalScore : 0
+        finalScore: gameState.isRetired ? calculateCareerScore(gameState.player, gameState.rivalConfrontations).totalScore : 0,
+        ballonDorCount: gameState.palmares ? gameState.palmares.filter(p => p.trophy === "Ballon d'Or").length : 0,
+        trophiesCount: gameState.palmares ? gameState.palmares.length : 0
       });
     }
-  }, [gameState?.player?.ovr, gameState?.club?.name, gameState?.season, !!gameState?.seasonStats, !!gameState?.isRetired]);
+  }, [gameState?.player?.ovr, gameState?.club?.name, gameState?.season, !!gameState?.seasonStats, !!gameState?.isRetired, gameState?.palmares?.length]);
 
   const [activeOutcome, setActiveOutcome] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
