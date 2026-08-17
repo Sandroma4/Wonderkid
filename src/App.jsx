@@ -38,7 +38,8 @@ import {
 import { getRoleById } from './utils/rolesData';
 
 export default function App() {
-  const [appView, setAppView] = useState('mainMenu'); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
+  const [appView, setAppView] = useState('mainMenu');
+  const [inviteCode, setInviteCode] = useState(null); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
   const [gameState, setGameState] = useState(null);
   const [multiplayerContext, setMultiplayerContext] = useState(null);
 
@@ -1228,32 +1229,33 @@ export default function App() {
     return (
       <>
         {showPseudoModal && <PseudonymModal onConfirm={handlePseudoConfirm} />}
-        <MainMenu onNavigate={setAppView} onLoadGame={handleLoadGame} />
+        <MainMenu onNavigate={setAppView} onLoadGame={handleLoadGame} onJoinInvite={(code) => { setInviteCode(code); setAppView('multiplayerLobby'); }} />
       </>
     );
   }
 
   if (appView === 'globalPalmares') {
-    return <GlobalPalmares onBack={() => setAppView('mainMenu')} />;
+    return <GlobalPalmares onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
   }
 
   if (appView === 'achievements') {
-    return <Achievements onBack={() => setAppView('mainMenu')} />;
+    return <Achievements onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
   }
 
   if (appView === 'leaderboard') {
-    return <Leaderboard onBack={() => setAppView('mainMenu')} />;
+    return <Leaderboard onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
   }
 
   if (appView === 'cardCollection') {
-    return <CardCollection onBack={() => setAppView('mainMenu')} />;
+    return <CardCollection onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
   }
 
   
   if (appView === 'multiplayerLobby') {
     return <MultiplayerLobby 
+      initialInviteCode={inviteCode}
       multiplayerContext={multiplayerContext}
-      onBack={() => setAppView('mainMenu')}
+      onBack={() => { setInviteCode(null); setAppView('mainMenu'); }}
       onStart={(roomObj, playerId, players, roomId, isHost) => {
         setMultiplayerContext({ roomObj, playerId, players, roomId, isHost });
         setAppView('career');
@@ -1263,7 +1265,7 @@ export default function App() {
   }
 
   if (appView === 'careerHistory') {
-    return <CareerHistory onBack={() => setAppView('mainMenu')} />;
+    return <CareerHistory onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
   }
 
   const handleRoleSelection = (role) => {

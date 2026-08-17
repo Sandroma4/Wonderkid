@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { playSound } from '../utils/audio';
 import { supabase } from '../supabaseClient';
 
-export const MainMenu = ({ onNavigate, onLoadGame }) => {
+import { FriendsModal } from './FriendsModal';
+
+export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   const [user, setUser] = useState(null);
   const [hasSave, setHasSave] = useState(false);
 
@@ -31,6 +33,38 @@ export const MainMenu = ({ onNavigate, onLoadGame }) => {
     }
   }, []);
 
+  
+  // Real-time invites
+  useEffect(() => {
+    if (!user) return;
+    const channel = supabase.channel(`user:${user.id}`)
+      .on('broadcast', { event: 'game_invite' }, (payload) => {
+        setIncomingInvite(payload.payload);
+        playSound('notification');
+      })
+      .subscribe();
+      
+    return () => { supabase.removeChannel(channel); };
+  }, [user]);
+
+  const handleSendInvite = async (friendId, friendName) => {
+    // Generate a random room ID or use one we have
+    const newRoomId = Math.random().toString(36).substring(2, 8).toUpperCase();
+    
+    // Broadcast invite
+    await supabase.channel(`user:${friendId}`).send({
+      type: 'broadcast',
+      event: 'game_invite',
+      payload: {
+        senderName: user.user_metadata?.pseudonym || user.email,
+        roomId: newRoomId
+      }
+    });
+    
+    // Then join this room ourselves
+    onJoinInvite(newRoomId);
+  };
+
   const handleGoogleLogin = async () => {
     playSound('click');
     await supabase.auth.signInWithOAuth({
@@ -46,7 +80,9 @@ export const MainMenu = ({ onNavigate, onLoadGame }) => {
     await supabase.auth.signOut();
   };
 
-  const [showSettings, setShowSettings] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
+  const [showFriends, setShowFriends] = useState(false);
+  const [incomingInvite, setIncomingInvite] = useState(null);
   const [newPseudonym, setNewPseudonym] = useState('');
   const [settingError, setSettingError] = useState('');
   
@@ -103,13 +139,55 @@ export const MainMenu = ({ onNavigate, onLoadGame }) => {
     <div className="min-h-screen bg-[#0F172A] flex items-center justify-center p-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-10"></div>
       
+
+      {/* Bouton Amis */}
+      {user && (
+        <button 
+          onClick={() => { playSound('click'); setShowFriends(true); }}
+          className="absolute top-6 right-20 z-20 bg-slate-800/80 hover:bg-slate-700 text-white p-3 rounded-full shadow-lg border border-slate-700 transition-all hover:scale-110"
+        >
+          👥
+        </button>
+      )}
+
       {/* Bouton Paramètres (Toujours visible) */}
       <button 
         onClick={() => { playSound('click'); setShowSettings(true); setNewPseudonym(user?.user_metadata?.pseudonym || ''); setSettingError(''); setEmail(''); setPassword(''); }}
-        className="absolute top-6 left-6 z-20 bg-slate-800/80 hover:bg-slate-700 text-white p-3 rounded-full shadow-lg border border-slate-700 transition-all hover:rotate-90"
+        className="absolute top-6 right-6 z-20 bg-slate-800/80 hover:bg-slate-700 text-white p-3 rounded-full shadow-lg border border-slate-700 transition-all hover:rotate-90"
       >
         ⚙️
       </button>
+
+
+      {/* Incoming Invite Popup */}
+      {incomingInvite && (
+        <div className="fixed top-24 right-4 z-50 bg-slate-900 border border-emerald-500 rounded-xl p-4 shadow-2xl animate-bounce-in max-w-sm w-full md:w-auto">
+          <h3 className="text-emerald-400 font-bold mb-2 uppercase text-sm tracking-wider">Invitation reçue !</h3>
+          <p className="text-white text-sm mb-4"><span className="font-bold text-amber-400">{incomingInvite.senderName}</span> vous invite à jouer en 1v1 !</p>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => { playSound('click'); onJoinInvite(incomingInvite.roomId); setIncomingInvite(null); }}
+              className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-2 rounded-lg transition-colors"
+            >
+              Rejoindre
+            </button>
+            <button 
+              onClick={() => { playSound('click'); setIncomingInvite(null); }}
+              className="flex-1 bg-slate-700 hover:bg-rose-500 text-white text-xs font-bold py-2 rounded-lg transition-colors"
+            >
+              Refuser
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Friends Modal */}
+      <FriendsModal 
+        isOpen={showFriends} 
+        onClose={() => setShowFriends(false)} 
+        user={user} 
+        onInviteToGame={handleSendInvite}
+      />
 
       {/* Settings Modal */}
       {showSettings && (

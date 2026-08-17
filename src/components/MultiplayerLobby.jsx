@@ -3,7 +3,7 @@ import { generateRoomCode, createMultiplayerRoom } from '../utils/multiplayer';
 import { playSound } from '../utils/audio';
 
 export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
-  const [roomId, setRoomId] = useState(multiplayerContext ? multiplayerContext.roomId : '');
+  const [roomId, setRoomId] = useState(multiplayerContext ? multiplayerContext.roomId : (initialInviteCode || ''));
   const [joinCode, setJoinCode] = useState('');
   const [players, setPlayers] = useState(multiplayerContext ? multiplayerContext.players : []);
   const [playerId] = useState(() => multiplayerContext ? multiplayerContext.playerId : Math.random().toString(36).substring(2, 9));
