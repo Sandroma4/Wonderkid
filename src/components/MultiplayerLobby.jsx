@@ -12,10 +12,11 @@ export const MultiplayerLobby = ({ onStart, onBack }) => {
   const [roomObj, setRoomObj] = useState(null);
   
   const [playerName, setPlayerName] = useState(localStorage.getItem('wonderkid_pseudo') || 'Joueur Inconnu');
+  const isStartingRef = React.useRef(false);
 
   useEffect(() => {
     return () => {
-      if (roomObj) {
+      if (roomObj && !isStartingRef.current) {
         roomObj.leaveRoom();
       }
     };
@@ -73,6 +74,7 @@ export const MultiplayerLobby = ({ onStart, onBack }) => {
     if (status === 'lobby' && players.length > 0) {
       const hostStarting = players.find(p => p.isHost && p.starting);
       if (hostStarting) {
+        isStartingRef.current = true;
         onStart(roomObj, playerId, players);
       }
     }

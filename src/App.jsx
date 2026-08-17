@@ -1092,6 +1092,10 @@ export default function App() {
   };
 
   const handleRestartGame = () => {
+    if (multiplayerContext?.roomObj) {
+      multiplayerContext.roomObj.leaveRoom();
+    }
+    setMultiplayerContext(null);
     setGameState(null);
     setAppView('mainMenu');
   };
