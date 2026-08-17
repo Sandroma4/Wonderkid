@@ -82,6 +82,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
     const [showSettings, setShowSettings] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
+  const [showPlayOptions, setShowPlayOptions] = useState(false);
   const [incomingInvite, setIncomingInvite] = useState(null);
   const [newPseudonym, setNewPseudonym] = useState('');
   const [settingError, setSettingError] = useState('');
