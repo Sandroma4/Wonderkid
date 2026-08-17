@@ -303,6 +303,58 @@ export function Dashboard({
                   )}
                 </div>
 
+                {/* Comparatif Légendes (Hall of Fame) */}
+                {(() => {
+                  const boCount = groupedPalmares.find(t => t.text === "Ballon d'Or")?.count || 0;
+                  const ldcCount = groupedPalmares.find(t => t.text === "Vainqueur de la Ligue des Champions")?.count || 0;
+                  const cmCount = groupedPalmares.find(t => t.text === "Vainqueur de la Coupe du Monde")?.count || 0;
+                  
+                  let rankTitle = "Joueur Professionnel";
+                  if (player.traits?.some(t => t.id === 'legende_club')) rankTitle = "Légende du Club";
+                  if (boCount >= 1 || ldcCount >= 2 || cmCount >= 1) rankTitle = "Star Mondiale";
+                  if (boCount >= 3 || (ldcCount >= 3 && cmCount >= 1)) rankTitle = "Légende Absolue";
+                  if (boCount >= 6 && ldcCount >= 4) rankTitle = "Le G.O.A.T.";
+
+                  return (
+                    <div className="w-full bg-slate-800/70 p-5 rounded-2xl border border-emerald-500/30 mt-4 shadow-inner">
+                      <h3 className="heading-typography font-bold text-emerald-400 uppercase tracking-wider mb-3 text-xs flex items-center justify-center gap-1.5">
+                        <span>🏛️</span> Hall of Fame
+                      </h3>
+                      <div className="text-center mb-4">
+                        <span className="text-[10px] text-slate-400 uppercase tracking-widest block mb-1">Rang Historique</span>
+                        <span className="text-lg font-black text-white px-4 py-1 bg-gradient-to-r from-emerald-600 to-teal-500 rounded-lg shadow-lg inline-block">{rankTitle}</span>
+                      </div>
+                      
+                      <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                        <div className="text-slate-400 font-bold border-b border-slate-700/50 pb-1 truncate">Joueur</div>
+                        <div className="text-slate-400 font-bold border-b border-slate-700/50 pb-1">BO 🥇</div>
+                        <div className="text-slate-400 font-bold border-b border-slate-700/50 pb-1">LDC 🏆</div>
+                        <div className="text-slate-400 font-bold border-b border-slate-700/50 pb-1">CM 🌎</div>
+                        
+                        <div className="text-emerald-400 font-black py-1.5 truncate">{player.name.split(' ').pop()}</div>
+                        <div className="text-emerald-400 font-black py-1.5">{boCount}</div>
+                        <div className="text-emerald-400 font-black py-1.5">{ldcCount}</div>
+                        <div className="text-emerald-400 font-black py-1.5">{cmCount}</div>
+                        
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">Messi</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">8</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">4</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">1</div>
+                        
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">C. Ronaldo</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">5</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">5</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">0</div>
+                        
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">Pelé</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">0</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">0</div>
+                        <div className="text-slate-300 py-1 border-t border-slate-700/30">3</div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
                 {player.careerHistory && player.careerHistory.length > 0 && (
                   <details className="w-full bg-slate-800/70 rounded-2xl border border-slate-700/60 mt-4 group">
                     <summary className="p-4 heading-typography font-bold text-slate-200 uppercase tracking-wider text-xs cursor-pointer list-none flex justify-between items-center hover:text-white transition-colors">
@@ -846,11 +898,21 @@ export function Dashboard({
                         )}
                       </div>
                       {/* Solde */}
-                      <div className="flex-1 relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-3 py-2 rounded-xl flex items-center justify-center shadow-lg border border-emerald-300">
+                      <div className="flex-1 flex flex-col gap-1">
+                        {player.sponsor && player.sponsor !== 'Aucun' && (
+                          <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-2 py-0.5 rounded-lg text-center shadow-sm">
+                            <span className="heading-typography text-[7px] md:text-[8px] font-black uppercase text-amber-400 tracking-wider">
+                              ⭐ {player.sponsor}
+                            </span>
+                          </div>
+                        )}
+                        <div className="relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-3 py-2 rounded-xl flex items-center justify-center shadow-lg border border-emerald-300">
+
                         <div className="absolute inset-0 bg-white/20 pointer-events-none mix-blend-overlay" />
                         <span className="heading-typography text-[11px] font-black text-white drop-shadow-md z-10 tracking-wide">
                           {bankBalance.toLocaleString('fr-FR')} €
                         </span>
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -883,11 +945,21 @@ export function Dashboard({
                         )}
                       </div>
                       {/* Solde */}
-                      <div className="relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-2 py-1 rounded-md flex items-center justify-center shadow-lg border border-emerald-300">
+                      <div className="flex flex-col gap-1 items-end justify-center w-full">
+                        {player.sponsor && player.sponsor !== 'Aucun' && (
+                          <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-1.5 py-0.5 rounded text-center shadow-sm w-full">
+                            <span className="heading-typography text-[7px] font-black uppercase text-amber-400 tracking-wider block">
+                              ⭐ {player.sponsor}
+                            </span>
+                          </div>
+                        )}
+                        <div className="relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-2 py-1 rounded-md flex items-center justify-center shadow-lg border border-emerald-300 w-full">
+
                         <div className="absolute inset-0 bg-white/20 pointer-events-none mix-blend-overlay" />
                         <span className="heading-typography text-[9px] sm:text-[10px] font-black text-white drop-shadow-md z-10 tracking-wide">
                           {bankBalance.toLocaleString('fr-FR')} €
                         </span>
+                      </div>
                       </div>
                     </div>
                   </div>

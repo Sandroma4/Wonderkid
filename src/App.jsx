@@ -198,6 +198,9 @@ export default function App() {
     if (typeof outcome.applyStats === 'function') {
       updatedPlayer = outcome.applyStats(updatedPlayer);
     }
+    if (updatedPlayer.traits?.some(t => t.id === 'legende_club') && updatedPlayer.coachTrust < (gameState.player.coachTrust || 50)) {
+      updatedPlayer.coachTrust = gameState.player.coachTrust;
+    }
 
     // Multiplicateur d'âge pour les gains de stats lors des événements
     // Même courbe que la progression de fin de saison
@@ -545,6 +548,7 @@ export default function App() {
       updatedPlayer.currency = newClub.currency;
       updatedPlayer.conversionRate = newClub.conversionRate;
       updatedPlayer.coachTrust = 60;
+      updatedPlayer.clubYears = 0;
       
       return {
         ...prev,
@@ -689,7 +693,40 @@ export default function App() {
       }
 
       const perfEarnings = statsToUse ? parseFloat(statsToUse.earnings || 0) * 1000000 : 0;
-      const newBankBalance = Math.max(0, prev.bankBalance + salaryEarnings + perfEarnings + inventoryEarnings);
+      let sponsorEarnings = 0;
+      let sponsorFatigue = 0;
+      let currentSponsor = 'Aucun';
+      
+      // currentOvr is already defined as prev.player.ovr at the start of handleProceedToNextSeasonFinal
+      if (currentOvr >= 90) {
+        currentSponsor = 'Équipementier Mondial';
+        sponsorEarnings = 5000000;
+        sponsorFatigue = 15;
+      } else if (currentOvr >= 83) {
+        currentSponsor = 'Sponsor National';
+        sponsorEarnings = 1500000;
+        sponsorFatigue = 8;
+      } else if (currentOvr >= 75) {
+        currentSponsor = 'Sponsor Local';
+        sponsorEarnings = 200000;
+        sponsorFatigue = 4;
+      }
+
+      const newBankBalance = Math.max(0, prev.bankBalance + salaryEarnings + perfEarnings + inventoryEarnings + sponsorEarnings);
+      if (currentOvr >= 90) {
+        currentSponsor = 'Équipementier Mondial';
+        sponsorEarnings = 5000000;
+        sponsorFatigue = 15;
+      } else if (currentOvr >= 83) {
+        currentSponsor = 'Sponsor National';
+        sponsorEarnings = 1500000;
+        sponsorFatigue = 8;
+      } else if (currentOvr >= 75) {
+        currentSponsor = 'Sponsor Local';
+        sponsorEarnings = 200000;
+        sponsorFatigue = 4;
+      }
+
 
       const newPalmares = [...(prev.palmares || [])];
       let globalTrophies = [];
@@ -752,9 +789,13 @@ export default function App() {
         age: newAge,
         currentYear: newCurrentYear,
         attributes: updatedAttributes,
-        form: 85,
+        form: Math.max(10, 85 - sponsorFatigue),
         morale: Math.max(80, minMorale),
-        coachTrust: Math.max(0, Math.min(100, (prev.player.coachTrust ?? 75) + inventoryTrustChange)),
+        sponsor: currentSponsor,
+        clubYears: (prev.player.clubYears || 0) + 1,
+        coachTrust: updatedPlayer.traits?.some(t => t.id === 'legende_club') && inventoryTrustChange < 0
+          ? prev.player.coachTrust ?? 75
+          : Math.max(0, Math.min(100, (prev.player.coachTrust ?? 75) + inventoryTrustChange)),
         nationalCaps: (prev.player.nationalCaps || 0) + (statsToUse?.nationalCallup ? 3 : 0),
         injuryDuration: 0,
         palmares: newPalmares,
@@ -777,6 +818,20 @@ export default function App() {
         }]
       };
 
+      
+      // Check Légende du Club
+      const hasLDC = newPalmares.some(t => t.text === 'Vainqueur de la Ligue des Champions');
+      if (updatedPlayer.clubYears >= 10 && hasLDC) {
+        if (!updatedPlayer.traits) updatedPlayer.traits = [];
+        if (!updatedPlayer.traits.some(t => t.id === 'legende_club')) {
+          updatedPlayer.traits.push({
+            id: 'legende_club',
+            name: 'Légende du Club',
+            description: 'Fidélité absolue. Immunisé aux baisses de confiance du Coach.'
+          });
+        }
+      }
+      
       let newNationalStatus = prev.player.nationalStatus || 'BANC';
       let gainedCaptain = false;
       if (currentOvr >= 90 && newAge >= 25 && newNationalStatus !== 'CAPITAINE') {
