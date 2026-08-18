@@ -1421,7 +1421,6 @@ export default function App() {
     return <MultiplayerLobby 
       initialInviteCode={inviteCode}
       multiplayerContext={multiplayerContext}
-      userName={user?.user_metadata?.pseudonym || user?.email?.split('@')[0] || 'Joueur Inconnu'}
       onBack={() => { setInviteCode(null); setAppView('mainMenu'); }}
       onStart={(roomObj, playerId, players, roomId, isHost, isCoop) => {
         setMultiplayerContext({ roomObj, playerId, players, roomId, isHost, isCoopMode: isCoop });

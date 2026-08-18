@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { generateRoomCode, createMultiplayerRoom } from '../utils/multiplayer';
 import { playSound } from '../utils/audio';
 
-export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialCoopMode, initialInviteCode, userName }) => {
+export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialCoopMode, initialInviteCode }) => {
   const [roomId, setRoomId] = useState(multiplayerContext ? multiplayerContext.roomId : (initialInviteCode || ''));
   const [joinCode, setJoinCode] = useState('');
   const [players, setPlayers] = useState(multiplayerContext ? multiplayerContext.players : []);
@@ -12,7 +12,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
   const [roomObj, setRoomObj] = useState(multiplayerContext ? multiplayerContext.roomObj : null);
   const [isCoopMode, setIsCoopMode] = useState(initialCoopMode || false);
   
-  const [playerName, setPlayerName] = useState(userName || localStorage.getItem('wonderkid_pseudo') || 'Joueur Inconnu');
+  const [playerName, setPlayerName] = useState(localStorage.getItem('golden_xi_pseudonym') || 'Joueur Inconnu');
 
   // If restoring, attach setPlayers callback to roomObj
   useEffect(() => {
