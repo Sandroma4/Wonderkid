@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { generateRoomCode, createMultiplayerRoom } from '../utils/multiplayer';
 import { playSound } from '../utils/audio';
+import { supabase } from '../supabaseClient';
 
 export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialCoopMode, initialInviteCode }) => {
   const [roomId, setRoomId] = useState(multiplayerContext ? multiplayerContext.roomId : (initialInviteCode || ''));
@@ -13,6 +14,17 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
   const [isCoopMode, setIsCoopMode] = useState(initialCoopMode || false);
   
   const [playerName, setPlayerName] = useState(localStorage.getItem('golden_xi_pseudonym') || 'Joueur Inconnu');
+
+  // Fetch actual user pseudo if logged in
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user?.user_metadata?.pseudonym) {
+        setPlayerName(session.user.user_metadata.pseudonym);
+      }
+    };
+    fetchUser();
+  }, []);
 
   // If restoring, attach setPlayers callback to roomObj
   useEffect(() => {
@@ -107,7 +119,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
           ← Retour
         </button>
 
-        <h2 className="heading-typography text-2xl font-black text-white uppercase tracking-wider mb-2 mt-4">
+        <h2 className="heading-typography text-2xl font-black text-white uppercase tracking-wider mb-2 mt-16">
           La Course à la Carrière
         </h2>
         <p className="text-slate-400 text-sm mb-8 px-4">
