@@ -102,6 +102,16 @@ export default function App() {
       multiplayerContext.roomObj.setOnStateChange((updatedPlayers) => {
         setMultiplayerContext(prev => ({ ...prev, players: updatedPlayers }));
       });
+      multiplayerContext.roomObj.setOnBroadcast((payload) => {
+        if (payload.type === 'INITIAL_CLUB') {
+          handleChooseClub(payload.club, true);
+        } else if (payload.type === 'COOP_SEASON_RESULTS') {
+          applyCoopSeasonResults(payload.results);
+          if (!multiplayerContext.isHost) {
+            multiplayerContext.roomObj.updateState({ eventsFinished: false });
+          }
+        }
+      });
     }
   }, [multiplayerContext?.roomObj]);
 
@@ -121,6 +131,76 @@ export default function App() {
       });
     }
   }, [gameState?.player?.ovr, gameState?.club?.name, gameState?.season, !!gameState?.seasonStats, !!gameState?.isRetired, gameState?.palmares?.length]);
+
+
+
+  // Coop Mercato Vote Resolution
+  useEffect(() => {
+    if (multiplayerContext?.isCoopMode && gameState?.isWaitingForMercato) {
+      const players = multiplayerContext.players;
+      if (players.length === 2 && players.every(p => p.mercatoVote !== undefined)) {
+        const votes = players.map(p => p.mercatoVote);
+        if (votes[0] === votes[1]) {
+           // Agree! Execute transfer
+           if (votes[0] === 'STAY') {
+             handleStayCurrentClub(true);
+           } else {
+             handleAcceptTransferOffer(gameState.mercatoPendingVote, true);
+           }
+           multiplayerContext.roomObj.updateState({ mercatoVote: undefined });
+        } else {
+           // Disagree! Reset
+           multiplayerContext.roomObj.updateState({ mercatoVote: undefined });
+           setGameState(prev => ({ ...prev, isWaitingForMercato: false, mercatoPendingVote: null }));
+           // Optional: You could show a Toast here saying "Désaccord avec votre coéquipier !"
+        }
+      }
+    }
+  }, [multiplayerContext?.players, gameState?.isWaitingForMercato]);
+
+  // Coop Season Sync
+  useEffect(() => {
+    if (multiplayerContext?.isCoopMode && multiplayerContext?.isHost && gameState?.isWaitingForCoopPartner) {
+      const allFinished = multiplayerContext.players.every(p => p.eventsFinished);
+      if (allFinished && multiplayerContext.players.length === 2) {
+        const hostOvr = gameState.player.ovr;
+        const clientPlayer = multiplayerContext.players.find(p => !p.isHost);
+        const clientOvr = clientPlayer ? clientPlayer.playerOvr : 75;
+        
+        const combinedPlayer = { ...gameState.player, ovr: Math.min(99, Math.floor((hostOvr + clientOvr) / 1.6)) };
+        
+        const dummyStats = simulateSeasonStats(combinedPlayer, gameState.club, null);
+        const tournamentStats = simulateTournaments(combinedPlayer, gameState.club, dummyStats, gameState.season, gameState.lastSeasonStats);
+        
+        const finalsToPlay = Object.keys(tournamentStats).filter(key => 
+          tournamentStats[key] && (tournamentStats[key].stage === 'Finaliste' || tournamentStats[key].stage === 'Vainqueur')
+        );
+
+        const { awards, ballonDorRank } = calculateAwards(combinedPlayer, gameState.club, dummyStats, tournamentStats, gameState.season);
+        
+        const fullStats = {
+          ...dummyStats,
+          tournaments: tournamentStats,
+          awards: awards,
+          ballonDorRank: ballonDorRank
+        };
+
+        const interSeasonOffers = generateInterSeasonOffers(combinedPlayer, gameState.club);
+
+        const payload = {
+          fullStats,
+          finalsToPlay,
+          interSeasonOffers
+        };
+
+        multiplayerContext.roomObj.sendBroadcast({ type: 'COOP_SEASON_RESULTS', results: payload });
+        
+        applyCoopSeasonResults(payload);
+        
+        multiplayerContext.roomObj.updateState({ eventsFinished: false });
+      }
+    }
+  }, [multiplayerContext?.players, gameState?.isWaitingForCoopPartner]);
 
   const [activeOutcome, setActiveOutcome] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -244,7 +324,10 @@ export default function App() {
     });
   };
 
-  const handleChooseClub = (selectedClub) => {
+  const handleChooseClub = (selectedClub, isFromBroadcast = false) => {
+    if (multiplayerContext?.isCoopMode && multiplayerContext?.isHost && !isFromBroadcast) {
+      multiplayerContext.roomObj.sendBroadcast({ type: 'INITIAL_CLUB', club: selectedClub });
+    }
     setGameState((prev) => {
       let updatedPlayer = { ...prev.player };
       updatedPlayer.statusText = calculatePlayerStatus(updatedPlayer, selectedClub);
@@ -489,6 +572,49 @@ export default function App() {
     };
   };
 
+  const applyCoopSeasonResults = (results) => {
+    setGameState((prev) => {
+      const { fullStats, finalsToPlay, interSeasonOffers } = results;
+      
+      if (finalsToPlay.length > 0) {
+          const finalKey = finalsToPlay[0];
+          let finalName = '';
+          if (finalKey === 'championsLeague') finalName = 'Ligue des Champions';
+          else if (finalKey === 'europaLeague') finalName = 'Ligue Europa';
+          else if (finalKey === 'conferenceLeague') finalName = 'Conference League';
+          else if (finalKey === 'worldCup') finalName = 'Coupe du Monde';
+          else if (finalKey === 'euro') finalName = 'Euro';
+          else if (finalKey === 'domesticCup') finalName = 'Coupe Nationale';
+
+          const opponentOvr = Math.min(95, prev.club.ovr + Math.floor(Math.random() * 10) - 3);
+
+          return {
+            ...prev,
+            isWaitingForCoopPartner: false,
+            seasonStats: fullStats,
+            lastSeasonStats: fullStats,
+            transferMarketOffers: interSeasonOffers,
+            isInteractiveMatch: true,
+            interactiveMatchScenario: {
+              type: finalKey,
+              name: `Finale ${finalName}`,
+              opponent: `Adversaire (${opponentOvr})`,
+              opponentOvr: opponentOvr,
+            }
+          };
+      } else {
+        return {
+          ...prev,
+          isWaitingForCoopPartner: false,
+          seasonStats: fullStats,
+          lastSeasonStats: fullStats,
+          transferMarketOffers: interSeasonOffers,
+          isInteractiveMatch: false
+        };
+      }
+    });
+  };
+
   const handleContinueFromOutcome = () => {
     setActiveOutcome(null);
     setGameState((prev) => {
@@ -499,6 +625,16 @@ export default function App() {
       const isEnded = nextStep > prev.totalEvents;
 
       if (isEnded) {
+        if (multiplayerContext?.isCoopMode) {
+          multiplayerContext.roomObj.updateState({ eventsFinished: true, playerOvr: prev.player.ovr });
+          return {
+            ...prev,
+            completedEvents: updatedCompletedEvents,
+            eventStep: nextStep,
+            isWaitingForCoopPartner: true
+          };
+        }
+
         const dummyStats = simulateSeasonStats(prev.player, prev.club, null);
         const tournamentStats = simulateTournaments(prev.player, prev.club, dummyStats, prev.season, prev.lastSeasonStats);
         
@@ -673,7 +809,12 @@ export default function App() {
     });
   };
 
-  const handleAcceptTransferOffer = (newClub) => {
+  const handleAcceptTransferOffer = (newClub, bypassVote = false) => {
+    if (multiplayerContext?.isCoopMode && !bypassVote) {
+      multiplayerContext.roomObj.updateState({ mercatoVote: newClub ? newClub.id : 'STAY' });
+      setGameState(prev => ({ ...prev, isWaitingForMercato: true, mercatoPendingVote: newClub }));
+      return;
+    }
     setGameState((prev) => {
       const updatedPlayer = { ...prev.player };
       updatedPlayer.statusText = newClub.status || calculatePlayerStatus(updatedPlayer, newClub);

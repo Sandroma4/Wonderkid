@@ -142,7 +142,7 @@ export function Dashboard({
     isInteractiveMatch, interactiveMatchPhases, interactiveMatchCurrentPhaseIndex, 
     interactiveMatchScore, interactiveMatchResult, interactiveMatchFinalOutcome, isRetired, 
     seasonStats, lastSeasonStats, 
-    transferMarketOffers, clubOffers, bankBalance, palmares, isWaitingForMercato,
+    transferMarketOffers, clubOffers, bankBalance, palmares, isWaitingForMercato, isWaitingForCoopPartner,
     rival: baseRival, rivalConfrontations, isSelectingPerk
   } = gameState || {};
 
@@ -375,12 +375,15 @@ export function Dashboard({
                   </details>
                 )}
 
-                
-                {/* Multiplayer Versus Result */}
+                {/* Multiplayer Versus / Coop Result */}
                 {multiplayerContext && opponent && (
-                  <div className="w-full bg-slate-900/80 p-5 rounded-2xl border border-cyan-500/50 mt-4 shadow-inner text-center">
-                    <h3 className="heading-typography font-bold text-cyan-400 uppercase tracking-wider mb-3 text-xs flex items-center justify-center gap-1.5">
-                      <span>⚔️</span> Résultat du Face-à-Face
+                  <div className={`w-full bg-slate-900/80 p-5 rounded-2xl border mt-4 shadow-inner text-center ${multiplayerContext.isCoopMode ? 'border-emerald-500/50' : 'border-cyan-500/50'}`}>
+                    <h3 className={`heading-typography font-bold uppercase tracking-wider mb-3 text-xs flex items-center justify-center gap-1.5 ${multiplayerContext.isCoopMode ? 'text-emerald-400' : 'text-cyan-400'}`}>
+                      {multiplayerContext.isCoopMode ? (
+                        <><span>🤝</span> Bilan Frères d'Armes</>
+                      ) : (
+                        <><span>⚔️</span> Résultat du Face-à-Face</>
+                      )}
                     </h3>
                     {!opponent.isRetired ? (
                       <p className="text-slate-400 text-sm animate-pulse">En attente de la fin de carrière de {opponent.name}...</p>
@@ -391,18 +394,28 @@ export function Dashboard({
                             <p className="text-[10px] text-slate-400 uppercase font-bold">{player.name}</p>
                             <p className="text-xl md:text-2xl font-black text-amber-400">{gameState.score ? gameState.score.totalScore : (player.bankBalance ? player.bankBalance : 0)} pts</p>
                           </div>
-                          <div className="text-2xl font-black text-slate-600">VS</div>
+                          <div className="text-2xl font-black text-slate-600">{multiplayerContext.isCoopMode ? '+' : 'VS'}</div>
                           <div className="text-center">
                             <p className="text-[10px] text-slate-400 uppercase font-bold">{opponent.name}</p>
                             <p className="text-xl md:text-2xl font-black text-cyan-400">{opponent.finalScore || 0} pts</p>
                           </div>
                         </div>
                         {(() => {
-                          const myScore = gameState.score ? gameState.score.totalScore : 0; // Wait, how to get my score? Let's assume it's calculated before. Actually, we should import calculateCareerScore but let's just use what we have. I will use gameState.finalScore if available, else 0.
+                          const myScore = gameState.score ? gameState.score.totalScore : 0;
                           const opScore = opponent.finalScore || 0;
-                          if (myScore > opScore) return <div className="text-emerald-400 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Victoire ! 🏆</div>;
-                          if (myScore < opScore) return <div className="text-rose-500 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Défaite... ❌</div>;
-                          return <div className="text-slate-300 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Égalité 🤝</div>;
+                          if (multiplayerContext.isCoopMode) {
+                            const total = myScore + opScore;
+                            return (
+                              <div className="mt-4 border-t border-slate-700/50 pt-3 w-full">
+                                <p className="text-[10px] text-slate-400 uppercase font-bold mb-1">Score Total Coopératif</p>
+                                <div className="text-emerald-400 font-black text-2xl md:text-4xl tracking-widest">{total} pts</div>
+                              </div>
+                            );
+                          } else {
+                            if (myScore > opScore) return <div className="text-emerald-400 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Victoire ! 🏆</div>;
+                            if (myScore < opScore) return <div className="text-rose-500 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Défaite... 😭</div>;
+                            return <div className="text-slate-300 font-black text-xl md:text-2xl uppercase tracking-widest mt-2">Égalité 🤝</div>;
+                          }
                         })()}
                       </div>
                     )}
@@ -432,7 +445,15 @@ export function Dashboard({
               </p>
             </div>
             <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-5 min-h-0 shrink">
-              {clubOffers.map((offer) => {
+              {(multiplayerContext?.isCoopMode && !multiplayerContext?.isHost) ? (
+                <div className="col-span-full w-full flex flex-col items-center justify-center p-8 bg-slate-800/80 rounded-2xl border border-slate-700">
+                  <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                  <h2 className="text-xl font-bold text-white uppercase tracking-wider mb-2">Pacte Frères d'Armes</h2>
+                  <p className="text-slate-400 text-center text-sm max-w-md">
+                    Votre capitaine (l'Hôte) est actuellement en train de négocier votre premier contrat avec les clubs formateurs. Préparez-vous à signer !
+                  </p>
+                </div>
+              ) : clubOffers.map((offer) => {
                 const offerTheme = getTheme(offer.primary, offer.secondary);
                 return (
                   <div 
@@ -717,7 +738,18 @@ export function Dashboard({
              </div>
            </div>
         </div>
-      ) : isWaitingForMercato ? (
+      ) : isWaitingForCoopPartner ? (
+          <div className="app-typography min-h-[100dvh] text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-slate-950">
+            <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
+            <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">
+              <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+              <h2 className="heading-typography text-2xl font-black text-white uppercase tracking-widest">Fin de Saison</h2>
+              <p className="text-slate-400 font-medium">
+                En attente de votre coéquipier pour générer les résultats du championnat...
+              </p>
+            </div>
+          </div>
+        ) : isWaitingForMercato ? (
         <div className="app-typography min-h-[100dvh] text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-slate-950">
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">

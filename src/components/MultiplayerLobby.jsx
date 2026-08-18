@@ -10,6 +10,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
   const [isHost, setIsHost] = useState(multiplayerContext ? multiplayerContext.isHost : false);
   const [status, setStatus] = useState(multiplayerContext ? 'lobby' : 'menu'); // 'menu', 'hosting', 'joining', 'lobby'
   const [roomObj, setRoomObj] = useState(multiplayerContext ? multiplayerContext.roomObj : null);
+  const [isCoopMode, setIsCoopMode] = useState(false);
   
   const [playerName, setPlayerName] = useState(localStorage.getItem('wonderkid_pseudo') || 'Joueur Inconnu');
 
@@ -45,6 +46,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
       name: playerName,
       isHost: true,
       ready: false,
+      isCoop: false
     };
     
     const room = createMultiplayerRoom(code, playerId, initialPlayerState, (updatedPlayers) => {
@@ -77,7 +79,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
   const handleStartGame = () => {
     playSound('click');
     if (roomObj) {
-      roomObj.updateState({ name: playerName, isHost, ready: true, starting: true });
+      roomObj.updateState({ name: playerName, isHost, ready: true, starting: true, isCoop: isCoopMode });
     }
   };
 
@@ -87,7 +89,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
       const hostStarting = players.find(p => p.isHost && p.starting);
       if (hostStarting) {
         isStartingRef.current = true;
-        onStart(roomObj, playerId, players, roomId, isHost);
+        onStart(roomObj, playerId, players, roomId, isHost, hostStarting.isCoop);
       }
     }
   }, [players, status, onStart, roomObj, playerId]);
@@ -109,7 +111,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
           La Course à la Carrière
         </h2>
         <p className="text-slate-400 text-sm mb-8 px-4">
-          Affrontez un ami en direct. Créez votre joueur, vivez votre carrière en simultané, et comparez vos scores finaux !
+          {(!isHost ? players.find(p => p.isHost)?.isCoop : isCoopMode) ? 'Devenez Frères d\'Armes, évoluez dans le même club et gagnez la Ligue des Champions ensemble !' : 'Affrontez un ami en direct. Créez votre joueur, vivez votre carrière en simultané, et comparez vos scores finaux !'}
         </p>
 
         {status === 'menu' && (
@@ -158,7 +160,34 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
             )}
 
             <div className="w-full space-y-3 mb-8 text-left">
-              <h3 className="text-slate-300 font-bold uppercase text-xs tracking-wider border-b border-slate-800 pb-2">Joueurs dans le salon</h3>
+              
+            {isHost && (
+              <div className="w-full bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 mb-4 flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">Mode Coopératif</h3>
+                  <p className="text-xs text-slate-400">Jouez dans le même club en Frères d'Armes</p>
+                </div>
+                <button 
+                  onClick={() => {
+                    playSound('click');
+                    const newMode = !isCoopMode;
+                    setIsCoopMode(newMode);
+                    if (roomObj) roomObj.updateState({ isCoop: newMode });
+                  }}
+                  className={`w-12 h-6 rounded-full relative transition-colors ${isCoopMode ? 'bg-emerald-500' : 'bg-slate-700'}`}
+                >
+                  <div className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform ${isCoopMode ? 'translate-x-7' : 'translate-x-1'}`}></div>
+                </button>
+              </div>
+            )}
+            
+            {!isHost && players.find(p => p.isHost)?.isCoop && (
+               <div className="w-full bg-emerald-900/30 border border-emerald-700/50 rounded-xl p-3 mb-4 flex items-center justify-center">
+                 <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">🌟 Mode Coopératif Activé 🌟</span>
+               </div>
+            )}
+            
+            <h3 className="text-slate-300 font-bold uppercase text-xs tracking-wider border-b border-slate-800 pb-2">Joueurs dans le salon</h3>
               {players.map(p => (
                 <div key={p.playerId} className="flex items-center justify-between bg-slate-800/50 p-3 rounded-lg border border-slate-700/50">
                   <div className="flex items-center gap-3">

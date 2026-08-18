@@ -12,7 +12,8 @@ export const generateRoomCode = () => {
 export const createMultiplayerRoom = (roomId, playerId, initialPlayerState, initialOnStateChange) => {
   let localState = { ...initialPlayerState };
   const callbacks = {
-    onStateChange: initialOnStateChange
+    onStateChange: initialOnStateChange,
+    onBroadcast: null
   };
 
   const channel = supabase.channel(`room_${roomId}`, {
@@ -36,6 +37,11 @@ export const createMultiplayerRoom = (roomId, playerId, initialPlayerState, init
         callbacks.onStateChange(players);
       }
     })
+    .on('broadcast', { event: 'coop_event' }, (payload) => {
+      if (callbacks.onBroadcast) {
+        callbacks.onBroadcast(payload.payload);
+      }
+    })
     .subscribe(async (status) => {
       if (status === 'SUBSCRIBED') {
         await channel.track({ playerId, ...localState });
@@ -56,9 +62,23 @@ export const createMultiplayerRoom = (roomId, playerId, initialPlayerState, init
     }
   };
 
+  const sendBroadcast = async (payload) => {
+    if (channel.state === 'joined') {
+      await channel.send({
+        type: 'broadcast',
+        event: 'coop_event',
+        payload
+      });
+    }
+  };
+
   const setOnStateChange = (newCallback) => {
     callbacks.onStateChange = newCallback;
   };
+  
+  const setOnBroadcast = (newCallback) => {
+    callbacks.onBroadcast = newCallback;
+  };
 
-  return { updateState, leaveRoom, channel, setOnStateChange };
+  return { updateState, leaveRoom, channel, setOnStateChange, sendBroadcast, setOnBroadcast };
 };
