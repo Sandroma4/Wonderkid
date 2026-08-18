@@ -1417,7 +1417,7 @@ export default function App() {
   }
 
   
-  if (appView === 'multiplayerLobby') {
+  if (appView === 'multiplayerLobby' || appView === 'multiplayerLobbyCoop') {
     return <MultiplayerLobby 
       initialInviteCode={inviteCode}
       multiplayerContext={multiplayerContext}
@@ -1427,6 +1427,7 @@ export default function App() {
         setAppView('career');
         setGameState(null);
       }}
+      initialCoopMode={appView === 'multiplayerLobbyCoop'}
     />;
   }
 
