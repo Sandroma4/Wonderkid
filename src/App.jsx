@@ -405,25 +405,28 @@ export default function App() {
     updatedPlayer = updatePlayerBestCard(updatedPlayer, gameState.club);
     updatedPlayer.statusText = calculatePlayerStatus(updatedPlayer, gameState.club);
 
-    // Construire les effets boostés à afficher
+    // Construire les effets de stats RÉELS à afficher (masque les stats maxées)
     const statLabelsMap = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
-    const boostedDisplayEffects = boostedEffects.map(({ attr, boostedGain }) => ({
-      text: `+${boostedGain} ${statLabelsMap[attr] || attr}`,
-      style: 'positive',
-      isBoosted: true
-    }));
-
-    // Remplacer les effets de stats dans l'outcome par les versions boostées
+    
+    // Remplacer les effets de stats dans l'outcome par les VRAIS deltas
     let finalEffects = outcome.effects ? [...outcome.effects] : [];
-    if (boostedDisplayEffects.length > 0) {
-      // Remplacer les effets de stat +X par les versions boostées, garder les effets non-stat
-      const nonStatEffects = finalEffects.filter(eff => {
-        if (!eff || eff.style !== 'positive') return true;
-        const match = eff.text?.match(/^\+\d+\s*[A-Za-zÀ-ÖØ-öø-ÿ]+$/);
-        return !match; // garder les effets qui ne sont pas "+X StatNom"
-      });
-      finalEffects = [...nonStatEffects, ...boostedDisplayEffects];
-    }
+    
+    // Retirer tous les effets de stats "textuels" originaux (+X ou -X sur une stat)
+    finalEffects = finalEffects.filter(eff => {
+      if (!eff || !eff.text) return true;
+      const match = eff.text.match(/^[+-]\d+\s*(Vitesse|Tir|Passe|Dribble|Défense|Physique)$/i);
+      return !match; // garder uniquement ce qui n'est pas une stat de base
+    });
+
+    // Ajouter les vrais gains / pertes calculés
+    STAT_KEYS.forEach(attr => {
+      const delta = (currentAttributes[attr] || 0) - (prevAttributes[attr] || 0);
+      if (delta > 0) {
+        finalEffects.push({ text: `+${delta} ${statLabelsMap[attr]}`, style: 'positive', isBoosted: true });
+      } else if (delta < 0) {
+        finalEffects.push({ text: `${delta} ${statLabelsMap[attr]}`, style: 'negative' });
+      }
+    });
 
     // Attacher les effets convertis et boostés à l'outcome
     const outcomeWithConverted = {

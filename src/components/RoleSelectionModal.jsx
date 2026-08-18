@@ -36,7 +36,7 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
           </p>
         </div>
 
-        <div className={`grid gap-2 sm:gap-3 ${roles.length <= 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-3'}`}>
+        <div className={`grid gap-2 sm:gap-3 grid-cols-2 sm:grid-cols-3`}>
           {roles.map((role) => {
             const positiveMultipliers = Object.entries(role.multipliers).filter(([, v]) => v > 1);
             const negativeMultipliers = Object.entries(role.multipliers).filter(([, v]) => v < 1);
@@ -50,24 +50,24 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
               <button
                 key={role.id}
                 onClick={() => onSelect(role)}
-                className="flex flex-row sm:flex-col items-center text-left sm:text-center p-2.5 sm:p-3 bg-slate-800/60 border border-slate-700 rounded-xl hover:bg-slate-800 hover:border-amber-500/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.1)] transition-all duration-200 group relative overflow-hidden active:scale-95 w-full"
+                className="flex flex-col items-center text-center p-2 sm:p-3 bg-slate-800/60 border border-slate-700 rounded-xl hover:bg-slate-800 hover:border-amber-500/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.1)] transition-all duration-200 group relative overflow-hidden active:scale-95 w-full"
               >
                 {/* Halo d'arrière-plan au survol */}
                 <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
-                <div className="text-3xl sm:text-4xl sm:mb-2 mr-3 sm:mr-0 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg relative z-10 flex-shrink-0">
+                <div className="text-2xl sm:text-4xl mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg relative z-10 flex-shrink-0">
                   {role.icon}
                 </div>
                 
                 <div className="flex flex-col flex-1 relative z-10">
-                  <h3 className="heading-typography font-black text-white mb-0.5 sm:mb-1 text-xs sm:text-sm">
+                  <h3 className="heading-typography font-black text-white mb-0.5 sm:mb-1 text-[10px] sm:text-sm">
                     {role.name}
                   </h3>
                   <p className="text-[9px] sm:text-[11px] text-slate-400 mb-1.5 sm:mb-3 leading-tight hidden sm:block">
                     {role.desc}
                   </p>
                   
-                  <div className="sm:mt-auto w-full flex flex-wrap justify-start sm:justify-center gap-1 sm:gap-1.5">
+                  <div className="mt-1 sm:mt-auto w-full flex flex-wrap justify-center gap-1 sm:gap-1.5">
                     {positiveMultipliers.map(([attr, val]) => (
                       <div key={attr} className="bg-emerald-500/15 text-emerald-400 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md border border-emerald-500/25 tracking-wide">
                         {formatMultiplier(val)} {statLabels[attr] || attr}
