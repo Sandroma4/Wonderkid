@@ -5,6 +5,7 @@ import { playSound } from '../utils/audio';
 
 export const Achievements = ({ onBack }) => {
   const [unlocked, setUnlocked] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
 
   useEffect(() => {
     setUnlocked(getUnlockedAchievements());
@@ -53,9 +54,31 @@ export const Achievements = ({ onBack }) => {
         </div>
 
         {/* Content */}
+        <div className="flex gap-2 overflow-x-auto pb-4 mb-2 custom-scrollbar hide-scrollbar-on-mobile">
+          {['all', 'common', 'rare', 'epic', 'legendary'].map(tab => (
+            <button 
+              key={tab}
+              onClick={() => { playSound('click'); setActiveTab(tab); }}
+              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all border
+                ${activeTab === tab 
+                  ? 'bg-slate-700 text-white border-slate-500 shadow-md scale-105' 
+                  : 'bg-slate-800/50 text-slate-400 border-slate-700/50 hover:bg-slate-800 hover:text-slate-300'}`}
+            >
+              {tab === 'all' ? 'Tous' : tab}
+            </button>
+          ))}
+        </div>
+
         <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-10">
-            {ACHIEVEMENTS.map((ach) => {
+            {
+            ACHIEVEMENTS.filter(ach => activeTab === "all" || ach.rarity === activeTab)
+            .sort((a, b) => {
+              const rarityOrder = { legendary: 1, epic: 2, rare: 3, common: 4 };
+              return rarityOrder[a.rarity] - rarityOrder[b.rarity];
+            })
+            .map((ach) => {
+
               const unlockData = unlocked.find(u => u.id === ach.id);
               const isUnlocked = !!unlockData;
               return (
