@@ -420,7 +420,7 @@ export default function App() {
 
     // Ajouter les vrais gains / pertes calculés
     STAT_KEYS.forEach(attr => {
-      const delta = (currentAttributes[attr] || 0) - (prevAttributes[attr] || 0);
+      const delta = Math.round((currentAttributes[attr] || 0) - (prevAttributes[attr] || 0));
       if (delta > 0) {
         finalEffects.push({ text: `+${delta} ${statLabelsMap[attr]}`, style: 'positive', isBoosted: true });
       } else if (delta < 0) {

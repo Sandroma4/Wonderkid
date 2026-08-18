@@ -1,167 +1,50 @@
 import { calculateCareerScore } from './scoreCalculator';
 export const ACHIEVEMENTS = [
-  {
-    id: 'ach_first_contract',
-    title: 'Premier Contrat',
-    description: 'Signer dans votre tout premier club professionnel.',
-    icon: '🟢',
-    rarity: 'common'
-  },
-  {
-    id: 'ach_golden_boy',
-    title: 'Golden Boy',
-    description: 'Remporter le trophée Kopa du meilleur jeune joueur.',
-    icon: '👶',
-    rarity: 'rare'
-  },
-  {
-    id: 'ach_goal_machine',
-    title: 'Machine à Buts',
-    description: 'Gagner le trophée Gerd Müller.',
-    icon: '⚽',
-    rarity: 'epic'
-  },
-  {
-    id: 'ach_iron_wall',
-    title: 'Mur de Fer',
-    description: 'Remporter le trophée Yachine du meilleur gardien.',
-    icon: '🧤',
-    rarity: 'epic'
-  },
-  {
-    id: 'ach_king_europe',
-    title: 'Roi d\'Europe',
-    description: 'Remporter la Ligue des Champions.',
-    icon: '🇪🇺',
-    rarity: 'epic'
-  },
-  {
-    id: 'ach_national_hero',
-    title: 'Héros National',
-    description: 'Remporter la Coupe du Monde.',
-    icon: '🌎',
-    rarity: 'legendary'
-  },
-  {
-    id: 'ach_euro_king',
-    title: 'Continent Conquis',
-    description: 'Remporter l\'Euro.',
-    icon: '🇪🇺',
-    rarity: 'legendary'
-  },
-  {
-    id: 'ach_europa_league',
-    title: 'Prince d\'Europe',
-    description: 'Remporter la Ligue Europa.',
-    icon: '🥈',
-    rarity: 'epic'
-  },
-  {
-    id: 'ach_conference_league',
-    title: 'Baroudeur',
-    description: 'Remporter la Conference League.',
-    icon: '🥉',
-    rarity: 'rare'
-  },
-  {
-    id: 'ach_cup_winner',
-    title: 'Roi des Coupes',
-    description: 'Remporter la Coupe Nationale.',
-    icon: '🏆',
-    rarity: 'epic'
-  },
-  {
-    id: 'ach_world_summit',
-    title: 'Sommet du Monde',
-    description: 'Gagner le Ballon d\'Or.',
-    icon: '⭐',
-    rarity: 'legendary'
-  },
-  {
-    id: 'ach_millionaire',
-    title: 'Nouveau Riche',
-    description: 'Atteindre 1 000 000 € sur votre compte en banque.',
-    icon: '💰',
-    rarity: 'rare'
-  },
-{
-    id: 'ach_relegation',
-    title: 'Descente aux Enfers',
-    description: 'Connaître une relégation avec son club.',
-    icon: '📉',
-    rarity: 'rare'
-  },
-  {
-    id: 'ach_perfection',
-    title: 'Perfection Absolue',
-    description: 'Atteindre la note maximale (99) de Général.',
-    icon: '⭐',
-    rarity: 'legendary'
-  },
-  {
-    id: 'ach_polyvalent',
-    title: 'Joueur Polyvalent',
-    description: 'Avoir au moins 85 dans trois statistiques différentes.',
-    icon: '🔄',
-    rarity: 'epic'
-  },
-  {
-    id: 'ach_late_bloomer',
-    title: 'Gloire Tardive',
-    description: 'Remporter son premier Ballon d\'Or après 30 ans.',
-    icon: '🤓',
-    rarity: 'epic'
-  },
-  {
-    id: 'ach_veteran',
-    title: 'La Fin d\'une Ère',
-    description: 'Jouer 15 saisons ou plus dans votre carrière.',
-    icon: '👴',
-    rarity: 'rare'
-  },
-  {
-    id: 'ach_mercenary',
-    title: 'Mercenaire',
-    description: 'Connaître au moins 5 clubs différents.',
-    icon: '💸',
-    rarity: 'rare'
-  },
-  {
-    id: 'ach_one_club_man',
-    title: 'L\'Enfant du Club',
-    description: 'Passer 10 saisons consécutives dans le même club.',
-    icon: '🏠',
-    rarity: 'legendary'
-  },
-  {
-    id: 'ach_local_legend',
-    title: 'Légende Locale',
-    description: 'Remporter 5 fois le Championnat.',
-    icon: '🏅',
-    rarity: 'rare'
-  },
-  {
-    id: 'ach_wall_street',
-    title: 'Loup de Wall Street',
-    description: 'Amasser plus de 50 000 000 €.',
-    icon: '📈',
-    rarity: 'epic'
-  },
-{
-    id: 'ach_benchwarmer',
-    title: 'Banc de Touche',
-    description: 'Avoir une confiance du coach inférieure à 20%.',
-    icon: '🪑',
-    rarity: 'common'
-  },
-  {
-    id: 'ach_charity',
-    title: 'Mécène',
-    description: 'Faire un don important (Acheter Mécénat).',
-    icon: '🤲',
-    rarity: 'rare'
-  },
-];
+  { id: 'ach_first_contract', title: 'Premier Contrat', description: 'Signer dans votre tout premier club.', icon: '🟢', rarity: 'common' },
+  { id: 'ach_benchwarmer', title: 'Banc de Touche', description: 'Avoir une confiance du coach < 20%.', icon: '🪑', rarity: 'common' },
+  { id: 'ach_millionaire', title: 'Nouveau Riche', description: 'Atteindre 1 000 000 € en banque.', icon: '💰', rarity: 'common' },
+  { id: 'ach_relegation', title: 'Descente aux Enfers', description: 'Connaître une relégation.', icon: '📉', rarity: 'common' },
+  { id: 'ach_mercenary', title: 'Mercenaire', description: 'Connaître au moins 5 clubs différents.', icon: '💸', rarity: 'rare' },
+  { id: 'ach_veteran', title: 'La Fin d\'une Ère', description: 'Jouer 15 saisons ou plus.', icon: '👴', rarity: 'rare' },
+  { id: 'ach_charity', title: 'Mécène', description: 'Faire un don important.', icon: '🤲', rarity: 'rare' },
+  { id: 'ach_europa_league', title: 'Prince d\'Europe', description: 'Remporter la Ligue Europa.', icon: '🥈', rarity: 'rare' },
+  { id: 'ach_conference_league', title: 'Baroudeur', description: 'Remporter la Conference League.', icon: '🥉', rarity: 'rare' },
+  { id: 'ach_cup_winner', title: 'Roi des Coupes', description: 'Remporter la Coupe Nationale.', icon: '🏆', rarity: 'rare' },
+  { id: 'ach_polyvalent', title: 'Joueur Polyvalent', description: 'Avoir au moins 85 dans trois statistiques.', icon: '🔄', rarity: 'rare' },
+  { id: 'ach_culture_shock', title: 'Choc Culturel', description: 'Passer du sommet aux abîmes (ou l\'inverse).', icon: '🌍', rarity: 'rare' },
+  { id: 'ach_public_enemy', title: 'Ennemi Public', description: 'Morale à 0% et confiance à 0%.', icon: '😡', rarity: 'rare' },
+  { id: 'ach_bankrupt', title: 'Banqueroute', description: 'Compte à 0€ mais inventaire rempli.', icon: '💸', rarity: 'rare' },
+
+  { id: 'ach_golden_boy', title: 'Golden Boy', description: 'Remporter le trophée Kopa.', icon: '👶', rarity: 'epic' },
+  { id: 'ach_iron_wall', title: 'Mur de Fer', description: 'Remporter le trophée Yachine.', icon: '🧤', rarity: 'epic' },
+  { id: 'ach_king_europe', title: 'Roi d\'Europe', description: 'Remporter la Ligue des Champions.', icon: '🇪🇺', rarity: 'epic' },
+  { id: 'ach_local_legend', title: 'Légende Locale', description: 'Remporter 5 fois le Championnat.', icon: '🏅', rarity: 'epic' },
+  { id: 'ach_wall_street', title: 'Loup de Wall Street', description: 'Amasser plus de 50 000 000 €.', icon: '📈', rarity: 'epic' },
+  { id: 'ach_one_club_man', title: 'L\'Enfant du Club', description: 'Passer 10 saisons dans le même club.', icon: '🏠', rarity: 'epic' },
+  { id: 'ach_misunderstood', title: 'Génie Incompris', description: 'Ballon d\'Or avec un coach qui vous déteste.', icon: '🎭', rarity: 'epic' },
+  { id: 'ach_globetrotter', title: 'Globetrotter', description: 'Jouer dans 4 pays différents.', icon: '✈️', rarity: 'epic' },
+  { id: 'ach_black_cat', title: 'Chat Noir', description: 'Perdre 3 finales de Ligue des Champions.', icon: '🐈‍⬛', rarity: 'epic' },
+  { id: 'ach_gk_scorer', title: 'Gardien Buteur', description: 'Marquer un but en tant que Gardien.', icon: '🥅', rarity: 'epic' },
+  { id: 'ach_def_scorer', title: 'Défenseur Goleador', description: 'Marquer 10 buts en une saison en tant que Déf.', icon: '🛡️', rarity: 'epic' },
+  { id: 'ach_wonderkid', title: 'Wonderkid', description: 'Général de 85+ avant 19 ans.', icon: '✨', rarity: 'epic' },
+  { id: 'ach_old_sage', title: 'Vieux Sage', description: 'Jouer jusqu\'à 38 ans.', icon: '🧙‍♂️', rarity: 'epic' },
+
+  { id: 'ach_goal_machine', title: 'Machine à Buts', description: 'Gagner le trophée Gerd Müller.', icon: '⚽', rarity: 'legendary' },
+  { id: 'ach_national_hero', title: 'Héros National', description: 'Remporter la Coupe du Monde.', icon: '🌎', rarity: 'legendary' },
+  { id: 'ach_euro_king', title: 'Continent Conquis', description: 'Remporter l\'Euro.', icon: '🇪🇺', rarity: 'legendary' },
+  { id: 'ach_world_summit', title: 'Sommet du Monde', description: 'Gagner le Ballon d\'Or.', icon: '⭐', rarity: 'legendary' },
+  { id: 'ach_late_bloomer', title: 'Gloire Tardive', description: 'Premier Ballon d\'Or après 30 ans.', icon: '🤓', rarity: 'legendary' },
+  { id: 'ach_perfection', title: 'Perfection Absolue', description: 'Atteindre la note maximale (99) de Général.', icon: '⭐', rarity: 'legendary' },
+  { id: 'ach_goat', title: 'G.O.A.T.', description: 'Gagner 5 Ballons d\'Or.', icon: '🐐', rarity: 'legendary' },
+  { id: 'ach_treble', title: 'Le Triplé', description: 'Gagner Championnat, Coupe et LDC la même année.', icon: '👑', rarity: 'legendary' },
+  { id: 'ach_grand_slam', title: 'Grand Chelem', description: 'Le Triplé + Coupe du Monde ou Euro.', icon: '🔥', rarity: 'legendary' },
+  { id: 'ach_emperor', title: 'L\'Empereur', description: 'Gagner la LDC avec 3 clubs différents.', icon: '🦅', rarity: 'legendary' },
+  { id: 'ach_phoenix', title: 'Le Phénix', description: 'Commencer en Division 3+ et gagner le Ballon d\'Or.', icon: '🦅', rarity: 'legendary' },
+  { id: 'ach_billionaire', title: 'Milliardaire', description: 'Amasser 1 000 000 000 €.', icon: '💎', rarity: 'legendary' },
+  { id: 'ach_loyalty', title: 'Fidélité Éternelle', description: 'Passer 20 ans dans le même club.', icon: '🏛️', rarity: 'legendary' },
+  { id: 'ach_perfect_score', title: 'Score Parfait', description: 'Atteindre 100 000 points de carrière.', icon: '💯', rarity: 'legendary' },
+  { id: 'ach_clean_sheet', title: 'Mur Infranchissable', description: 'Réaliser 25 Clean Sheets en une saison.', icon: '🧱', rarity: 'legendary' },
+  { id: 'ach_assist_king', title: 'Maestro', description: 'Délivrer 25 passes décisives en une saison.', icon: '🎯', rarity: 'legendary' }];
 
 export const checkAchievements = (player, seasonStats, currentClub, palmares = []) => {
   const newUnlocks = [];

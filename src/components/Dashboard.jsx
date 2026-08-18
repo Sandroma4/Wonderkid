@@ -323,57 +323,16 @@ export function Dashboard({
                   )}
                 </div>
 
-                {/* Comparatif Légendes (Hall of Fame) */}
-                {(() => {
-                  const boCount = groupedPalmares.find(t => t.text === "Ballon d'Or")?.count || 0;
-                  const ldcCount = groupedPalmares.find(t => t.text === "Vainqueur de la Ligue des Champions")?.count || 0;
-                  const cmCount = groupedPalmares.find(t => t.text === "Vainqueur de la Coupe du Monde")?.count || 0;
-                  
-                  let rankTitle = "Joueur Professionnel";
-                  if (player.traits?.some(t => t.id === 'legende_club')) rankTitle = "Légende du Club";
-                  if (boCount >= 1 || ldcCount >= 2 || cmCount >= 1) rankTitle = "Star Mondiale";
-                  if (boCount >= 3 || (ldcCount >= 3 && cmCount >= 1)) rankTitle = "Légende Absolue";
-                  if (boCount >= 6 && ldcCount >= 4) rankTitle = "Le G.O.A.T.";
-
-                  return (
-                    <div className="w-full bg-slate-800/70 p-5 rounded-2xl border border-emerald-500/30 mt-4 shadow-inner">
-                      <h3 className="heading-typography font-bold text-emerald-400 uppercase tracking-wider mb-3 text-xs flex items-center justify-center gap-1.5">
-                        <span>🏛️</span> Hall of Fame
-                      </h3>
-                      <div className="text-center mb-4">
-                        <span className="text-[10px] text-slate-400 uppercase tracking-widest block mb-1">Rang Historique</span>
-                        <span className="text-lg font-black text-white px-4 py-1 bg-gradient-to-r from-emerald-600 to-teal-500 rounded-lg shadow-lg inline-block">{rankTitle}</span>
-                      </div>
-                      
-                      <div className="grid grid-cols-4 gap-2 text-center text-xs">
-                        <div className="text-slate-400 font-bold border-b border-slate-700/50 pb-1 truncate">Joueur</div>
-                        <div className="text-slate-400 font-bold border-b border-slate-700/50 pb-1">BO 🥇</div>
-                        <div className="text-slate-400 font-bold border-b border-slate-700/50 pb-1">LDC 🏆</div>
-                        <div className="text-slate-400 font-bold border-b border-slate-700/50 pb-1">CM 🌎</div>
-                        
-                        <div className="text-emerald-400 font-black py-1.5 truncate">{player.name.split(' ').pop()}</div>
-                        <div className="text-emerald-400 font-black py-1.5">{boCount}</div>
-                        <div className="text-emerald-400 font-black py-1.5">{ldcCount}</div>
-                        <div className="text-emerald-400 font-black py-1.5">{cmCount}</div>
-                        
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">Messi</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">8</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">4</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">1</div>
-                        
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">C. Ronaldo</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">5</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">5</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">0</div>
-                        
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">Pelé</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">0</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">0</div>
-                        <div className="text-slate-300 py-1 border-t border-slate-700/30">3</div>
-                      </div>
-                    </div>
-                  );
-                })()}
+                {/* Résumé du Score de la Carrière */}
+                <div className="w-full bg-slate-800/70 p-5 rounded-2xl border border-amber-500/30 mt-4 shadow-inner text-center">
+                  <h3 className="heading-typography font-bold text-amber-400 uppercase tracking-wider mb-3 text-xs flex items-center justify-center gap-1.5">
+                    <span>👑</span> Score de la Carrière
+                  </h3>
+                  <div className="text-4xl md:text-5xl font-black text-amber-500 drop-shadow-md mb-2">
+                    {gameState.score?.totalScore ? gameState.score.totalScore.toLocaleString('fr-FR') : "0"}
+                  </div>
+                  <p className="text-[10px] text-slate-400 uppercase tracking-widest">Points Légendaires</p>
+                </div>
 
                 {player.careerHistory && player.careerHistory.length > 0 && (
                   <details className="w-full bg-slate-800/70 rounded-2xl border border-slate-700/60 mt-4 group">
