@@ -76,13 +76,13 @@ export const Leaderboard = ({ onBack }) => {
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-1 md:gap-2 truncate">
-                          <p className="font-bold text-white text-sm md:text-lg truncate">{entry.pseudo}</p>
+                          <p className="font-bold text-white text-sm md:text-lg truncate">{entry.pseudo || entry.player_name || 'Inconnu'}</p>
                           {entry.nationality && (
                             <span className="text-[9px] md:text-[10px] bg-slate-800 px-1 md:px-1.5 py-0.5 rounded border border-slate-700 shrink-0">{entry.nationality}</span>
                           )}
                         </div>
                         <p className="text-[9px] md:text-xs text-slate-400 font-medium uppercase tracking-wider flex items-center gap-1 md:gap-2 truncate">
-                          <span className="truncate">{entry.player_name || 'Inconnu'}</span>
+                          <span className="truncate">{entry.pseudo ? entry.player_name : 'Carrière'}</span>
                           <span className="hidden sm:inline">•</span>
                           <span className="hidden sm:inline">OVR: <span className="text-emerald-400 font-bold">{entry.ovr}</span></span>
                           {entry.major_trophies > 0 && (

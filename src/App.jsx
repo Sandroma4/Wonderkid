@@ -1193,11 +1193,9 @@ export default function App() {
       const majorTrophiesNames = ["Ballon d'Or", "Vainqueur de la Coupe du Monde", "Vainqueur de l'Euro", "Vainqueur de la Copa America", "Vainqueur de la Ligue des Champions"];
       const major_trophies = palmares ? palmares.filter(t => majorTrophiesNames.includes(t.text)).length : 0;
 
+      const combinedName = pseudo !== 'Anonyme' ? `${pseudo} (${realName})` : realName;
       const payload = {
-        player_name: realName,
-        pseudo: pseudo,
-        nationality: nationality,
-        major_trophies: major_trophies,
+        player_name: combinedName,
         score: totalScore,
         ovr: maxOvr
       };
