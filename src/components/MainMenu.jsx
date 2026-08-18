@@ -141,23 +141,26 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-10"></div>
       
 
-      {/* Bouton Amis */}
-      {user && (
-        <button 
-          onClick={() => { playSound('click'); setShowFriends(true); }}
-          className="absolute top-6 right-20 z-20 bg-slate-800/80 hover:bg-slate-700 text-white p-3 rounded-full shadow-lg border border-slate-700 transition-all hover:scale-110"
-        >
-          👥
-        </button>
-      )}
+      {/* Top Right Action Buttons */}
+      <div className="absolute top-4 right-4 md:top-6 md:right-6 z-20 flex items-center gap-2">
+        {/* Bouton Amis */}
+        {user && (
+          <button 
+            onClick={() => { playSound('click'); setShowFriends(true); }}
+            className="bg-slate-800/80 hover:bg-slate-700 text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-700 transition-all hover:scale-110"
+          >
+            👥
+          </button>
+        )}
 
-      {/* Bouton Paramètres (Toujours visible) */}
-      <button 
-        onClick={() => { playSound('click'); setShowSettings(true); setNewPseudonym(user?.user_metadata?.pseudonym || ''); setSettingError(''); setEmail(''); setPassword(''); }}
-        className="absolute top-6 right-6 z-20 bg-slate-800/80 hover:bg-slate-700 text-white p-3 rounded-full shadow-lg border border-slate-700 transition-all hover:rotate-90"
-      >
-        ⚙️
-      </button>
+        {/* Bouton Paramètres (Toujours visible) */}
+        <button 
+          onClick={() => { playSound('click'); setShowSettings(true); setNewPseudonym(user?.user_metadata?.pseudonym || ''); setSettingError(''); setEmail(''); setPassword(''); }}
+          className="bg-slate-800/80 hover:bg-slate-700 text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-700 transition-all hover:rotate-90"
+        >
+          ⚙️
+        </button>
+      </div>
 
 
       {/* Incoming Invite Popup */}
