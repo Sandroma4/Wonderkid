@@ -35,9 +35,9 @@ export const Leaderboard = ({ onBack }) => {
         <div className="flex items-center justify-between mb-4 md:mb-8">
           <button 
             onClick={() => { playSound('click'); onBack(); }}
-            className="text-slate-400 hover:text-white flex items-center gap-1 md:gap-2 font-bold uppercase tracking-wider text-xs md:text-sm transition-colors"
+            className="text-white bg-slate-800/80 hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-700 whitespace-nowrap"
           >
-            <span>🔙</span> Retour
+            ← Retour
           </button>
           <h1 className="heading-typography text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
             CLASSEMENT

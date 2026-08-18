@@ -25,12 +25,12 @@ export const CardCollection = ({ onBack }) => {
           </h1>
           <p className="text-slate-400 mt-2 text-sm md:text-base font-medium">Votre collection de légendes. L'histoire s'écrit ici.</p>
         </div>
-        <button 
-          onClick={() => { playSound('click'); onBack(); }}
-          className="heading-typography px-5 py-2.5 bg-slate-800 text-white rounded-xl font-bold uppercase tracking-wider text-sm hover:bg-slate-700 transition-colors shadow-lg border border-slate-700 hover:border-emerald-500"
-        >
-          Retour Menu
-        </button>
+          <button 
+            onClick={() => { playSound('click'); onBack(); }}
+            className="text-white bg-slate-800/80 hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-700 whitespace-nowrap"
+          >
+            ← Retour
+          </button>
       </div>
 
       <div className="relative z-10 flex-1 overflow-y-auto">

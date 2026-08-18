@@ -30,7 +30,7 @@ export const GlobalPalmares = ({ onBack }) => {
         </div>
 
         {/* Content */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 mt-4 md:mt-8 mb-4 md:mb-8 bg-slate-900/60 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-slate-700/50 backdrop-blur-sm">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-4 md:gap-0 mt-4 md:mt-8 mb-4 md:mb-8 p-1 md:p-2 w-full">
           {palmares.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center opacity-50">
               <span className="text-6xl mb-4">🏆</span>
@@ -38,7 +38,7 @@ export const GlobalPalmares = ({ onBack }) => {
               <p className="text-slate-400 text-sm mt-2">Jouez une carrière et brillez sur le terrain !</p>
             </div>
           ) : (
-            <div className="flex-1 overflow-y-auto pr-1 md:pr-4 space-y-4 md:space-y-6 pb-8 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto pr-1 md:pr-4 pb-8 custom-scrollbar grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 content-start w-full">
               {Object.values(palmares.reduce((acc, t) => {
                 const key = `${t.icon}-${t.text}`;
                 if (!acc[key]) acc[key] = { ...t, count: 0 };
@@ -50,14 +50,12 @@ export const GlobalPalmares = ({ onBack }) => {
                 if (rankB !== rankA) return rankB - rankA;
                 return b.count - a.count;
               }).map((trophy, idx) => (
-                <div key={idx} className="bg-slate-700/40 border border-slate-600/50 px-3 py-2 rounded-xl flex items-center justify-between hover:bg-slate-700/60 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl drop-shadow-md">{trophy.icon}</span>
-                    <div>
-                      <h3 className="text-white font-bold text-sm">{trophy.text}</h3>
-                    </div>
-                  </div>
-                  <span className="heading-typography font-black text-amber-500 text-lg drop-shadow-sm">x{trophy.count}</span>
+                <div key={idx} className="bg-slate-800/60 border border-amber-500/30 p-4 rounded-2xl flex flex-col items-center justify-center text-center hover:bg-slate-800 transition-colors shadow-lg relative">
+                  <span className="text-4xl md:text-5xl drop-shadow-lg mb-2">{trophy.icon}</span>
+                  <h3 className="text-slate-300 font-bold text-[10px] md:text-xs uppercase tracking-wider mb-2 leading-tight min-h-[30px] flex items-center">{trophy.text}</h3>
+                  <span className="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-black text-xs md:text-sm px-2.5 py-1 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)] border border-amber-300/50 z-10">
+                    x{trophy.count}
+                  </span>
                 </div>
               ))}
             </div>

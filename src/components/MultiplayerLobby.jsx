@@ -100,9 +100,9 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
         
         <button 
           onClick={() => { playSound('click'); onBack(); }}
-          className="absolute top-4 left-4 p-2 text-slate-400 hover:text-white bg-slate-800 rounded-full transition-colors"
+          className="absolute top-4 left-4 text-white bg-slate-800/80 hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-700 z-50 whitespace-nowrap"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          ← Retour
         </button>
 
         <h2 className="heading-typography text-2xl font-black text-white uppercase tracking-wider mb-2 mt-4">
