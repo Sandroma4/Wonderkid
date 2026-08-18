@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { generateRoomCode, createMultiplayerRoom } from '../utils/multiplayer';
 import { playSound } from '../utils/audio';
 
-export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
+export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialCoopMode }) => {
   const [roomId, setRoomId] = useState(multiplayerContext ? multiplayerContext.roomId : (initialInviteCode || ''));
   const [joinCode, setJoinCode] = useState('');
   const [players, setPlayers] = useState(multiplayerContext ? multiplayerContext.players : []);
@@ -10,7 +10,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext }) => {
   const [isHost, setIsHost] = useState(multiplayerContext ? multiplayerContext.isHost : false);
   const [status, setStatus] = useState(multiplayerContext ? 'lobby' : 'menu'); // 'menu', 'hosting', 'joining', 'lobby'
   const [roomObj, setRoomObj] = useState(multiplayerContext ? multiplayerContext.roomObj : null);
-  const [isCoopMode, setIsCoopMode] = useState(false);
+  const [isCoopMode, setIsCoopMode] = useState(initialCoopMode || false);
   
   const [playerName, setPlayerName] = useState(localStorage.getItem('wonderkid_pseudo') || 'Joueur Inconnu');
 

@@ -164,7 +164,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
             onClick={() => setActiveTab('requests')}
             className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors relative ${activeTab === 'requests' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'}`}
           >
-            Requ\u00eates
+            Requêtes
             {requests.length > 0 && (
               <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full">{requests.length}</span>
             )}
