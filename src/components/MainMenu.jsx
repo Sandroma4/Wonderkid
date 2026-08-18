@@ -376,9 +376,9 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   </div>
                 </button>
 
-                <button 
+                                <button 
                   onClick={() => { playSound('click'); onNavigate('multiplayerLobbyCoop'); }}
-                  className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 border border-emerald-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95"
+                  className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-violet-600 to-violet-800 border border-violet-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] active:scale-95"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                   <div className="flex items-center justify-between relative z-10">
@@ -386,7 +386,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                       <span className="text-xl md:text-2xl">🤝</span>
                       <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Frères d'Armes (Coop)</span>
                     </div>
-                    <span className="text-emerald-300 group-hover:translate-x-1 transition-transform">➔</span>
+                    <span className="text-violet-300 group-hover:translate-x-1 transition-transform">➔</span>
                   </div>
                 </button>
             </div>
