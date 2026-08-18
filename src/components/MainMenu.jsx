@@ -142,7 +142,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
       
 
       {/* Top Right Action Buttons */}
-      <div className="absolute top-4 right-4 md:top-6 md:right-6 z-20 flex items-center gap-2">
+      <div className="absolute top-12 right-4 md:top-6 md:right-6 z-20 flex items-center gap-2">
         {/* Bouton Amis */}
         {user && (
           <button 
