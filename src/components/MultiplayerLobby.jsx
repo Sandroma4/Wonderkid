@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { generateRoomCode, createMultiplayerRoom } from '../utils/multiplayer';
 import { playSound } from '../utils/audio';
 
-export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialCoopMode }) => {
+export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialCoopMode, initialInviteCode }) => {
   const [roomId, setRoomId] = useState(multiplayerContext ? multiplayerContext.roomId : (initialInviteCode || ''));
   const [joinCode, setJoinCode] = useState('');
   const [players, setPlayers] = useState(multiplayerContext ? multiplayerContext.players : []);
