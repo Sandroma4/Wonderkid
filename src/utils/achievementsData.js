@@ -335,5 +335,66 @@ export const checkAchievements = (player, seasonStats, currentClub, palmares = [
     newUnlocks.push('ach_misunderstood');
   }
 
+
+  // Nouveaux succès exotiques
+  if (player.careerHistory) {
+    const uniqueCountries = new Set(player.careerHistory.map(h => h.origin));
+    if (uniqueCountries.size >= 4) {
+      newUnlocks.push('ach_globetrotter');
+    }
+
+    let hasCultureShock = false;
+    for (let i = 1; i < player.careerHistory.length; i++) {
+      const prevTier = player.careerHistory[i - 1].tier;
+      const currTier = player.careerHistory[i].tier;
+      if ((prevTier === 1 && currTier >= 3) || (prevTier >= 3 && currTier === 1)) {
+        hasCultureShock = true;
+        break;
+      }
+    }
+    if (hasCultureShock) {
+      newUnlocks.push('ach_culture_shock');
+    }
+
+    const finalsLost = player.careerHistory.filter(h => h.tournaments?.championsLeague?.stage === 'Finale').length;
+    if (finalsLost >= 3) {
+      newUnlocks.push('ach_black_cat');
+    }
+  }
+
+  if (player.morale <= 0 && player.coachTrust <= 0) {
+    newUnlocks.push('ach_public_enemy');
+  }
+
+  if (player.bankBalance <= 0 && player.inventory && player.inventory.length > 0) {
+    newUnlocks.push('ach_bankrupt');
+  }
+
+  if (seasonStats) {
+    if ((player.position === 'GB' || player.roleId === 'GB') && seasonStats.goals >= 1) {
+      newUnlocks.push('ach_gk_scorer');
+    }
+
+    if ((player.position === 'DEF' || player.roleId === 'DEF') && seasonStats.goals >= 10) {
+      newUnlocks.push('ach_def_scorer');
+    }
+
+    if (seasonStats.cleanSheets >= 25) {
+      newUnlocks.push('ach_clean_sheet');
+    }
+
+    if (seasonStats.assists >= 25) {
+      newUnlocks.push('ach_assist_king');
+    }
+  }
+
+  if (player.ovr >= 85 && player.age < 19) {
+    newUnlocks.push('ach_wonderkid');
+  }
+
+  if (player.age >= 38) {
+    newUnlocks.push('ach_old_sage');
+  }
+
   return newUnlocks;
 };
