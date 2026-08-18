@@ -84,14 +84,7 @@ export const ACHIEVEMENTS = [
     icon: '💰',
     rarity: 'rare'
   },
-  {
-    id: 'ach_luxury',
-    title: 'Luxe Absolu',
-    description: 'Acheter la Villa d\'architecte avec piscine.',
-    icon: '💎',
-    rarity: 'epic'
-  },
-  {
+{
     id: 'ach_relegation',
     title: 'Descente aux Enfers',
     description: 'Connaître une relégation avec son club.',
@@ -154,14 +147,7 @@ export const ACHIEVEMENTS = [
     icon: '📈',
     rarity: 'epic'
   },
-  {
-    id: 'ach_collector',
-    title: 'Collectionneur Compulsif',
-    description: 'Acheter 10 investissements.',
-    icon: '🛍️',
-    rarity: 'legendary'
-  },
-  {
+{
     id: 'ach_benchwarmer',
     title: 'Banc de Touche',
     description: 'Avoir une confiance du coach inférieure à 20%.',
@@ -174,13 +160,6 @@ export const ACHIEVEMENTS = [
     description: 'Faire un don important (Acheter Mécénat).',
     icon: '🤲',
     rarity: 'rare'
-  },
-  {
-    id: 'ach_jet',
-    title: 'Flambeur',
-    description: 'Acheter le Jet Privé.',
-    icon: '✈️',
-    rarity: 'common'
   },
 ];
 
@@ -212,9 +191,7 @@ export const checkAchievements = (player, seasonStats, currentClub, palmares = [
     newUnlocks.push('ach_millionaire');
   }
 
-  if (player.inventory && player.inventory.includes('villa')) {
-    newUnlocks.push('ach_luxury');
-  }
+  
 
   if (seasonStats && seasonStats.isRelegated) {
     newUnlocks.push('ach_relegation');
@@ -256,9 +233,7 @@ export const checkAchievements = (player, seasonStats, currentClub, palmares = [
     newUnlocks.push('ach_wall_street');
   }
 
-  if (player.inventory && player.inventory.length >= 10) {
-    newUnlocks.push('ach_collector');
-  }
+  
 
   if (player.coachTrust <= 20) {
     newUnlocks.push('ach_benchwarmer');
@@ -268,9 +243,7 @@ export const checkAchievements = (player, seasonStats, currentClub, palmares = [
     newUnlocks.push('ach_charity');
   }
 
-  if (player.inventory && player.inventory.includes('jet_prive')) {
-    newUnlocks.push('ach_jet');
-  }
+  
 
 
   // Nouveaux succès hardcore
