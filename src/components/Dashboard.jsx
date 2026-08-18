@@ -556,6 +556,61 @@ export function Dashboard({
                   <span className="heading-typography text-lg font-bold text-amber-400 mt-0.5 block">{seasonStats.rating}</span>
                 </div>
               </div>
+              {/* --- DEBUT AJOUTS OVR ET FINANCES --- */}
+              {player.valueHistory && player.valueHistory.length > 1 && (
+                <div className="bg-slate-800/80 p-3 md:p-4 rounded-2xl border border-slate-700/50 shadow-inner w-full mt-2 hidden md:block">
+                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 text-center">Évolution OVR & Valeur</h4>
+                  <div className="h-40 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={[...player.valueHistory, { year: player.currentYear || season, value: player.value, ovr: player.ovr }]}>
+                        <XAxis dataKey="year" hide />
+                        <YAxis domain={['auto', 'auto']} hide />
+                        <Tooltip 
+                           contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }} 
+                           labelStyle={{ color: '#94a3b8', fontSize: '10px' }} 
+                           itemStyle={{ fontSize: '12px', fontWeight: 'bold' }} 
+                           formatter={(val, name) => [name === 'ovr' ? val : val + ' M€', name === 'ovr' ? 'OVR' : 'Valeur']} 
+                        />
+                        <Line type="monotone" dataKey="ovr" stroke="#34d399" strokeWidth={3} dot={{ r: 3, fill: '#10b981', strokeWidth: 0 }} />
+                        <Line type="monotone" dataKey="value" stroke="#60a5fa" strokeWidth={2} dot={false} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              )}
+
+              {seasonStats.financials && (
+                <div className="bg-slate-800/80 p-3 md:p-4 rounded-2xl border border-slate-700/50 shadow-inner w-full mt-2 text-xs">
+                  <h4 className="font-bold text-amber-400 mb-2 uppercase tracking-wider text-[10px] md:text-xs">💰 Bilan Financier Annuel</h4>
+                  <div className="space-y-1 md:space-y-1.5 font-mono text-[10px] md:text-xs">
+                    <div className="flex justify-between text-slate-300">
+                      <span>Revenus (Salaire + Primes)</span>
+                      <span className="text-emerald-400">+{(seasonStats.financials.salaryEarnings + seasonStats.financials.perfEarnings).toLocaleString()} €</span>
+                    </div>
+                    {(seasonStats.financials.sponsorEarnings > 0 || seasonStats.financials.inventoryEarnings > 0) && (
+                      <div className="flex justify-between text-slate-300">
+                        <span>Sponsors & Investissements</span>
+                        <span className="text-emerald-400">+{(seasonStats.financials.sponsorEarnings + seasonStats.financials.inventoryEarnings).toLocaleString()} €</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-slate-300 border-t border-slate-700/50 pt-1 mt-1">
+                      <span>Impôts & Taxes (25%)</span>
+                      <span className="text-rose-400">-{seasonStats.financials.taxes.toLocaleString()} €</span>
+                    </div>
+                    <div className="flex justify-between text-slate-300">
+                      <span>Train de vie (10%)</span>
+                      <span className="text-rose-400">-{seasonStats.financials.lifestyleCost.toLocaleString()} €</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-white border-t border-slate-600 pt-1.5 mt-1.5 text-[11px] md:text-[13px]">
+                      <span>RÉSULTAT NET (BANQUE)</span>
+                      <span className={seasonStats.financials.net >= 0 ? "text-emerald-400" : "text-rose-400"}>
+                        {seasonStats.financials.net > 0 ? "+" : ""}{seasonStats.financials.net.toLocaleString()} €
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* --- FIN AJOUTS OVR ET FINANCES --- */}
 
               <div className="bg-slate-800/80 p-2 md:p-3.5 rounded-2xl border border-slate-700/50 space-y-0.5 md:space-y-1 shadow-inner text-xs overflow-y-auto">
                 <p className="font-medium text-slate-100">📢 {seasonStats.promotionRelegationText}</p>

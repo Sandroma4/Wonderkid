@@ -347,10 +347,22 @@ export default function App() {
         const roleMultiplier = role?.multipliers?.[attr] || 1.0;
         const totalMultiplier = ageMultiplier * roleMultiplier;
         
-        if (totalMultiplier !== 1.0) {
-          const finalGain = rawGain * totalMultiplier;
-          const extra = finalGain - rawGain;
-          if (extra !== 0) {
+        let finalGain = rawGain * totalMultiplier;
+        
+        // --- NOUVEAU: Le Mur des 85 OVR ---
+        if (prev >= 85) {
+            let actualGain = 0;
+            for (let i = 0; i < Math.floor(finalGain); i++) {
+                const prob = prev >= 90 ? 0.30 : 0.60;
+                if (Math.random() < prob) actualGain++;
+            }
+            actualGain += (finalGain - Math.floor(finalGain));
+            finalGain = actualGain;
+        }
+
+        const extra = finalGain - rawGain;
+        if (extra !== 0) {
+
             currentAttributes[attr] = after + extra;
             
             // Pour l'affichage, on garde des entiers propres
@@ -359,7 +371,6 @@ export default function App() {
               boostedEffects.push({ attr, rawGain, boostedGain: finalGainFloor, extra: finalGainFloor - rawGain });
             }
           }
-        }
       }
     });
 
@@ -848,7 +859,20 @@ export default function App() {
         sponsorFatigue = 4;
       }
 
-      const newBankBalance = Math.max(0, prev.bankBalance + salaryEarnings + perfEarnings + inventoryEarnings + sponsorEarnings);
+      const taxes = Math.floor(salaryEarnings * 0.25); // 25% d'impôts sur salaire
+      const lifestyleCost = Math.floor(salaryEarnings * 0.10); // 10% de frais de vie
+      const newBankBalance = Math.max(0, prev.bankBalance + salaryEarnings + perfEarnings + inventoryEarnings + sponsorEarnings - taxes - lifestyleCost);
+      
+      statsToUse.financials = {
+        salaryEarnings,
+        taxes,
+        lifestyleCost,
+        perfEarnings,
+        inventoryEarnings,
+        sponsorEarnings,
+        net: salaryEarnings + perfEarnings + inventoryEarnings + sponsorEarnings - taxes - lifestyleCost
+      };
+
       if (currentOvr >= 90) {
         currentSponsor = 'Équipementier Mondial';
         sponsorEarnings = 5000000;
