@@ -13,7 +13,7 @@ import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameSt
 import { createMultiplayerRoom } from './utils/multiplayer';
 import { PseudonymModal } from './components/PseudonymModal';
 import { checkAchievements } from './utils/achievementsData';
-import { simulateTournaments, calculateAwards, updateClubOvr } from './utils/awards';
+import { simulateTournaments, calculateAwards, calculateUniqueAwards, updateClubOvr } from './utils/awards';
 import { RoleSelectionModal } from './components/RoleSelectionModal';
 import { supabase } from './supabaseClient';
 import { calculateCareerScore } from './utils/scoreCalculator';
@@ -105,8 +105,8 @@ export default function App() {
       multiplayerContext.roomObj.setOnBroadcast((payload) => {
         if (payload.type === 'INITIAL_CLUB') {
           handleChooseClub(payload.club, true);
-        } else if (payload.type === 'COOP_SEASON_RESULTS') {
-          applyCoopSeasonResults(payload.results);
+        } else if (payload.type === 'MULTIPLAYER_SEASON_RESULTS') {
+          applyMultiplayerSeasonResults(payload.results);
           if (!multiplayerContext.isHost) {
             multiplayerContext.roomObj.updateState({ eventsFinished: false });
           }
@@ -161,49 +161,66 @@ export default function App() {
     }
   }, [multiplayerContext?.players, gameState?.isWaitingForMercato]);
 
-  // Coop Season Sync
+  // Multiplayer Season Sync
   useEffect(() => {
-    if (multiplayerContext?.isCoopMode && multiplayerContext?.isHost && gameState?.isWaitingForCoopPartner) {
-      const allFinished = multiplayerContext.players.every(p => p.eventsFinished);
-      if (allFinished && multiplayerContext.players.length === 2) {
-        const hostOvr = gameState.player.ovr;
-        const clientPlayer = multiplayerContext.players.find(p => !p.isHost);
-        const clientOvr = clientPlayer ? clientPlayer.playerOvr : 75;
+    if (multiplayerContext?.isHost && gameState?.isWaitingForMultiplayerSync) {
+      const allFinished = multiplayerContext.players.length === 2 && multiplayerContext.players.every(p => p.eventsFinished);
+      if (allFinished) {
+        const hostState = multiplayerContext.players.find(p => p.isHost);
+        const clientState = multiplayerContext.players.find(p => !p.isHost);
         
-        const combinedPlayer = { ...gameState.player, ovr: Math.min(99, Math.floor((hostOvr + clientOvr) / 1.6)) };
-        
-        const dummyStats = simulateSeasonStats(combinedPlayer, gameState.club, null);
-        const tournamentStats = simulateTournaments(combinedPlayer, gameState.club, dummyStats, gameState.season, gameState.lastSeasonStats);
-        
-        const finalsToPlay = Object.keys(tournamentStats).filter(key => 
-          tournamentStats[key] && (tournamentStats[key].stage === 'Finaliste' || tournamentStats[key].stage === 'Vainqueur')
+        if (!hostState.seasonData || !clientState.seasonData) return;
+
+        let finalHostTourney = hostState.seasonData.tournamentStats;
+        let finalClientTourney = clientState.seasonData.tournamentStats;
+
+        if (multiplayerContext.isCoopMode) {
+          const combinedPlayer = { ...hostState.player, ovr: Math.min(99, Math.floor((hostState.player.ovr + clientState.player.ovr) / 1.6)) };
+          const combinedTourney = simulateTournaments(combinedPlayer, hostState.club, hostState.seasonData.dummyStats, hostState.seasonData.seasonIndex, hostState.seasonData.lastSeasonStats);
+          finalHostTourney = combinedTourney;
+          finalClientTourney = combinedTourney;
+        }
+
+        const { awardsA, ballonDorRankA, awardsB, ballonDorRankB } = calculateUniqueAwards(
+          hostState.player, hostState.club, hostState.seasonData.dummyStats, finalHostTourney,
+          clientState.player, clientState.club, clientState.seasonData.dummyStats, finalClientTourney,
+          hostState.seasonData.seasonIndex
         );
 
-        const { awards, ballonDorRank } = calculateAwards(combinedPlayer, gameState.club, dummyStats, tournamentStats, gameState.season);
-        
-        const fullStats = {
-          ...dummyStats,
-          tournaments: tournamentStats,
-          awards: awards,
-          ballonDorRank: ballonDorRank
+        const hostFullStats = {
+          ...hostState.seasonData.dummyStats,
+          tournaments: finalHostTourney,
+          awards: awardsA,
+          ballonDorRank: ballonDorRankA
         };
 
-        const interSeasonOffers = generateInterSeasonOffers(combinedPlayer, gameState.club);
+        const clientFullStats = {
+          ...clientState.seasonData.dummyStats,
+          tournaments: finalClientTourney,
+          awards: awardsB,
+          ballonDorRank: ballonDorRankB
+        };
+
+        // Only host calculates interseason offers for Coop, but for 1v1 they can just keep their own or host calculates for both
+        const hostOffers = generateInterSeasonOffers(hostState.player, hostState.club);
+        const clientOffers = generateInterSeasonOffers(clientState.player, clientState.club);
+        
+        const hostFinals = Object.keys(finalHostTourney).filter(key => finalHostTourney[key] && (finalHostTourney[key].stage === 'Finaliste' || finalHostTourney[key].stage === 'Vainqueur'));
+        const clientFinals = Object.keys(finalClientTourney).filter(key => finalClientTourney[key] && (finalClientTourney[key].stage === 'Finaliste' || finalClientTourney[key].stage === 'Vainqueur'));
 
         const payload = {
-          fullStats,
-          finalsToPlay,
-          interSeasonOffers
+          hostPayload: { fullStats: hostFullStats, finalsToPlay: hostFinals, interSeasonOffers: hostOffers },
+          clientPayload: { fullStats: clientFullStats, finalsToPlay: clientFinals, interSeasonOffers: clientOffers }
         };
 
-        multiplayerContext.roomObj.sendBroadcast({ type: 'COOP_SEASON_RESULTS', results: payload });
+        multiplayerContext.roomObj.sendBroadcast({ type: 'MULTIPLAYER_SEASON_RESULTS', results: payload });
         
-        applyCoopSeasonResults(payload);
+        applyMultiplayerSeasonResults(payload);
         
         multiplayerContext.roomObj.updateState({ eventsFinished: false });
       }
     }
-  }, [multiplayerContext?.players, gameState?.isWaitingForCoopPartner]);
+  }, [multiplayerContext?.players, gameState?.isWaitingForMultiplayerSync]);
 
   const [activeOutcome, setActiveOutcome] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -575,9 +592,10 @@ export default function App() {
     };
   };
 
-  const applyCoopSeasonResults = (results) => {
+  const applyMultiplayerSeasonResults = (results) => {
     setGameState((prev) => {
-      const { fullStats, finalsToPlay, interSeasonOffers } = results;
+      const myPayload = multiplayerContext?.isHost ? results.hostPayload : results.clientPayload;
+      const { fullStats, finalsToPlay, interSeasonOffers } = myPayload;
       
       if (finalsToPlay.length > 0) {
           const finalKey = finalsToPlay[0];
@@ -593,7 +611,7 @@ export default function App() {
 
           return {
             ...prev,
-            isWaitingForCoopPartner: false,
+            isWaitingForMultiplayerSync: false,
             seasonStats: fullStats,
             lastSeasonStats: fullStats,
             transferMarketOffers: interSeasonOffers,
@@ -608,7 +626,7 @@ export default function App() {
       } else {
         return {
           ...prev,
-          isWaitingForCoopPartner: false,
+          isWaitingForMultiplayerSync: false,
           seasonStats: fullStats,
           lastSeasonStats: fullStats,
           transferMarketOffers: interSeasonOffers,
@@ -628,13 +646,22 @@ export default function App() {
       const isEnded = nextStep > prev.totalEvents;
 
       if (isEnded) {
-        if (multiplayerContext?.isCoopMode) {
-          multiplayerContext.roomObj.updateState({ eventsFinished: true, playerOvr: prev.player.ovr });
+        if (multiplayerContext) {
+          const dummyStats = simulateSeasonStats(prev.player, prev.club, null);
+          const tournamentStats = simulateTournaments(prev.player, prev.club, dummyStats, prev.season, prev.lastSeasonStats);
+          
+          multiplayerContext.roomObj.updateState({ 
+            eventsFinished: true, 
+            player: prev.player,
+            club: prev.club,
+            seasonData: { dummyStats, tournamentStats, seasonIndex: prev.season, lastSeasonStats: prev.lastSeasonStats }
+          });
+          
           return {
             ...prev,
             completedEvents: updatedCompletedEvents,
             eventStep: nextStep,
-            isWaitingForCoopPartner: true
+            isWaitingForMultiplayerSync: true
           };
         }
 

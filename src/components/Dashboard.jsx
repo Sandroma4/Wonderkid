@@ -142,7 +142,7 @@ export function Dashboard({
     isInteractiveMatch, interactiveMatchPhases, interactiveMatchCurrentPhaseIndex, 
     interactiveMatchScore, interactiveMatchResult, interactiveMatchFinalOutcome, isRetired, 
     seasonStats, lastSeasonStats, 
-    transferMarketOffers, clubOffers, bankBalance, palmares, isWaitingForMercato, isWaitingForCoopPartner,
+    transferMarketOffers, clubOffers, bankBalance, palmares, isWaitingForMercato, isWaitingForMultiplayerSync,
     rival: baseRival, rivalConfrontations, isSelectingPerk
   } = gameState || {};
 
@@ -738,7 +738,7 @@ export function Dashboard({
              </div>
            </div>
         </div>
-      ) : isWaitingForCoopPartner ? (
+      ) : isWaitingForMultiplayerSync ? (
           <div className="app-typography min-h-[100dvh] text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-slate-950">
             <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
             <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">

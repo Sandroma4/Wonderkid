@@ -446,3 +446,53 @@ export const updateClubOvr = (club, player, seasonStats) => {
   
   return { ...club, ovr: newOvr };
 };
+
+
+export const calculateUniqueAwards = (playerA, clubA, statsA, tourneyA, playerB, clubB, statsB, tourneyB, seasonIndex) => {
+  const { awards: awardsA, ballonDorRank: bdA } = calculateAwards(playerA, clubA, statsA, tourneyA, seasonIndex);
+  const { awards: awardsB, ballonDorRank: bdB } = calculateAwards(playerB, clubB, statsB, tourneyB, seasonIndex);
+
+  const resolveConflict = (awardKeywords, metricA, metricB) => {
+    const hasAwardA = awardsA.some(a => awardKeywords.some(kw => a.text.toLowerCase().includes(kw.toLowerCase())));
+    const hasAwardB = awardsB.some(a => awardKeywords.some(kw => a.text.toLowerCase().includes(kw.toLowerCase())));
+    
+    if (hasAwardA && hasAwardB) {
+      if (metricA >= metricB) {
+        for (let i = awardsB.length - 1; i >= 0; i--) {
+          if (awardKeywords.some(kw => awardsB[i].text.toLowerCase().includes(kw.toLowerCase()))) {
+            awardsB.splice(i, 1);
+          }
+        }
+      } else {
+        for (let i = awardsA.length - 1; i >= 0; i--) {
+          if (awardKeywords.some(kw => awardsA[i].text.toLowerCase().includes(kw.toLowerCase()))) {
+            awardsA.splice(i, 1);
+          }
+        }
+      }
+    }
+  };
+
+  if (bdA === 1 && bdB === 1) {
+    if (statsA.rating >= statsB.rating) {
+      for (let i = awardsB.length - 1; i >= 0; i--) {
+        if (awardsB[i].text === "Ballon d'Or") awardsB.splice(i, 1);
+      }
+    } else {
+      for (let i = awardsA.length - 1; i >= 0; i--) {
+        if (awardsA[i].text === "Ballon d'Or") awardsA.splice(i, 1);
+      }
+    }
+  }
+
+  resolveConflict(['buteur', 'soulier d\'or', 'pichichi', 'capocannoniere', 'boot'], statsA.goals || 0, statsB.goals || 0);
+  resolveConflict(['passeur', 'assist', 'playmaker'], statsA.assists || 0, statsB.assists || 0);
+  resolveConflict(['mvp', 'meilleur joueur', 'player of the season'], statsA.rating || 0, statsB.rating || 0);
+  resolveConflict(['gardien', 'zamora', 'glove', 'yachine'], -(statsA.goalsConceded || 999), -(statsB.goalsConceded || 999));
+  resolveConflict(['espoir', 'young', 'giovane', 'golden boy', 'kopa'], playerA.ovr || 0, playerB.ovr || 0);
+
+  return {
+    awardsA, ballonDorRankA: bdA === 1 && bdB === 1 && statsA.rating < statsB.rating ? 2 : bdA,
+    awardsB, ballonDorRankB: bdA === 1 && bdB === 1 && statsB.rating < statsA.rating ? 2 : bdB
+  };
+};
