@@ -97,6 +97,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   const [showFriends, setShowFriends] = useState(false);
   const [showPlayOptions, setShowPlayOptions] = useState(false);
   const [showFutsalOptions, setShowFutsalOptions] = useState(false);
+  const [showCareerOptions, setShowCareerOptions] = useState(false);
   const [incomingInvite, setIncomingInvite] = useState(null);
   const [newPseudonym, setNewPseudonym] = useState('');
   const [settingError, setSettingError] = useState('');
@@ -376,35 +377,53 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 <span className="heading-typography text-slate-600 dark:text-slate-300 font-bold text-sm tracking-wide uppercase">Retour</span>
               </button>
 
-              <button 
-                onClick={() => { playSound('start'); onNavigate('career'); }}
-                className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 border border-emerald-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95"
-              >
-                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
-                <div className="flex items-center justify-between relative z-10">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl md:text-2xl">⚽</span>
-                    <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Nouvelle Carrière</span>
-                  </div>
-                  <span className="text-emerald-600 dark:text-emerald-300 group-hover:translate-x-1 transition-transform">➔</span>
-                </div>
-              </button>
-
-              {hasSave && (
+              <div className="pb-2">
                 <button 
-                  onClick={() => { playSound('click'); onLoadGame(); }}
-                  className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 to-amber-700 border border-amber-400/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] active:scale-95"
+                  onClick={() => { playSound('click'); setShowCareerOptions(!showCareerOptions); }}
+                  className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 border border-emerald-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95 mb-3"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-3">
-                      <span className="text-xl md:text-2xl">⏳</span>
-                      <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Continuer la Carrière</span>
+                      <span className="text-xl md:text-2xl">🏆</span>
+                      <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Carrière Solo</span>
                     </div>
-                    <span className="text-amber-600 dark:text-amber-300 group-hover:translate-x-1 transition-transform">➔</span>
+                    <span className={`text-emerald-200 transition-transform ${showCareerOptions ? 'rotate-90' : 'group-hover:translate-x-1'}`}>➔</span>
                   </div>
                 </button>
-              )}
+
+                {showCareerOptions && (
+                  <div className="flex flex-col gap-3 pl-4 border-l-2 border-emerald-500/30 ml-2 animate-fade-in">
+                    <button 
+                      onClick={() => { playSound('start'); onNavigate('career'); }}
+                      className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-700 border border-emerald-400/50 p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95"
+                    >
+                      <div className="flex items-center justify-between relative z-10">
+                        <div className="flex items-center gap-3">
+                          <span className="text-lg md:text-xl">⚽</span>
+                          <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Nouvelle Carrière</span>
+                        </div>
+                        <span className="text-emerald-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
+                      </div>
+                    </button>
+
+                    {hasSave && (
+                      <button 
+                        onClick={() => { playSound('click'); onLoadGame(); }}
+                        className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 to-amber-700 border border-amber-400/50 p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] active:scale-95"
+                      >
+                        <div className="flex items-center justify-between relative z-10">
+                          <div className="flex items-center gap-3">
+                            <span className="text-lg md:text-xl">⏳</span>
+                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Continuer la Carrière</span>
+                          </div>
+                          <span className="text-amber-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
+                        </div>
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
 
                               <button 
                   onClick={() => { playSound('click'); onNavigate('multiplayerLobby'); }}
@@ -443,7 +462,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                     <div className="flex items-center justify-between relative z-10">
                       <div className="flex items-center gap-3">
                         <span className="text-xl md:text-2xl">⚽</span>
-                        <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Futsal (5v5)</span>
+                        <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Futsal</span>
                       </div>
                       <span className={`text-orange-200 transition-transform ${showFutsalOptions ? 'rotate-90' : 'group-hover:translate-x-1'}`}>➔</span>
                     </div>
