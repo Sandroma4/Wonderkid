@@ -7,8 +7,17 @@
     <title>Wonderkid</title>
     <!-- Tailwind CSS placé correctement à l'intérieur du head -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Force dark mode by default, or load from localStorage
+      const theme = localStorage.getItem('theme');
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
   </head>
-  <body>
+  <body class="bg-white dark:bg-[#0F172A] text-slate-900 dark:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
