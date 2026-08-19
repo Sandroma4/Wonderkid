@@ -432,6 +432,38 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                     <span className="text-violet-600 dark:text-violet-300 group-hover:translate-x-1 transition-transform">➔</span>
                   </div>
                 </button>
+
+                <div className="pt-2">
+                  <div className="flex flex-col gap-3">
+                    <button 
+                      onClick={() => { playSound('click'); onNavigate('futsalManager'); }}
+                      className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 border border-orange-400/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] active:scale-95"
+                    >
+                      <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                      <div className="flex items-center justify-between relative z-10">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl md:text-2xl">👟</span>
+                          <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Gestion Futsal</span>
+                        </div>
+                        <span className="text-orange-200 group-hover:translate-x-1 transition-transform">➔</span>
+                      </div>
+                    </button>
+
+                    <button 
+                      onClick={() => { playSound('click'); onNavigate('futsalLobby'); }}
+                      className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-orange-600 to-red-700 border border-red-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(239,68,68,0.4)] active:scale-95"
+                    >
+                      <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                      <div className="flex items-center justify-between relative z-10">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl md:text-2xl">🔥</span>
+                          <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Futsal (5v5 en ligne)</span>
+                        </div>
+                        <span className="text-red-200 group-hover:translate-x-1 transition-transform">➔</span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
             </div>
           ) : (
             <>

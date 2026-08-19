@@ -3,6 +3,9 @@ import { CharacterCreation } from './components/CharacterCreation';
 import { Dashboard } from './components/Dashboard';
 import { MainMenu } from './components/MainMenu';
 import { MultiplayerLobby } from './components/MultiplayerLobby';
+import { FutsalLobby } from './components/FutsalLobby';
+import { FutsalTeamsManager } from './components/FutsalTeamsManager';
+import { FutsalMatch } from './components/FutsalMatch';
 import { GlobalPalmares } from './components/GlobalPalmares';
 import { Achievements } from './components/Achievements';
 import { Leaderboard } from './components/Leaderboard';
@@ -1472,6 +1475,40 @@ export default function App() {
     setGameState(null);
     setAppView('mainMenu');
   };
+
+  if (appView === 'futsalManager') {
+    return <FutsalTeamsManager onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
+  }
+
+  if (appView === 'futsalLobby') {
+    return <FutsalLobby 
+      multiplayerContext={multiplayerContext}
+      onStart={(roomObj, playerId, players, roomId, isHost) => {
+        setMultiplayerContext({ roomObj, playerId, players, roomId, isHost, isCoop: false });
+        setAppView('futsalMatch');
+      }}
+      onBack={() => {
+        if (multiplayerContext?.roomObj) multiplayerContext.roomObj.leaveRoom();
+        setMultiplayerContext(null);
+        setInviteCode(null);
+        setAppView('mainMenu');
+      }}
+    />
+  }
+
+  if (appView === 'futsalMatch') {
+    return <FutsalMatch 
+      roomObj={multiplayerContext.roomObj}
+      playerId={multiplayerContext.playerId}
+      players={multiplayerContext.players}
+      isHost={multiplayerContext.isHost}
+      onEndMatch={() => {
+        if (multiplayerContext?.roomObj) multiplayerContext.roomObj.leaveRoom();
+        setMultiplayerContext(null);
+        setAppView('mainMenu');
+      }}
+    />
+  }
 
   const handleBuyLifestyleItem = (item) => {
     setGameState((prev) => {

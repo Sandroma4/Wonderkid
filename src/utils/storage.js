@@ -4,6 +4,7 @@ const PALMARES_KEY = 'golden_xi_global_palmares_v3';
 const ACHIEVEMENTS_KEY = 'golden_xi_achievements_v3';
 const PSEUDO_KEY = 'golden_xi_pseudonym';
 const CARD_COLLECTION_KEY = 'golden_xi_card_collection_v1';
+const FUTSAL_TEAMS_KEY = 'golden_xi_futsal_teams_v1';
 
 export const savePseudonym = (pseudo) => {
   try {
@@ -100,6 +101,23 @@ export const saveCardToCollection = (player, palmares, maxOvr) => {
     localStorage.setItem(CARD_COLLECTION_KEY, JSON.stringify(updated));
   } catch (e) {
     console.error('Failed to save card collection', e);
+  }
+};
+
+export const getFutsalTeams = () => {
+  try {
+    const data = localStorage.getItem(FUTSAL_TEAMS_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    return [];
+  }
+};
+
+export const saveFutsalTeams = (teams) => {
+  try {
+    localStorage.setItem(FUTSAL_TEAMS_KEY, JSON.stringify(teams));
+  } catch (e) {
+    console.error('Failed to save futsal teams', e);
   }
 };
 
