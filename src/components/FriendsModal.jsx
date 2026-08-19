@@ -143,35 +143,35 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-200/90 dark:bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white dark:bg-slate-900 border border-emerald-500/50 rounded-2xl md:rounded-3xl p-4 md:p-6 w-full max-w-md shadow-2xl relative flex flex-col max-h-[85vh]">
+    <div className="fixed inset-0 bg-slate-300/90 dark:bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+      <div className="bg-slate-50 dark:bg-slate-900 border border-emerald-500/50 rounded-2xl md:rounded-3xl p-4 md:p-6 w-full max-w-md shadow-2xl relative flex flex-col max-h-[85vh]">
         <button 
           onClick={() => { playSound('click'); onClose(); }}
-          className="absolute top-4 right-4 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors text-xl font-black"
+          className="absolute top-4 right-4 text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white transition-colors text-xl font-black"
         >
           X
         </button>
         <h2 className="heading-typography text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 uppercase tracking-wider text-center">Liste d'Amis</h2>
         
-        <div className="flex bg-slate-50 dark:bg-slate-800 rounded-lg p-1 mb-4 flex-shrink-0">
+        <div className="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1 mb-4 flex-shrink-0">
           <button 
             onClick={() => setActiveTab('friends')}
-            className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors ${activeTab === 'friends' ? 'bg-emerald-600 text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
+            className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors ${activeTab === 'friends' ? 'bg-emerald-600 text-slate-800 dark:text-white' : 'text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white'}`}
           >
             Amis ({friends.length})
           </button>
           <button 
             onClick={() => setActiveTab('requests')}
-            className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors relative ${activeTab === 'requests' ? 'bg-emerald-600 text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
+            className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors relative ${activeTab === 'requests' ? 'bg-emerald-600 text-slate-800 dark:text-white' : 'text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white'}`}
           >
             Requêtes
             {requests.length > 0 && (
-              <span className="absolute -top-1 -right-1 bg-rose-500 text-slate-900 dark:text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full">{requests.length}</span>
+              <span className="absolute -top-1 -right-1 bg-rose-500 text-slate-800 dark:text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full">{requests.length}</span>
             )}
           </button>
           <button 
             onClick={() => setActiveTab('add')}
-            className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors ${activeTab === 'add' ? 'bg-emerald-600 text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
+            className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors ${activeTab === 'add' ? 'bg-emerald-600 text-slate-800 dark:text-white' : 'text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white'}`}
           >
             Ajouter
           </button>
@@ -184,8 +184,8 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
                 <p className="text-center text-slate-500 dark:text-slate-500 text-sm py-8">Aucun ami pour le moment.</p>
               ) : (
                 friends.map(f => (
-                  <div key={f.friendshipId} className="bg-slate-50/90 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-300 dark:border-slate-700 flex justify-between items-center">
-                    <span className="font-bold text-slate-900 dark:text-white text-sm truncate pr-2">{f.friend?.pseudonym}</span>
+                  <div key={f.friendshipId} className="bg-slate-100/90 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-300 dark:border-slate-700 flex justify-between items-center">
+                    <span className="font-bold text-slate-800 dark:text-white text-sm truncate pr-2">{f.friend?.pseudonym}</span>
                     <div className="flex gap-2 flex-shrink-0">
                       <button 
                         onClick={() => onInviteToGame(f.friend.id, f.friend.pseudonym)}
@@ -213,18 +213,18 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
                 <p className="text-center text-slate-500 dark:text-slate-500 text-sm py-8">Aucune demande en attente.</p>
               ) : (
                 requests.map(req => (
-                  <div key={req.id} className="bg-slate-50/90 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-300 dark:border-slate-700 flex flex-col gap-2">
-                    <span className="font-bold text-slate-900 dark:text-white text-sm">{req.sender?.pseudonym} vous a ajout\u00e9 !</span>
+                  <div key={req.id} className="bg-slate-100/90 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-300 dark:border-slate-700 flex flex-col gap-2">
+                    <span className="font-bold text-slate-800 dark:text-white text-sm">{req.sender?.pseudonym} vous a ajout\u00e9 !</span>
                     <div className="flex gap-2">
                       <button 
                         onClick={() => handleRequest(req.id, 'accept')}
-                        className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                        className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
                       >
                         Accepter
                       </button>
                       <button 
                         onClick={() => handleRequest(req.id, 'reject')}
-                        className="flex-1 bg-slate-200 dark:bg-slate-700 hover:bg-rose-500/50 text-slate-900 dark:text-white py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                        className="flex-1 bg-slate-300 dark:bg-slate-700 hover:bg-rose-500/50 text-slate-800 dark:text-white py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
                       >
                         Refuser
                       </button>
@@ -243,9 +243,9 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Chercher un pseudo exact"
-                  className="flex-1 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-slate-900 dark:text-white text-sm focus:border-emerald-400 outline-none"
+                  className="flex-1 bg-slate-300 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-white text-sm focus:border-emerald-400 outline-none"
                 />
-                <button type="submit" className="bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider">
+                <button type="submit" className="bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider">
                   \u2192
                 </button>
               </form>
@@ -255,11 +255,11 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
               
               <div className="space-y-3">
                 {searchResults.map(res => (
-                  <div key={res.id} className="bg-slate-50/90 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-300 dark:border-slate-700 flex justify-between items-center">
-                    <span className="font-bold text-slate-900 dark:text-white text-sm">{res.pseudonym}</span>
+                  <div key={res.id} className="bg-slate-100/90 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-300 dark:border-slate-700 flex justify-between items-center">
+                    <span className="font-bold text-slate-800 dark:text-white text-sm">{res.pseudonym}</span>
                     <button 
                       onClick={() => sendFriendRequest(res.id)}
-                      className="bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                      className="bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
                     >
                       Ajouter
                     </button>
