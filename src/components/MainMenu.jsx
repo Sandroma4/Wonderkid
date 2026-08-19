@@ -339,8 +339,8 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
       )}
 
       {/* Background Decor */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 blur-[120px] rounded-full"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-slate-8000/10 blur-[120px] rounded-full"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 dark:hidden blur-[120px] rounded-full"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-slate-400/10 dark:hidden blur-[120px] rounded-full"></div>
 
       <div className="relative z-10 w-full max-w-md flex flex-col items-center mt-4 md:-mt-32">
         {/* Logo */}
