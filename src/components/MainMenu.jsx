@@ -150,14 +150,14 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A] flex items-center justify-center p-6 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0F172A] flex items-center justify-center p-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Theme Toggle Button */}
       <div className="absolute top-12 left-4 md:top-6 md:left-6 z-20">
         <button
           onClick={toggleTheme}
-          className="bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-900 dark:text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-200 dark:border-slate-300 dark:border-slate-700 transition-all hover:scale-110 flex items-center justify-center w-12 h-12"
+          className="bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-300 dark:border-slate-700 transition-all hover:scale-110 flex items-center justify-center w-12 h-12"
           title={theme === 'dark' ? 'Passer en Mode Clair' : 'Passer en Mode Sombre'}
         >
           {theme === 'dark' ? '☀️' : '🌙'}
@@ -170,7 +170,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
         {user && (
           <button 
             onClick={() => { playSound('click'); setShowFriends(true); }}
-            className="bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-300 dark:border-slate-700 transition-all hover:scale-110"
+            className="bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-300 dark:border-slate-700 transition-all hover:scale-110"
           >
             👥
           </button>
@@ -179,7 +179,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
         {/* Bouton Paramètres (Toujours visible) */}
         <button 
           onClick={() => { playSound('click'); setShowSettings(true); setNewPseudonym(user?.user_metadata?.pseudonym || ''); setSettingError(''); setEmail(''); setPassword(''); }}
-          className="bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-300 dark:border-slate-700 transition-all hover:rotate-90"
+          className="bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-300 dark:border-slate-700 transition-all hover:rotate-90"
         >
           ⚙️
         </button>
@@ -190,17 +190,17 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
       {incomingInvite && (
         <div className="fixed top-24 right-4 z-50 bg-white dark:bg-slate-900 border border-emerald-500 rounded-xl p-4 shadow-2xl animate-bounce-in max-w-sm w-full md:w-auto">
           <h3 className="text-emerald-600 dark:text-emerald-400 font-bold mb-2 uppercase text-sm tracking-wider">Invitation reçue !</h3>
-          <p className="text-slate-900 dark:text-slate-900 dark:text-white text-sm mb-4"><span className="font-bold text-amber-600 dark:text-amber-400">{incomingInvite.senderName}</span> vous invite à jouer en 1v1 !</p>
+          <p className="text-slate-900 dark:text-white text-sm mb-4"><span className="font-bold text-amber-600 dark:text-amber-400">{incomingInvite.senderName}</span> vous invite à jouer en 1v1 !</p>
           <div className="flex gap-2">
             <button 
               onClick={() => { playSound('click'); onJoinInvite(incomingInvite.roomId); setIncomingInvite(null); }}
-              className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-slate-900 dark:text-white text-xs font-bold py-2 rounded-lg transition-colors"
+              className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white text-xs font-bold py-2 rounded-lg transition-colors"
             >
               Rejoindre
             </button>
             <button 
               onClick={() => { playSound('click'); setIncomingInvite(null); }}
-              className="flex-1 bg-slate-200 dark:bg-slate-700 hover:bg-rose-500 text-slate-900 dark:text-slate-900 dark:text-white text-xs font-bold py-2 rounded-lg transition-colors"
+              className="flex-1 bg-slate-200 dark:bg-slate-700 hover:bg-rose-500 text-slate-900 dark:text-white text-xs font-bold py-2 rounded-lg transition-colors"
             >
               Refuser
             </button>
@@ -222,7 +222,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
           <div className="bg-white dark:bg-slate-900 border border-emerald-500/50 rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-sm w-full shadow-2xl relative">
             <button 
               onClick={() => setShowSettings(false)}
-              className="absolute top-4 right-4 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-900 dark:text-white"
+              className="absolute top-4 right-4 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white"
             >
               ✕
             </button>
@@ -249,26 +249,26 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Adresse Email"
-                  className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-900 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
+                  className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
                 />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Mot de passe"
-                  className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-900 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
+                  className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
                 />
                 {settingError && <p className="text-xs text-center font-semibold text-rose-500">{settingError}</p>}
                 
                 <button
                   onClick={handleEmailAuth}
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-slate-900 dark:text-white font-bold rounded-xl text-sm uppercase tracking-wider transition-colors shadow-lg"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white font-bold rounded-xl text-sm uppercase tracking-wider transition-colors shadow-lg"
                 >
                   {isLoginMode ? 'Se Connecter' : 'Créer un Compte'}
                 </button>
                 <button
                   onClick={() => setIsLoginMode(!isLoginMode)}
-                  className="w-full text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-slate-900 dark:text-white underline mt-2"
+                  className="w-full text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white underline mt-2"
                 >
                   {isLoginMode ? "Pas encore de compte ? S'inscrire" : "Déjà un compte ? Se connecter"}
                 </button>
@@ -287,7 +287,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                     onChange={(e) => setNewPseudonym(e.target.value)}
                     maxLength={20}
                     placeholder="Ex: xX_Striker_Xx"
-                    className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-900 dark:text-white font-bold focus:border-emerald-400 outline-none text-base text-center"
+                    className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-bold focus:border-emerald-400 outline-none text-base text-center"
                   />
                 </div>
                 {settingError && (
@@ -297,7 +297,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 )}
                 <button
                   onClick={handleUpdatePseudonym}
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-slate-900 dark:text-white font-bold rounded-xl text-sm uppercase tracking-wider transition-colors shadow-lg"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white font-bold rounded-xl text-sm uppercase tracking-wider transition-colors shadow-lg"
                 >
                   Mettre à jour
                 </button>
@@ -307,7 +307,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 <div className="pt-4 mt-4 border-t border-slate-300 dark:border-slate-800">
                   <button 
                     onClick={() => { handleLogout(); setShowSettings(false); }}
-                    className="w-full py-2 text-rose-500 hover:text-rose-600 dark:text-rose-400 text-xs font-bold uppercase tracking-wider"
+                    className="w-full py-2 text-rose-500 hover:text-rose-400 text-xs font-bold uppercase tracking-wider"
                   >
                     Se déconnecter
                   </button>
@@ -349,7 +349,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
             <div className="space-y-4 animate-[fade-in_0.3s_ease-out]">
               <button 
                 onClick={() => { playSound('click'); setShowPlayOptions(false); }}
-                className="w-full relative group overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 transition-all duration-300 hover:bg-slate-200 dark:bg-slate-700 active:scale-95 flex items-center gap-2 justify-center"
+                className="w-full relative group overflow-hidden rounded-2xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 transition-all duration-300 hover:bg-slate-300 dark:hover:bg-slate-700 active:scale-95 flex items-center gap-2 justify-center"
               >
                 <span className="text-slate-600 dark:text-slate-400">⬅️</span>
                 <span className="heading-typography text-slate-700 dark:text-slate-300 font-bold text-sm tracking-wide uppercase">Retour</span>
@@ -363,7 +363,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 <div className="flex items-center justify-between relative z-10">
                   <div className="flex items-center gap-3">
                     <span className="text-xl md:text-2xl">⚽</span>
-                    <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Nouvelle Carrière</span>
+                    <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Nouvelle Carrière</span>
                   </div>
                   <span className="text-emerald-600 dark:text-emerald-300 group-hover:translate-x-1 transition-transform">➔</span>
                 </div>
@@ -378,7 +378,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-3">
                       <span className="text-xl md:text-2xl">⏳</span>
-                      <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Continuer la Carrière</span>
+                      <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Continuer la Carrière</span>
                     </div>
                     <span className="text-amber-600 dark:text-amber-300 group-hover:translate-x-1 transition-transform">➔</span>
                   </div>
@@ -393,7 +393,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-3">
                       <span className="text-xl md:text-2xl">⚔️</span>
-                      <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Course à la Carrière (1v1)</span>
+                      <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Course à la Carrière (1v1)</span>
                     </div>
                     <span className="text-cyan-600 dark:text-cyan-300 group-hover:translate-x-1 transition-transform">➔</span>
                   </div>
@@ -407,7 +407,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-3">
                       <span className="text-xl md:text-2xl">🤝</span>
-                      <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Frères d'Armes (Coop)</span>
+                      <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Frères d'Armes (Coop)</span>
                     </div>
                     <span className="text-violet-600 dark:text-violet-300 group-hover:translate-x-1 transition-transform">➔</span>
                   </div>
@@ -423,7 +423,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 <div className="flex items-center justify-between relative z-10">
                   <div className="flex items-center gap-3">
                     <span className="text-xl md:text-2xl">🎮</span>
-                    <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Jouer</span>
+                    <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Jouer</span>
                   </div>
                   <span className="text-emerald-600 dark:text-emerald-300 group-hover:translate-x-1 transition-transform">➔</span>
                 </div>
@@ -431,12 +431,12 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
           <button 
             onClick={() => { playSound('click'); onNavigate('leaderboard'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-200 dark:bg-slate-700 hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] active:scale-95"
+            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-300 dark:hover:bg-slate-700 hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] active:scale-95"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">🌍</span>
-                <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Classement Mondial</span>
+                <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Classement Mondial</span>
               </div>
               <span className="text-slate-600 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -444,12 +444,12 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
           <button 
             onClick={() => { playSound('click'); onNavigate('achievements'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-200 dark:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
+            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-300 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">🏅</span>
-                <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-lg tracking-wide uppercase">Succès</span>
+                <span className="heading-typography text-slate-900 dark:text-white font-bold text-lg tracking-wide uppercase">Succès</span>
               </div>
               <span className="text-slate-600 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -457,12 +457,12 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
           <button 
             onClick={() => { playSound('click'); onNavigate('globalPalmares'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-200 dark:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
+            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-300 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">🏆</span>
-                <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Palmarès Global</span>
+                <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Palmarès Global</span>
               </div>
               <span className="text-slate-600 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -470,12 +470,12 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
           <button 
             onClick={() => { playSound('click'); onNavigate('cardCollection'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-200 dark:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
+            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-300 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">🎴</span>
-                <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Hall of Fame</span>
+                <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Hall of Fame</span>
               </div>
               <span className="text-slate-600 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -483,12 +483,12 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
           <button 
             onClick={() => { playSound('click'); onNavigate('careerHistory'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-200 dark:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
+            className="w-full relative group overflow-hidden rounded-2xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-300 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">📖</span>
-                <span className="heading-typography text-slate-900 dark:text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Historique des Carrières</span>
+                <span className="heading-typography text-slate-900 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Historique des Carrières</span>
               </div>
               <span className="text-slate-600 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>

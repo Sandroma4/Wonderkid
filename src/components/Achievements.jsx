@@ -28,7 +28,7 @@ export const Achievements = ({ onBack }) => {
   const completionRate = Math.round((unlocked.length / ACHIEVEMENTS.length) * 100);
 
   return (
-    <div className="min-h-screen bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
       <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10">
         
@@ -36,12 +36,12 @@ export const Achievements = ({ onBack }) => {
         <div className="flex items-center justify-between mb-6">
           <button 
             onClick={() => { playSound('click'); onBack(); }}
-            className="text-slate-900 dark:text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-200 dark:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700"
+            className="text-slate-900 dark:text-white bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700"
           >
             ← Retour
           </button>
           <div className="text-right">
-            <h2 className="heading-typography text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-widest drop-shadow-sm">
+            <h2 className="heading-typography text-2xl md:text-3xl font-black text-slate-900 dark:text-white uppercase tracking-widest drop-shadow-sm">
               Succès
             </h2>
             <p className="text-emerald-600 dark:text-emerald-400 font-bold">{completionRate}% complété</p>
@@ -62,7 +62,7 @@ export const Achievements = ({ onBack }) => {
               className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all border
                 ${activeTab === tab 
                   ? 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white border-slate-500 shadow-md scale-105' 
-                  : 'bg-slate-50 dark:bg-slate-50/50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-300/80 dark:border-slate-700/50 hover:bg-slate-50 dark:bg-slate-800 hover:text-slate-700 dark:text-slate-300'}`}
+                  : 'bg-slate-50/50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 border-slate-300/80 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-300'}`}
             >
               {tab === 'all' ? 'Tous' : tab}
             </button>
@@ -85,7 +85,7 @@ export const Achievements = ({ onBack }) => {
                 <div 
                   key={ach.id} 
                   className={`relative overflow-hidden rounded-2xl p-4 flex items-center gap-4 transition-all duration-300 border 
-                    ${isUnlocked ? 'bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 ' + rarityBorders[ach.rarity] : 'bg-white dark:bg-white/50 dark:bg-slate-900/50 border-slate-300 dark:border-slate-800 opacity-60 grayscale'}`
+                    ${isUnlocked ? 'bg-slate-50/90 dark:bg-slate-800/80 ' + rarityBorders[ach.rarity] : 'bg-white dark:bg-slate-900/50 border-slate-300 dark:border-slate-800 opacity-60 grayscale'}`
                   }
                 >
                   <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-3xl shrink-0 
@@ -94,7 +94,7 @@ export const Achievements = ({ onBack }) => {
                     {isUnlocked ? ach.icon : '🔒'}
                   </div>
                   <div>
-                    <h3 className={`font-bold text-lg flex items-center gap-2 ${isUnlocked ? 'text-slate-900 dark:text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400'}`}>
+                    <h3 className={`font-bold text-lg flex items-center gap-2 ${isUnlocked ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400'}`}>
                       {ach.title}
                       {isUnlocked && unlockData.date && (
                         <span className="text-[10px] font-semibold tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-500/20">

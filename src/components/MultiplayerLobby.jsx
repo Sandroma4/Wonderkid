@@ -114,12 +114,12 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
         
         <button 
           onClick={() => { playSound('click'); onBack(); }}
-          className="absolute top-4 left-4 text-slate-900 dark:text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-200 dark:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 z-50 whitespace-nowrap"
+          className="absolute top-4 left-4 text-slate-900 dark:text-white bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 z-50 whitespace-nowrap"
         >
           ← Retour
         </button>
 
-        <h2 className="heading-typography text-2xl font-black text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider mb-2 mt-16">
+        <h2 className="heading-typography text-2xl font-black text-slate-900 dark:text-white uppercase tracking-wider mb-2 mt-16">
           La Course à la Carrière
         </h2>
         <p className="text-slate-600 dark:text-slate-400 text-sm mb-8 px-4">
@@ -130,7 +130,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
           <div className="w-full space-y-4">
             <button 
               onClick={handleCreateRoom}
-              className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-colors shadow-lg shadow-emerald-900/20"
+              className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-colors shadow-lg shadow-emerald-900/20"
             >
               Créer un Salon
             </button>
@@ -148,12 +148,12 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
                 onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                 placeholder="Code à 4 lettres"
                 maxLength={4}
-                className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-900 dark:text-white text-center font-mono text-xl rounded-xl focus:outline-none focus:border-cyan-500"
+                className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-center font-mono text-xl rounded-xl focus:outline-none focus:border-cyan-500"
               />
               <button 
                 onClick={handleJoinRoom}
                 disabled={joinCode.length !== 4}
-                className="px-6 py-4 bg-cyan-600 hover:bg-cyan-500 disabled:bg-slate-200 dark:bg-slate-700 disabled:text-slate-500 dark:text-slate-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-colors"
+                className="px-6 py-4 bg-cyan-600 hover:bg-cyan-500 disabled:bg-slate-700 disabled:text-slate-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-colors"
               >
                 Rejoindre
               </button>
@@ -164,7 +164,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
         {status === 'lobby' && (
           <div className="w-full flex flex-col items-center">
             {isHost && (
-              <div className="bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl p-4 mb-6 w-full shadow-inner">
+              <div className="bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl p-4 mb-6 w-full shadow-inner">
                 <p className="text-xs text-slate-600 dark:text-slate-400 uppercase font-bold mb-1">Code du Salon</p>
                 <p className="text-4xl font-mono font-black text-cyan-600 dark:text-cyan-400 tracking-widest">{roomId}</p>
                 <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">Partagez ce code avec votre adversaire</p>
@@ -174,9 +174,9 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
             <div className="w-full space-y-3 mb-8 text-left">
               
             {isHost && (
-              <div className="w-full bg-slate-50 dark:bg-slate-50/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-300/80 dark:border-slate-700/50 rounded-xl p-3 mb-4 flex items-center justify-between">
+              <div className="w-full bg-slate-50/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-700/50 rounded-xl p-3 mb-4 flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider">Mode Coopératif</h3>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Mode Coopératif</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400">Jouez dans le même club en Frères d'Armes</p>
                 </div>
                 <button 
@@ -201,16 +201,16 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
             
             <h3 className="text-slate-700 dark:text-slate-300 font-bold uppercase text-xs tracking-wider border-b border-slate-300 dark:border-slate-800 pb-2">Joueurs dans le salon</h3>
               {players.map(p => (
-                <div key={p.playerId} className="flex items-center justify-between bg-slate-50 dark:bg-slate-50/50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-300 dark:border-slate-300/80 dark:border-slate-700/50">
+                <div key={p.playerId} className="flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-300/80 dark:border-slate-700/50">
                   <div className="flex items-center gap-3">
                     <div className={`w-2 h-2 rounded-full ${p.playerId === playerId ? 'bg-emerald-500' : 'bg-cyan-500'}`}></div>
-                    <span className="font-semibold text-slate-900 dark:text-slate-900 dark:text-white">{p.name}</span>
+                    <span className="font-semibold text-slate-900 dark:text-white">{p.name}</span>
                   </div>
                   {p.isHost && <span className="text-[10px] bg-amber-500/20 text-amber-600 dark:text-amber-400 px-2 py-1 rounded font-bold uppercase">Hôte</span>}
                 </div>
               ))}
               {players.length < 2 && (
-                <div className="flex items-center justify-center bg-slate-50 dark:bg-slate-800/30 p-3 rounded-lg border border-slate-300 dark:border-slate-800 border-dashed animate-pulse">
+                <div className="flex items-center justify-center bg-slate-800/30 p-3 rounded-lg border border-slate-300 dark:border-slate-800 border-dashed animate-pulse">
                   <span className="text-slate-500 dark:text-slate-500 italic text-sm">En attente d'un adversaire...</span>
                 </div>
               )}
@@ -220,7 +220,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
               <button 
                 onClick={handleStartGame}
                 disabled={players.length < 2}
-                className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-50 dark:bg-slate-800 disabled:text-slate-500 dark:text-slate-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-all shadow-lg shadow-emerald-900/20 disabled:shadow-none"
+                className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-all shadow-lg shadow-emerald-900/20 disabled:shadow-none"
               >
                 {players.length < 2 ? 'Attente des joueurs' : 'Lancer la Carrière'}
               </button>

@@ -36,14 +36,14 @@ export const CareerHistory = ({ onBack }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0F172A] p-6 text-slate-800 dark:text-slate-200 relative overflow-hidden font-sans flex flex-col items-center">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0F172A] p-6 text-slate-800 dark:text-slate-200 relative overflow-hidden font-sans flex flex-col items-center">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-10"></div>
       
       <div className="w-full max-w-3xl relative z-10">
         <div className="flex items-center justify-between mb-8">
           <button 
             onClick={() => { playSound('click'); onBack(); }}
-            className="text-slate-900 dark:text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-200 dark:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
+            className="text-slate-900 dark:text-white bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
           >
             ← Retour
           </button>
@@ -53,7 +53,7 @@ export const CareerHistory = ({ onBack }) => {
           <div className="w-20"></div> {/* Spacer for centering */}
         </div>
 
-        <div className="bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-3xl p-6 shadow-2xl backdrop-blur-sm min-h-[60vh]">
+        <div className="bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-3xl p-6 shadow-2xl backdrop-blur-sm min-h-[60vh]">
           {loading ? (
             <div className="flex flex-col items-center justify-center h-64 space-y-4">
               <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
@@ -69,7 +69,7 @@ export const CareerHistory = ({ onBack }) => {
             <div className="space-y-3">
               {scores.map((entry, index) => {
                 const isTop3 = index < 3;
-                let bgClass = "bg-slate-200 dark:bg-slate-200/50 dark:bg-slate-700/50 hover:bg-slate-200 dark:bg-slate-700";
+                let bgClass = "bg-slate-200/50 dark:bg-slate-700/50 hover:bg-slate-300 dark:hover:bg-slate-700";
                 let rankColor = "text-slate-500 dark:text-slate-500";
                 
                 if (index === 0) { bgClass = "bg-amber-900/40 border border-amber-500/30"; rankColor = "text-amber-600 dark:text-amber-400"; }
@@ -84,7 +84,7 @@ export const CareerHistory = ({ onBack }) => {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="font-bold text-slate-900 dark:text-slate-900 dark:text-white text-lg">{entry.pseudo}</p>
+                          <p className="font-bold text-slate-900 dark:text-white text-lg">{entry.pseudo}</p>
                           {entry.nationality && (
                             <span className="text-[10px] bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700">{entry.nationality}</span>
                           )}
