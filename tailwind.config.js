@@ -6,7 +6,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        emerald: {
+          75: '#defbed',
+          150: '#baf5d7',
+        }
+      }
+    },
   },
   plugins: [],
 }

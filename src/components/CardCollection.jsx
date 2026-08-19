@@ -13,7 +13,7 @@ export const CardCollection = ({ onBack }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-emerald-300 dark:bg-slate-950 p-3 md:p-8 relative overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-emerald-200 dark:bg-slate-950 p-3 md:p-8 relative overflow-hidden flex flex-col">
       {/* Decorative background elements */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-900/20 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3"></div>
@@ -48,7 +48,7 @@ export const CardCollection = ({ onBack }) => {
                   <PlayerCard player={card} club={card.club} />
                 </div>
                 
-                <div className="w-full mt-2 bg-emerald-300 dark:bg-slate-950 p-3 rounded-2xl border border-slate-800/80 shadow-inner space-y-2">
+                <div className="w-full mt-2 bg-emerald-200 dark:bg-slate-950 p-3 rounded-2xl border border-slate-800/80 shadow-inner space-y-2">
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-slate-500 dark:text-slate-500 font-medium">Fin de carrière</span>
                     <span className="text-slate-600 dark:text-slate-300 font-bold">{card.date}</span>

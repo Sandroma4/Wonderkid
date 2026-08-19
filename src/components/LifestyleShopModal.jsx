@@ -14,7 +14,7 @@ export function LifestyleShopModal({ isOpen, onClose, bankBalance, player, onBuy
           <button onClick={onClose} className="p-2 text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white font-bold">✕</button>
         </div>
 
-        <div className="bg-emerald-300 dark:bg-slate-950 p-3 rounded-2xl flex justify-between items-center border border-slate-300 dark:border-slate-800">
+        <div className="bg-emerald-200 dark:bg-slate-950 p-3 rounded-2xl flex justify-between items-center border border-slate-300 dark:border-slate-800">
           <span className="text-xs font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400">Solde disponible</span>
           <span className="text-lg font-black text-emerald-600 dark:text-emerald-400">{bankBalance.toLocaleString('fr-FR')} €</span>
         </div>
@@ -26,7 +26,7 @@ export function LifestyleShopModal({ isOpen, onClose, bankBalance, player, onBuy
             const hasUpkeep = item.upkeep < 0;
             const isProfitable = item.upkeep > 0;
             return (
-              <div key={item.id} className="p-2 sm:p-3 bg-emerald-300 dark:bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-300 dark:border-slate-800 flex flex-col justify-between gap-1 sm:gap-2 group hover:border-emerald-500/50 transition-colors">
+              <div key={item.id} className="p-2 sm:p-3 bg-emerald-200 dark:bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-300 dark:border-slate-800 flex flex-col justify-between gap-1 sm:gap-2 group hover:border-emerald-500/50 transition-colors">
                 <div>
                   <h4 className="font-bold text-[9px] sm:text-xs text-slate-800 dark:text-white flex flex-col sm:flex-row flex-wrap gap-1 sm:items-center mb-1">
                     <span className="leading-tight">{item.name}</span>

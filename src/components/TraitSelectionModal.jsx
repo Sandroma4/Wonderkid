@@ -5,7 +5,7 @@ export const TraitSelectionModal = ({ onSelect }) => {
   const traits = getBaseTraits();
 
   return (
-    <div className="fixed inset-0 bg-emerald-300/90 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-emerald-200/90 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl md:rounded-3xl p-4 md:p-6 max-w-2xl w-[95%] shadow-2xl relative overflow-y-auto max-h-[90vh]">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-500"></div>
         
