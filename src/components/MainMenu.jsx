@@ -150,8 +150,28 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-200 dark:bg-[#0F172A] flex items-center justify-center p-6 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-emerald-150 dark:bg-[#0F172A] flex items-center justify-center p-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
+      
+      {/* Pitch Markings - Left (Penalty Area) */}
+      <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-56 h-[440px] border-y-[3px] border-r-[3px] border-white/60 dark:border-white/5 pointer-events-none">
+        {/* Six-yard box */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-20 h-48 border-y-[3px] border-r-[3px] border-white/60 dark:border-white/5"></div>
+        {/* Penalty spot */}
+        <div className="absolute right-14 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white/60 dark:bg-white/5"></div>
+        {/* Penalty arc */}
+        <div className="absolute -right-10 top-1/2 -translate-y-1/2 w-20 h-32 border-[3px] border-white/60 dark:border-white/5 rounded-full" style={{ clipPath: 'inset(0 0 0 50%)' }}></div>
+      </div>
+
+      {/* Pitch Markings - Right (Penalty Area) */}
+      <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-56 h-[440px] border-y-[3px] border-l-[3px] border-white/60 dark:border-white/5 pointer-events-none">
+        {/* Six-yard box */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-20 h-48 border-y-[3px] border-l-[3px] border-white/60 dark:border-white/5"></div>
+        {/* Penalty spot */}
+        <div className="absolute left-14 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white/60 dark:bg-white/5"></div>
+        {/* Penalty arc */}
+        <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-20 h-32 border-[3px] border-white/60 dark:border-white/5 rounded-full" style={{ clipPath: 'inset(0 50% 0 0)' }}></div>
+      </div>
       
       {/* Theme Toggle Button */}
       <div className="absolute top-12 left-4 md:top-6 md:left-6 z-20">
