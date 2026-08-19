@@ -413,7 +413,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-3">
                       <span className="text-xl md:text-2xl">⚔️</span>
-                      <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Course à la Carrière (1v1)</span>
+                      <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Guerre d'égos (1v1)</span>
                     </div>
                     <span className="text-cyan-600 dark:text-cyan-300 group-hover:translate-x-1 transition-transform">➔</span>
                   </div>

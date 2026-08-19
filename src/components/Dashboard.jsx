@@ -34,11 +34,17 @@ import { getTraitDetails } from '../utils/traitsData';
 import { COUNTRIES } from '../utils/gameData';
 import { FlagIcon } from './FlagIcon';
 
-const AnimatedStatBar = ({ label, oldVal, newVal, gain }) => {
-  const [currentVal, setCurrentVal] = useState(oldVal);
-  const [displayVal, setDisplayVal] = useState(oldVal);
+const AnimatedStatBar = ({ label, oldVal, newVal, gain, disableEffects }) => {
+  const [currentVal, setCurrentVal] = useState(disableEffects ? newVal : oldVal);
+  const [displayVal, setDisplayVal] = useState(disableEffects ? newVal : oldVal);
 
   useEffect(() => {
+    if (disableEffects) {
+      setCurrentVal(newVal);
+      setDisplayVal(newVal);
+      return;
+    }
+    
     const timer = setTimeout(() => {
       setCurrentVal(newVal);
       
@@ -56,20 +62,24 @@ const AnimatedStatBar = ({ label, oldVal, newVal, gain }) => {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [oldVal, newVal, gain]);
+  }, [oldVal, newVal, gain, disableEffects]);
 
   return (
     <div className="flex flex-col gap-1.5 w-full max-w-[160px] bg-white/80 dark:bg-slate-900/80 p-2.5 rounded-xl border border-slate-300/80 dark:border-slate-700/50 shadow-inner">
       <div className="flex justify-between items-center text-[9px] uppercase font-black tracking-wider">
         <span className="text-slate-600 dark:text-slate-300">{label}</span>
-        <span className={gain > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}>
-          {gain > 0 ? `+${gain}` : gain} <span className="text-slate-800 dark:text-white text-[11px] ml-1">{displayVal}</span>
-        </span>
+        {disableEffects ? (
+          <span className="text-slate-800 dark:text-white text-[11px] ml-1">{displayVal}</span>
+        ) : (
+          <span className={gain > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}>
+            {gain > 0 ? `+${gain}` : gain} <span className="text-slate-800 dark:text-white text-[11px] ml-1">{displayVal}</span>
+          </span>
+        )}
       </div>
-      <div className="h-1.5 w-full bg-white dark:bg-slate-800 rounded-full overflow-hidden relative">
+      <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden relative">
          <div 
-           className={`absolute top-0 left-0 h-full ${gain > 0 ? 'bg-emerald-500' : 'bg-rose-500'} transition-all ease-out`} 
-           style={{ width: `${Math.min(99, Math.max(0, currentVal))}%`, transitionDuration: '1000ms' }} 
+           className={`absolute top-0 left-0 h-full ${disableEffects ? 'bg-slate-400 dark:bg-slate-500' : (gain > 0 ? 'bg-emerald-500' : 'bg-rose-500')} ${!disableEffects ? 'transition-all ease-out' : ''}`} 
+           style={{ width: `${Math.min(99, Math.max(0, currentVal))}%`, transitionDuration: disableEffects ? '0ms' : '1000ms' }} 
          />
       </div>
     </div>
@@ -629,7 +639,8 @@ export function Dashboard({
                           label={labels[attr] || attr} 
                           oldVal={oldVal} 
                           newVal={newVal} 
-                          gain={displayGain} 
+                          gain={displayGain}
+                          disableEffects={player.age > 21}
                         />
                       );
                     })}

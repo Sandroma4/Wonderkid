@@ -88,11 +88,20 @@ export const CareerHistory = ({ onBack }) => {
                           {entry.nationality && (
                             <span className="text-[10px] bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700">{entry.nationality}</span>
                           )}
+                          {entry.position && (
+                            <span className="text-[10px] bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-300/50 dark:border-emerald-700/50">{entry.position}</span>
+                          )}
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider flex items-center gap-2">
                           <span>{entry.player_name || 'Inconnu'}</span>
                           <span>•</span>
                           <span>OVR Max : <span className="text-emerald-600 dark:text-emerald-400 font-bold">{entry.ovr}</span></span>
+                          {entry.ballon_dor > 0 && (
+                            <>
+                              <span>•</span>
+                              <span className="text-amber-500 flex items-center gap-1">🌕 x{entry.ballon_dor}</span>
+                            </>
+                          )}
                           {entry.major_trophies > 0 && (
                             <>
                               <span>•</span>

@@ -80,11 +80,19 @@ export const Leaderboard = ({ onBack }) => {
                           {entry.nationality && (
                             <span className="text-[9px] md:text-[10px] bg-white dark:bg-slate-800 px-1 md:px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 shrink-0">{entry.nationality}</span>
                           )}
+                          {entry.position && (
+                            <span className="text-[9px] md:text-[10px] bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-1 md:px-1.5 py-0.5 rounded border border-emerald-300/50 dark:border-emerald-700/50 shrink-0">{entry.position}</span>
+                          )}
                         </div>
                         <p className="text-[9px] md:text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider flex items-center gap-1 md:gap-2 truncate">
                           <span className="truncate">{entry.pseudo ? entry.player_name : 'Carrière'}</span>
                           <span className="hidden sm:inline">•</span>
                           <span className="hidden sm:inline">OVR: <span className="text-emerald-600 dark:text-emerald-400 font-bold">{entry.ovr}</span></span>
+                          {entry.ballon_dor > 0 && (
+                            <span className="hidden md:flex items-center gap-1 text-amber-500">
+                              • 🌕 x{entry.ballon_dor}
+                            </span>
+                          )}
                           {entry.major_trophies > 0 && (
                             <span className="hidden md:flex items-center gap-1">
                               • 🏆 {entry.major_trophies}

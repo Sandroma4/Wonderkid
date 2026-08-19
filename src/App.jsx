@@ -113,6 +113,19 @@ export default function App() {
         } else if (payload.type === 'PLAYER_QUIT') {
           alert("L'autre joueur a quitté la partie.");
           handleRestartGame();
+        } else if (payload.type === 'COOP_CONSEQUENCE') {
+          const { narrative, stats } = payload.effect;
+          alert(`📢 INTERACTION COOP :\n\n${narrative}`);
+          
+          setGameState(prev => {
+            if (!prev) return prev;
+            const updatedPlayer = { ...prev.player };
+            if (stats.morale) updatedPlayer.morale = Math.max(0, Math.min(100, (updatedPlayer.morale || 50) + stats.morale));
+            if (stats.form) updatedPlayer.form = Math.max(0, Math.min(100, (updatedPlayer.form || 50) + stats.form));
+            if (stats.coachTrust) updatedPlayer.coachTrust = Math.max(0, Math.min(100, (updatedPlayer.coachTrust || 50) + stats.coachTrust));
+            
+            return { ...prev, player: updatedPlayer };
+          });
         }
       });
     }
@@ -304,7 +317,7 @@ export default function App() {
 
     const clubOffers = generate6ClubOffers(tempPlayer);
     const initialCompletedEvents = [];
-    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, 38, {}, null);
+    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, 38, {}, null, multiplayerContext?.isCoopMode);
     let rival = null;
     if (multiplayerContext?.players) {
       const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
@@ -548,6 +561,13 @@ export default function App() {
           updatedPlayer.bannedAtEventStep = prev.eventStep;
       }
       outcomeWithConverted.narrative = (outcomeWithConverted.narrative || "") + "\n\n🚨 RUPTURE TOTALE : Le coach ne vous fait plus aucune confiance ! Vous êtes banni de l'équipe première et placé sur la liste des transferts (Moral tombé à 0).";
+    }
+
+    if (outcomeWithConverted.coopEffect && multiplayerContext?.roomObj) {
+      multiplayerContext.roomObj.sendBroadcast({
+        type: 'COOP_CONSEQUENCE',
+        effect: outcomeWithConverted.coopEffect
+      });
     }
 
     setActiveOutcome(outcomeWithConverted);
@@ -1241,7 +1261,7 @@ export default function App() {
       const is18 = newAge === 18 && !finalUpdatedPlayer.roleId;
 
       const matchesPlayed = statsToUse ? (statsToUse.matches || 0) : 38;
-      let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, statsToUse?.tournaments, prev.club.tier);
+      let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, statsToUse?.tournaments, prev.club.tier, multiplayerContext?.isCoopMode);
       const hasPlayerWonBallonDor = statsToUse?.awards?.some(a => a.text === "Ballon d'Or");
       const hasPlayerWonCL = statsToUse?.tournaments?.championsLeague?.stage === 'Vainqueur';
       const updatedRival = updateRival(prev.rival, finalUpdatedPlayer.ovr, prev.club.tier, hasPlayerWonBallonDor, hasPlayerWonCL);
@@ -1408,11 +1428,17 @@ export default function App() {
       const majorTrophiesNames = ["Ballon d'Or", "Vainqueur de la Coupe du Monde", "Vainqueur de l'Euro", "Vainqueur de la Copa America", "Vainqueur de la Ligue des Champions"];
       const major_trophies = palmares ? palmares.filter(t => majorTrophiesNames.includes(t.text)).length : 0;
 
+      const ballon_dor = palmares ? palmares.filter(t => t.text === "Ballon d'Or").length : 0;
+
       const combinedName = pseudo !== 'Anonyme' ? `${pseudo} (${realName})` : realName;
       const payload = {
         player_name: combinedName,
         score: totalScore,
-        ovr: maxOvr
+        ovr: maxOvr,
+        nationality: nationality,
+        position: player.position,
+        major_trophies: major_trophies,
+        ballon_dor: ballon_dor
       };
       
       if (session) {

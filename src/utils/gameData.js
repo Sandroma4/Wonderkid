@@ -10,6 +10,7 @@ import { EXTRA_EVENTS_9 } from './extraEvents9';
 import { EXTRA_EVENTS_10 } from './extraEvents10';
 import { EXTRA_EVENTS_11 } from './extraEvents11';
 import { EXTRA_EVENTS_12 } from './extraEvents12';
+import { COOP_EVENTS } from './coopEvents';
 
 export const COUNTRIES = [
   { id: "ZA", name: "Afrique du Sud" },
@@ -2850,7 +2851,8 @@ export const ALL_EVENTS = [
   ...EXTRA_EVENTS_9,
   ...EXTRA_EVENTS_10,
   ...EXTRA_EVENTS_11,
-  ...EXTRA_EVENTS_12
+  ...EXTRA_EVENTS_12,
+  ...COOP_EVENTS
 ];
 
 export const PERKS_LIST = [
@@ -2870,10 +2872,12 @@ export const CHALLENGES_LIST = [
 ];
 
 
-export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlayed = 38, tournaments = {}) => { 
+export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlayed = 38, tournaments = {}, clubTier = null, isCoopMode = false) => { 
   const playerPosition = player?.position || 'ALL'; 
   
   const compatibleEvents = ALL_EVENTS.filter(ev => { 
+    if (ev.category === 'FRÈRES D\'ARMES' && !isCoopMode) return false;
+    
     if (ev.targetPosition && ev.targetPosition !== 'ALL') {
       if (ev.targetPosition.startsWith('!')) {
         const excluded = ev.targetPosition.substring(1);
