@@ -134,7 +134,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-slate-50 dark:bg-[#0F172A] text-slate-100 flex flex-col justify-center items-center p-3 sm:p-6 relative overflow-y-auto font-sans">
+    <div className="min-h-[100dvh] bg-[#0F172A] text-slate-100 flex flex-col justify-center items-center p-3 sm:p-6 relative overflow-y-auto font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
       {isWaitingForOpponent ? (
       <div className="w-full max-w-2xl bg-white dark:bg-slate-900/90 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl relative overflow-hidden z-10 my-auto">
@@ -156,7 +156,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
       </div>
 ) : (
       <div className="w-full max-w-2xl bg-white dark:bg-slate-900/90 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl relative overflow-hidden z-10 my-auto max-h-[95dvh] overflow-y-auto">
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-white dark:bg-slate-800">
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-slate-50 dark:bg-slate-800">
           <div 
             className="h-full bg-emerald-500 transition-all duration-300 ease-out"
             style={{ width: `${(step / totalSteps) * 100}%` }}
@@ -164,7 +164,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
         </div>
 
         <div className="text-center mb-5 sm:mb-6 mt-1 sm:mt-2 space-y-1">
-          <span className="text-emerald-400 text-[10px] font-black tracking-widest uppercase">Étape {step} sur {totalSteps}</span>
+          <span className="text-emerald-600 dark:text-emerald-400 text-[10px] font-black tracking-widest uppercase">Étape {step} sur {totalSteps}</span>
           <h1 className="text-xl sm:text-3xl font-black text-slate-900 dark:text-slate-900 dark:text-white">
             {step === 1 && "Nationalité"}
             {step === 2 && "Sexe & Identité"}
@@ -185,7 +185,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                     key={continent}
                     type="button"
                     onClick={() => setActiveContinent(continent)}
-                    className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-colors ${activeContinent === continent ? 'bg-emerald-600 text-slate-900 dark:text-slate-900 dark:text-white' : 'bg-white dark:bg-slate-800 text-slate-400 hover:bg-slate-100 dark:bg-slate-700'}`}
+                    className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-colors ${activeContinent === continent ? 'bg-emerald-600 text-slate-900 dark:text-slate-900 dark:text-white' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:bg-slate-700'}`}
                   >
                     {continent}
                   </button>
@@ -197,7 +197,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                     key={c.id}
                     type="button"
                     onClick={() => handleSelectCountry(c)}
-                    className={`p-2.5 sm:p-3 rounded-xl border flex flex-col items-center justify-center gap-1.5 sm:gap-2 transition-all hover:border-emerald-400 hover:bg-emerald-500/10 ${country.id === c.id ? 'border-emerald-400 bg-emerald-900/40 opacity-100' : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 opacity-80'}`}
+                    className={`p-2.5 sm:p-3 rounded-xl border flex flex-col items-center justify-center gap-1.5 sm:gap-2 transition-all hover:border-emerald-400 hover:bg-emerald-500/10 ${country.id === c.id ? 'border-emerald-400 bg-emerald-900/40 opacity-100' : 'border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 opacity-80'}`}
                   >
                     <FlagIcon code={c.id} className="w-8 h-5 sm:w-10 sm:h-7" />
                     <span className="text-[11px] font-bold text-slate-900 dark:text-slate-900 dark:text-white text-center leading-tight line-clamp-1">{c.name}</span>
@@ -222,7 +222,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                         className={`p-2 sm:p-6 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-1 sm:gap-3 relative overflow-hidden group ${
                           isSelected
                             ? 'border-emerald-400 bg-emerald-500/20 shadow-[0_0_35px_rgba(16,185,129,0.35)] scale-[1.02]'
-                            : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/80 hover:border-emerald-400/50 hover:bg-emerald-500/10'
+                            : 'border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/80 hover:border-emerald-400/50 hover:bg-emerald-500/10'
                         }`}
                       >
                         {/* Glowing radial halo backdrop */}
@@ -259,12 +259,12 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                     value={playerName}
                     onChange={(e) => setPlayerName(e.target.value)}
                     maxLength={25}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-900 dark:text-white font-bold focus:border-emerald-400 outline-none text-base text-center"
+                    className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-900 dark:text-white font-bold focus:border-emerald-400 outline-none text-base text-center"
                   />
                   <button
                     type="button"
                     onClick={() => { playSound('click'); setPlayerName(getRandomName(country.id, gender.id)); }}
-                    className="px-5 py-3 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:bg-slate-700 text-sm font-bold rounded-xl text-slate-800 dark:text-slate-200 transition-all flex items-center gap-2"
+                    className="px-5 py-3 bg-slate-50 dark:bg-slate-800 hover:bg-slate-200 dark:bg-slate-700 text-sm font-bold rounded-xl text-slate-800 dark:text-slate-200 transition-all flex items-center gap-2"
                   >
                     <span>🎲</span>
                   </button>
@@ -287,14 +287,14 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                   key={bg.id}
                   type="button"
                   onClick={() => { playSound('click'); setBackground(bg); setStep(4); }}
-                  className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left transition-all group"
+                  className="p-4 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left transition-all group"
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xl">{bg.icon}</span>
-                    <h4 className="font-black text-slate-900 dark:text-slate-900 dark:text-white text-sm group-hover:text-emerald-400 transition-colors">{bg.name}</h4>
+                    <h4 className="font-black text-slate-900 dark:text-slate-900 dark:text-white text-sm group-hover:text-emerald-600 dark:text-emerald-400 transition-colors">{bg.name}</h4>
                   </div>
                   <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-2">{bg.desc}</p>
-                  <div className="text-[10px] font-mono text-emerald-400 font-bold">
+                  <div className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">
                     💰 Budget initial : {bg.startingMoney.toLocaleString()} €
                   </div>
                 </button>
@@ -311,10 +311,10 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                       key={posCat.id}
                       type="button"
                       onClick={() => { playSound('click'); setSelectedPositionCat(posCat); setPositionName(posCat.name); setRole(posCat.roles[0]); setStep(5); }}
-                      className="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-center transition-all group"
+                      className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-center transition-all group"
                     >
                       <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">{posCat.icon}</div>
-                      <div className="font-extrabold text-slate-900 dark:text-slate-900 dark:text-white text-sm group-hover:text-emerald-400">{posCat.name}</div>
+                      <div className="font-extrabold text-slate-900 dark:text-slate-900 dark:text-white text-sm group-hover:text-emerald-600 dark:text-emerald-400">{posCat.name}</div>
                       
                     </button>
                   ))}
@@ -326,7 +326,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                     <button
                       type="button"
                       onClick={() => { playSound('click'); setSelectedPositionCat(null); }}
-                      className="text-xs text-emerald-400 hover:underline font-bold"
+                      className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline font-bold"
                     >
                       ← Changer de poste
                     </button>
@@ -337,11 +337,11 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                         key={r.id}
                         type="button"
                         onClick={() => handleSelectRole(selectedPositionCat, r)}
-                        className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left transition-all group"
+                        className="p-3.5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left transition-all group"
                       >
-                        <div className="font-extrabold text-xs text-slate-900 dark:text-slate-900 dark:text-white group-hover:text-emerald-400 flex items-center justify-between">
+                        <div className="font-extrabold text-xs text-slate-900 dark:text-slate-900 dark:text-white group-hover:text-emerald-600 dark:text-emerald-400 flex items-center justify-between">
                           <span>{r.name}</span>
-                          <span className="text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity">➔</span>
+                          <span className="text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity">➔</span>
                         </div>
                         <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">{r.description}</p>
                       </button>
@@ -359,13 +359,13 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                   key={ls.id}
                   type="button"
                   onClick={() => { playSound('click'); setLifestyle(ls); setStep(6); }}
-                  className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left flex items-center justify-between transition-all group"
+                  className="p-4 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left flex items-center justify-between transition-all group"
                 >
                   <div>
-                    <div className="font-extrabold text-sm text-slate-900 dark:text-slate-900 dark:text-white group-hover:text-emerald-400">{ls.name}</div>
+                    <div className="font-extrabold text-sm text-slate-900 dark:text-slate-900 dark:text-white group-hover:text-emerald-600 dark:text-emerald-400">{ls.name}</div>
                     <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">{ls.description}</div>
                   </div>
-                  <span className="text-slate-600 dark:text-slate-400 group-hover:text-emerald-400 font-bold">➔</span>
+                  <span className="text-slate-600 dark:text-slate-400 group-hover:text-emerald-600 dark:text-emerald-400 font-bold">➔</span>
                 </button>
               ))}
             </div>
@@ -378,14 +378,14 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                   key={chal.id}
                   type="button"
                   onClick={() => { playSound('click'); setChallenge(chal); setStep(7); }}
-                  className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left flex items-center justify-between transition-all group relative overflow-hidden"
+                  className="p-4 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left flex items-center justify-between transition-all group relative overflow-hidden"
                 >
                   <div className="flex items-start gap-3">
                     <span className="text-2xl mt-1">{chal.icon}</span>
                     <div>
-                      <div className="font-extrabold text-sm text-slate-900 dark:text-slate-900 dark:text-white group-hover:text-emerald-400 flex items-center gap-2">
+                      <div className="font-extrabold text-sm text-slate-900 dark:text-slate-900 dark:text-white group-hover:text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
                         {chal.name}
-                        {chal.multiplier > 1 && <span className="bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded text-[9px] uppercase font-black">Score x{chal.multiplier}</span>}
+                        {chal.multiplier > 1 && <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded text-[9px] uppercase font-black">Score x{chal.multiplier}</span>}
                       </div>
                       <div className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">{chal.desc}</div>
                     </div>
@@ -397,13 +397,13 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
 
           {step === 7 && (
             <div className="space-y-4 text-center">
-              <div className="inline-block p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 shadow-inner w-full max-w-md">
+              <div className="inline-block p-4 rounded-2xl border border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 shadow-inner w-full max-w-md">
                 <div className="flex justify-center mb-2">
                   <FlagIcon code={country.id} className="w-8 h-5" />
                 </div>
                 <h2 className="text-xl font-black text-slate-900 dark:text-slate-900 dark:text-white">{playerName}</h2>
-                <p className="text-emerald-400 font-bold text-xs">{positionName} • {role ? role.name : ''}</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80 text-[11px] text-slate-700 dark:text-slate-300 grid grid-cols-2 gap-2 text-left">
+                <p className="text-emerald-600 dark:text-emerald-400 font-bold text-xs">{positionName} • {role ? role.name : ''}</p>
+                <div className="mt-3 pt-3 border-t border-slate-300 dark:border-slate-800/80 text-[11px] text-slate-700 dark:text-slate-300 grid grid-cols-2 gap-2 text-left">
                   <p>Sexe : <strong className="text-slate-900 dark:text-slate-900 dark:text-white">{gender.name}</strong></p>
                   <p>Origine : <strong className="text-slate-900 dark:text-slate-900 dark:text-white">{background.name}</strong></p>
                   <p>Hygiène : <strong className="text-slate-900 dark:text-slate-900 dark:text-white">{lifestyle.name}</strong></p>
@@ -422,7 +422,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
           )}
         </div>
 
-        <div className="mt-6 flex justify-start items-center border-t border-slate-200 dark:border-slate-800 pt-4 h-8">
+        <div className="mt-6 flex justify-start items-center border-t border-slate-300 dark:border-slate-800 pt-4 h-8">
           {step > 1 && (
             <button
               type="button"

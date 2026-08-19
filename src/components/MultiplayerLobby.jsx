@@ -107,14 +107,14 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
   }, [players, status, onStart, roomObj, playerId]);
 
   return (
-    <div className="app-typography min-h-[100dvh] bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div className="app-typography min-h-[100dvh] bg-slate-100 dark:bg-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-[0.03]"></div>
       
-      <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl relative z-10 flex flex-col items-center text-center">
+      <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-6 shadow-2xl relative z-10 flex flex-col items-center text-center">
         
         <button 
           onClick={() => { playSound('click'); onBack(); }}
-          className="absolute top-4 left-4 text-slate-900 dark:text-slate-900 dark:text-white bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 z-50 whitespace-nowrap"
+          className="absolute top-4 left-4 text-slate-900 dark:text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 hover:bg-slate-200 dark:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 z-50 whitespace-nowrap"
         >
           ← Retour
         </button>
@@ -136,9 +136,9 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
             </button>
 
             <div className="flex items-center gap-2">
-              <div className="h-px bg-white dark:bg-slate-800 flex-1"></div>
+              <div className="h-px bg-slate-50 dark:bg-slate-800 flex-1"></div>
               <span className="text-slate-500 dark:text-slate-500 text-xs uppercase font-bold">ou</span>
-              <div className="h-px bg-white dark:bg-slate-800 flex-1"></div>
+              <div className="h-px bg-slate-50 dark:bg-slate-800 flex-1"></div>
             </div>
 
             <div className="flex gap-2">
@@ -148,12 +148,12 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
                 onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                 placeholder="Code à 4 lettres"
                 maxLength={4}
-                className="flex-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-900 dark:text-white text-center font-mono text-xl rounded-xl focus:outline-none focus:border-cyan-500"
+                className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-900 dark:text-white text-center font-mono text-xl rounded-xl focus:outline-none focus:border-cyan-500"
               />
               <button 
                 onClick={handleJoinRoom}
                 disabled={joinCode.length !== 4}
-                className="px-6 py-4 bg-cyan-600 hover:bg-cyan-500 disabled:bg-slate-100 dark:bg-slate-700 disabled:text-slate-500 dark:text-slate-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-colors"
+                className="px-6 py-4 bg-cyan-600 hover:bg-cyan-500 disabled:bg-slate-200 dark:bg-slate-700 disabled:text-slate-500 dark:text-slate-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-colors"
               >
                 Rejoindre
               </button>
@@ -164,9 +164,9 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
         {status === 'lobby' && (
           <div className="w-full flex flex-col items-center">
             {isHost && (
-              <div className="bg-white/80 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl p-4 mb-6 w-full shadow-inner">
+              <div className="bg-slate-50 dark:bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl p-4 mb-6 w-full shadow-inner">
                 <p className="text-xs text-slate-600 dark:text-slate-400 uppercase font-bold mb-1">Code du Salon</p>
-                <p className="text-4xl font-mono font-black text-cyan-400 tracking-widest">{roomId}</p>
+                <p className="text-4xl font-mono font-black text-cyan-600 dark:text-cyan-400 tracking-widest">{roomId}</p>
                 <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">Partagez ce code avec votre adversaire</p>
               </div>
             )}
@@ -174,7 +174,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
             <div className="w-full space-y-3 mb-8 text-left">
               
             {isHost && (
-              <div className="w-full bg-slate-800/50 border border-slate-300 dark:border-slate-700/50 rounded-xl p-3 mb-4 flex items-center justify-between">
+              <div className="w-full bg-slate-50 dark:bg-slate-50/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-300/80 dark:border-slate-700/50 rounded-xl p-3 mb-4 flex items-center justify-between">
                 <div>
                   <h3 className="text-sm font-bold text-slate-900 dark:text-slate-900 dark:text-white uppercase tracking-wider">Mode Coopératif</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400">Jouez dans le même club en Frères d'Armes</p>
@@ -186,7 +186,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
                     setIsCoopMode(newMode);
                     if (roomObj) roomObj.updateState({ isCoop: newMode });
                   }}
-                  className={`w-12 h-6 rounded-full relative transition-colors ${isCoopMode ? 'bg-emerald-500' : 'bg-slate-100 dark:bg-slate-700'}`}
+                  className={`w-12 h-6 rounded-full relative transition-colors ${isCoopMode ? 'bg-emerald-500' : 'bg-slate-200 dark:bg-slate-700'}`}
                 >
                   <div className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform ${isCoopMode ? 'translate-x-7' : 'translate-x-1'}`}></div>
                 </button>
@@ -195,22 +195,22 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
             
             {!isHost && players.find(p => p.isHost)?.isCoop && (
                <div className="w-full bg-emerald-900/30 border border-emerald-700/50 rounded-xl p-3 mb-4 flex items-center justify-center">
-                 <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">🌟 Mode Coopératif Activé 🌟</span>
+                 <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">🌟 Mode Coopératif Activé 🌟</span>
                </div>
             )}
             
-            <h3 className="text-slate-700 dark:text-slate-300 font-bold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 pb-2">Joueurs dans le salon</h3>
+            <h3 className="text-slate-700 dark:text-slate-300 font-bold uppercase text-xs tracking-wider border-b border-slate-300 dark:border-slate-800 pb-2">Joueurs dans le salon</h3>
               {players.map(p => (
-                <div key={p.playerId} className="flex items-center justify-between bg-slate-800/50 p-3 rounded-lg border border-slate-300 dark:border-slate-700/50">
+                <div key={p.playerId} className="flex items-center justify-between bg-slate-50 dark:bg-slate-50/50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-300 dark:border-slate-300/80 dark:border-slate-700/50">
                   <div className="flex items-center gap-3">
                     <div className={`w-2 h-2 rounded-full ${p.playerId === playerId ? 'bg-emerald-500' : 'bg-cyan-500'}`}></div>
                     <span className="font-semibold text-slate-900 dark:text-slate-900 dark:text-white">{p.name}</span>
                   </div>
-                  {p.isHost && <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-1 rounded font-bold uppercase">Hôte</span>}
+                  {p.isHost && <span className="text-[10px] bg-amber-500/20 text-amber-600 dark:text-amber-400 px-2 py-1 rounded font-bold uppercase">Hôte</span>}
                 </div>
               ))}
               {players.length < 2 && (
-                <div className="flex items-center justify-center bg-slate-800/30 p-3 rounded-lg border border-slate-200 dark:border-slate-800 border-dashed animate-pulse">
+                <div className="flex items-center justify-center bg-slate-50 dark:bg-slate-800/30 p-3 rounded-lg border border-slate-300 dark:border-slate-800 border-dashed animate-pulse">
                   <span className="text-slate-500 dark:text-slate-500 italic text-sm">En attente d'un adversaire...</span>
                 </div>
               )}
@@ -220,12 +220,12 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
               <button 
                 onClick={handleStartGame}
                 disabled={players.length < 2}
-                className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 disabled:bg-white dark:bg-slate-800 disabled:text-slate-500 dark:text-slate-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-all shadow-lg shadow-emerald-900/20 disabled:shadow-none"
+                className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-50 dark:bg-slate-800 disabled:text-slate-500 dark:text-slate-500 text-slate-900 dark:text-white rounded-xl font-bold uppercase tracking-wide transition-all shadow-lg shadow-emerald-900/20 disabled:shadow-none"
               >
                 {players.length < 2 ? 'Attente des joueurs' : 'Lancer la Carrière'}
               </button>
             ) : (
-              <div className="w-full py-4 bg-white dark:bg-slate-800 text-slate-400 rounded-xl font-bold uppercase tracking-wide border border-slate-300 dark:border-slate-700 flex justify-center items-center gap-2">
+              <div className="w-full py-4 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-xl font-bold uppercase tracking-wide border border-slate-300 dark:border-slate-700 flex justify-center items-center gap-2">
                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-600 dark:text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                 En attente de l'hôte...
               </div>

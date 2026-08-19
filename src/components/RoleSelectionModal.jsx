@@ -30,7 +30,7 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
             Il est temps de définir votre style de jeu. Choisissez votre{' '}
-            <span className="text-amber-400 font-bold">Rôle de prédilection</span>.
+            <span className="text-amber-600 dark:text-amber-400 font-bold">Rôle de prédilection</span>.
             <br/>
             <span className="text-slate-500 dark:text-slate-500 text-xs mt-1 block">Ce bonus s'applique passivement tout au long de votre carrière.</span>
           </p>
@@ -50,7 +50,7 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
               <button
                 key={role.id}
                 onClick={() => onSelect(role)}
-                className="flex flex-col items-center text-center p-2 sm:p-3 bg-slate-800/60 border border-slate-300 dark:border-slate-700 rounded-xl hover:bg-white dark:bg-slate-800 hover:border-amber-500/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.1)] transition-all duration-200 group relative overflow-hidden active:scale-95 w-full"
+                className="flex flex-col items-center text-center p-2 sm:p-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:bg-slate-800 hover:border-amber-500/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.1)] transition-all duration-200 group relative overflow-hidden active:scale-95 w-full"
               >
                 {/* Halo d'arrière-plan au survol */}
                 <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
@@ -69,12 +69,12 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
                   
                   <div className="mt-1 sm:mt-auto w-full flex flex-wrap justify-center gap-1 sm:gap-1.5">
                     {positiveMultipliers.map(([attr, val]) => (
-                      <div key={attr} className="bg-emerald-500/15 text-emerald-400 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md border border-emerald-500/25 tracking-wide">
+                      <div key={attr} className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md border border-emerald-500/25 tracking-wide">
                         {formatMultiplier(val)} {statLabels[attr] || attr}
                       </div>
                     ))}
                     {negativeMultipliers.map(([attr, val]) => (
-                      <div key={attr} className="bg-rose-500/15 text-rose-400 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md border border-rose-500/25 tracking-wide">
+                      <div key={attr} className="bg-rose-500/15 text-rose-600 dark:text-rose-400 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md border border-rose-500/25 tracking-wide">
                         {formatMultiplier(val)} {statLabels[attr] || attr}
                       </div>
                     ))}

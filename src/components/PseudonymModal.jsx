@@ -21,7 +21,7 @@ export function PseudonymModal({ onConfirm }) {
 
   return (
     <div className="fixed inset-0 bg-black/90 z-[200] flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-slate-50 dark:bg-[#0F172A] border border-emerald-500/50 rounded-2xl md:rounded-3xl p-5 md:p-8 max-w-sm w-[95%] shadow-[0_0_60px_rgba(16,185,129,0.3)] relative overflow-y-auto max-h-[90vh]">
+      <div className="bg-[#0F172A] border border-emerald-500/50 rounded-2xl md:rounded-3xl p-5 md:p-8 max-w-sm w-[95%] shadow-[0_0_60px_rgba(16,185,129,0.3)] relative overflow-y-auto max-h-[90vh]">
         {/* Glow decor */}
         <div className="absolute inset-0 bg-emerald-500/5 pointer-events-none" />
         <div className="absolute -top-10 -left-10 w-40 h-40 bg-emerald-500/20 blur-[60px] rounded-full pointer-events-none" />
@@ -40,7 +40,7 @@ export function PseudonymModal({ onConfirm }) {
               Choisissez votre pseudo
             </h2>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-              Ce nom apparaîtra dans le <span className="text-emerald-400 font-semibold">Classement Mondial</span>.
+              Ce nom apparaîtra dans le <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Classement Mondial</span>.
               Choisissez-le bien — il vous représentera pour toujours.
             </p>
           </div>
@@ -54,11 +54,11 @@ export function PseudonymModal({ onConfirm }) {
               onKeyDown={(e) => e.key === 'Enter' && handleConfirm()}
               maxLength={20}
               placeholder="Ex: xX_Striker_Xx"
-              className="w-full bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 focus:border-emerald-500 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-slate-900 dark:text-white font-bold text-lg text-center outline-none transition-colors placeholder:text-slate-600"
+              className="w-full bg-slate-100 dark:bg-slate-950 border-2 border-slate-300 dark:border-slate-800 focus:border-emerald-500 rounded-2xl px-5 py-3.5 text-slate-900 dark:text-slate-900 dark:text-white font-bold text-lg text-center outline-none transition-colors placeholder:text-slate-600"
               autoFocus
             />
             {error && (
-              <p className="text-rose-400 text-xs font-semibold">{error}</p>
+              <p className="text-rose-600 dark:text-rose-400 text-xs font-semibold">{error}</p>
             )}
             <p className="text-slate-600 text-[10px] uppercase tracking-wider">
               {pseudo.trim().length}/20 caractères • Min. 3
