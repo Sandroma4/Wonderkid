@@ -2372,7 +2372,7 @@ export const generate6ClubOffers = (player) => {
   return scoredClubs.sort((a, b) => b.score - a.score).slice(0, 6);
 };
 
-export const generateInterSeasonOffers = (player, currentClub, seasonStats = null) => {
+export const generateInterSeasonOffers = (player, currentClub, seasonStats = null, clubEvolutions = {}) => {
   if (!player || !currentClub) return [];
   const playerOvr = player.ovr || 50;
   
@@ -2389,7 +2389,7 @@ export const generateInterSeasonOffers = (player, currentClub, seasonStats = nul
     if (hasMLS && c.origin !== 'US') return false;
     if (hasSaudi && c.origin !== 'SA') return false;
 
-    const clubOvr = c.ovr || (c.tier === 1 ? 82 : c.tier === 2 ? 70 : 55);
+    const clubOvr = (c.ovr || (c.tier === 1 ? 82 : c.tier === 2 ? 70 : 55)) + (clubEvolutions[c.id] || 0);
     const diff = clubOvr - playerOvr;
     return diff <= maxOvrDiff && diff >= -12;
   });
@@ -2408,8 +2408,8 @@ export const generateInterSeasonOffers = (player, currentClub, seasonStats = nul
 
   // Trier les clubs pour privilégier ceux dont l'OVR est proche de celui du joueur
   const sortedClubs = finalPool.sort((a, b) => {
-    const aOvr = a.ovr || (a.tier === 1 ? 82 : a.tier === 2 ? 70 : 55);
-    const bOvr = b.ovr || (b.tier === 1 ? 82 : b.tier === 2 ? 70 : 55);
+    const aOvr = (a.ovr || (a.tier === 1 ? 82 : a.tier === 2 ? 70 : 55)) + (clubEvolutions[a.id] || 0);
+    const bOvr = (b.ovr || (b.tier === 1 ? 82 : b.tier === 2 ? 70 : 55)) + (clubEvolutions[b.id] || 0);
     // Un joueur de 90 d'OVR a plus de chances d'être contacté par un club de 88 que de 78.
     // L'aléatoire permet de garder des surprises.
     let aScore = Math.abs((aOvr + (isGreatSeason ? 3 : 0)) - playerOvr) + (Math.random() * 6);

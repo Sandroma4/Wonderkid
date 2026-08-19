@@ -202,8 +202,8 @@ export default function App() {
         };
 
         // Only host calculates interseason offers for Coop, but for 1v1 they can just keep their own or host calculates for both
-        const hostOffers = generateInterSeasonOffers(hostState.player, hostState.club);
-        const clientOffers = generateInterSeasonOffers(clientState.player, clientState.club);
+        const hostOffers = generateInterSeasonOffers(hostState.player, hostState.club, null, hostState.clubEvolutions || {});
+        const clientOffers = generateInterSeasonOffers(clientState.player, clientState.club, null, clientState.clubEvolutions || {});
         
         const hostFinals = Object.keys(finalHostTourney).filter(key => finalHostTourney[key] && (finalHostTourney[key].stage === 'Finaliste' || finalHostTourney[key].stage === 'Vainqueur'));
         const clientFinals = Object.keys(finalClientTourney).filter(key => finalClientTourney[key] && (finalClientTourney[key].stage === 'Finaliste' || finalClientTourney[key].stage === 'Vainqueur'));
@@ -324,6 +324,7 @@ export default function App() {
     setGameState({
       player: tempPlayer,
       club: null,
+      clubEvolutions: {},
       clubOffers,
       season: 2026,
       bankBalance: Number(tempPlayer.bankBalance) || 12000,
@@ -575,7 +576,7 @@ export default function App() {
 
     playSound('levelUp');
     
-    const interSeasonOffers = generateInterSeasonOffers(prev.player, prev.club);
+    const interSeasonOffers = generateInterSeasonOffers(prev.player, prev.club, null, prev.clubEvolutions || {});
     return {
       ...prev,
       completedEvents: updatedCompletedEvents || prev.completedEvents,
@@ -1062,8 +1063,51 @@ export default function App() {
       }
 
 
+
       const newPalmares = [...(prev.palmares || [])];
       let globalTrophies = [];
+
+      // DYNAMIC CLUB PROGRESSION LOGIC
+      let evolutions = { ...(prev.clubEvolutions || {}) };
+      let currentClubId = prev.club.id;
+      let clubBonus = 0;
+      
+      if (statsToUse) {
+        if (statsToUse.leaguePosition === 1) clubBonus += 1;
+        if (statsToUse.tournaments) {
+          if (statsToUse.tournaments.championsLeague?.stage === 'Vainqueur') clubBonus += 2;
+          if (statsToUse.tournaments.europaLeague?.stage === 'Vainqueur') clubBonus += 1;
+          if (statsToUse.tournaments.conferenceLeague?.stage === 'Vainqueur') clubBonus += 1;
+        }
+        if (statsToUse.nationalCup?.stage === 'Vainqueur') clubBonus += 1;
+        
+        // Superstar effect
+        if (currentOvr >= prev.club.ovr + 4 && currentRating >= 7.5) {
+           clubBonus += 1;
+        }
+      }
+      
+      // Apply bonus and decline
+      Object.keys(evolutions).forEach(id => {
+         if (id !== currentClubId && evolutions[id] > 0) {
+            evolutions[id] -= 1; // slow decline
+         }
+      });
+      
+      if (clubBonus > 0) {
+         let currentEvo = evolutions[currentClubId] || 0;
+         let baseOvr = prev.club.ovr - currentEvo;
+         
+         if (currentEvo + clubBonus > 15) clubBonus = 15 - currentEvo;
+         if (baseOvr + currentEvo + clubBonus > 88 && baseOvr < 88) {
+            clubBonus = Math.max(0, 88 - (baseOvr + currentEvo));
+         }
+         if (clubBonus > 0) {
+            evolutions[currentClubId] = currentEvo + clubBonus;
+            prev.club.ovr += clubBonus;
+         }
+      }
+
 
       if (statsToUse) {
         // Promotion ne donne plus de trophée dans la vitrine
