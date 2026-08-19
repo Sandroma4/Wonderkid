@@ -34,17 +34,11 @@ import { getTraitDetails } from '../utils/traitsData';
 import { COUNTRIES } from '../utils/gameData';
 import { FlagIcon } from './FlagIcon';
 
-const AnimatedStatBar = ({ label, oldVal, newVal, gain, disableEffects }) => {
-  const [currentVal, setCurrentVal] = useState(disableEffects ? newVal : oldVal);
-  const [displayVal, setDisplayVal] = useState(disableEffects ? newVal : oldVal);
+const AnimatedStatBar = ({ label, oldVal, newVal, gain }) => {
+  const [currentVal, setCurrentVal] = useState(oldVal);
+  const [displayVal, setDisplayVal] = useState(oldVal);
 
   useEffect(() => {
-    if (disableEffects) {
-      setCurrentVal(newVal);
-      setDisplayVal(newVal);
-      return;
-    }
-    
     const timer = setTimeout(() => {
       setCurrentVal(newVal);
       
@@ -62,24 +56,20 @@ const AnimatedStatBar = ({ label, oldVal, newVal, gain, disableEffects }) => {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [oldVal, newVal, gain, disableEffects]);
+  }, [oldVal, newVal, gain]);
 
   return (
     <div className="flex flex-col gap-1.5 w-full max-w-[160px] bg-white/80 dark:bg-slate-900/80 p-2.5 rounded-xl border border-slate-300/80 dark:border-slate-700/50 shadow-inner">
       <div className="flex justify-between items-center text-[9px] uppercase font-black tracking-wider">
         <span className="text-slate-600 dark:text-slate-300">{label}</span>
-        {disableEffects ? (
-          <span className="text-slate-800 dark:text-white text-[11px] ml-1">{displayVal}</span>
-        ) : (
-          <span className={gain > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}>
-            {gain > 0 ? `+${gain}` : gain} <span className="text-slate-800 dark:text-white text-[11px] ml-1">{displayVal}</span>
-          </span>
-        )}
+        <span className={gain > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}>
+          {gain > 0 ? `+${gain}` : gain} <span className="text-slate-800 dark:text-white text-[11px] ml-1">{displayVal}</span>
+        </span>
       </div>
       <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden relative">
          <div 
-           className={`absolute top-0 left-0 h-full ${disableEffects ? 'bg-slate-400 dark:bg-slate-500' : (gain > 0 ? 'bg-emerald-500' : 'bg-rose-500')} ${!disableEffects ? 'transition-all ease-out' : ''}`} 
-           style={{ width: `${Math.min(99, Math.max(0, currentVal))}%`, transitionDuration: disableEffects ? '0ms' : '1000ms' }} 
+           className={`absolute top-0 left-0 h-full ${gain > 0 ? 'bg-emerald-500' : 'bg-rose-500'} transition-all ease-out`} 
+           style={{ width: `${Math.min(99, Math.max(0, currentVal))}%`, transitionDuration: '1000ms' }} 
          />
       </div>
     </div>
@@ -639,8 +629,7 @@ export function Dashboard({
                           label={labels[attr] || attr} 
                           oldVal={oldVal} 
                           newVal={newVal} 
-                          gain={displayGain}
-                          disableEffects={player.age > 21}
+                          gain={displayGain} 
                         />
                       );
                     })}
@@ -1148,17 +1137,17 @@ export function Dashboard({
                       <div className="flex flex-wrap gap-1.5">
                         {activeOutcome.effects?.map((eff, i) => (
                           <span key={i} className={`heading-typography text-[9px] md:text-[10px] font-semibold px-2 py-1 rounded-lg border shadow-sm flex items-center gap-1 ${
-                            eff.isBoosted
+                            eff.isBoosted && player.age <= 21
                               ? 'bg-violet-100 text-violet-900 border-violet-400'
                               : eff.style === 'positive' ? 'bg-emerald-200 text-emerald-900 border-emerald-300' : 'bg-rose-100 text-rose-900 border-rose-300'
                           }`}>
-                            {eff.isBoosted && <span className="opacity-80">⚡</span>}
+                            {eff.isBoosted && player.age <= 21 && <span className="opacity-80">⚡</span>}
                             {eff.text}
                           </span>
                         ))}
 
                       </div>
-                      {activeOutcome.ageBoostApplied && (
+                      {activeOutcome.ageBoostApplied && activeOutcome.ageBoostApplied <= 21 && (
                         <p className="text-[9px] text-violet-700 font-semibold leading-relaxed flex items-center gap-1">
                           <span>⚡</span>
                           <span>
