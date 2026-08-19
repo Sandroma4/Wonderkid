@@ -61,7 +61,7 @@ export const TransferModal = ({ club, playerOvr, onAccept, onReject, onClose }) 
   };
 
   return (
-    <div className="fixed inset-0 bg-emerald-200/90 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-emerald-300/90 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl md:rounded-3xl p-4 md:p-6 max-w-xl w-[95%] shadow-2xl relative overflow-y-auto max-h-[90vh]">
         {!negotiating && !result && (
           <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white text-xl">&times;</button>
@@ -94,7 +94,7 @@ export const TransferModal = ({ club, playerOvr, onAccept, onReject, onClose }) 
                 <div className="text-5xl mb-4">🚪</div>
                 <h3 className="heading-typography text-xl font-bold text-rose-500 mb-2">Négociations Rompues</h3>
                 <p className="text-slate-600 dark:text-slate-300 mb-6">Vos exigences étaient trop élevées. Le club a retiré son offre.</p>
-                <button onClick={() => onReject(club.id)} className="w-full bg-emerald-100 dark:bg-slate-700 hover:bg-slate-600 text-slate-800 dark:text-white font-bold py-3 rounded-xl shadow-lg transition-colors">
+                <button onClick={() => onReject(club.id)} className="w-full bg-emerald-300 dark:bg-slate-700 hover:bg-slate-600 text-slate-800 dark:text-white font-bold py-3 rounded-xl shadow-lg transition-colors">
                   Retour au Mercato
                 </button>
               </>

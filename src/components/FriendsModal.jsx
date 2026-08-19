@@ -143,7 +143,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-emerald-200/90 dark:bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 bg-emerald-300/90 dark:bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
       <div className="bg-white dark:bg-slate-900 border border-emerald-500/50 rounded-2xl md:rounded-3xl p-4 md:p-6 w-full max-w-md shadow-2xl relative flex flex-col max-h-[85vh]">
         <button 
           onClick={() => { playSound('click'); onClose(); }}
@@ -224,7 +224,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
                       </button>
                       <button 
                         onClick={() => handleRequest(req.id, 'reject')}
-                        className="flex-1 bg-emerald-100 dark:bg-slate-700 hover:bg-rose-500/50 text-slate-800 dark:text-white py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                        className="flex-1 bg-emerald-300 dark:bg-slate-700 hover:bg-rose-500/50 text-slate-800 dark:text-white py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
                       >
                         Refuser
                       </button>
@@ -243,7 +243,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Chercher un pseudo exact"
-                  className="flex-1 bg-emerald-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-white text-sm focus:border-emerald-400 outline-none"
+                  className="flex-1 bg-emerald-300 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-white text-sm focus:border-emerald-400 outline-none"
                 />
                 <button type="submit" className="bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider">
                   \u2192

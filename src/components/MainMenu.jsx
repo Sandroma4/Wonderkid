@@ -150,7 +150,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-50 dark:bg-[#0F172A] flex items-center justify-center p-6 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-emerald-300 dark:bg-[#0F172A] flex items-center justify-center p-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Theme Toggle Button */}
@@ -200,7 +200,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
             </button>
             <button 
               onClick={() => { playSound('click'); setIncomingInvite(null); }}
-              className="flex-1 bg-emerald-100 dark:bg-slate-700 hover:bg-rose-500 text-slate-800 dark:text-white text-xs font-bold py-2 rounded-lg transition-colors"
+              className="flex-1 bg-emerald-300 dark:bg-slate-700 hover:bg-rose-500 text-slate-800 dark:text-white text-xs font-bold py-2 rounded-lg transition-colors"
             >
               Refuser
             </button>
@@ -218,7 +218,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
       {/* Settings Modal */}
       {showSettings && (
-        <div className="fixed inset-0 bg-emerald-200/90 dark:bg-black/80 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-emerald-300/90 dark:bg-black/80 z-50 flex items-center justify-center p-4">
           <div className="bg-white dark:bg-slate-900 border border-emerald-500/50 rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-sm w-full shadow-2xl relative">
             <button 
               onClick={() => setShowSettings(false)}
@@ -239,9 +239,9 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 </button>
                 
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 h-px bg-emerald-100 dark:bg-slate-700"></div>
+                  <div className="flex-1 h-px bg-emerald-300 dark:bg-slate-700"></div>
                   <span className="text-xs text-slate-500 dark:text-slate-500 font-semibold uppercase">Ou avec Email</span>
-                  <div className="flex-1 h-px bg-emerald-100 dark:bg-slate-700"></div>
+                  <div className="flex-1 h-px bg-emerald-300 dark:bg-slate-700"></div>
                 </div>
 
                 <input
@@ -249,14 +249,14 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Adresse Email"
-                  className="w-full bg-emerald-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
+                  className="w-full bg-emerald-300 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
                 />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Mot de passe"
-                  className="w-full bg-emerald-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
+                  className="w-full bg-emerald-300 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
                 />
                 {settingError && <p className="text-xs text-center font-semibold text-rose-500">{settingError}</p>}
                 
@@ -287,7 +287,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                     onChange={(e) => setNewPseudonym(e.target.value)}
                     maxLength={20}
                     placeholder="Ex: xX_Striker_Xx"
-                    className="w-full bg-emerald-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white font-bold focus:border-emerald-400 outline-none text-base text-center"
+                    className="w-full bg-emerald-300 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white font-bold focus:border-emerald-400 outline-none text-base text-center"
                   />
                 </div>
                 {settingError && (

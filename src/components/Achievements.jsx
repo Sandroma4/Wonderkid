@@ -28,7 +28,7 @@ export const Achievements = ({ onBack }) => {
   const completionRate = Math.round((unlocked.length / ACHIEVEMENTS.length) * 100);
 
   return (
-    <div className="min-h-screen bg-emerald-50 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-emerald-300 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
       <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10">
         
@@ -61,7 +61,7 @@ export const Achievements = ({ onBack }) => {
               onClick={() => { playSound('click'); setActiveTab(tab); }}
               className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all border
                 ${activeTab === tab 
-                  ? 'bg-emerald-100 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-500 shadow-md scale-105' 
+                  ? 'bg-emerald-300 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-500 shadow-md scale-105' 
                   : 'bg-white/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-500 dark:text-slate-400 border-slate-300/80 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-300'}`}
             >
               {tab === 'all' ? 'Tous' : tab}

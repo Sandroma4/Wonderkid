@@ -239,7 +239,7 @@ export function Dashboard({
       {/* CHOIX DU PREMIER CLUB */}
       {/* ÉCRAN DE FIN DE CARRIÈRE */}
       {isRetired ? (
-        <div className="app-typography min-h-[100dvh] bg-emerald-50 dark:bg-[#0F172A] p-4 md:p-8 text-slate-800 dark:text-slate-100 relative overflow-y-auto flex flex-col items-center justify-center font-sans">
+        <div className="app-typography min-h-[100dvh] bg-emerald-300 dark:bg-[#0F172A] p-4 md:p-8 text-slate-800 dark:text-slate-100 relative overflow-y-auto flex flex-col items-center justify-center font-sans">
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -739,7 +739,7 @@ export function Dashboard({
            </div>
         </div>
       ) : isWaitingForMultiplayerSync ? (
-          <div className="app-typography min-h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-emerald-100 dark:bg-slate-950">
+          <div className="app-typography min-h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-emerald-300 dark:bg-slate-950">
             <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
             <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">
               <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
@@ -750,7 +750,7 @@ export function Dashboard({
             </div>
           </div>
         ) : isWaitingForMercato ? (
-        <div className="app-typography min-h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-emerald-100 dark:bg-slate-950">
+        <div className="app-typography min-h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-emerald-300 dark:bg-slate-950">
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">
             <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
@@ -1139,7 +1139,7 @@ export function Dashboard({
                           <span key={i} className={`heading-typography text-[9px] md:text-[10px] font-semibold px-2 py-1 rounded-lg border shadow-sm flex items-center gap-1 ${
                             eff.isBoosted
                               ? 'bg-violet-100 text-violet-900 border-violet-400'
-                              : eff.style === 'positive' ? 'bg-emerald-100 text-emerald-900 border-emerald-300' : 'bg-rose-100 text-rose-900 border-rose-300'
+                              : eff.style === 'positive' ? 'bg-emerald-300 text-emerald-900 border-emerald-300' : 'bg-rose-100 text-rose-900 border-rose-300'
                           }`}>
                             {eff.isBoosted && <span className="opacity-80">⚡</span>}
                             {eff.text}
@@ -1176,7 +1176,7 @@ export function Dashboard({
                           className="w-full text-left p-3 md:p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all duration-150 flex items-center justify-between group shadow-sm"
                         >
                           <div className="flex items-center gap-2 md:gap-3 pr-2">
-                            <span className="heading-typography text-[8px] md:text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-emerald-100 dark:bg-slate-950 text-emerald-600 dark:text-emerald-400 shadow-sm flex-shrink-0">{option.typeTag}</span>
+                            <span className="heading-typography text-[8px] md:text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-emerald-300 dark:bg-slate-950 text-emerald-600 dark:text-emerald-400 shadow-sm flex-shrink-0">{option.typeTag}</span>
                             <span className="font-semibold text-[10px] md:text-sm text-slate-800 dark:text-white leading-tight">{option.text}</span>
                           </div>
                           <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:text-emerald-500 text-[10px] md:text-xs transition-transform group-hover:translate-x-1 flex-shrink-0">➔</span>

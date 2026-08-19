@@ -107,7 +107,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
   }, [players, status, onStart, roomObj, playerId]);
 
   return (
-    <div className="app-typography min-h-[100dvh] bg-emerald-100 dark:bg-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div className="app-typography min-h-[100dvh] bg-emerald-300 dark:bg-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-[0.03]"></div>
       
       <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-6 shadow-2xl relative z-10 flex flex-col items-center text-center">
@@ -186,7 +186,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
                     setIsCoopMode(newMode);
                     if (roomObj) roomObj.updateState({ isCoop: newMode });
                   }}
-                  className={`w-12 h-6 rounded-full relative transition-colors ${isCoopMode ? 'bg-emerald-500' : 'bg-emerald-100 dark:bg-slate-700'}`}
+                  className={`w-12 h-6 rounded-full relative transition-colors ${isCoopMode ? 'bg-emerald-500' : 'bg-emerald-300 dark:bg-slate-700'}`}
                 >
                   <div className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform ${isCoopMode ? 'translate-x-7' : 'translate-x-1'}`}></div>
                 </button>
