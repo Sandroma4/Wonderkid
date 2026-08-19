@@ -154,23 +154,23 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Pitch Markings - Left (Penalty Area) */}
-      <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-56 h-[440px] border-y-[3px] border-r-[3px] border-white/60 dark:border-white/5 pointer-events-none">
+      <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-[280px] h-[680px] border-y-[4px] border-r-[4px] border-white/60 dark:border-white/5 pointer-events-none">
         {/* Six-yard box */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-20 h-48 border-y-[3px] border-r-[3px] border-white/60 dark:border-white/5"></div>
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[90px] h-[300px] border-y-[4px] border-r-[4px] border-white/60 dark:border-white/5"></div>
         {/* Penalty spot */}
-        <div className="absolute right-14 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white/60 dark:bg-white/5"></div>
+        <div className="absolute left-[180px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white/60 dark:bg-white/5 -translate-x-1/2"></div>
         {/* Penalty arc */}
-        <div className="absolute -right-10 top-1/2 -translate-y-1/2 w-20 h-32 border-[3px] border-white/60 dark:border-white/5 rounded-full" style={{ clipPath: 'inset(0 0 0 50%)' }}></div>
+        <div className="absolute left-[30px] top-1/2 -translate-y-1/2 w-[300px] h-[300px] border-[4px] border-white/60 dark:border-white/5 rounded-full" style={{ clipPath: 'inset(0 0 0 250px)' }}></div>
       </div>
 
       {/* Pitch Markings - Right (Penalty Area) */}
-      <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-56 h-[440px] border-y-[3px] border-l-[3px] border-white/60 dark:border-white/5 pointer-events-none">
+      <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[280px] h-[680px] border-y-[4px] border-l-[4px] border-white/60 dark:border-white/5 pointer-events-none">
         {/* Six-yard box */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-20 h-48 border-y-[3px] border-l-[3px] border-white/60 dark:border-white/5"></div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[90px] h-[300px] border-y-[4px] border-l-[4px] border-white/60 dark:border-white/5"></div>
         {/* Penalty spot */}
-        <div className="absolute left-14 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white/60 dark:bg-white/5"></div>
+        <div className="absolute right-[180px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white/60 dark:bg-white/5 translate-x-1/2"></div>
         {/* Penalty arc */}
-        <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-20 h-32 border-[3px] border-white/60 dark:border-white/5 rounded-full" style={{ clipPath: 'inset(0 50% 0 0)' }}></div>
+        <div className="absolute right-[30px] top-1/2 -translate-y-1/2 w-[300px] h-[300px] border-[4px] border-white/60 dark:border-white/5 rounded-full" style={{ clipPath: 'inset(0 250px 0 0)' }}></div>
       </div>
       
       {/* Theme Toggle Button */}
