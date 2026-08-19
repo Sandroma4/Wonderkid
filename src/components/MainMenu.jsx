@@ -347,7 +347,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
       <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
         {/* Logo absolutely positioned to not affect button centering */}
-        <div className="absolute -top-32 md:-top-48 left-1/2 -translate-x-1/2 flex justify-center items-center pointer-events-none animate-[fade-in_1s_ease-out]">
+        <div className="absolute -top-64 md:-top-80 left-1/2 -translate-x-1/2 flex justify-center items-center pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
           <div className="absolute w-[180px] h-[180px] md:w-[280px] md:h-[280px] bg-emerald-500/40 blur-[80px] rounded-full"></div>
           <img 
