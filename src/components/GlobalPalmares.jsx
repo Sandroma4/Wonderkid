@@ -11,7 +11,7 @@ export const GlobalPalmares = ({ onBack }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-200 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-emerald-50 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
       <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10 px-2 md:px-0">
         
@@ -19,7 +19,7 @@ export const GlobalPalmares = ({ onBack }) => {
         <div className="flex items-center justify-between mb-6">
           <button 
             onClick={() => { playSound('click'); onBack(); }}
-            className="text-slate-800 dark:text-white bg-slate-100/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700"
+            className="text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700"
           >
             ← Retour
           </button>

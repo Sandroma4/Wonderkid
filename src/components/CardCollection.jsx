@@ -13,7 +13,7 @@ export const CardCollection = ({ onBack }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-300 dark:bg-slate-950 p-3 md:p-8 relative overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-emerald-100 dark:bg-slate-950 p-3 md:p-8 relative overflow-hidden flex flex-col">
       {/* Decorative background elements */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-900/20 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3"></div>
@@ -27,7 +27,7 @@ export const CardCollection = ({ onBack }) => {
         </div>
           <button 
             onClick={() => { playSound('click'); onBack(); }}
-            className="text-slate-800 dark:text-white bg-slate-100/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
+            className="text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
           >
             ← Retour
           </button>
@@ -35,7 +35,7 @@ export const CardCollection = ({ onBack }) => {
 
       <div className="relative z-10 flex-1 overflow-y-auto">
         {collection.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center p-8 bg-slate-50/50 dark:bg-slate-900/50 rounded-3xl border border-slate-300 dark:border-slate-800 backdrop-blur-sm">
+          <div className="flex flex-col items-center justify-center h-full text-center p-8 bg-white/50 dark:bg-slate-900/50 rounded-3xl border border-slate-300 dark:border-slate-800 backdrop-blur-sm">
             <span className="text-6xl mb-4">📭</span>
             <h2 className="heading-typography text-2xl font-bold text-slate-800 dark:text-white mb-2">Album vide</h2>
             <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400">Terminez une carrière pour voir votre carte apparaître ici !</p>
@@ -48,7 +48,7 @@ export const CardCollection = ({ onBack }) => {
                   <PlayerCard player={card} club={card.club} />
                 </div>
                 
-                <div className="w-full mt-2 bg-slate-300 dark:bg-slate-950 p-3 rounded-2xl border border-slate-800/80 shadow-inner space-y-2">
+                <div className="w-full mt-2 bg-emerald-100 dark:bg-slate-950 p-3 rounded-2xl border border-slate-800/80 shadow-inner space-y-2">
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-slate-500 dark:text-slate-500 font-medium">Fin de carrière</span>
                     <span className="text-slate-600 dark:text-slate-300 font-bold">{card.date}</span>

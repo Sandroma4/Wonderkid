@@ -20,7 +20,7 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
 
   return (
     <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3">
-      <div className="bg-slate-50 dark:bg-slate-900 border border-amber-500/30 rounded-2xl md:rounded-3xl p-3 md:p-8 max-w-4xl w-full shadow-[0_0_60px_rgba(245,158,11,0.15)] relative overflow-y-auto max-h-[92vh]">
+      <div className="bg-white dark:bg-slate-900 border border-amber-500/30 rounded-2xl md:rounded-3xl p-3 md:p-8 max-w-4xl w-full shadow-[0_0_60px_rgba(245,158,11,0.15)] relative overflow-y-auto max-h-[92vh]">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 rounded-t-2xl"></div>
 
         <div className="text-center mb-4 md:mb-8 mt-0">
