@@ -346,14 +346,17 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
       <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
-        {/* Logo absolutely positioned to not affect button centering */}
-        <div className="absolute -top-[280px] md:-top-[400px] lg:-top-[460px] left-1/2 -translate-x-1/2 flex justify-center items-center pointer-events-none animate-[fade-in_1s_ease-out]">
+        {/* Logo positioned dynamically in the top half of the screen */}
+        <div 
+          className="fixed top-0 left-0 w-full flex justify-center items-center pointer-events-none animate-[fade-in_1s_ease-out]" 
+          style={{ height: 'calc(50vh - 180px)' }}
+        >
           {/* Intense glow behind the logo */}
-          <div className="absolute w-[260px] h-[260px] md:w-[380px] md:h-[380px] lg:w-[440px] lg:h-[440px] bg-emerald-500/40 blur-[80px] rounded-full"></div>
+          <div className="absolute w-[320px] h-[320px] md:w-[460px] md:h-[460px] lg:w-[540px] lg:h-[540px] bg-emerald-500/40 blur-[80px] rounded-full max-h-full max-w-full"></div>
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
-            className="relative z-10 w-[260px] h-[260px] md:w-[380px] md:h-[380px] lg:w-[440px] lg:h-[440px] object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
+            className="relative z-10 w-[320px] h-[320px] md:w-[460px] md:h-[460px] lg:w-[540px] lg:h-[540px] max-h-full max-w-full object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
             onError={(e) => {
               e.target.onerror = null; 
               e.target.style.display = 'none';
