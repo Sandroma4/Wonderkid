@@ -344,9 +344,9 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 dark:hidden blur-[120px] rounded-full"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-slate-400/10 dark:hidden blur-[120px] rounded-full"></div>
 
-      <div className="relative z-10 w-full max-w-md flex flex-col items-center mt-4 md:-mt-32">
+      <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
-        <div className="mb-6 flex justify-center items-center relative animate-[fade-in_1s_ease-out]">
+        <div className="mb-12 flex justify-center items-center relative animate-[fade-in_1s_ease-out] -mt-12 md:-mt-24">
           {/* Intense glow behind the logo */}
           <div className="absolute w-[180px] h-[180px] md:w-[280px] md:h-[280px] bg-emerald-500/40 blur-[80px] rounded-full pointer-events-none"></div>
           <img 
