@@ -346,9 +346,10 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
       <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
-        <div className="mb-12 flex justify-center items-center relative animate-[fade-in_1s_ease-out] -mt-12 md:-mt-24">
+        {/* Logo absolutely positioned to not affect button centering */}
+        <div className="absolute -top-32 md:-top-48 left-1/2 -translate-x-1/2 flex justify-center items-center pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
-          <div className="absolute w-[180px] h-[180px] md:w-[280px] md:h-[280px] bg-emerald-500/40 blur-[80px] rounded-full pointer-events-none"></div>
+          <div className="absolute w-[180px] h-[180px] md:w-[280px] md:h-[280px] bg-emerald-500/40 blur-[80px] rounded-full"></div>
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
@@ -377,10 +378,10 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 <span className="heading-typography text-slate-600 dark:text-slate-300 font-bold text-sm tracking-wide uppercase">Retour</span>
               </button>
 
-              <div className="pb-2">
+              <div>
                 <button 
                   onClick={() => { playSound('click'); setShowCareerOptions(!showCareerOptions); }}
-                  className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 border border-emerald-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95 mb-3"
+                  className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-800 border border-emerald-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                   <div className="flex items-center justify-between relative z-10">
@@ -393,7 +394,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 </button>
 
                 {showCareerOptions && (
-                  <div className="flex flex-col gap-3 pl-4 border-l-2 border-emerald-500/30 ml-2 animate-fade-in">
+                  <div className="flex flex-col gap-3 pl-4 border-l-2 border-emerald-500/30 ml-2 mt-3 animate-fade-in">
                     <button 
                       onClick={() => { playSound('start'); onNavigate('career'); }}
                       className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-700 border border-emerald-400/50 p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] active:scale-95"
@@ -453,10 +454,10 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   </div>
                 </button>
 
-                <div className="pt-2">
+                <div>
                   <button 
                     onClick={() => { playSound('click'); setShowFutsalOptions(!showFutsalOptions); }}
-                    className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 border border-orange-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] active:scale-95 mb-3"
+                    className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 border border-orange-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] active:scale-95"
                   >
                     <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                     <div className="flex items-center justify-between relative z-10">
@@ -469,7 +470,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   </button>
                   
                   {showFutsalOptions && (
-                    <div className="flex flex-col gap-3 pl-4 border-l-2 border-orange-500/30 ml-2 animate-fade-in">
+                    <div className="flex flex-col gap-3 pl-4 border-l-2 border-orange-500/30 ml-2 mt-3 animate-fade-in">
                       <button 
                         onClick={() => { playSound('click'); onNavigate('futsalManager'); }}
                         className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 border border-orange-400/50 p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] active:scale-95"
