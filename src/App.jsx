@@ -110,6 +110,9 @@ export default function App() {
           if (!multiplayerContext.isHost) {
             multiplayerContext.roomObj.updateState({ eventsFinished: false });
           }
+        } else if (payload.type === 'PLAYER_QUIT') {
+          alert("L'autre joueur a quitté la partie.");
+          handleRestartGame();
         }
       });
     }
@@ -1364,6 +1367,7 @@ export default function App() {
 
   const handleRestartGame = () => {
     if (multiplayerContext?.roomObj) {
+      multiplayerContext.roomObj.sendBroadcast({ type: 'PLAYER_QUIT' });
       multiplayerContext.roomObj.leaveRoom();
     }
     clearMultiplayerSession();
