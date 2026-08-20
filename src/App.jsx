@@ -1548,6 +1548,9 @@ export default function App() {
         palmares: newPalmares,
         rival: updatedRival,
         isRetired: isForcedRetirement,
+        internationalTournamentDone: false,
+        isInternationalTournament: false,
+        pendingStatsForIntl: null,
         needsTraitSelection: is18
       };
     });
