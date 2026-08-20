@@ -11,12 +11,11 @@ export const Leaderboard = ({ onBack }) => {
     const fetchScores = async () => {
       try {
         let query = supabase.from('leaderboard').select('*').gte('created_at', '2026-08-12T00:00:00Z');
-        // is_coop temporary removed to prevent 400 Bad Request console errors
-        // if (activeTab === 'solo') {
-        //   query = query.eq('is_coop', false);
-        // } else if (activeTab === 'coop') {
-        //   query = query.eq('is_coop', true);
-        // }
+        if (activeTab === 'solo') {
+          query = query.eq('is_coop', false);
+        } else if (activeTab === 'coop') {
+          query = query.eq('is_coop', true);
+        }
         
         let { data, error } = await query.order('score', { ascending: false }).limit(50);
         
