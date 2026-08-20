@@ -322,7 +322,7 @@ export default function App() {
 
     const clubOffers = generate6ClubOffers(tempPlayer);
     const initialCompletedEvents = [];
-    const clubMatches = selectedClub ? getMatchesForClub(selectedClub) : 38;
+    const clubMatches = 38;
     const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, clubMatches, {}, null, multiplayerContext?.isCoopMode);
     let rival = null;
     if (multiplayerContext?.players) {
