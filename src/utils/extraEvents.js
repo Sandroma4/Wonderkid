@@ -449,7 +449,13 @@ export const EXTRA_EVENTS = [
       ] },
       { typeTag: 'Fétiche', text: 'Mettre vos crampons porte-bonheur usés', outcome: { narrative: 'Un vieux grigri qui marche !', effects: [{text: '+10 Moral', style: 'positive'}], applyStats: p => ({...p, morale: Math.min(100, p.morale+10)}) } }
     ]
-  },], applyStats: p => ({...p, morale: Math.min(100, p.morale+50)}) },
+  },
+  {
+    id: 'extra_30', category: 'MATCH', tag: 'Face à face', targetPosition: 'ST', condition: () => true,
+    description: "Face à face avec le gardien à la dernière minute.",
+    options: [
+      { typeTag: 'Piqué', text: 'Tenter un lob piqué', outcome: [
+        { probability: p => (p.attributes?.finishing || 50) * (p.morale / 100) * 0.5, narrative: 'Le ballon termine au fond ! Chef-d\'œuvre.', effects: [{text: '+50 Moral', style: 'positive'}], applyStats: p => ({...p, morale: Math.min(100, p.morale+50)}) },
         { probability: p => 100 - ((p.attributes?.finishing || 50) * (p.morale / 100) * 0.5), narrative: 'Le gardien la capte facilement. Carrière ruinée.', effects: [{text: '-50 Moral', style: 'negative'}, {text: '-50 Confiance', style: 'negative'}], applyStats: p => ({...p, morale: Math.max(0, p.morale-50), coachTrust: Math.max(0, p.coachTrust-50)}) }
       ] },
       { typeTag: 'Force', text: 'Frapper fort coup de pied', outcome: [

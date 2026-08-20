@@ -828,7 +828,8 @@ export function Dashboard({
           </div>
         </div>
       ) : (
-        /* DASHBOARD PRINCIPAL EN SAISON */
+        <>
+        {/* DASHBOARD PRINCIPAL EN SAISON */}
         <div 
           className="app-typography min-h-[100dvh] text-slate-900 p-1 md:p-4 pb-20 md:pb-4 relative overflow-y-auto overflow-x-hidden transition-all duration-700"
           style={clubBackgroundStyle}
@@ -1402,33 +1403,32 @@ export function Dashboard({
               </div>
 
             </div>
-          </div>
 
-          {/* MOBILE BOTTOM NAV */}
-          <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-slate-900 border-t border-slate-300 dark:border-slate-800 md:hidden z-50 flex justify-around p-2 pb-safe shadow-2xl">
-             <button 
-                onClick={() => { playSound('click'); setActiveMobileTab('terrain'); }} 
-                className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'terrain' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
-             >
-                <span className="text-xl mb-1">🏟️</span>
-                <span className="text-[9px] font-bold tracking-widest uppercase">Terrain</span>
-             </button>
-             <button 
-                onClick={() => { playSound('click'); setActiveMobileTab('joueur'); }} 
-                className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'joueur' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
-             >
-                <span className="text-xl mb-1">👕</span>
-                <span className="text-[9px] font-bold tracking-widest uppercase">Joueur</span>
-             </button>
-             <button 
-                onClick={() => { playSound('click'); setActiveMobileTab('carriere'); }} 
-                className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'carriere' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
-             >
-                <span className="text-xl mb-1">⚔️</span>
-                <span className="text-[9px] font-bold tracking-widest uppercase">Rival</span>
-             </button>
-          </div>
-        </div>
+            {/* MOBILE BOTTOM NAV */}
+            <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-slate-900 border-t border-slate-300 dark:border-slate-800 md:hidden z-50 flex justify-around p-2 pb-safe shadow-2xl">
+              <button 
+                  onClick={() => { playSound('click'); setActiveMobileTab('terrain'); }} 
+                  className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'terrain' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
+              >
+                  <span className="text-xl mb-1">🏟️</span>
+                  <span className="text-[9px] font-bold tracking-widest uppercase">Terrain</span>
+              </button>
+              <button 
+                  onClick={() => { playSound('click'); setActiveMobileTab('joueur'); }} 
+                  className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'joueur' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
+              >
+                  <span className="text-xl mb-1">👕</span>
+                  <span className="text-[9px] font-bold tracking-widest uppercase">Joueur</span>
+              </button>
+              <button 
+                  onClick={() => { playSound('click'); setActiveMobileTab('carriere'); }} 
+                  className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'carriere' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
+              >
+                  <span className="text-xl mb-1">⚔️</span>
+                  <span className="text-[9px] font-bold tracking-widest uppercase">Rival</span>
+              </button>
+            </div>
+          </>
       )}
 
       <LifestyleShopModal 
