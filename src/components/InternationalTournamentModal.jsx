@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const STAGES = [
-  { id: 'SEIZIEMES', name: 'Seizimes de finale', difficulty: 1.0 },
-  { id: 'HUITIEMES', name: 'Huitimes de finale', difficulty: 1.2 },
+  { id: 'SEIZIEMES', name: 'Seizièmes de finale', difficulty: 1.0 },
+  { id: 'HUITIEMES', name: 'Huitièmes de finale', difficulty: 1.2 },
   { id: 'QUARTS', name: 'Quarts de finale', difficulty: 1.5 },
   { id: 'DEMIES', name: 'Demi-finale', difficulty: 1.8 },
   { id: 'FINALE', name: 'Finale', difficulty: 2.2 }
@@ -10,38 +10,75 @@ const STAGES = [
 
 const TOURNAMENT_EVENTS = [
   {
-    title: "Sance de tirs au but",
-    desc: "Le match s'ternise. C'est l'heure des tirs au but. Le coach vous demande de tirer le penalty dcisif.",
+    title: "Séance de tirs au but",
+    desc: "Le match s'éternise. C'est l'heure des tirs au but. Le coach vous regarde droit dans les yeux.",
     options: [
-      { text: "Prendre ses responsabilits", type: 'MENTAL', baseSuccess: 0.6 },
-      { text: "Laisser un coquipier tirer", type: 'NEUTRE', baseSuccess: 0.5 }
+      { text: "Prendre le 5ème penalty décisif", type: 'MENTAL', baseSuccess: 0.6 },
+      { text: "Tirer en premier pour montrer la voie", type: 'LEADER', baseSuccess: 0.65 },
+      { text: "Tenter une panenka risquée", type: 'TECHNIQUE', baseSuccess: 0.4 },
+      { text: "Laisser un coéquipier plus confiant tirer", type: 'NEUTRE', baseSuccess: 0.5 }
     ]
   },
   {
     title: "Le discours de la mi-temps",
-    desc: "L'quipe est mene 1-0  la mi-temps. Le vestiaire est silencieux et abattu.",
+    desc: "L'équipe est menée 1-0 à la mi-temps. Le vestiaire est silencieux et abattu.",
     options: [
-      { text: "Pousser une gueulante pour rveiller tout le monde", type: 'LEADER', baseSuccess: 0.7 },
-      { text: "Se concentrer sur sa propre tactique", type: 'TACTIQUE', baseSuccess: 0.6 }
+      { text: "Pousser une gueulante pour réveiller tout le monde", type: 'LEADER', baseSuccess: 0.7 },
+      { text: "Se concentrer sur sa propre tactique avec le coach", type: 'TACTIQUE', baseSuccess: 0.6 },
+      { text: "Rassurer les jeunes joueurs stressés", type: 'MENTAL', baseSuccess: 0.65 },
+      { text: "Ne rien dire et se préparer physiquement", type: 'PHYSIQUE', baseSuccess: 0.55 }
     ]
   },
   {
-    title: "Coup franc dcisif",
-    desc: "90me minute, coup franc  25 mtres. C'est l'occasion en or pour faire basculer le match.",
+    title: "Coup franc décisif",
+    desc: "90ème minute, coup franc à 25 mètres. C'est l'occasion en or pour faire basculer le match.",
     options: [
-      { text: "Tirer en force", type: 'PHYSIQUE', baseSuccess: 0.6 },
-      { text: "La jouer tactique avec une combinaison", type: 'TECHNIQUE', baseSuccess: 0.7 }
+      { text: "Tirer en force côté ouvert", type: 'PHYSIQUE', baseSuccess: 0.6 },
+      { text: "Enrouler parfaitement au-dessus du mur", type: 'TECHNIQUE', baseSuccess: 0.65 },
+      { text: "La jouer tactique avec une combinaison inattendue", type: 'TACTIQUE', baseSuccess: 0.7 },
+      { text: "Centrer dans la boîte pour un grand défenseur", type: 'NEUTRE', baseSuccess: 0.75 }
     ]
   },
   {
     title: "Provocation adverse",
-    desc: "Le dfenseur adverse n'arrte pas de vous provoquer et de vous mettre des coups discrets.",
+    desc: "Le défenseur adverse n'arrête pas de vous provoquer et de vous mettre des coups discrets depuis le début du match.",
     options: [
       { text: "Garder son sang-froid et jouer au foot", type: 'MENTAL', baseSuccess: 0.75 },
-      { text: "Rpondre par l'impact physique", type: 'PHYSIQUE', baseSuccess: 0.55 }
+      { text: "Répondre par l'impact physique régulier", type: 'PHYSIQUE', baseSuccess: 0.6 },
+      { text: "Provoquer une faute pour lui faire prendre un carton", type: 'MALIN', baseSuccess: 0.55 },
+      { text: "Demander au capitaine d'intervenir", type: 'LEADER', baseSuccess: 0.65 }
+    ]
+  },
+  {
+    title: "Blessure légère",
+    desc: "Vous ressentez une petite pointe musculaire. Il reste 20 minutes de jeu dans ce match couperet.",
+    options: [
+      { text: "Serrer les dents et continuer à fond", type: 'PHYSIQUE', baseSuccess: 0.5 },
+      { text: "Gérer ses efforts et jouer plus intelligemment", type: 'TACTIQUE', baseSuccess: 0.7 },
+      { text: "Demander le changement pour ne pas pénaliser l'équipe", type: 'NEUTRE', baseSuccess: 0.8 },
+      { text: "Prendre des risques pour marquer avant de sortir", type: 'MENTAL', baseSuccess: 0.45 }
     ]
   }
 ];
+
+const getNationalColors = (originCode) => {
+  const colors = {
+    fr: { primary: '#002395', secondary: '#ED2939' },
+    br: { primary: '#009739', secondary: '#FEDD00' },
+    ar: { primary: '#74ACDF', secondary: '#FFFFFF' },
+    de: { primary: '#000000', secondary: '#FFCE00' },
+    es: { primary: '#AA151B', secondary: '#F1BF00' },
+    it: { primary: '#0066B2', secondary: '#FFFFFF' },
+    pt: { primary: '#046A38', secondary: '#DA291C' },
+    en: { primary: '#FFFFFF', secondary: '#CE1124' },
+    nl: { primary: '#FF4F00', secondary: '#21468B' },
+    be: { primary: '#E30A17', secondary: '#000000' },
+    dz: { primary: '#006233', secondary: '#FFFFFF' },
+    ma: { primary: '#C1272D', secondary: '#006233' },
+    sn: { primary: '#00853F', secondary: '#FDEF42' },
+  };
+  return colors[originCode] || { primary: '#1a2a6c', secondary: '#b21f1f' };
+};
 
 export const InternationalTournamentModal = ({ player, season, type, onComplete }) => {
   const [stageIndex, setStageIndex] = useState(0);
@@ -54,12 +91,18 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
   let isWorldCup = type === 'WORLD_CUP';
   const displayYear = player?.currentYear || season;
   
-  // Hotfix pour les sauvegardes en cours qui auraient bloqué sur EURO au lieu de CDM
   if (displayYear % 4 === 2) {
     isWorldCup = true;
   }
   
   const tournamentName = isWorldCup ? 'Coupe du Monde' : 'Euro';
+  const emoji = isWorldCup ? '🌍' : '🇪🇺';
+  
+  const nationalColors = getNationalColors(player?.origin);
+  const bgStyle = {
+    background: `radial-gradient(circle at center, ${nationalColors.primary} 0%, #0f172a 100%)`,
+    boxShadow: `inset 0 0 100px rgba(0,0,0,0.8), 0 0 20px ${nationalColors.secondary}40`
+  };
 
   useEffect(() => {
     generateEventForStage();
@@ -92,13 +135,13 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
       }));
 
       if (stageIndex === STAGES.length - 1) {
-        setResultText(`Y" Masterclass ! Vous remportez la ${tournamentName} !`);
+        setResultText(`🏆 Masterclass ! Vous remportez la ${tournamentName} !`);
         setWon(true);
       } else {
-        setResultText(`o. Succs ! L'quipe nationale se qualifie pour le tour suivant !`);
+        setResultText(`✅ Succès ! L'équipe nationale se qualifie pour le tour suivant !`);
       }
     } else {
-      setResultText(`?O %chec. L'quipe nationale est limine de la ${tournamentName}...`);
+      setResultText(`❌ Échec. L'équipe nationale est éliminée de la ${tournamentName}...`);
       setEliminated(true);
     }
     
@@ -121,8 +164,8 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
     else if (stageIndex === 4) finalStage = 'Finaliste';
     else if (stageIndex === 3) finalStage = 'Demi-Finale';
     else if (stageIndex === 2) finalStage = 'Quarts';
-    else if (stageIndex === 1) finalStage = 'Huitimes';
-    else finalStage = 'Seizimes';
+    else if (stageIndex === 1) finalStage = 'Huitièmes';
+    else finalStage = 'Seizièmes';
 
     onComplete(player, {
       stage: finalStage,
@@ -134,52 +177,51 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-md"></div>
       
       <div 
-        className="relative w-full max-w-2xl bg-white dark:bg-[#1E293B] rounded-2xl shadow-2xl overflow-hidden border border-white/20 transform transition-all"
+        className="relative w-full max-w-2xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl animate-fade-in-up"
+        style={bgStyle}
       >
-        {/* Header Area */}
-        <div className={`relative p-6 text-center ${isWorldCup ? 'bg-gradient-to-br from-[#1a2a6c] via-[#b21f1f] to-[#fdbb2d]' : 'bg-gradient-to-br from-blue-700 to-blue-900'}`}>
-          <div className="absolute inset-0 bg-black/10"></div>
-          <div className="relative z-10">
-            <h2 className="text-3xl font-black text-white mb-2 drop-shadow-md flex items-center justify-center gap-3 tracking-wide">
-              {isWorldCup ? 'YO?' : 'YOY'} {tournamentName} {displayYear}
-            </h2>
-            <div className="inline-block bg-black/30 backdrop-blur-md px-6 py-2 rounded-full border border-white/20 shadow-inner">
-              <span className="text-white font-bold tracking-widest uppercase text-sm">
-                {STAGES[stageIndex].name}
-              </span>
-            </div>
+        <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-black/40 pointer-events-none"></div>
+
+        <div className="relative p-6 text-center border-b border-white/10">
+          <h2 className="text-3xl font-black text-white mb-2 drop-shadow-lg flex items-center justify-center gap-3 tracking-wide">
+            <span>{emoji}</span> {tournamentName} {displayYear}
+          </h2>
+          <div className="inline-block bg-black/50 backdrop-blur-md px-6 py-2 rounded-full border border-white/10 shadow-inner">
+            <span className="font-bold tracking-widest uppercase text-sm" style={{ color: nationalColors.secondary || '#fff' }}>
+              {STAGES[stageIndex].name}
+            </span>
           </div>
         </div>
 
-        {/* Content Area */}
-        <div className="p-6 md:p-8">
+        <div className="relative p-6 md:p-8">
           <div>
             {event && (
               <div className="animate-fade-in-up">
-                <div className="mb-8 text-center">
-                  <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3">
+                <div className="mb-8 text-center bg-black/30 p-6 rounded-xl border border-white/5 backdrop-blur-sm">
+                  <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-sm">
                     {event.title}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
+                  <p className="text-slate-300 text-lg leading-relaxed">
                     {event.desc}
                   </p>
                 </div>
                 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3">
                   {event.options.map((opt, i) => (
                     <button 
                       key={i} 
                       onClick={() => handleChoice(opt)}
-                      className="group relative flex items-center w-full p-4 bg-slate-50 dark:bg-slate-800/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 border-2 border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-xl transition-all duration-300 text-left overflow-hidden shadow-sm hover:shadow-md"
+                      className="group relative flex flex-col md:flex-row items-start md:items-center w-full p-4 bg-black/40 hover:bg-white/10 border border-white/10 hover:border-white/30 rounded-xl transition-all duration-300 text-left overflow-hidden shadow-md backdrop-blur-sm"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      <span className="relative z-10 shrink-0 flex items-center justify-center w-24 px-3 py-1 bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-black uppercase tracking-wider rounded-lg mr-4">
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <span className="relative z-10 shrink-0 flex items-center justify-center min-w-[100px] px-3 py-1.5 bg-black/60 text-slate-300 text-[10px] md:text-xs font-black uppercase tracking-wider rounded-lg mb-2 md:mb-0 md:mr-4 border border-white/5">
                         {opt.type}
                       </span>
-                      <span className="relative z-10 text-slate-700 dark:text-slate-200 font-semibold text-sm md:text-base">
+                      <span className="relative z-10 text-white font-semibold text-sm md:text-base drop-shadow-sm">
                         {opt.text}
                       </span>
                     </button>
@@ -190,27 +232,27 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
 
             {resultText && (
               <div className="text-center py-4 animate-fade-in-up">
-                <h3 className={`text-2xl md:text-3xl font-black mb-6 ${eliminated ? 'text-red-500' : 'text-emerald-500'}`}>
+                <h3 className={`text-2xl md:text-3xl font-black mb-6 drop-shadow-md ${eliminated ? 'text-rose-500' : 'text-emerald-400'}`}>
                   {resultText}
                 </h3>
                 
-                <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-8 inline-block min-w-[250px] shadow-sm">
-                  <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Statistiques Personnelles</p>
-                  <div className="flex justify-center gap-8">
+                <div className="bg-black/40 backdrop-blur-md p-6 rounded-xl border border-white/10 mb-8 inline-block min-w-[250px] shadow-lg">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Statistiques du Tournoi</p>
+                  <div className="flex justify-center gap-10">
                     <div className="text-center">
-                      <span className="block text-3xl font-black text-slate-800 dark:text-white">{tournamentStats.goals}</span>
-                      <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Buts</span>
+                      <span className="block text-4xl font-black text-white drop-shadow-sm">{tournamentStats.goals}</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Buts</span>
                     </div>
                     <div className="text-center">
-                      <span className="block text-3xl font-black text-slate-800 dark:text-white">{tournamentStats.assists}</span>
-                      <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Passes</span>
+                      <span className="block text-4xl font-black text-white drop-shadow-sm">{tournamentStats.assists}</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Passes</span>
                     </div>
                   </div>
                 </div>
 
                 <button 
                   onClick={nextStage}
-                  className={`w-full p-4 rounded-xl font-bold text-lg text-white shadow-lg transition-all duration-300 hover:-translate-y-1 ${eliminated || won ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30' : 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/30'}`}
+                  className={`w-full p-4 rounded-xl font-black text-lg text-white shadow-xl transition-all duration-300 hover:-translate-y-1 ${eliminated || won ? 'bg-amber-600 hover:bg-amber-500 shadow-amber-900/50' : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-900/50'}`}
                 >
                   {eliminated || won ? 'Terminer le tournoi' : 'Passer au tour suivant'}
                 </button>
