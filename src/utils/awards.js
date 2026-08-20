@@ -119,10 +119,39 @@ export const simulateTournaments = (player, club, seasonStats, seasonIndex, last
     }
   }
 
-  const simulateEuroCup = (compLevel, winBase, finBase, semiBase, stageMatchCounts) => {
-    const winChance = clamp((effectiveClubOvr - winBase) * 0.01, 0.003, 0.25);
-    const finalistChance = clamp((effectiveClubOvr - finBase) * 0.008, 0.01, 0.12);
-    const semiChance = clamp((effectiveClubOvr - semiBase) * 0.01, 0.03, 0.18);
+    const simulateEuroCup = (compLevel, winBase, finBase, semiBase, stageMatchCounts) => {
+    // Amplificateur d'écart d'OVR (OVR Gap Multiplier) pour la LDC et autres coupes d'Europe
+    const ovrGap = effectiveClubOvr - winBase;
+    
+    // Si l'OVR est inférieur au seuil attendu, on amplifie l'écart exponentiellement pour punir les petits clubs
+    // (ex: un écart de -12 OVR (73 vs 85) sera décuplé)
+    let winChance = 0;
+    if (ovrGap < 0) {
+      // Miracle chance (très faible, diminue drastiquement plus l'écart est grand)
+      winChance = Math.max(0.001, 0.10 * Math.pow(0.85, Math.abs(ovrGap)));
+    } else {
+      // L'équipe est au niveau ou supérieure, les chances augmentent
+      winChance = clamp(0.15 + (ovrGap * 0.05), 0.15, 0.50);
+    }
+    
+    // Finaliste
+    const finGap = effectiveClubOvr - finBase;
+    let finalistChance = 0;
+    if (finGap < 0) {
+      finalistChance = Math.max(0.005, 0.15 * Math.pow(0.88, Math.abs(finGap)));
+    } else {
+      finalistChance = clamp(0.20 + (finGap * 0.03), 0.20, 0.40);
+    }
+    
+    // Demi-finale
+    const semiGap = effectiveClubOvr - semiBase;
+    let semiChance = 0;
+    if (semiGap < 0) {
+      semiChance = Math.max(0.01, 0.20 * Math.pow(0.90, Math.abs(semiGap)));
+    } else {
+      semiChance = clamp(0.25 + (semiGap * 0.02), 0.25, 0.45);
+    }
+
     
     const roll = Math.random();
     let stage, matches;

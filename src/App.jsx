@@ -34,6 +34,7 @@ import {
   PERKS_LIST,
   calculatePlayerValue,
   calculateSalaryOffer,
+  getMatchesForClub,
   distributeExcessStats,
   updatePlayerBestCard,
   COUNTRIES
@@ -320,7 +321,8 @@ export default function App() {
 
     const clubOffers = generate6ClubOffers(tempPlayer);
     const initialCompletedEvents = [];
-    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, 38, {}, null, multiplayerContext?.isCoopMode);
+    const clubMatches = selectedClub ? getMatchesForClub(selectedClub) : 38;
+    const seasonEvents = getRandomSeasonEvents(tempPlayer, initialCompletedEvents, clubMatches, {}, null, multiplayerContext?.isCoopMode);
     let rival = null;
     if (multiplayerContext?.players) {
       const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
@@ -1178,6 +1180,28 @@ export default function App() {
              globalTrophies.push(t);
            });
         }
+        
+        // Système équilibré de gain de statistiques suite aux trophées
+        if (globalTrophies.length > 0) {
+          globalTrophies.forEach(t => {
+            let boostCount = 0;
+            const text = t.text.toLowerCase();
+            if (text.includes('champion de') || text.includes('coupe nationale')) boostCount = 1;
+            else if (text.includes('ligue europa') || text.includes('conference')) boostCount = 1;
+            else if (text.includes('ligue des champions') || text.includes('euro') || text.includes('coupe du monde')) boostCount = 2;
+            else if (text.includes("ballon d'or")) boostCount = 2;
+            else if (t.type === 'individual') boostCount = 1; // Soulier d'or, etc.
+            
+            for (let i = 0; i < boostCount; i++) {
+              const nonMaxedStats = Object.keys(updatedAttributes).filter(key => updatedAttributes[key] < 99);
+              if (nonMaxedStats.length > 0) {
+                const randomStat = nonMaxedStats[Math.floor(Math.random() * nonMaxedStats.length)];
+                updatedAttributes[randomStat]++;
+              }
+            }
+          });
+        }
+
       }
 
       if (globalTrophies.length > 0) {
@@ -1263,7 +1287,7 @@ export default function App() {
 
       const is18 = newAge === 18 && !finalUpdatedPlayer.roleId;
 
-      const matchesPlayed = statsToUse ? (statsToUse.matches || 0) : 38;
+      const matchesPlayed = statsToUse ? (statsToUse.matches || 0) : getMatchesForClub(prev.club);
       let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, statsToUse?.tournaments, prev.club.tier, multiplayerContext?.isCoopMode);
       const hasPlayerWonBallonDor = statsToUse?.awards?.some(a => a.text === "Ballon d'Or");
       const hasPlayerWonCL = statsToUse?.tournaments?.championsLeague?.stage === 'Vainqueur';
@@ -1273,7 +1297,7 @@ export default function App() {
         seasonEvents.unshift({
           id: `rival_ballondor_${newCurrentYear}`,
           category: 'RIVALITÉ',
-          tag: 'Ballon d\'Or',
+          tag: "Ballon d'Or",
           description: `Votre rival historique, ${updatedRival.name}, vient de remporter le Ballon d'Or. La presse attend votre réaction.`,
           options: [
             { typeTag: "Classe", text: "Le féliciter publiquement (Classe)", outcome: { narrative: "Vous montrez beaucoup de classe. Le monde du foot apprécie.", effects: [{text: "+15 Confiance", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 15) }) } },
@@ -1441,7 +1465,8 @@ export default function App() {
         nationality: nationality,
         position: player.position,
         major_trophies: major_trophies,
-        ballon_dor: ballon_dor
+        ballon_dor: ballon_dor,
+        is_coop: !!multiplayerContext?.isCoopMode
       };
       
       if (session) {

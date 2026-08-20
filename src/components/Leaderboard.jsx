@@ -5,16 +5,19 @@ import { playSound } from '../utils/audio';
 export const Leaderboard = ({ onBack }) => {
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('solo');
 
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        const { data, error } = await supabase
-          .from('leaderboard')
-          .select('*')
-          .gte('created_at', '2026-08-12T00:00:00Z')
-          .order('score', { ascending: false })
-          .limit(50);
+        let query = supabase.from('leaderboard').select('*').gte('created_at', '2026-08-12T00:00:00Z');
+        if (activeTab === 'solo') {
+          query = query.eq('is_coop', false);
+        } else if (activeTab === 'coop') {
+          query = query.eq('is_coop', true);
+        }
+        
+        const { data, error } = await query.order('score', { ascending: false }).limit(50);
         
         if (error) throw error;
         setScores(data || []);
@@ -25,13 +28,17 @@ export const Leaderboard = ({ onBack }) => {
       }
     };
     fetchScores();
-  }, []);
+  }, [activeTab]);
 
   return (
     <div className="min-h-screen bg-emerald-200 dark:bg-[#0F172A] p-3 md:p-6 text-slate-700 dark:text-slate-200 relative overflow-hidden font-sans flex flex-col items-center">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-10"></div>
       
       <div className="w-full max-w-3xl relative z-10">
+        <div className="flex justify-center mb-6 gap-4">
+          <button onClick={() => setActiveTab('solo')} className={`px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase transition-all ${activeTab === 'solo' ? 'bg-amber-500 text-white shadow-lg scale-105' : 'bg-white/50 text-slate-600 hover:bg-white/80'}`}>Solo</button>
+          <button onClick={() => setActiveTab('coop')} className={`px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase transition-all ${activeTab === 'coop' ? 'bg-blue-500 text-white shadow-lg scale-105' : 'bg-white/50 text-slate-600 hover:bg-white/80'}`}>Coop</button>
+        </div>
         <div className="flex items-center justify-between mb-4 md:mb-8">
           <button 
             onClick={() => { playSound('click'); onBack(); }}

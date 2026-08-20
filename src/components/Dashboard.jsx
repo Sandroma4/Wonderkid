@@ -93,8 +93,8 @@ const formatEventCategory = (cat) => {
   if (!cat) return 'Événement';
   const labels = {
     'WORLD_CUP': 'Coupe du Monde',
-    'EURO': 'Euro',
-    'CHAMPIONS_LEAGUE': 'Ligue des Champions',
+    'EURO': '🇪🇺 Euro',
+    'CHAMPIONS_LEAGUE': '🇪🇺 Ligue des Champions',
     'CUP': 'Coupe Nationale',
     'LIFESTYLE': 'Vie Privée',
     'TRANSFERT': 'Transfert',
@@ -605,7 +605,7 @@ export function Dashboard({
                 <div className="bg-white/90 dark:bg-slate-800/80 p-2 md:p-3.5 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 shadow-inner text-xs space-y-1 md:space-y-1.5 hidden md:block">
                   <p className="font-bold text-slate-800 dark:text-slate-100 mb-1 uppercase tracking-wider text-[10px]">Tournois Disputés</p>
                   {seasonStats.tournaments.worldCup && <p className="text-slate-700 dark:text-slate-200">🌍 Coupe du Monde : <span className="font-semibold">{seasonStats.tournaments.worldCup.stage}</span></p>}
-                  {seasonStats.tournaments.euro && <p className="text-slate-700 dark:text-slate-200">🇪🇺 Euro : <span className="font-semibold">{seasonStats.tournaments.euro.stage}</span></p>}
+                  {seasonStats.tournaments.euro && <p className="text-slate-700 dark:text-slate-200 flex items-center gap-1.5"><FlagIcon code="eu" className="w-4 h-3" /> Euro : <span className="font-semibold">{seasonStats.tournaments.euro.stage}</span></p>}
                   {seasonStats.tournaments.championsLeague && <p className="text-slate-700 dark:text-slate-200">⭐ Ligue des Champions : <span className="font-semibold">{seasonStats.tournaments.championsLeague.stage}</span></p>}
                   {seasonStats.tournaments.domesticCup && <p className="text-slate-700 dark:text-slate-200">🏆 Coupe Nationale : <span className="font-semibold">{seasonStats.tournaments.domesticCup.stage}</span></p>}
                 </div>
@@ -1169,7 +1169,9 @@ export function Dashboard({
                     </div>
                   ) : (
                     <div className="space-y-1.5 my-2 md:my-3 sticky bottom-14 md:static z-20 bg-white dark:bg-slate-900 md:bg-transparent p-2 md:p-0 -mx-2 md:mx-0 rounded-xl shadow-[0_-5px_15px_-5px_rgba(0,0,0,0.5)] md:shadow-none">
-                      {currentEvent?.options?.map((option, idx) => (
+                      {currentEvent?.options?.map((option, idx) => {
+                        if (option.requiredBackground && option.requiredBackground !== player.background?.id) return null;
+                        return (
                         <button 
                           key={idx} 
                           onClick={() => { playSound('click'); onSelectOption(idx); }} 
@@ -1181,7 +1183,7 @@ export function Dashboard({
                           </div>
                           <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:text-emerald-500 text-[10px] md:text-xs transition-transform group-hover:translate-x-1 flex-shrink-0">➔</span>
                         </button>
-                      ))}
+                      ); })}
                     </div>
                   )}
                 </div>
@@ -1344,21 +1346,34 @@ export function Dashboard({
                 })()}
 
                 {/* BLOC TRAITS (PLAYSTYLES) MOVED HERE */}
-                {player.traits && player.traits.length > 0 && (
+                {((player.perks && player.perks.length > 0) || (player.traits && player.traits.length > 0)) && (
                   <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-4 shadow-2xl">
                     <h4 className="heading-typography text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-3 flex items-center gap-2">
                       <span>✨ Traits & Styles de Jeu</span>
                     </h4>
                     <div className="flex flex-col gap-2">
-                      {player.traits.map(traitId => {
-                        const trait = getTraitDetails(traitId);
+                      {player.perks && player.perks.map(traitId => {
+                        const trait = PERKS_LIST.find(p => p.id === traitId);
                         if (!trait) return null;
                         return (
-                          <div key={traitId} className="flex items-center gap-3 bg-white/90 dark:bg-slate-800/80 p-2 rounded-xl border border-slate-300 dark:border-slate-700">
+                          <div key={`perk-${traitId}`} className="flex items-center gap-3 bg-white/90 dark:bg-slate-800/80 p-2 rounded-xl border border-slate-300 dark:border-slate-700">
                             <span className="text-2xl drop-shadow-md">{trait.icon}</span>
                             <div>
                               <p className="heading-typography text-xs font-bold text-slate-800 dark:text-white uppercase">{trait.name}</p>
                               <p className="text-[9px] text-slate-500 dark:text-slate-500 dark:text-slate-400 leading-tight mt-0.5">{trait.description}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                      {player.traits && player.traits.map(tObj => {
+                        const traitDef = PERKS_LIST.find(p => p.id === tObj.id);
+                        if (!traitDef) return null;
+                        return (
+                          <div key={`trait-${tObj.id}`} className="flex items-center gap-3 bg-white/90 dark:bg-slate-800/80 p-2 rounded-xl border border-slate-amber-300 dark:border-amber-700/50 shadow-sm">
+                            <span className="text-2xl drop-shadow-md">{traitDef.icon}</span>
+                            <div>
+                              <p className="heading-typography text-xs font-bold text-amber-600 dark:text-amber-400 uppercase">{traitDef.name}</p>
+                              <p className="text-[9px] text-slate-500 dark:text-slate-500 dark:text-slate-400 leading-tight mt-0.5">{traitDef.description}</p>
                             </div>
                           </div>
                         );

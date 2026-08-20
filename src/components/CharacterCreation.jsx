@@ -116,7 +116,15 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
       form: 85,
       morale: 80,
       bankBalance: background.startingMoney || 0,
-      palmares: []
+      palmares: [],
+      perks: (() => {
+        if (background?.id === 'STREET') return ['bg_street'];
+        if (background?.id === 'ACADEMY') return ['bg_academy'];
+        if (background?.id === 'LEGACY') return ['star'];
+        if (background?.id === 'AMATEUR') return ['increvable'];
+        if (background?.id === 'FUTSAL') return ['bg_futsal'];
+        return [];
+      })()
     };
 
     if (multiplayerContext?.roomObj) {
@@ -416,7 +424,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                 onClick={() => handleFinish()}
                 className="w-full max-w-md mx-auto block py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-800 dark:text-slate-100 font-black text-xs uppercase tracking-wider hover:scale-[1.02] transition-all shadow-xl shadow-emerald-500/20 active:scale-95"
               >
-                LANCER MA CARRIÈRE EN D3 🚀
+                Commencer ma carrière
               </button>
             </div>
           )}

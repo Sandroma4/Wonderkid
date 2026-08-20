@@ -915,7 +915,10 @@ export const POSITIONS_DATA = [
     icon: '🎯',
     roles: [
       { id: 'buteur', name: 'Buteur', description: 'Finisseur axial pur, obsédé par le but.', baseStats: { pace: 72, finishing: 85, passing: 58, dribbling: 65, defense: 30, physical: 75 } },
-      { id: 'renard', name: 'Renard de surface', description: 'Opportuniste redoutable dans la zone de vérité.', baseStats: { pace: 68, finishing: 88, passing: 55, dribbling: 62, defense: 28, physical: 70 } },
+      { id: 'bg_street', name: 'Dalleux (Origine)', desc: 'Bonus de stats dans les moments difficiles.', icon: '🔥', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
+  { id: 'bg_academy', name: 'Élève Modèle (Origine)', desc: 'La confiance du coach est plus facile à gagner', icon: '📚', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
+  { id: 'bg_futsal', name: 'Technique Pure (Origine)', desc: 'Augmente considérablement les dribbles et la vista', icon: '⚡', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
+  { id: 'renard', name: 'Renard de surface', description: 'Opportuniste redoutable dans la zone de vérité.', baseStats: { pace: 68, finishing: 88, passing: 55, dribbling: 62, defense: 28, physical: 70 } },
       { id: 'faux9', name: 'Faux 9', description: 'Décroche pour créer le jeu et distribuer.', baseStats: { pace: 75, finishing: 74, passing: 78, dribbling: 76, defense: 35, physical: 65 } },
       { id: 'ailier', name: 'Ailier', description: 'Perpétuelle percussion sur les côtés et centres.', baseStats: { pace: 88, finishing: 70, passing: 68, dribbling: 84, defense: 35, physical: 62 } }
     ]
@@ -2471,8 +2474,22 @@ export const getEffectiveStats = (player) => {
   return effective;
 };
 
+export const getMatchesForClub = (club) => {
+  if (!club) return 38;
+  const ln = (club.leagueName || '').toLowerCase();
+  const tier = club.tier || 3;
+  if (ln.includes('premier league') || ln.includes('ligue 1') || ln.includes('liga') || ln.includes('serie a')) {
+    return 38;
+  } else if (ln.includes('bundesliga') || ln.includes('eredivisie')) {
+    return 34;
+  } else if (tier === 3) {
+    return 40;
+  }
+  return 38;
+};
+
 export const simulateSeasonStats = (player, currentClub, interactiveMatchResult = null) => {
-  const totalSeasonMatches = 34;
+    const totalSeasonMatches = getMatchesForClub(currentClub);
   const ovr = player.ovr || 50;
   const form = player.form || 80;
   const pos = (player.position || 'DEFAULT').toUpperCase();
@@ -2533,9 +2550,22 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
   const defense = attr.defense || 50;
   const physical = attr.physical || 50;
   const formMultiplier = form / 80;
-  const goalVariance = (0.7 + Math.random() * 0.5) * difficultyMultiplier;
-  const assistVariance = (0.7 + Math.random() * 0.5) * difficultyMultiplier;
-  const defenseVariance = (0.7 + Math.random() * 0.5) * difficultyMultiplier;
+  
+  // Diversification des données : variance statistique extrême basée sur Forme & Moral
+  const morale = player.morale || 70;
+  let varianceMultiplier = 1.0;
+  const masterClassRoll = Math.random();
+  if (form >= 85 && morale >= 85 && masterClassRoll < 0.20) {
+    // Masterclass : 20% de chance d'exploser les compteurs si tout va bien
+    varianceMultiplier = 1.4 + (Math.random() * 0.6); // x1.4 à x2.0
+  } else if ((form <= 45 || morale <= 45) && masterClassRoll < 0.25) {
+    // Jours sans / Cauchemar : 25% de chance de passer à côté de la saison
+    varianceMultiplier = 0.2 + (Math.random() * 0.3); // x0.2 à x0.5
+  }
+
+  const goalVariance = (0.55 + Math.random() * 0.9) * difficultyMultiplier * (1 + (clubOvr - 75) * 0.005) * (1 - (tier - 1) * 0.05) * varianceMultiplier;
+  const assistVariance = (0.55 + Math.random() * 0.9) * difficultyMultiplier * (1 + (clubOvr - 75) * 0.005) * (1 - (tier - 1) * 0.05) * varianceMultiplier;
+  const defenseVariance = (0.55 + Math.random() * 0.9) * difficultyMultiplier * (1 + (clubOvr - 75) * 0.005) * (1 - (tier - 1) * 0.05) * varianceMultiplier;
   let goals = 0;
   let assists = 0;
   let cleanSheets = 0;
@@ -2642,6 +2672,308 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
 
 
 export const ALL_EVENTS = [
+  // ÉVÉNEMENTS EXCLUSIFS LIES AUX ORIGINES SOCIALES (PROBABILISTES)
+  {
+    id: 'origin_amateur_1', category: 'LIFESTYLE', tag: 'Le Match du Cinquantenaire',
+    condition: (player) => player.background?.id === 'AMATEUR' && Math.random() > 0.4,
+    description: "Votre ancien club amateur fête ses 50 ans et vous supplie de venir jouer un match de gala sur leur terrain bosselé en pleine semaine de championnat.",
+    options: [
+      {
+        text: "Faire acte de présence (Sécurité)", typeTag: "Respect",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Vous saluez tout le monde et donnez le coup d'envoi. Le respect est là.",
+            effects: [{text: "+5 Moral", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 5) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Le long trajet vous a épuisé, mais vous n'avez pas osé refuser.",
+            effects: [{text: "-5 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Jouer le match sérieusement (Progression)", typeTag: "Engagement",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.physical || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous faites un match propre et retrouvez vos sensations physiques.",
+            effects: [{text: "+15 Moral", style: "positive"}, {text: "+1 Physique", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 15), attributes: { ...p.attributes, physical: Math.min(99, (p.attributes?.physical || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.physical || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous prenez des mauvais coups inutiles sur un terrain catastrophique.",
+            effects: [{text: "-10 Confiance", style: "negative"}, {text: "-10 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 10), coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Jouer pour humilier l'adversaire (Coup d'Éclat)", typeTag: "Showman",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous marquez un but incroyable. La vidéo fait le tour du net !",
+            effects: [{text: "+30 Moral", style: "positive"}, {text: "+2 Physique", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 30), attributes: { ...p.attributes, physical: Math.min(99, (p.attributes?.physical || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Catastrophe ! Un tacle assassin d'un défenseur amateur vous blesse.",
+            effects: [{text: "-25 Forme", style: "negative"}, {text: "-20 Confiance", style: "negative"}, {text: "-15 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 25), coachTrust: Math.max(0, (p.coachTrust||50) - 20), morale: Math.max(0, (p.morale||50) - 15) })
+          }
+        ]
+      },
+      {
+        text: "Financer la buvette pour se faire excuser (Gestion)", typeTag: "Astuce",
+        outcome: {
+          narrative: "Votre don généreux compense votre absence. Vous restez chez vous pour récupérer.",
+          effects: [{text: "-15 000€", style: "negative"}, {text: "+15 Forme", style: "positive"}, {text: "+10 Confiance", style: "positive"}],
+          applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) - 15000, form: Math.min(100, (p.form||50) + 15), coachTrust: Math.min(100, (p.coachTrust||50) + 10) })
+        }
+      }
+    ]
+  },
+  {
+    id: 'origin_futsal_1', category: 'LIFESTYLE', tag: 'Le Défi Viral',
+    condition: (player) => player.background?.id === 'FUTSAL' && Math.random() > 0.4,
+    description: "Un influenceur freestyle très connu débarque à votre entraînement et vous défie dans un 1v1 diffusé en direct devant des millions de viewers.",
+    options: [
+      {
+        text: "Refuser poliment pour s'entraîner (Sécurité)", typeTag: "Discipline",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Le coach adore votre professionnalisme.",
+            effects: [{text: "+10 Confiance", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, (p.coachTrust||50) + 10) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Les moqueries d'internet vous touchent.",
+            effects: [{text: "-5 Moral", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Faire quelques jongles sympas (Progression)", typeTag: "Showman modéré",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.dribbling || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous assurez le show sans forcer, c'est réussi.",
+            effects: [{text: "+15 Moral", style: "positive"}, {text: "+1 Dribble", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 15), attributes: { ...p.attributes, dribbling: Math.min(99, (p.attributes?.dribbling || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.dribbling || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous perdez la balle bêtement, le coach soupire.",
+            effects: [{text: "-10 Confiance", style: "negative"}, {text: "-10 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 10), coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "L'humilier avec un petit pont en direct (Coup d'Éclat)", typeTag: "Audace",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Petit pont monumental ! Vous devenez l'idole des jeunes !",
+            effects: [{text: "+35 Moral", style: "positive"}, {text: "+2 Dribble", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 35), attributes: { ...p.attributes, dribbling: Math.min(99, (p.attributes?.dribbling || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous glissez lamentablement sur le ballon. Un meme est né.",
+            effects: [{text: "-25 Confiance", style: "negative"}, {text: "-20 Forme", style: "negative"}, {text: "-15 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 20), coachTrust: Math.max(0, (p.coachTrust||50) - 25), morale: Math.max(0, (p.morale||50) - 15) })
+          }
+        ]
+      },
+      {
+        text: "Prendre la honte exprès pour amuser le coach (Gestion)", typeTag: "Kamikaze",
+        outcome: {
+          narrative: "Vous vous ridiculisez, mais votre capacité d'autodérision rassure le staff.",
+          effects: [{text: "-25 Moral", style: "negative"}, {text: "+25 Confiance", style: "positive"}],
+          applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 25), coachTrust: Math.min(100, (p.coachTrust||50) + 25) })
+        }
+      }
+    ]
+  },
+  {
+    id: 'origin_street_1', category: 'LIFESTYLE', tag: 'Solidarité Risquée',
+    condition: (player) => player.background?.id === 'STREET' && Math.random() > 0.4,
+    description: "Un 'grand frère' de votre ancien quartier, qui vous a protégé jeune, a de gros ennuis judiciaires. Il demande votre soutien public.",
+    options: [
+      {
+        text: "Faire un post évasif sur Instagram (Sécurité)", typeTag: "Prudence",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Le strict minimum pour vous dédouaner sans vous mouiller.",
+            effects: [{text: "+5 Moral", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 5) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Même un simple post déplaît à la direction.",
+            effects: [{text: "-5 Confiance", style: "negative"}], applyStats: (p) => ({ ...p, coachTrust: Math.max(0, (p.coachTrust||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Appeler le président pour demander de l'aide (Progression)", typeTag: "Négociation",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Le président utilise ses contacts pour calmer le jeu. Gros soulagement.",
+            effects: [{text: "+20 Moral", style: "positive"}, {text: "+1 Passe", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 20), attributes: { ...p.attributes, passing: Math.min(99, (p.attributes?.passing || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Le président est furieux que vous l'impliquiez dans ces affaires.",
+            effects: [{text: "-10 Confiance", style: "negative"}, {text: "-10 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 10), coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Soutien médiatique absolu face caméras (Coup d'Éclat)", typeTag: "Loyauté pure",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Votre loyauté impressionne la France entière. Vous êtes vu comme un homme d'honneur.",
+            effects: [{text: "+40 Moral", style: "positive"}, {text: "+2 Physique", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 40), attributes: { ...p.attributes, physical: Math.min(99, (p.attributes?.physical || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Scandale national ! Le club est obligé de vous sanctionner lourdement.",
+            effects: [{text: "-25 Confiance", style: "negative"}, {text: "-20 Forme", style: "negative"}, {text: "-15 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 20), coachTrust: Math.max(0, (p.coachTrust||50) - 25), morale: Math.max(0, (p.morale||50) - 15) })
+          }
+        ]
+      },
+      {
+        text: "Engager le meilleur avocat discrètement (Gestion)", typeTag: "L'Ombre",
+        outcome: {
+          narrative: "L'argent résout le problème dans le silence absolu.",
+          effects: [{text: "-100 000€", style: "negative"}, {text: "+20 Confiance", style: "positive"}, {text: "+10 Moral", style: "positive"}],
+          applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) - 100000, coachTrust: Math.min(100, (p.coachTrust||50) + 20), morale: Math.min(100, (p.morale||50) + 10) })
+        }
+      }
+    ]
+  },
+  {
+    id: 'origin_legacy_1', category: 'CARRIÈRE', tag: 'Guerre de Sponsors',
+    condition: (player) => player.background?.id === 'LEGACY' && Math.random() > 0.4,
+    description: "Une immense marque concurrente au sponsor principal de votre club veut vous signer à prix d'or uniquement grâce au nom de votre père.",
+    options: [
+      {
+        text: "Ignorer l'offre et rester loyal (Sécurité)", typeTag: "Fidélité",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Le club apprécie grandement ce geste d'apaisement.",
+            effects: [{text: "+10 Confiance", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, (p.coachTrust||50) + 10) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Vous êtes rongé par le regret de cette perte d'argent.",
+            effects: [{text: "-5 Moral", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Négocier une hausse avec le club via cette offre (Progression)", typeTag: "Business",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.pace || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Le sponsor actuel s'aligne pour éviter de vous perdre.",
+            effects: [{text: "+500 000€", style: "positive"}, {text: "+1 Dribble", style: "positive"}], applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) + 500000, attributes: { ...p.attributes, dribbling: Math.min(99, (p.attributes?.dribbling || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.pace || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Le club prend ça pour du chantage et se braque complètement.",
+            effects: [{text: "-10 Confiance", style: "negative"}, {text: "-10 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 10), coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Signer le contrat concurrent (Coup d'Éclat)", typeTag: "Avidité",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Coup de génie juridique, vous gagnez sur tous les tableaux !",
+            effects: [{text: "+1 500 000€", style: "positive"}, {text: "+10 Moral", style: "positive"}, {text: "+2 Vitesse", style: "positive"}], applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) + 1500000, morale: Math.min(100, (p.morale||50) + 10), attributes: { ...p.attributes, pace: Math.min(99, (p.attributes?.pace || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Le club porte plainte pour conflit d'intérêts et vous met sur le banc.",
+            effects: [{text: "-25 Confiance", style: "negative"}, {text: "-20 Forme", style: "negative"}, {text: "-15 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 20), coachTrust: Math.max(0, (p.coachTrust||50) - 25), morale: Math.max(0, (p.morale||50) - 15) })
+          }
+        ]
+      },
+      {
+        text: "Demander à papa de régler l'affaire (Gestion)", typeTag: "Piston",
+        outcome: {
+          narrative: "Votre père trouve un compromis financier apaisé. L'honneur du club est sauf.",
+          effects: [{text: "-20 Moral", style: "negative"}, {text: "+250 000€", style: "positive"}, {text: "+15 Confiance", style: "positive"}],
+          applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 20), bankBalance: (p.bankBalance||0) + 250000, coachTrust: Math.min(100, (p.coachTrust||50) + 15) })
+        }
+      }
+    ]
+  },
+  {
+    id: 'origin_academy_1', category: 'VESTIAIRE', tag: 'La Fronde',
+    condition: (player) => player.background?.id === 'ACADEMY' && Math.random() > 0.4,
+    description: "Plusieurs de vos anciens camarades du centre de formation se rebellent contre la tactique stricte du coach pro.",
+    options: [
+      {
+        text: "Rester neutre (Sécurité)", typeTag: "Observation",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Vous évitez la tempête et gardez votre énergie.",
+            effects: [{text: "+10 Forme", style: "positive"}], applyStats: (p) => ({ ...p, form: Math.min(100, (p.form||50) + 10) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "L'ambiance lourde finit par peser sur votre humeur.",
+            effects: [{text: "-5 Moral", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Jouer les médiateurs entre jeunes et staff (Progression)", typeTag: "Diplomate",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Votre vision de jeu calme tout le monde. L'équipe est unie.",
+            effects: [{text: "+15 Confiance", style: "positive"}, {text: "+10 Moral", style: "positive"}, {text: "+1 Passe", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, (p.coachTrust||50) + 15), morale: Math.min(100, (p.morale||50) + 10), attributes: { ...p.attributes, passing: Math.min(99, (p.attributes?.passing || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Échec critique. Les deux camps pensent que vous les avez trahis.",
+            effects: [{text: "-10 Confiance", style: "negative"}, {text: "-10 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 10), coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Mener la fronde et renverser la tactique (Coup d'Éclat)", typeTag: "Rébellion",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Le coach finit par céder et change de système. Vous êtes le roi du vestiaire.",
+            effects: [{text: "+40 Moral", style: "positive"}, {text: "+2 Passe", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 40), attributes: { ...p.attributes, passing: Math.min(99, (p.attributes?.passing || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "La rébellion échoue. Vous êtes isolé et envoyé en réserve.",
+            effects: [{text: "-25 Confiance", style: "negative"}, {text: "-20 Forme", style: "negative"}, {text: "-15 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 20), coachTrust: Math.max(0, (p.coachTrust||50) - 25), morale: Math.max(0, (p.morale||50) - 15) })
+          }
+        ]
+      },
+      {
+        text: "Dénoncer les meneurs en privé au coach (Gestion)", typeTag: "Balance",
+        outcome: {
+          narrative: "Le coach écarte les rebelles. Vous devenez son lieutenant absolu.",
+          effects: [{text: "-30 Moral", style: "negative"}, {text: "+40 Confiance", style: "positive"}],
+          applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 30), coachTrust: Math.min(100, (p.coachTrust||50) + 40) })
+        }
+      }
+    ]
+  },
+
   // GENERAL EVENTS (ALL)
   {
     id: 'first_training', category: 'ENTRAÎNEMENT', tag: 'Première impression', targetPosition: 'ALL', isFirstTime: true,
@@ -2652,43 +2984,298 @@ export const ALL_EVENTS = [
     ]
   },
   {
-    id: 'media_interview', category: 'MÉDIAS', tag: 'Presse Locale', targetPosition: 'ALL', isFirstTime: true,
-    description: 'Un journaliste local demande votre première interview.',
+    id: 'media_interview', category: 'MÉDIAS', tag: 'Interview Piège', targetPosition: 'ALL', isFirstTime: true,
+    description: "Un journaliste sportif très agressif tente de vous faire dire du mal du système de jeu actuel du coach.",
     options: [
-      { typeTag: 'AMBITIEUX', text: '"Je suis venu ici pour tout casser."', outcome: { narrative: 'Déclaration choc.', effects: [{ text: '+5 TIR', style: 'positive' }, { text: '-5 Moral', style: 'negative' }], applyStats: (p) => ({ ...p, morale: Math.max(0, p.morale - 5), attributes: { ...p.attributes, finishing: Math.min(99, p.attributes.finishing + 5) } }) } },
-      { typeTag: 'HUMBLE', text: '"Je suis là pour apprendre."', outcome: { narrative: 'Les supporters saluent votre maturité.', effects: [{ text: '+10 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 10) }) } }
+      {
+        text: "Répondre avec des phrases bateaux (Sécurité)", typeTag: "Langue de bois",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Le journaliste s'ennuie, mais le coach apprécie votre prudence.",
+            effects: [{text: "+5 Confiance", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, (p.coachTrust||50) + 5) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Vos réponses maladroites sont détournées dans un petit article sarcastique.",
+            effects: [{text: "-5 Moral", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Défendre brillamment la tactique (Progression)", typeTag: "Charisme",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Votre intelligence de jeu se ressent dans vos propos. Vous gagnez en leadership !",
+            effects: [{text: "+15 Confiance", style: "positive"}, {text: "+1 Passe", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, (p.coachTrust||50) + 15), attributes: { ...p.attributes, passing: Math.min(99, (p.attributes?.passing || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous vous emmêlez les pinceaux tactiquement. Le coach est consterné.",
+            effects: [{text: "-10 Confiance", style: "negative"}, {text: "-10 Moral", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 10), coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Critiquer publiquement le système (Coup d'Éclat)", typeTag: "Rébellion",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Coup de tonnerre ! L'opinion publique vous soutient et force le coach à vous écouter.",
+            effects: [{text: "+35 Moral", style: "positive"}, {text: "+2 Vitesse", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 35), attributes: { ...p.attributes, pace: Math.min(99, (p.attributes?.pace || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous êtes massacré par les consultants TV et mis à pied.",
+            effects: [{text: "-25 Confiance", style: "negative"}, {text: "-20 Forme", style: "negative"}, {text: "-15 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 20), coachTrust: Math.max(0, (p.coachTrust||50) - 25), morale: Math.max(0, (p.morale||50) - 15) })
+          }
+        ]
+      },
+      {
+        text: "Couper court à l'interview prématurément (Gestion)", typeTag: "Fuite",
+        outcome: {
+          narrative: "Vous partez en plein milieu. Les médias vous détestent, mais vous vous préservez mentalement.",
+          effects: [{text: "-20 Moral", style: "negative"}, {text: "+25 Forme", style: "positive"}],
+          applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 20), form: Math.min(100, (p.form||50) + 25) })
+        }
+      }
     ]
   },
   {
     id: 'ev_party_night', category: 'VIE PRIVÉE', tag: 'Sortie nocturne', targetPosition: 'ALL', isFirstTime: false,
-    description: "Vos coéquipiers vous invitent en boîte de nuit.",
+    description: "Vos coéquipiers vous invitent à la plus grosse soirée de l'année en boîte de nuit, 48h avant un match crucial.",
     options: [
-      { typeTag: 'SORTIE', text: 'Y aller pour la cohésion', outcome: { narrative: 'Ambiance sympa mais réveil compliqué.', effects: [{ text: '-15 Forme', style: 'negative' }, { text: '+10 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, form: Math.max(0, p.form - 15), morale: Math.min(100, p.morale + 10) }) } },
-      { typeTag: 'SERIEUX', text: 'Rester dormir', outcome: { narrative: 'Vous êtes en pleine forme.', effects: [{ text: '+10 Forme', style: 'positive' }], applyStats: (p) => ({ ...p, form: Math.min(100, p.form + 10) }) } }
+      {
+        text: "Refuser pour dormir (Sécurité)", typeTag: "Pro",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Vous regardez un film et dormez tôt.",
+            effects: [{text: "+10 Forme", style: "positive"}], applyStats: (p) => ({ ...p, form: Math.min(100, (p.form||50) + 10) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Vous voyez leurs stories toute la nuit. Vous vous sentez seul.",
+            effects: [{text: "-5 Moral", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Y aller mais ne boire que de l'eau (Progression)", typeTag: "Contrôle",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.physical || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous consolidez les liens avec le groupe sans ruiner votre physique.",
+            effects: [{text: "+15 Moral", style: "positive"}, {text: "+1 Physique", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 15), attributes: { ...p.attributes, physical: Math.min(99, (p.attributes?.physical || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.physical || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous rentrez tard et très fatigué. Le coach s'en rend compte.",
+            effects: [{text: "-10 Confiance", style: "negative"}, {text: "-10 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 10), coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Finir sur les tables jusqu'à l'aube (Coup d'Éclat)", typeTag: "No Limit",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Soirée mythique. Vous devenez le leader charismatique de l'équipe !",
+            effects: [{text: "+40 Moral", style: "positive"}, {text: "+2 Dribble", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 40), attributes: { ...p.attributes, dribbling: Math.min(99, (p.attributes?.dribbling || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Des paparazzis vous filment ivre mort. Honte absolue.",
+            effects: [{text: "-25 Confiance", style: "negative"}, {text: "-20 Forme", style: "negative"}, {text: "-15 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 20), coachTrust: Math.max(0, (p.coachTrust||50) - 25), morale: Math.max(0, (p.morale||50) - 15) })
+          }
+        ]
+      },
+      {
+        text: "Payer un carré VIP au groupe sans y aller (Gestion)", typeTag: "Mécène",
+        outcome: {
+          narrative: "Vous dépensez une fortune pour eux, ils vous adorent. Vous dormez comme un bébé.",
+          effects: [{text: "-25 000€", style: "negative"}, {text: "+20 Forme", style: "positive"}, {text: "+10 Moral", style: "positive"}],
+          applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) - 25000, form: Math.min(100, (p.form||50) + 20), morale: Math.min(100, (p.morale||50) + 10) })
+        }
+      }
     ]
   },
   {
     id: 'ev_extra_training', category: 'ENTRAÎNEMENT', tag: "Heures sup'", targetPosition: 'ALL', isFirstTime: false,
-    description: 'La séance est terminée. Restez-vous ?',
+    description: "L'entraînement officiel est terminé sous une pluie battante. Que faites-vous ?",
     options: [
-      { typeTag: 'TRAVAIL', text: 'Bosser devant le but', outcome: { narrative: 'Vos efforts paient.', effects: [{ text: '+4 TIR', style: 'positive' }, { text: '-5 Forme', style: 'negative' }], applyStats: (p) => ({ ...p, form: Math.max(0, p.form - 5), attributes: { ...p.attributes, finishing: Math.min(99, p.attributes.finishing + 4) } }) } },
-      { typeTag: 'RENTRER', text: 'Rentrer pour récupérer', outcome: { narrative: 'Vous récupérez bien.', effects: [{ text: '+5 Forme', style: 'positive' }], applyStats: (p) => ({ ...p, form: Math.min(100, p.form + 5) }) } }
+      {
+        text: "Rentrer se doucher (Sécurité)", typeTag: "Récupération",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Vous privilégiez la récupération musculaire.",
+            effects: [{text: "+5 Forme", style: "positive"}], applyStats: (p) => ({ ...p, form: Math.min(100, (p.form||50) + 5) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Le coach trouve que vous manquez de détermination.",
+            effects: [{text: "-5 Confiance", style: "negative"}], applyStats: (p) => ({ ...p, coachTrust: Math.max(0, (p.coachTrust||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Travail devant le but (Progression)", typeTag: "Finition",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.finishing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous enchaînez les lucarnes. Vous progressez.",
+            effects: [{text: "+15 Confiance", style: "positive"}, {text: "+1 Tir", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, (p.coachTrust||50) + 15), attributes: { ...p.attributes, finishing: Math.min(99, (p.attributes?.finishing || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.finishing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous prenez froid sous la pluie.",
+            effects: [{text: "-15 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 15) })
+          }
+        ]
+      },
+      {
+        text: "Parcours physique extrême de 2h (Coup d'Éclat)", typeTag: "Machine",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous brisez vos limites. Le staff n'en croit pas ses yeux.",
+            effects: [{text: "+40 Confiance", style: "positive"}, {text: "+2 Physique", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, (p.coachTrust||50) + 40), attributes: { ...p.attributes, physical: Math.min(99, (p.attributes?.physical || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Déchirure musculaire à la fin du parcours...",
+            effects: [{text: "-30 Forme", style: "negative"}, {text: "-20 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 30), morale: Math.max(0, (p.morale||50) - 20) })
+          }
+        ]
+      },
+      {
+        text: "Payer des séances de kiné privé pour tous (Gestion)", typeTag: "Soin",
+        outcome: {
+          narrative: "Un investissement sur votre corps. Vous êtes plus frais que jamais.",
+          effects: [{text: "-10 000€", style: "negative"}, {text: "+20 Forme", style: "positive"}, {text: "+10 Confiance", style: "positive"}],
+          applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) - 10000, form: Math.min(100, (p.form||50) + 20), coachTrust: Math.min(100, (p.coachTrust||50) + 10) })
+        }
+      }
     ]
   },
   {
-    id: 'ev_sponsor_deal', category: 'SPONSOR', tag: 'Nouveau Contrat', targetPosition: 'ALL', isFirstTime: false,
-    description: 'Une marque de boisson vous approche pour un spot publicitaire.',
+    id: 'ev_sponsor_deal', category: 'SPONSOR', tag: 'Dilemme Éthique', targetPosition: 'ALL', isFirstTime: false,
+    description: "Une marque de malbouffe vous offre une somme astronomique pour une publicité. Le club déconseille.",
     options: [
-      { typeTag: 'TOURNAGE', text: 'Accepter le tournage (Fatigant)', outcome: { narrative: 'Gros buzz, mais vous manquez de sommeil.', effects: [{ text: '+15 Moral', style: 'positive' }, { text: '-15 Forme', style: 'negative' }], applyStats: (p) => ({ ...p, form: Math.max(0, p.form - 15), morale: Math.min(100, p.morale + 15) }) } },
-      { typeTag: 'REFUS', text: 'Refuser pour se concentrer sur le foot', outcome: { narrative: 'Le coach adore votre mentalité.', effects: [{ text: '+3 DÉFENSE', style: 'positive' }, { text: '+5 Forme', style: 'positive' }], applyStats: (p) => ({ ...p, form: Math.min(100, p.form + 5), attributes: { ...p.attributes, defense: Math.min(99, p.attributes.defense + 3) } }) } }
+      {
+        text: "Refuser sagement (Sécurité)", typeTag: "Éthique",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Le club salue vos principes.",
+            effects: [{text: "+10 Confiance", style: "positive"}], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, (p.coachTrust||50) + 10) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Vous êtes frustré de passer à côté d'autant d'argent.",
+            effects: [{text: "-5 Moral", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 5) })
+          }
+        ]
+      },
+      {
+        text: "Négocier pour des repas sains (Progression)", typeTag: "Négociation",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.defense || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Ils acceptent ! Vous gagnez de l'argent avec une bonne image.",
+            effects: [{text: "+150 000€", style: "positive"}, {text: "+1 Moral", style: "positive"}], applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) + 150000, morale: Math.min(100, (p.morale||50) + 1) })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.defense || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Les négociations échouent et le club vous réprimande.",
+            effects: [{text: "-10 Confiance", style: "negative"}], applyStats: (p) => ({ ...p, coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Signer le gros contrat cash (Coup d'Éclat)", typeTag: "Jackpot",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "La pub est un hit mondial et devient virale ! Vous êtes intouchable.",
+            effects: [{text: "+400 000€", style: "positive"}, {text: "+30 Moral", style: "positive"}], applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) + 400000, morale: Math.min(100, (p.morale||50) + 30) })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Scandale alimentaire ! Vous perdez toute crédibilité sportive.",
+            effects: [{text: "-25 Confiance", style: "negative"}, {text: "-20 Moral", style: "negative"}], applyStats: (p) => ({ ...p, coachTrust: Math.max(0, (p.coachTrust||50) - 25), morale: Math.max(0, (p.morale||50) - 20) })
+          }
+        ]
+      },
+      {
+        text: "Révéler l'offre toxique à la presse pour soigner son image (Gestion)", typeTag: "Lanceur d'alerte",
+        outcome: {
+          narrative: "Vous êtes salué par les ONG de santé. Le coach est fier de vous.",
+          effects: [{text: "-15 Moral", style: "negative"}, {text: "+40 Confiance", style: "positive"}],
+          applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 15), coachTrust: Math.min(100, (p.coachTrust||50) + 40) })
+        }
+      }
     ]
   },
   {
     id: 'ev_fan_interaction', category: 'FANS', tag: 'Rencontre', targetPosition: 'ALL', isFirstTime: false,
-    description: 'Des supporters attendent sous la pluie après le match.',
+    description: "Des supporters agressifs attendent sous la pluie à la sortie du stade après un mauvais match.",
     options: [
-      { typeTag: 'DISPONIBLE', text: 'Signer des autographes pendant 1h', outcome: { narrative: 'Vous devenez leur idole.', effects: [{ text: '+12 Moral', style: 'positive' }, { text: '-5 Forme', style: 'negative' }], applyStats: (p) => ({ ...p, form: Math.max(0, p.form - 5), morale: Math.min(100, p.morale + 12) }) } },
-      { typeTag: 'ESQUIVE', text: 'Rentrer vite au chaud', outcome: { narrative: 'Vous préservez votre santé.', effects: [{ text: '+8 Forme', style: 'positive' }, { text: '-5 Moral', style: 'negative' }], applyStats: (p) => ({ ...p, form: Math.min(100, p.form + 8), morale: Math.max(0, p.morale - 5) }) } }
+      {
+        text: "Les esquiver par la porte arrière (Sécurité)", typeTag: "Fuite",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
+            narrative: "Vous rentrez sain et sauf.",
+            effects: [{text: "+5 Forme", style: "positive"}], applyStats: (p) => ({ ...p, form: Math.min(100, (p.form||50) + 5) })
+          },
+          {
+            probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return 1 - prob; },
+            narrative: "Les supporters vous voient fuir et vous insultent. Grosse claque mentale.",
+            effects: [{text: "-10 Moral", style: "negative"}], applyStats: (p) => ({ ...p, morale: Math.max(0, (p.morale||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Aller leur parler calmement (Progression)", typeTag: "Courage",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Votre calme les apaise. Vous agissez en leader.",
+            effects: [{text: "+15 Moral", style: "positive"}, {text: "+1 Passe", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 15), attributes: { ...p.attributes, passing: Math.min(99, (p.attributes?.passing || 50) + 1) } })
+          },
+          {
+            probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "La discussion tourne au vinaigre. Vous devez être escorté.",
+            effects: [{text: "-10 Confiance", style: "negative"}, {text: "-10 Forme", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 10), coachTrust: Math.max(0, (p.coachTrust||50) - 10) })
+          }
+        ]
+      },
+      {
+        text: "Les affronter physiquement (Coup d'Éclat)", typeTag: "Guerrier",
+        outcome: [
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Vous repoussez le meneur de façon musclée. Les autres reculent. Alpha mentalité !",
+            effects: [{text: "+35 Moral", style: "positive"}, {text: "+2 Physique", style: "positive"}], applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale||50) + 35), attributes: { ...p.attributes, physical: Math.min(99, (p.attributes?.physical || 50) + 2) } })
+          },
+          {
+            probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return 1 - Math.max(0.1, Math.min(0.9, prob)); },
+            narrative: "Bagarre générale ! Vous finissez en garde à vue et suspendu.",
+            effects: [{text: "-30 Confiance", style: "negative"}, {text: "-25 Forme", style: "negative"}, {text: "-20 Moral", style: "negative"}], applyStats: (p) => ({ ...p, form: Math.max(10, (p.form||50) - 25), coachTrust: Math.max(0, (p.coachTrust||50) - 30), morale: Math.max(0, (p.morale||50) - 20) })
+          }
+        ]
+      },
+      {
+        text: "Offrir des maillots dédicacés pour calmer la foule (Gestion)", typeTag: "Pacifiste riche",
+        outcome: {
+          narrative: "L'émeute se transforme en séance de dédicaces amicale. Magie du foot.",
+          effects: [{text: "-15 000€", style: "negative"}, {text: "+20 Moral", style: "positive"}],
+          applyStats: (p) => ({ ...p, bankBalance: (p.bankBalance||0) - 15000, morale: Math.min(100, (p.morale||50) + 20) })
+        }
+      }
     ]
   },
   {
@@ -2819,7 +3406,8 @@ export const ALL_EVENTS = [
     description: "L'équipe nationale traverse une crise. Le sélectionneur est critiqué, le vestiaire est divisé. En tant que Capitaine, vous devez agir.",
     options: [
       { typeTag: 'DISCOURS', text: 'Prendre la parole dans le vestiaire pour unir l\'équipe', outcome: { narrative: 'Un discours poignant qui relance la machine !', effects: [{ text: '+20 Moral', style: 'positive' }, { text: '+2 Passe', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 20), attributes: { ...p.attributes, passing: Math.min(99, p.attributes.passing + 2) } }) } },
-      { typeTag: 'MÉDIAS', text: 'Défendre le sélectionneur publiquement', outcome: { narrative: 'Le coach vous sera éternellement reconnaissant.', effects: [{ text: '+25 Confiance', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 25) }) } }
+      { typeTag: 'MÉDIAS', text: 'Défendre le sélectionneur publiquement', outcome: { narrative: 'Le coach vous sera éternellement reconnaissant.', effects: [{ text: '+25 Confiance', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 25) }) } },
+      { requiredBackground: 'AMATEUR', typeTag: 'INTIMIDATION', text: '🔒 [Amateur] Recadrer violemment les rebelles', outcome: { narrative: 'Votre coup de sang remet tout le monde d\'accord. Personne ne bronche.', effects: [{ text: '+30 Moral', style: 'positive' }, { text: '+10 Confiance', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 30), coachTrust: Math.min(100, p.coachTrust + 10) }) } }
     ]
   },
   {
@@ -2856,6 +3444,9 @@ export const ALL_EVENTS = [
 ];
 
 export const PERKS_LIST = [
+  { id: 'bg_street', name: 'Dalleux (Origine)', desc: 'Bonus de stats dans les moments difficiles.', icon: '🔥', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
+  { id: 'bg_academy', name: 'Élève Modèle (Origine)', desc: 'La confiance du coach est plus facile à gagner', icon: '📚', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
+  { id: 'bg_futsal', name: 'Technique Pure (Origine)', desc: 'Augmente considérablement les dribbles et la vista', icon: '⚡', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
   { id: 'renard', name: 'Renard des surfaces', desc: 'Augmente les buts de 30%', icon: '🦊', roles: ['ST', 'ATT'] },
   { id: 'maestro', name: 'Maestro', desc: 'Augmente les passes décisives de 30%', icon: '🎩', roles: ['MID', 'CM', 'ATT'] },
   { id: 'mur', name: 'Muraille', desc: 'Augmente les clean sheets de 30%', icon: '🧱', roles: ['DEF', 'CB', 'GK'] },

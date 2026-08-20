@@ -16,10 +16,16 @@ export const CareerHistory = ({ onBack }) => {
       }
       
       try {
-        const { data, error } = await supabase
-          .from('leaderboard')
-          .select('*')
-          .ilike('player_name', `${pseudo}%`)
+        const { data: { session } } = await supabase.auth.getSession();
+        let query = supabase.from('leaderboard').select('*');
+        
+        if (session) {
+          query = query.eq('user_id', session.user.id);
+        } else {
+          query = query.ilike('player_name', `${pseudo}%`);
+        }
+        
+        const { data, error } = await query
           .gte('created_at', '2026-08-12T00:00:00Z')
           .order('score', { ascending: false })
           .limit(50);
