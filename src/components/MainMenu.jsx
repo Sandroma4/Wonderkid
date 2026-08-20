@@ -478,7 +478,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                         <div className="flex items-center justify-between relative z-10">
                           <div className="flex items-center gap-3">
                             <span className="text-lg md:text-xl">👟</span>
-                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Gestion Futsal</span>
+                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Équipes</span>
                           </div>
                           <span className="text-orange-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
                         </div>
@@ -491,7 +491,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                         <div className="flex items-center justify-between relative z-10">
                           <div className="flex items-center gap-3">
                             <span className="text-lg md:text-xl">🔥</span>
-                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Futsal en ligne</span>
+                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Match en ligne</span>
                           </div>
                           <span className="text-red-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
                         </div>
