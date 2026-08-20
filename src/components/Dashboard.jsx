@@ -1029,7 +1029,6 @@ export function Dashboard({
                       </div>
                       </div>
                     </div>
-                  </div>
                   {/* Club Actuel - MOBILE */}
                   <div className="flex md:hidden bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 shadow-2xl items-center justify-between gap-2 h-full relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-3 opacity-20 transform translate-x-2 -translate-y-2">
@@ -1372,7 +1371,8 @@ export function Dashboard({
 
             </div>
           </div>
-            {/* MOBILE BOTTOM NAV */}
+          </div>
+          {/* MOBILE BOTTOM NAV */}
             <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-slate-900 border-t border-slate-300 dark:border-slate-800 md:hidden z-50 flex justify-around p-2 pb-safe shadow-2xl">
               <button 
                   onClick={() => { playSound('click'); setActiveMobileTab('terrain'); }} 
