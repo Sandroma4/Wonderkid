@@ -706,7 +706,7 @@ export default function App() {
       }
 
       const finalsToPlay = Object.keys(newTournamentStats).filter(key => 
-        newTournamentStats[key] && (newTournamentStats[key].stage === 'Finaliste' || newTournamentStats[key].stage === 'Vainqueur')
+        !['worldCup', 'euro'].includes(key) && newTournamentStats[key] && (newTournamentStats[key].stage === 'Finaliste' || newTournamentStats[key].stage === 'Vainqueur')
       );
 
       if (finalsToPlay.length > 0) {
