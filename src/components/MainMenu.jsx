@@ -346,11 +346,8 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
       <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
-        {/* Logo positioned dynamically in the top half of the screen */}
-        <div 
-          className="fixed top-0 left-0 w-full flex justify-center items-center pointer-events-none animate-[fade-in_1s_ease-out]" 
-          style={{ height: 'calc(50vh - 180px)' }}
-        >
+        {/* Logo positioned dynamically near the top of the screen */}
+        <div className="fixed top-0 left-0 w-full flex justify-center items-start pt-8 md:pt-12 pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
           <div className="absolute w-[320px] h-[320px] md:w-[460px] md:h-[460px] lg:w-[540px] lg:h-[540px] bg-emerald-500/40 blur-[80px] rounded-full max-h-full max-w-full"></div>
           <img 
