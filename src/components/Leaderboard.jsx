@@ -17,7 +17,16 @@ export const Leaderboard = ({ onBack }) => {
           query = query.eq('is_coop', true);
         }
         
-        const { data, error } = await query.order('score', { ascending: false }).limit(50);
+        let { data, error } = await query.order('score', { ascending: false }).limit(50);
+        
+        if (error && error.code === '42703') {
+           // Fallback if 'is_coop' column does not exist
+           console.warn("Column 'is_coop' missing in DB. Fetching without filter.");
+           const fallbackQuery = supabase.from('leaderboard').select('*').gte('created_at', '2026-08-12T00:00:00Z');
+           const res = await fallbackQuery.order('score', { ascending: false }).limit(50);
+           data = res.data;
+           error = res.error;
+        }
         
         if (error) throw error;
         setScores(data || []);

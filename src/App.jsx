@@ -1590,7 +1590,17 @@ export default function App() {
         payload.user_id = session.user.id;
       }
 
-      await supabase.from('leaderboard').insert([payload]);
+      const { error: insertError } = await supabase.from('leaderboard').insert([payload]);
+      if (insertError) {
+        if (insertError.code === '42703') {
+           console.warn("Column 'is_coop' missing. Retrying insert without it.");
+           delete payload.is_coop;
+           const { error: retryError } = await supabase.from('leaderboard').insert([payload]);
+           if (retryError) throw retryError;
+        } else {
+           throw insertError;
+        }
+      }
     } catch (e) {
       console.error("Failed to submit score:", e);
     }
