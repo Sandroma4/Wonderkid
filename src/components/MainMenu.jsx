@@ -366,7 +366,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
         </div>
 
         {/* Menu Buttons */}
-        <div className="w-full space-y-4 animate-[slide-up_0.8s_ease-out]">
+        <div className="w-full min-h-[480px] flex flex-col justify-start space-y-4 animate-[slide-up_0.8s_ease-out]">
           
           {showPlayOptions ? (
             <div className="space-y-4 animate-[fade-in_0.3s_ease-out]">
