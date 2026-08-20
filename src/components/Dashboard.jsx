@@ -1076,7 +1076,6 @@ export function Dashboard({
                       </div>
                       </div>
                     </div>
-                  </div>
                   {/* Gauges (États) */}
                   <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-3 shadow-2xl flex flex-col justify-center h-full">
                     <div className="space-y-2">
@@ -1238,37 +1237,6 @@ export function Dashboard({
                     </button>
                   </div>
                 )}
-</div>
-<div className="block md:hidden">
-{/* STATS DÉTAILLÉES (Toujours visible) */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-3 shadow-2xl">
-                  <button onClick={() => setIsMobileStatsOpen(!isMobileStatsOpen)} className="w-full heading-typography text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider flex justify-between items-center mb-1 bg-white dark:bg-slate-800 p-2 rounded-xl">
-                    <span className="flex items-center gap-1.5">📊 Stats Détaillées</span>
-                    <span className="text-emerald-500 text-sm">{isMobileStatsOpen ? '▲' : '▼'}</span>
-                  </button>
-                  <div className={`transition-all duration-300 overflow-hidden ${isMobileStatsOpen ? 'max-h-[500px] opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'}`}>
-                  <div className="border-t border-slate-300/80 dark:border-slate-700/50 pt-3 grid grid-cols-2 gap-1.5">
-                    {['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical'].map((attr) => {
-                      const val = Math.floor(player.attributes?.[attr] || 0);
-                      const eff = Math.floor(effectiveStats[attr] || val);
-                      const diff = eff - val;
-                      return (
-                        <div key={attr} className="bg-white dark:bg-slate-800 px-2 py-1.5 rounded-md border border-slate-300/80 dark:border-slate-700/50 flex justify-between items-center shadow-sm">
-                          <span className="text-[9px] text-slate-500 dark:text-slate-500 dark:text-slate-400 capitalize font-medium">{statLabels[attr] || attr}</span>
-                          <div className="flex items-center gap-1">
-                            <span className="heading-typography font-bold text-[10px] text-slate-800 dark:text-slate-100">{val}</span>
-                            {diff !== 0 && (
-                              <span className={`heading-typography font-bold text-[9px] ${diff > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
-                                ({diff > 0 ? `+${diff}` : diff})
-                             </span>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                  </div>
 </div>
               </div>
 
