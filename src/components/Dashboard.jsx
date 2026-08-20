@@ -858,17 +858,17 @@ export function Dashboard({
               </div>
             )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               
               {/* ONGLET : JOUEUR (CARTE & STATS) */}
-              <div className={`${activeMobileTab !== 'joueur' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 lg:col-span-1`}>
+              <div className={`${activeMobileTab !== 'joueur' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1`}>
                 {/* BLOC CARTE FUT DU JOUEUR */}
                 <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-0 md:p-4 shadow-2xl flex flex-col items-center h-fit">
                   <button onClick={() => window.print()} className="w-full mb-2 text-xs font-bold uppercase tracking-wider bg-white dark:bg-slate-800 text-slate-800 dark:text-white py-1.5 rounded-xl shadow-md hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">📸 Exporter ma Carte</button>
                   <PlayerCard player={player} club={club} cardType="auto" />
                 </div>
-                <div className="hidden md:block">
-                  {/* STATS DÉTAILLÉES (Toujours visible sur desktop) */}
+                <div>
+                  {/* STATS DÉTAILLÉES */}
                   <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-3 shadow-2xl">
                     <div className="heading-typography text-[9px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider flex items-center mb-3">
                       <span className="flex items-center gap-1.5">📊 Stats Détaillées</span>
@@ -977,7 +977,7 @@ export function Dashboard({
               </div>
 
               {/* ONGLET : TERRAIN (EVENTS) */}
-              <div className={`${activeMobileTab !== 'terrain' ? 'hidden md:flex' : 'flex'} lg:col-span-2 flex-col space-y-4`}>
+              <div className={`${activeMobileTab !== 'terrain' ? 'hidden md:flex' : 'flex'} md:col-span-2 flex-col space-y-4`}>
                 
                 {/* TERRAIN / EVENTS EN HAUT */}
 
@@ -1221,6 +1221,7 @@ export function Dashboard({
                     </div>
                   </div>
                 )}
+                </div>
                 {multiplayerContext && (
                   <div className="flex justify-center mt-4">
                     <button 
@@ -1236,12 +1237,11 @@ export function Dashboard({
                       Quitter
                     </button>
                   </div>
-                )}
-</div>
+
               </div>
 
               {/* ONGLET : CARRIÈRE (TROPHÉES & ÉTAT) */}
-              <div className={`${activeMobileTab !== 'carriere' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 lg:col-span-1`}>
+              <div className={`${activeMobileTab !== 'carriere' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1`}>
 
                 {/* BLOC CARTE FUT DU RIVAL (JUSTE LA CARTE) */}
                 {rival && (() => {
