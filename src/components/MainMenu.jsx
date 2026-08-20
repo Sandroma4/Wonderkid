@@ -347,13 +347,13 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
       <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
         {/* Logo positioned dynamically near the top of the screen */}
-        <div className="fixed top-0 left-0 w-full flex justify-center items-start pt-8 md:pt-12 pointer-events-none animate-[fade-in_1s_ease-out]">
+        <div className="fixed top-0 left-0 w-full flex justify-center items-start -mt-8 md:-mt-16 pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
-          <div className="absolute w-[320px] h-[320px] md:w-[460px] md:h-[460px] lg:w-[540px] lg:h-[540px] bg-emerald-500/40 blur-[80px] rounded-full max-h-full max-w-full"></div>
+          <div className="absolute w-[280px] h-[280px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] bg-emerald-500/40 blur-[80px] rounded-full max-h-full max-w-full"></div>
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
-            className="relative z-10 w-[320px] h-[320px] md:w-[460px] md:h-[460px] lg:w-[540px] lg:h-[540px] max-h-full max-w-full object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
+            className="relative z-10 w-[280px] h-[280px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] max-h-full max-w-full object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
             onError={(e) => {
               e.target.onerror = null; 
               e.target.style.display = 'none';
