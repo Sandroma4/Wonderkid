@@ -152,7 +152,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-150 dark:bg-[#0F172A] flex items-center justify-center p-6 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-emerald-150 dark:bg-[#0F172A] flex items-start justify-center px-6 pb-6 pt-[calc(50vh-140px)] md:pt-[calc(50vh-150px)] relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Pitch Markings - Left (Penalty Area) */}
