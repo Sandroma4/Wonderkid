@@ -345,7 +345,7 @@ export default function App() {
       club: null,
       clubEvolutions: {},
       clubOffers,
-      season: 2026,
+      season: 2024,
       bankBalance: Number(tempPlayer.bankBalance) || 12000,
       completedEvents: initialCompletedEvents,
       eventsList: seasonEvents,
