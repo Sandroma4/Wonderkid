@@ -17,6 +17,7 @@ import { createMultiplayerRoom } from './utils/multiplayer';
 import { PseudonymModal } from './components/PseudonymModal';
 import { checkAchievements } from './utils/achievementsData';
 import { simulateTournaments, calculateAwards, calculateUniqueAwards, updateClubOvr } from './utils/awards';
+import { InternationalTournamentModal } from './components/InternationalTournamentModal';
 import { RoleSelectionModal } from './components/RoleSelectionModal';
 import { supabase } from './supabaseClient';
 import { calculateCareerScore } from './utils/scoreCalculator';
@@ -396,7 +397,22 @@ export default function App() {
       const newUnlocks = checkAchievements(updatedPlayer, null, selectedClub, prev.palmares);
       newUnlocks.forEach(achId => unlockAchievement(achId));
 
-      return { ...prev, club: selectedClub, player: updatedPlayer, currentEvent: prev.eventsList[0] };
+      
+      const dummyStatsForPreSim = simulateSeasonStats(updatedPlayer, selectedClub, null);
+      const predictedTournaments = simulateTournaments(updatedPlayer, selectedClub, dummyStatsForPreSim, 1, null);
+      updatedPlayer.predictedTournaments = predictedTournaments;
+      
+      const clubMatches = getMatchesForClub(selectedClub);
+      const newSeasonEvents = getRandomSeasonEvents(updatedPlayer, prev.completedEvents, clubMatches, predictedTournaments, selectedClub.tier, multiplayerContext?.isCoopMode);
+      
+      return { 
+        ...prev, 
+        club: selectedClub, 
+        player: updatedPlayer, 
+        eventsList: newSeasonEvents, 
+        totalEvents: newSeasonEvents.length, 
+        currentEvent: newSeasonEvents[0] 
+      };
     });
   };
 
@@ -662,6 +678,78 @@ export default function App() {
     });
   };
 
+
+  const handleInternationalComplete = (intlResult) => {
+    setGameState(prev => {
+      const pStats = prev.pendingStatsForIntl;
+      if (!pStats) return prev;
+      
+      const newTournamentStats = { ...pStats.tournamentStats };
+      if (prev.internationalTournamentType === 'WORLD_CUP') newTournamentStats.worldCup = intlResult;
+      else newTournamentStats.euro = intlResult;
+
+      if (multiplayerContext) {
+        multiplayerContext.roomObj.updateState({ 
+          eventsFinished: true, 
+          player: prev.player,
+          club: prev.club,
+          seasonData: { dummyStats: pStats.dummyStats, tournamentStats: newTournamentStats, seasonIndex: prev.season, lastSeasonStats: prev.lastSeasonStats }
+        });
+        
+        return {
+          ...prev,
+          isInternationalTournament: false,
+          internationalTournamentDone: true, // Prevent loop
+          isWaitingForMultiplayerSync: true,
+          pendingStatsForIntl: null
+        };
+      }
+
+      const finalsToPlay = Object.keys(newTournamentStats).filter(key => 
+        newTournamentStats[key] && (newTournamentStats[key].stage === 'Finaliste' || newTournamentStats[key].stage === 'Vainqueur')
+      );
+
+      if (finalsToPlay.length > 0) {
+          const finalKey = finalsToPlay[0];
+          let finalName = '';
+          if (finalKey === 'championsLeague') finalName = 'Ligue des Champions';
+          else if (finalKey === 'europaLeague') finalName = 'Ligue Europa';
+          else if (finalKey === 'conferenceLeague') finalName = 'Conference League';
+          else if (finalKey === 'domesticCup') finalName = 'Coupe Nationale';
+          
+          const compatibleScenarios = INTERACTIVE_MATCH_SCENARIOS.filter(scen => {
+            if (scen.targetPosition === 'ALL') return true;
+            const playerPos = (prev.player.position || '').toUpperCase();
+            if (scen.targetPosition.startsWith('!')) return !playerPos.includes(scen.targetPosition.substring(1));
+            return playerPos.includes(scen.targetPosition);
+          });
+          
+          const shuffledScenarios = compatibleScenarios.sort(() => 0.5 - Math.random());
+          const matchPhases = [
+            { ...shuffledScenarios[0], time: '15ème Minute', title: `Début de Finale : ${finalName}` },
+            { ...shuffledScenarios[1 % shuffledScenarios.length], time: '60ème Minute', title: `Le Tournant : ${finalName}` },
+            { ...shuffledScenarios[2 % shuffledScenarios.length], time: '89ème Minute', title: `Fin de Match : ${finalName}` }
+          ];
+
+          return {
+            ...prev,
+            isInternationalTournament: false,
+            internationalTournamentDone: true, // Prevent loop
+            isInteractiveMatch: true,
+            interactiveMatchPhases: matchPhases,
+            interactiveMatchCurrentPhaseIndex: 0,
+            interactiveMatchScore: 0,
+            interactiveMatchResult: null,
+            interactiveMatchFinalOutcome: null,
+            pendingStats: { tournamentStats: newTournamentStats, finalKey, finalName },
+            pendingStatsForIntl: null
+          };
+      } else {
+        return finalizeSeasonDirectly(prev, newTournamentStats, null, pStats.updatedCompletedEvents, pStats.nextStep);
+      }
+    });
+  };
+
   const handleContinueFromOutcome = () => {
     setActiveOutcome(null);
     setGameState((prev) => {
@@ -672,10 +760,32 @@ export default function App() {
       const isEnded = nextStep > prev.totalEvents;
 
       if (isEnded) {
-        if (multiplayerContext) {
-          const dummyStats = simulateSeasonStats(prev.player, prev.club, null);
-          const tournamentStats = simulateTournaments(prev.player, prev.club, dummyStats, prev.season, prev.lastSeasonStats);
+        const dummyStats = simulateSeasonStats(prev.player, prev.club, null);
+        const tournamentStats = simulateTournaments(prev.player, prev.club, dummyStats, prev.season, prev.lastSeasonStats);
+
+        const currentYear = prev.player.currentYear || 2024;
+        const isWorldCup = (currentYear % 4 === 2);
+        const isEuro = (currentYear % 4 === 0);
+        
+        if ((isWorldCup || isEuro) && !prev.internationalTournamentDone) {
+          let calledUp = false;
+          if (prev.player.ovr >= 82) calledUp = true;
+          else if (prev.player.ovr >= 75) calledUp = Math.random() > 0.4;
           
+          if (calledUp) {
+            return {
+              ...prev,
+              completedEvents: updatedCompletedEvents,
+              eventStep: nextStep,
+              currentEvent: null,
+              isInternationalTournament: true,
+              internationalTournamentType: isWorldCup ? 'WORLD_CUP' : 'EURO',
+              pendingStatsForIntl: { dummyStats, tournamentStats, updatedCompletedEvents, nextStep }
+            };
+          }
+        }
+
+        if (multiplayerContext) {
           multiplayerContext.roomObj.updateState({ 
             eventsFinished: true, 
             player: prev.player,
@@ -690,9 +800,6 @@ export default function App() {
             isWaitingForMultiplayerSync: true
           };
         }
-
-        const dummyStats = simulateSeasonStats(prev.player, prev.club, null);
-        const tournamentStats = simulateTournaments(prev.player, prev.club, dummyStats, prev.season, prev.lastSeasonStats);
         
         const finalsToPlay = Object.keys(tournamentStats).filter(key => 
           tournamentStats[key] && (tournamentStats[key].stage === 'Finaliste' || tournamentStats[key].stage === 'Vainqueur')
@@ -977,6 +1084,7 @@ export default function App() {
       const newAge = prev.player.age + 1;
       const newCurrentYear = (prev.player.currentYear || 2024) + 1;
       const newSeason = prev.season + 1;
+      const internationalTournamentDone = false;
       const declineAge = prev.player.declineAge || 32;
       
       if (newAge >= declineAge) {
@@ -1288,7 +1396,13 @@ export default function App() {
       const is18 = newAge === 18 && !finalUpdatedPlayer.roleId;
 
       const matchesPlayed = statsToUse ? (statsToUse.matches || 0) : getMatchesForClub(prev.club);
-      let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, statsToUse?.tournaments, prev.club.tier, multiplayerContext?.isCoopMode);
+      
+      // PRE-SIMULATION DU PARCOURS EUROPEEN POUR INJECTER DES EVENEMENTS
+      const dummyStatsForPreSim = simulateSeasonStats(finalUpdatedPlayer, prev.club, null);
+      const predictedTournaments = simulateTournaments(finalUpdatedPlayer, prev.club, dummyStatsForPreSim, newSeason, statsToUse);
+      finalUpdatedPlayer.predictedTournaments = predictedTournaments;
+      
+      let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, predictedTournaments, prev.club.tier, multiplayerContext?.isCoopMode);
       const hasPlayerWonBallonDor = statsToUse?.awards?.some(a => a.text === "Ballon d'Or");
       const hasPlayerWonCL = statsToUse?.tournaments?.championsLeague?.stage === 'Vainqueur';
       const updatedRival = updateRival(prev.rival, finalUpdatedPlayer.ovr, prev.club.tier, hasPlayerWonBallonDor, hasPlayerWonCL);

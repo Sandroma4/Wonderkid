@@ -52,45 +52,7 @@ export const simulateTournaments = (player, club, seasonStats, seasonIndex, last
   // ═══════════════════════════════════════════════════
   // CHAMPIONNATS INTERNATIONAUX (CDM / Euro)
   // ═══════════════════════════════════════════════════
-  if (isInternationalYear && seasonStats.nationalCallup && (player.nationalCaps || 0) > 0) {
-    // Probabilité de victoire basée sur l'OVR du joueur
-    // Un joueur de 50 OVR a ~1% de chance de gagner, un joueur de 90 OVR a ~12%
-    const winChance = clamp((playerOvr - 60) * 0.004, 0.005, 0.12);
-    const finalistChance = clamp((playerOvr - 55) * 0.006, 0.02, 0.15);
-    const semiChance = clamp((playerOvr - 50) * 0.008, 0.05, 0.25);
-    const quarterChance = clamp((playerOvr - 45) * 0.01, 0.1, 0.35);
-    
-    const roll = Math.random();
-    let stage, matches;
-    if (roll < winChance) { stage = 'Vainqueur'; matches = 7; }
-    else if (roll < winChance + finalistChance) { stage = 'Finaliste'; matches = 7; }
-    else if (roll < winChance + finalistChance + semiChance) { stage = 'Demi-finale'; matches = 6; }
-    else if (roll < winChance + finalistChance + semiChance + quarterChance) { stage = 'Quart de finale'; matches = 5; }
-    else { stage = 'Phase de groupes'; matches = 3; }
-    
-    const compLevel = isWorldCup ? 85 : 82;
-    const avgRating = getTournamentRating(playerOvr, compLevel);
-    
-    // Stats individuelles proportionnelles à l'OVR et au rating
-    const perfMultiplier = clamp(avgRating / 7.0, 0.3, 1.5);
-    let goals = 0, assists = 0;
-    
-    if (pos.includes('ATT') || pos.includes('ST') || pos.includes('WING')) {
-      goals = Math.max(0, Math.round(matches * 0.6 * perfMultiplier * (Math.random() * 0.8 + 0.3)));
-      assists = Math.max(0, Math.round(matches * 0.25 * perfMultiplier * (Math.random() * 0.8 + 0.2)));
-    } else if (pos.includes('MID') || pos.includes('CM')) {
-      goals = Math.max(0, Math.round(matches * 0.15 * perfMultiplier * (Math.random() * 0.8 + 0.2)));
-      assists = Math.max(0, Math.round(matches * 0.45 * perfMultiplier * (Math.random() * 0.8 + 0.3)));
-    } else {
-      goals = Math.max(0, Math.round(matches * 0.05 * perfMultiplier * Math.random()));
-      assists = Math.max(0, Math.round(matches * 0.08 * perfMultiplier * Math.random()));
-    }
-    
-    const tData = { stage, matches, goals, assists, rating: avgRating };
-    
-    if (isWorldCup) tournaments.worldCup = tData;
-    if (isEuro) tournaments.euro = tData;
-  }
+    // WORLD CUP ET EURO SONT MAINTENANT GERES PAR LE MINI-JEU DANS APP.JSX
   
   // ═══════════════════════════════════════════════════
   // COUPES D'EUROPE
