@@ -1741,6 +1741,47 @@ export default function App() {
     return <CharacterCreation onStartGame={handleStartGame} multiplayerContext={multiplayerContext} onRestartGame={handleRestartGame} />;
   }
 
+  if (gameState && gameState.isInternationalTournament) {
+    return (
+      <InternationalTournamentModal
+        player={gameState.player}
+        season={gameState.season}
+        type={gameState.internationalTournamentType}
+        onComplete={(newPlayerState, performanceResult) => {
+          setGameState(prev => {
+            const nextState = { ...prev, player: newPlayerState, isInternationalTournament: false, internationalTournamentDone: true };
+            if (prev.pendingStatsForIntl) {
+               const st = prev.pendingStatsForIntl.tournamentStats;
+               if (gameState.internationalTournamentType === 'WORLD_CUP') {
+                 st.worldCup = { stage: performanceResult.stage, performance: performanceResult.performance };
+               } else {
+                 st.euro = { stage: performanceResult.stage, performance: performanceResult.performance };
+               }
+               
+               // Injecte manuellement le statut de vainqueur
+               if (performanceResult.stage === 'Vainqueur') {
+                 if (gameState.internationalTournamentType === 'WORLD_CUP') {
+                   st.worldCup.stage = 'Vainqueur';
+                 } else {
+                   st.euro.stage = 'Vainqueur';
+                 }
+               }
+
+               return finalizeSeasonDirectly(
+                 nextState, 
+                 st, 
+                 null, 
+                 prev.pendingStatsForIntl.updatedCompletedEvents, 
+                 prev.pendingStatsForIntl.nextStep
+               );
+            }
+            return nextState;
+          });
+        }}
+      />
+    );
+  }
+
   return (
     <>
       <Dashboard
