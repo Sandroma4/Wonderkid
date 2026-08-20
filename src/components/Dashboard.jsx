@@ -607,6 +607,8 @@ export function Dashboard({
                   {seasonStats.tournaments.worldCup && <p className="text-slate-700 dark:text-slate-200">🌍 Coupe du Monde : <span className="font-semibold">{seasonStats.tournaments.worldCup.stage}</span></p>}
                   {seasonStats.tournaments.euro && <p className="text-slate-700 dark:text-slate-200 flex items-center gap-1.5"><FlagIcon code="eu" className="w-4 h-3" /> Euro : <span className="font-semibold">{seasonStats.tournaments.euro.stage}</span></p>}
                   {seasonStats.tournaments.championsLeague && <p className="text-slate-700 dark:text-slate-200">⭐ Ligue des Champions : <span className="font-semibold">{seasonStats.tournaments.championsLeague.stage}</span></p>}
+                  {seasonStats.tournaments.europaLeague && <p className="text-slate-700 dark:text-slate-200">🟠 Europa League : <span className="font-semibold">{seasonStats.tournaments.europaLeague.stage}</span></p>}
+                  {seasonStats.tournaments.conferenceLeague && <p className="text-slate-700 dark:text-slate-200">🟢 Conference League : <span className="font-semibold">{seasonStats.tournaments.conferenceLeague.stage}</span></p>}
                   {seasonStats.tournaments.domesticCup && <p className="text-slate-700 dark:text-slate-200">🏆 Coupe Nationale : <span className="font-semibold">{seasonStats.tournaments.domesticCup.stage}</span></p>}
                 </div>
               )}
@@ -706,11 +708,9 @@ export function Dashboard({
             ) : (
                <div className="space-y-4">
                  {interactiveMatchPhases[interactiveMatchCurrentPhaseIndex]?.options.map((opt, idx) => {
-                   const statLabels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
                    return (
                    <button key={idx} onClick={() => { playSound('click'); onPlayInteractiveMatch(idx); }} className="w-full text-left p-3 md:p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all duration-150 flex items-center justify-between group shadow-sm">
                      <span className="font-semibold text-[10px] md:text-sm text-slate-800 dark:text-white">{opt.text}</span>
-                     <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:text-emerald-500 text-[9px] md:text-xs font-bold uppercase tracking-wider flex-shrink-0 transition-transform group-hover:translate-x-1">Test {statLabels[opt.stat] || opt.stat}</span>
                    </button>
                  )})}
                </div>
@@ -953,11 +953,12 @@ export function Dashboard({
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={player.valueHistory} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
-                          <XAxis dataKey="age" tick={{ fontSize: 10, fill: '#94a3b8' }} tickLine={false} axisLine={false} />
+                          <XAxis dataKey="age" tick={{ fontSize: 10, fill: '#94a3b8' }} tickLine={false} axisLine={false} padding={{ left: 20, right: 20 }} />
                           <YAxis 
                             tick={{ fontSize: 10, fill: '#94a3b8' }} 
                             tickLine={false} 
                             axisLine={false}
+                            domain={['auto', 'auto']}
                             tickFormatter={(val) => `${(val / 1000000).toFixed(1)}M`}
                           />
                           <Tooltip 
@@ -1010,20 +1011,20 @@ export function Dashboard({
                         )}
                       </div>
                       {/* Solde */}
-                      <div className="flex-1 flex flex-col gap-1">
+                      <div className="flex-1 flex flex-row gap-1 items-stretch">
                         {player.sponsor && player.sponsor !== 'Aucun' && (
-                          <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-2 py-0.5 rounded-lg text-center shadow-sm">
-                            <span className="heading-typography text-[7px] md:text-[8px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider">
-                              ⭐ {player.sponsor}
+                          <div className="flex-1 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 px-1 py-1 rounded-xl flex items-center justify-center shadow-sm text-center">
+                            <span className="heading-typography text-[7px] md:text-[8px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider leading-tight">
+                              💎<br/>{player.sponsor}
                             </span>
                           </div>
                         )}
-                        <div className="relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-3 py-2 rounded-xl flex items-center justify-center shadow-lg border border-emerald-300">
-
-                        <div className="absolute inset-0 bg-white/20 pointer-events-none mix-blend-overlay" />
-                        <span className="heading-typography text-[11px] font-black text-slate-800 dark:text-white drop-shadow-md z-10 tracking-wide">
-                          {bankBalance.toLocaleString('fr-FR')} €
-                        </span>
+                        <div className="flex-1 relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-2 py-1 rounded-xl flex items-center justify-center shadow-lg border border-emerald-300 text-center">
+                          <div className="absolute inset-0 bg-white/20 pointer-events-none mix-blend-overlay" />
+                          <span className="heading-typography text-[10px] md:text-[11px] font-black text-slate-800 dark:text-white drop-shadow-md z-10 tracking-wide leading-none">
+                            {bankBalance.toLocaleString('fr-FR')} €
+                          </span>
+                        </div>
                       </div>
                       </div>
                     </div>
@@ -1057,20 +1058,20 @@ export function Dashboard({
                         )}
                       </div>
                       {/* Solde */}
-                      <div className="flex flex-col gap-1 items-end justify-center w-full">
+                      <div className="flex flex-row gap-1 items-stretch justify-end w-full">
                         {player.sponsor && player.sponsor !== 'Aucun' && (
-                          <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-1.5 py-0.5 rounded text-center shadow-sm w-full">
-                            <span className="heading-typography text-[7px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider block">
-                              ⭐ {player.sponsor}
+                          <div className="flex-1 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 px-1 py-0.5 rounded-md flex items-center justify-center text-center shadow-sm">
+                            <span className="heading-typography text-[6px] sm:text-[7px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider leading-tight">
+                              💎<br/>{player.sponsor}
                             </span>
                           </div>
                         )}
-                        <div className="relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-2 py-1 rounded-md flex items-center justify-center shadow-lg border border-emerald-300 w-full">
-
-                        <div className="absolute inset-0 bg-white/20 pointer-events-none mix-blend-overlay" />
-                        <span className="heading-typography text-[9px] sm:text-[10px] font-black text-slate-800 dark:text-white drop-shadow-md z-10 tracking-wide">
-                          {bankBalance.toLocaleString('fr-FR')} €
-                        </span>
+                        <div className="flex-1 relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-2 py-1 rounded-md flex items-center justify-center shadow-lg border border-emerald-300">
+                          <div className="absolute inset-0 bg-white/20 pointer-events-none mix-blend-overlay" />
+                          <span className="heading-typography text-[9px] sm:text-[10px] font-black text-slate-800 dark:text-white drop-shadow-md z-10 tracking-wide text-center leading-none">
+                            {bankBalance.toLocaleString('fr-FR')} €
+                          </span>
+                        </div>
                       </div>
                       </div>
                     </div>
@@ -1178,7 +1179,6 @@ export function Dashboard({
                           className="w-full text-left p-3 md:p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-emerald-500 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all duration-150 flex items-center justify-between group shadow-sm"
                         >
                           <div className="flex items-center gap-2 md:gap-3 pr-2">
-                            <span className="heading-typography text-[8px] md:text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-emerald-200 dark:bg-slate-950 text-emerald-600 dark:text-emerald-400 shadow-sm flex-shrink-0">{option.typeTag}</span>
                             <span className="font-semibold text-[10px] md:text-sm text-slate-800 dark:text-white leading-tight">{option.text}</span>
                           </div>
                           <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:text-emerald-500 text-[10px] md:text-xs transition-transform group-hover:translate-x-1 flex-shrink-0">➔</span>
@@ -1202,11 +1202,12 @@ export function Dashboard({
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={player.valueHistory} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
-                          <XAxis dataKey="age" tick={{ fontSize: 10, fill: '#94a3b8' }} tickLine={false} axisLine={false} />
+                          <XAxis dataKey="age" tick={{ fontSize: 10, fill: '#94a3b8' }} tickLine={false} axisLine={false} padding={{ left: 20, right: 20 }} />
                           <YAxis 
                             tick={{ fontSize: 10, fill: '#94a3b8' }} 
                             tickLine={false} 
                             axisLine={false}
+                            domain={['auto', 'auto']}
                             tickFormatter={(val) => `${(val / 1000000).toFixed(1)}M`}
                           />
                           <Tooltip 

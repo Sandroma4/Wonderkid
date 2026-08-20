@@ -16,13 +16,7 @@ export const EXTRA_EVENTS_12 = [
       { typeTag: 'Rebelle', text: 'Briser la grève et aller s\'entraîner seul', outcome: { narrative: 'Le public salue votre professionnalisme face au ridicule de la situation.', effects: [{ text: '+20 Confiance', style: 'positive' }, { text: '+3 Physique', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 20), attributes: { ...p.attributes, physical: Math.min(99, p.attributes.physical + 3) } }) } },
       { typeTag: 'Neutre', text: 'Rester caché au fond du bus', outcome: { narrative: 'Vous passez inaperçu dans ce naufrage collectif.', effects: [{ text: '-10 Moral', style: 'negative' }], applyStats: (p) => ({ ...p, morale: Math.max(0, p.morale - 10) }) } }
     ]
-  },
-  {
-    id: 'foot_12_03', category: 'CHAMPIONS_LEAGUE', tag: 'Finale', targetPosition: 'ALL',
-    description: "C'est la finale tant attendue ! En prolongations, le vice-capitaine adverse vous insulte lourdement...",
-    condition: (p) => p.age >= 25,
-    options: [
-      { typeTag: 'Coup de sang', text: 'Coup de boule dans le thorax !', outcome: { narrative: 'Carton rouge direct. Votre équipe perd la finale, mais l\'image entre dans la légende.', effects: [{ text: '-30 Confiance', style: 'negative' }, { text: '+5 Physique', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.max(0, p.coachTrust - 30), attributes: { ...p.attributes, physical: Math.min(99, p.attributes.physical + 5) } }) } },
+  },, { text: '+5 Physique', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.max(0, p.coachTrust - 30), attributes: { ...p.attributes, physical: Math.min(99, p.attributes.physical + 5) } }) } },
       { typeTag: 'Répartie', text: 'Le détruire verbalement', outcome: [
         { probability: 0.5, narrative: 'Il perd ses nerfs et prend un rouge ! Vous gagnez le match.', effects: [{ text: '+30 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 30) }) },
         { probability: 0.5, narrative: 'L\'arbitre vous avertit tous les deux.', effects: [{ text: '-5 Moral', style: 'negative' }], applyStats: (p) => ({ ...p, morale: Math.max(0, p.morale - 5) }) }

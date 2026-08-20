@@ -216,7 +216,7 @@ export const calculateAwards = (player, club, seasonStats, tournaments, seasonIn
       awards.push({ text: la.assist, icon: '🎯' });
     }
     // Équipe-type
-    if (rating >= 8.2 && ovr >= 82) awards.push({ text: la.team, icon: '🏆' });
+    // if (rating >= 8.2 && ovr >= 82) awards.push({ text: la.team, icon: '🏆' });
   } else if (tier === 2) {
     const la = {
       mvp: `Meilleur joueur de D2`,
@@ -231,7 +231,7 @@ export const calculateAwards = (player, club, seasonStats, tournaments, seasonIn
     if (rating >= 7.8 && ovr >= 70 && pos.includes('GK')) awards.push({ text: la.gk, icon: '🧤' });
     if (rating >= 7.5 && player.age <= 21 && ovr >= 65) awards.push({ text: la.young, icon: '👶' });
     if (assists >= 12 && ovr >= 68 && (pos.includes('MID') || pos.includes('CM') || pos.includes('WING'))) awards.push({ text: la.assist, icon: '🎯' });
-    if (rating >= 7.8 && ovr >= 70) awards.push({ text: la.team, icon: '🏆' });
+    // if (rating >= 7.8 && ovr >= 70) awards.push({ text: la.team, icon: '🏆' });
   }
 
   // ═══════════════════════════════════════════════════

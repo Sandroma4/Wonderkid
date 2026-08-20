@@ -449,13 +449,7 @@ export const EXTRA_EVENTS = [
       ] },
       { typeTag: 'Fétiche', text: 'Mettre vos crampons porte-bonheur usés', outcome: { narrative: 'Un vieux grigri qui marche !', effects: [{text: '+10 Moral', style: 'positive'}], applyStats: p => ({...p, morale: Math.min(100, p.morale+10)}) } }
     ]
-  },
-  {
-    id: 'extra_30', category: 'MATCH', tag: 'Face à Face', targetPosition: 'ATT', condition: () => true,
-    description: "90ème minute, finale. Face à face avec le gardien.",
-    options: [
-      { typeTag: 'Panenka', text: 'Faire une pichenette insolente', outcome: [
-        { probability: p => (p.attributes?.finishing || 50) * (p.morale / 100) * 0.5, narrative: 'But légendaire. Le monde entier en parle !', effects: [{text: '+50 Moral', style: 'positive'}], applyStats: p => ({...p, morale: Math.min(100, p.morale+50)}) },
+  },], applyStats: p => ({...p, morale: Math.min(100, p.morale+50)}) },
         { probability: p => 100 - ((p.attributes?.finishing || 50) * (p.morale / 100) * 0.5), narrative: 'Le gardien la capte facilement. Carrière ruinée.', effects: [{text: '-50 Moral', style: 'negative'}, {text: '-50 Confiance', style: 'negative'}], applyStats: p => ({...p, morale: Math.max(0, p.morale-50), coachTrust: Math.max(0, p.coachTrust-50)}) }
       ] },
       { typeTag: 'Force', text: 'Frapper fort coup de pied', outcome: [

@@ -772,7 +772,64 @@ export default function App() {
           if (prev.player.ovr >= 82) calledUp = true;
           else if (prev.player.ovr >= 75) calledUp = Math.random() > 0.4;
           
-          if (calledUp) {
+          if (calledUp || prev.player.preQualifiedForTourney) {
+            if ((prev.player.nationalCaps || 0) === 0 && !prev.player.firstCallupTriggered) {
+                const playerNationId = typeof prev.player.origin === 'object' ? prev.player.origin.id : prev.player.origin;
+                const countryObj = COUNTRIES.find(c => c.id === playerNationId);
+                const countryName = countryObj ? countryObj.name : (prev.player.nationality || 'Sélection Nationale');
+
+                const callupEvent = {
+                    id: `first_national_callup_pre_tourney_${currentYear}`,
+                    category: 'ÉQUIPE NATIONALE',
+                    tag: 'Première Sélection 🏆',
+                    description: `Incroyable consécration ! Le sélectionneur national vient de vous convoquer pour disputer ${isWorldCup ? 'la Coupe du Monde' : 'l\'Euro'}. C'est votre toute première sélection en équipe de ${countryName} !`,
+                    options: [
+                        {
+                            text: "Jouer libéré et impressionner le groupe",
+                            outcome: {
+                                narrative: "Vous brillez dès vos premières minutes ! Votre insouciance et votre qualité technique enchantent les supporters et le staff.",
+                                effects: [{ text: "+20 Moral", style: "positive" }, { text: "+15 Confiance", style: "positive" }, { text: "+2 Tir", style: "positive" }],
+                                applyStats: (p) => ({
+                                    ...p,
+                                    morale: Math.min(100, (p.morale || 50) + 20),
+                                    coachTrust: Math.min(100, (p.coachTrust || 50) + 15),
+                                    attributes: { ...p.attributes, finishing: (p.attributes?.finishing || 50) + 2 }
+                                })
+                            }
+                        },
+                        {
+                            text: "Rester humble et écouter les cadres",
+                            outcome: {
+                                narrative: "Les cadres du vestiaire adorent votre attitude respectueuse et vous intègrent immédiatement au groupe.",
+                                effects: [{ text: "+15 Moral", style: "positive" }, { text: "+10 Forme", style: "positive" }, { text: "+2 Passe", style: "positive" }],
+                                applyStats: (p) => ({
+                                    ...p,
+                                    morale: Math.min(100, (p.morale || 50) + 15),
+                                    form: Math.min(100, (p.form || 50) + 10),
+                                    attributes: { ...p.attributes, passing: (p.attributes?.passing || 50) + 2 }
+                                })
+                            }
+                        },
+                        {
+                            text: "Dédier cette sélection à votre famille",
+                            outcome: {
+                                narrative: "Vous offrez votre tout premier maillot national à vos parents. Une fierté inestimable.",
+                                effects: [{ text: "+30 Moral", style: "positive" }],
+                                applyStats: (p) => ({ ...p, morale: Math.min(100, (p.morale || 50) + 30) })
+                            }
+                        }
+                    ]
+                };
+                
+                return {
+                    ...prev,
+                    completedEvents: updatedCompletedEvents,
+                    eventStep: nextStep,
+                    currentEvent: callupEvent,
+                    player: { ...prev.player, firstCallupTriggered: true, preQualifiedForTourney: true }
+                };
+            }
+
             return {
               ...prev,
               completedEvents: updatedCompletedEvents,
@@ -1434,7 +1491,7 @@ export default function App() {
       }
 
       // Événements de sélection en équipe nationale
-      const isFirstCallup = (prev.player.nationalCaps || 0) === 0 && Boolean(statsToUse?.nationalCallup);
+      const isFirstCallup = (prev.player.nationalCaps || 0) === 0 && Boolean(statsToUse?.nationalCallup) && !prev.player.firstCallupTriggered;
       const hasCallupThisSeason = Boolean(statsToUse?.nationalCallup);
       const playerNationId = typeof prev.player.origin === 'object' ? prev.player.origin.id : prev.player.origin;
       const countryObj = COUNTRIES.find(c => c.id === playerNationId);
@@ -1590,17 +1647,40 @@ export default function App() {
         payload.user_id = session.user.id;
       }
 
-      const { error: insertError } = await supabase.from('leaderboard').insert([payload]);
-      if (insertError) {
-        if (insertError.code === '42703') {
-           console.warn("Column 'is_coop' missing. Retrying insert without it.");
-           delete payload.is_coop;
-           const { error: retryError } = await supabase.from('leaderboard').insert([payload]);
-           if (retryError) throw retryError;
-        } else {
-           throw insertError;
+      const insertWithRetry = async (payloadToInsert) => {
+        const { error } = await supabase.from('leaderboard').insert([payloadToInsert]);
+        if (error) {
+          if (error.code === '42703' && error.message) {
+            // Find the column name in the error message, usually in double quotes
+            const match = error.message.match(/column "(.*?)"/);
+            const col = match ? match[1] : null;
+            if (col && payloadToInsert.hasOwnProperty(col)) {
+              console.warn(`Column '${col}' missing in Supabase. Retrying without it.`);
+              delete payloadToInsert[col];
+              await insertWithRetry(payloadToInsert);
+            } else if (payloadToInsert.is_coop !== undefined) {
+              // Fallback just in case regex doesn't match
+              console.warn("Retrying without is_coop");
+              delete payloadToInsert.is_coop;
+              await insertWithRetry(payloadToInsert);
+            } else if (payloadToInsert.ballon_dor !== undefined) {
+              console.warn("Retrying without ballon_dor");
+              delete payloadToInsert.ballon_dor;
+              await insertWithRetry(payloadToInsert);
+            } else if (payloadToInsert.major_trophies !== undefined) {
+              console.warn("Retrying without major_trophies");
+              delete payloadToInsert.major_trophies;
+              await insertWithRetry(payloadToInsert);
+            } else {
+              throw error;
+            }
+          } else {
+            throw error;
+          }
         }
-      }
+      };
+
+      await insertWithRetry(payload);
     } catch (e) {
       console.error("Failed to submit score:", e);
     }
