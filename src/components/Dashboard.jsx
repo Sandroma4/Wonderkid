@@ -1237,7 +1237,7 @@ export function Dashboard({
                       Quitter
                     </button>
                   </div>
-
+                )}
               </div>
 
               {/* ONGLET : CARRIÈRE (TROPHÉES & ÉTAT) */}
@@ -1371,7 +1371,7 @@ export function Dashboard({
               </div>
 
             </div>
-
+          </div>
             {/* MOBILE BOTTOM NAV */}
             <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-slate-900 border-t border-slate-300 dark:border-slate-800 md:hidden z-50 flex justify-around p-2 pb-safe shadow-2xl">
               <button 
