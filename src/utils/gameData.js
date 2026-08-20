@@ -1819,16 +1819,35 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
   const physical = attr.physical || 50;
   const formMultiplier = form / 80;
   
-  // Diversification des données : variance statistique extrême basée sur Forme & Moral
+  // Diversification des données : variance statistique basée sur un mix global
+  // (Forme, Moral, OVR, Ecart avec le club, et Statistique Clé)
   const morale = player.morale || 70;
+  
+  const mentalScore = (form * 0.6) + (morale * 0.4);
+  const levelScore = ovr + (ovrDelta * 1.5); 
+  
+  let keyStat = 50;
+  if (pos.includes('ATT') || pos.includes('ST')) keyStat = attr.finishing || 50;
+  else if (pos.includes('MID')) keyStat = attr.passing || 50;
+  else keyStat = attr.defense || 50;
+
+  // Calcul du "Momentum" de la saison (Moyenne pondérée ~0-100)
+  // 40% Mental (Forme/Moral), 30% OVR & Diff Club, 30% Attributs spécifiques
+  const momentumScore = (mentalScore * 0.40) + (levelScore * 0.30) + (keyStat * 0.30);
+  
   let varianceMultiplier = 1.0;
   const masterClassRoll = Math.random();
-  if (form >= 85 && morale >= 85 && masterClassRoll < 0.20) {
-    // Masterclass : 20% de chance d'exploser les compteurs si tout va bien
-    varianceMultiplier = 1.4 + (Math.random() * 0.6); // x1.4 à x2.0
-  } else if ((form <= 45 || morale <= 45) && masterClassRoll < 0.25) {
-    // Jours sans / Cauchemar : 25% de chance de passer à côté de la saison
-    varianceMultiplier = 0.2 + (Math.random() * 0.3); // x0.2 à x0.5
+  
+  if (momentumScore >= 82 && masterClassRoll < 0.25) {
+    // Masterclass : Le joueur est en pleine confiance, surdimensionné ou au top de ses stats
+    varianceMultiplier = 1.4 + (Math.random() * 0.5); // x1.4 à x1.9
+  } else if (momentumScore <= 55 && masterClassRoll < 0.30) {
+    // Cauchemar / Jours sans : Mauvais moral, faible OVR ou stats insuffisantes
+    varianceMultiplier = 0.3 + (Math.random() * 0.4); // x0.3 à x0.7
+  } else {
+    // Lissage pour les cas normaux pour éviter que tout le monde reste figé à 1.0
+    // Un momentum de 70 donne ~0.95, un momentum de 80 donne ~1.0
+    varianceMultiplier = 0.60 + (momentumScore / 200);
   }
 
   const goalVariance = (0.55 + Math.random() * 0.9) * difficultyMultiplier * (1 + (clubOvr - 75) * 0.005) * (1 - (tier - 1) * 0.05) * varianceMultiplier;
