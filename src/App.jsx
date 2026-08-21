@@ -455,6 +455,19 @@ export default function App() {
       updatedPlayer.coachTrust = gameState.player.coachTrust;
     }
 
+    // Map standard stats to GK stats for general events
+    const isGk = (updatedPlayer.position || '').toUpperCase().includes('GK') || (updatedPlayer.position || '').toUpperCase().includes('GB');
+    if (isGk) {
+       const statMapping = { finishing: 'diving', defense: 'reflexes', dribbling: 'handling', passing: 'kicking', physical: 'positioning' };
+       Object.entries(statMapping).forEach(([stdStat, gkStat]) => {
+         const diff = (updatedPlayer.attributes[stdStat] || 50) - (prevAttributes[stdStat] || 50);
+         if (diff !== 0) {
+           updatedPlayer.attributes[gkStat] = Math.min(99, (updatedPlayer.attributes[gkStat] || 50) + diff);
+           updatedPlayer.attributes[stdStat] = prevAttributes[stdStat]; // revert standard stat change
+         }
+       });
+    }
+
     // Multiplicateur d'âge pour les gains de stats lors des événements
     // Même courbe que la progression de fin de saison
     let ageMultiplier = 1.0;
@@ -470,7 +483,7 @@ export default function App() {
       ageMultiplier = 0.5;
     }
 
-    const STAT_KEYS = ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
+    const STAT_KEYS = isGk ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] : ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
     let currentAttributes = { ...(updatedPlayer.attributes || prevAttributes) };
     const boostedEffects = []; // Pour afficher les gains réels boostés
     
@@ -543,7 +556,7 @@ export default function App() {
     updatedPlayer.statusText = calculatePlayerStatus(updatedPlayer, gameState.club);
 
     // Construire les effets de stats RÉELS à afficher (masque les stats maxées)
-    const statLabelsMap = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
+    const statLabelsMap = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique', diving: 'Plongeon', handling: 'Maniabilité', kicking: 'Jeu au pied', reflexes: 'Réflexes', positioning: 'Positionnement' };
     
     // Remplacer les effets de stats dans l'outcome par les VRAIS deltas
     let finalEffects = outcome.effects ? [...outcome.effects] : [];
@@ -551,7 +564,7 @@ export default function App() {
     // Retirer tous les effets de stats "textuels" originaux (+X ou -X sur une stat)
     finalEffects = finalEffects.filter(eff => {
       if (!eff || !eff.text) return true;
-      const match = eff.text.match(/^[+-]\d+\s*(Vitesse|Tir|Passe|Dribble|Défense|Physique)$/i);
+      const match = eff.text.match(/^[+-]\d+\s*(Vitesse|Tir|Passe|Dribble|Défense|Physique|Plongeon|Maniabilité|Jeu au pied|Réflexes|Positionnement)$/i);
       return !match; // garder uniquement ce qui n'est pas une stat de base
     });
 
