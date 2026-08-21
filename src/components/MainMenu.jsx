@@ -568,18 +568,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
             </div>
           </button>
 
-          <button 
-            onClick={() => { playSound('click'); onNavigate('careerHistory'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-white/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-300 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-xl md:text-2xl">📖</span>
-                <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Historique des Carrières</span>
-              </div>
-              <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
-            </div>
-          </button>
+
             </>
           )}
         </div>

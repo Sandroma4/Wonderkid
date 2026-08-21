@@ -9,7 +9,6 @@ import { FutsalMatch } from './components/FutsalMatch';
 import { GlobalPalmares } from './components/GlobalPalmares';
 import { Achievements } from './components/Achievements';
 import { Leaderboard } from './components/Leaderboard';
-import { CareerHistory } from './components/CareerHistory';
 import { CardCollection } from './components/CardCollection';
 import { playSound } from './utils/audio';
 import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession } from './utils/storage';
@@ -1807,10 +1806,6 @@ export default function App() {
       }}
       initialCoopMode={appView === 'multiplayerLobbyCoop'}
     />;
-  }
-
-  if (appView === 'careerHistory') {
-    return <CareerHistory onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
   }
 
   const handleRoleSelection = (role) => {
