@@ -1675,6 +1675,10 @@ export default function App() {
               console.warn("Retrying without nationality");
               delete payloadToInsert.nationality;
               await insertWithRetry(payloadToInsert);
+            } else if (payloadToInsert.position !== undefined) {
+              console.warn("Retrying without position");
+              delete payloadToInsert.position;
+              await insertWithRetry(payloadToInsert);
             } else {
               throw error;
             }
