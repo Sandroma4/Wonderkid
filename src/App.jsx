@@ -1650,10 +1650,10 @@ export default function App() {
       const insertWithRetry = async (payloadToInsert) => {
         const { error } = await supabase.from('leaderboard').insert([payloadToInsert]);
         if (error) {
-          if (error.code === '42703' && error.message) {
-            // Find the column name in the error message, usually in double quotes
-            const match = error.message.match(/column "(.*?)"/);
-            const col = match ? match[1] : null;
+          if ((error.code === '42703' || error.code === 'PGRST204') && error.message) {
+            // Find the column name in the error message, usually in double or single quotes
+            const match = error.message.match(/column ['"](.*?)['"]|the ['"](.*?)['"] column/);
+            const col = match ? (match[1] || match[2]) : null;
             if (col && payloadToInsert.hasOwnProperty(col)) {
               console.warn(`Column '${col}' missing in Supabase. Retrying without it.`);
               delete payloadToInsert[col];
@@ -1670,6 +1670,10 @@ export default function App() {
             } else if (payloadToInsert.major_trophies !== undefined) {
               console.warn("Retrying without major_trophies");
               delete payloadToInsert.major_trophies;
+              await insertWithRetry(payloadToInsert);
+            } else if (payloadToInsert.nationality !== undefined) {
+              console.warn("Retrying without nationality");
+              delete payloadToInsert.nationality;
               await insertWithRetry(payloadToInsert);
             } else {
               throw error;
