@@ -87,7 +87,10 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     const finalLifestyle = selectedLifestyle || lifestyle;
     const enginePos = selectedPositionCat ? selectedPositionCat.engineCode : 'ATT';
 
-    const baseStats = role ? { ...role.baseStats } : { pace: 70, finishing: 70, passing: 70, dribbling: 70, defense: 70, physical: 70 };
+    let baseStats = { pace: 70, finishing: 70, passing: 70, dribbling: 70, defense: 70, physical: 70 };
+    if (enginePos === 'GK') {
+      baseStats = { diving: 70, handling: 70, kicking: 70, reflexes: 70, pace: 70, positioning: 70 };
+    }
     
     const finalAttributes = generateYoungPlayerStats(enginePos, baseStats, background?.statBonus);
     const overall = calculateOVR({ position: enginePos, attributes: finalAttributes });

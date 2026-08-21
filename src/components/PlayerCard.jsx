@@ -54,12 +54,12 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
 
   const attrs = player.attributes || {};
   const stats = isGk ? [
-    { label: 'PLO', val: Math.floor(attrs.defense || 50) },
-    { label: 'RÉF', val: Math.min(99, Math.floor(((attrs.defense || 50) + (attrs.pace || 50)) / 2)) },
-    { label: 'JDM', val: Math.floor(attrs.physical || 50) },
+    { label: 'PLO', val: Math.floor(attrs.diving || 50) },
+    { label: 'RÉF', val: Math.floor(attrs.reflexes || 50) },
+    { label: 'MAN', val: Math.floor(attrs.handling || 50) },
     { label: 'VIT', val: Math.floor(attrs.pace || 50) },
-    { label: 'DÉG', val: Math.floor(attrs.passing || 50) },
-    { label: 'POS', val: Math.floor(attrs.dribbling || 50) }
+    { label: 'JEU', val: Math.floor(attrs.kicking || 50) },
+    { label: 'POS', val: Math.floor(attrs.positioning || 50) }
   ] : [
     { label: 'VIT', val: Math.floor(attrs.pace || 50) },
     { label: 'DRI', val: Math.floor(attrs.dribbling || 50) },

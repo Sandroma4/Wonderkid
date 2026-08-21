@@ -164,7 +164,7 @@ export function Dashboard({
 
   const effectiveStats = getEffectiveStats(player);
 
-  const statLabels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
+  const statLabels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique', diving: 'Plongeon', handling: 'Maniabilité', kicking: 'Jeu au pied', reflexes: 'Réflexes', positioning: 'Positionnement' };
 
 
   const groupedPalmares = useMemo(() => {
@@ -536,28 +536,6 @@ export function Dashboard({
                   <span className="heading-typography text-lg font-bold text-amber-600 dark:text-amber-400 mt-0.5 block">{seasonStats.rating}</span>
                 </div>
               </div>
-              {/* --- DEBUT AJOUTS OVR ET FINANCES --- */}
-              {player.valueHistory && player.valueHistory.length > 1 && (
-                <div className="bg-white/90 dark:bg-slate-800/80 p-3 md:p-4 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 shadow-inner w-full mt-2 hidden md:block">
-                  <h4 className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2 text-center">Évolution OVR & Valeur</h4>
-                  <div className="h-40 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={[...player.valueHistory, { year: player.currentYear || season, value: player.value, ovr: player.ovr }]}>
-                        <XAxis dataKey="year" hide />
-                        <YAxis domain={['auto', 'auto']} hide />
-                        <Tooltip 
-                           contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }} 
-                           labelStyle={{ color: '#94a3b8', fontSize: '10px' }} 
-                           itemStyle={{ fontSize: '12px', fontWeight: 'bold' }} 
-                           formatter={(val, name) => [name === 'ovr' ? val : val + ' M€', name === 'ovr' ? 'OVR' : 'Valeur']} 
-                        />
-                        <Line type="monotone" dataKey="ovr" stroke="#34d399" strokeWidth={3} dot={{ r: 3, fill: '#10b981', strokeWidth: 0 }} />
-                        <Line type="monotone" dataKey="value" stroke="#60a5fa" strokeWidth={2} dot={false} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
-              )}
 
               {seasonStats.financials && (
                 <div className="bg-white/90 dark:bg-slate-800/80 p-3 md:p-4 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 shadow-inner w-full mt-2 text-xs">
@@ -618,7 +596,7 @@ export function Dashboard({
                   <p className="font-bold text-slate-800 dark:text-slate-100 mb-1 md:mb-2 uppercase tracking-wider text-[10px] md:text-[11px] border-b border-slate-300 dark:border-slate-700 pb-1 md:pb-2">Bilan de Progression Physique & Technique</p>
                   <div className="grid grid-cols-2 gap-3">
                     {Object.entries(seasonStats.statGains).map(([attr, gain]) => {
-                      const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique' };
+                      const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique', diving: 'Plongeon', handling: 'Maniabilité', kicking: 'Jeu au pied', reflexes: 'Réflexes', positioning: 'Positionnement' };
                       const newVal = Math.floor(player.attributes[attr]);
                       const oldVal = Math.floor(player.attributes[attr] - gain);
                       const displayGain = newVal - oldVal;
@@ -874,7 +852,7 @@ export function Dashboard({
                       <span className="flex items-center gap-1.5">📊 Stats Détaillées</span>
                     </div>
                     <div className="border-t border-slate-300/80 dark:border-slate-700/50 pt-3 grid grid-cols-2 gap-1.5">
-                      {['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical'].map((attr) => {
+                      {(isGoalkeeper ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] : ['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical']).map((attr) => {
                         const val = Math.floor(player.attributes?.[attr] || 0);
                         const eff = Math.floor(effectiveStats[attr] || val);
                         const diff = eff - val;

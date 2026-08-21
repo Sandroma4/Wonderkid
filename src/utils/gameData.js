@@ -1481,7 +1481,9 @@ export const calculatePlayerStatus = (player, club) => {
 
 export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBonus) => {
   const targetOvr = Math.floor(Math.random() * 6) + 45;
-  const statsList = ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
+  const statsList = enginePos === 'GK' 
+    ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] 
+    : ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
   let rawStats = {};
   statsList.forEach(stat => {
     const base = roleBaseStats[stat] || 50;
@@ -1934,11 +1936,21 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
     secondaryGain = 0;
   }
   
-  const statGains = {
+  let statGains = {
     [primaryKey]: primaryGain,
     [secondaryKey]: secondaryGain,
     dribbling: dribbleGain
   };
+
+  if (pos.includes('GK') || pos.includes('GB')) {
+    statGains = {
+      diving: primaryGain,
+      reflexes: secondaryGain,
+      positioning: dribbleGain,
+      handling: Math.max(0, dribbleGain),
+      kicking: Math.max(0, secondaryGain - 1)
+    };
+  }
 
   const playerNation = typeof player.origin === 'object' ? player.origin?.id : player.origin;
   const topTierNations = ['FR', 'EN', 'DE', 'ES', 'IT', 'BR', 'AR', 'PT', 'NL', 'BE'];
@@ -2579,16 +2591,16 @@ export const ALL_EVENTS = [
     id: 'gk_penalty_save', category: 'TERRAIN', tag: 'Action Héroïque', targetPosition: 'GK',
     description: "90ème minute, l'équipe adverse obtient un penalty. Vous êtes le dernier rempart.",
     options: [
-      { typeTag: 'DÉFENSE', text: 'Plonger fermement du côté fermé', outcome: { narrative: 'Vous repoussez le ballon d\'une manchette magistrale !', effects: [{ text: '+6 DÉFENSE', style: 'positive' }, { text: '+10 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 10), attributes: { ...p.attributes, defense: Math.min(99, p.attributes.defense + 6) } }) } },
-      { typeTag: 'PHYSIQUE', text: 'Rester au centre et utiliser votre envergure', outcome: { narrative: 'Le tireur panique et tire au dessus.', effects: [{ text: '+4 PHYSIQUE', style: 'positive' }, { text: '+5 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 5), attributes: { ...p.attributes, physical: Math.min(99, p.attributes.physical + 4) } }) } }
+      { typeTag: 'PLONGEON', text: 'Plonger fermement du côté fermé', outcome: { narrative: 'Vous repoussez le ballon d\'une manchette magistrale !', effects: [{ text: '+6 PLONGEON', style: 'positive' }, { text: '+10 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 10), attributes: { ...p.attributes, diving: Math.min(99, (p.attributes.diving || 50) + 6) } }) } },
+      { typeTag: 'RÉFLEXES', text: 'Attendre le dernier moment', outcome: { narrative: 'Le tireur tente une panenka, vous la captez facilement.', effects: [{ text: '+4 RÉFLEXES', style: 'positive' }, { text: '+5 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 5), attributes: { ...p.attributes, reflexes: Math.min(99, (p.attributes.reflexes || 50) + 4) } }) } }
     ]
   },
   {
     id: 'gk_corner_chaos', category: 'TERRAIN', tag: 'Sortie Aérienne', targetPosition: 'GK',
     description: "Corner très fermé. La boîte est pleine de joueurs.",
     options: [
-      { typeTag: 'PHYSIQUE', text: 'Sortir aux poings avec agressivité', outcome: { narrative: 'Vous dégagez tout le monde, y compris vos coéquipiers.', effects: [{ text: '+5 PHYSIQUE', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, physical: Math.min(99, p.attributes.physical + 5) } }) } },
-      { typeTag: 'DÉFENSE', text: 'Rester sur la ligne et faire confiance à la défense', outcome: { narrative: 'Arrêt réflexe sur la ligne !', effects: [{ text: '+5 DÉFENSE', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, defense: Math.min(99, p.attributes.defense + 5) } }) } }
+      { typeTag: 'MANIABILITÉ', text: 'Sortir avec agressivité pour capter la balle', outcome: { narrative: 'Vous captez le ballon sereinement au-dessus de tout le monde.', effects: [{ text: '+5 MANIABILITÉ', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, handling: Math.min(99, (p.attributes.handling || 50) + 5) } }) } },
+      { typeTag: 'POSITIONNEMENT', text: 'Rester sur la ligne et bien lire la trajectoire', outcome: { narrative: 'Arrêt miraculeux sur la ligne grâce à votre placement !', effects: [{ text: '+5 POSITIONNEMENT', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, positioning: Math.min(99, (p.attributes.positioning || 50) + 5) } }) } }
     ]
   },
   
@@ -2805,17 +2817,13 @@ export const generateRival = (player) => {
   } else if (pos.includes('DEF') || pos.includes('ARR')) {
     baseStats = { ...baseStats, defense: ovr + 15, physical: ovr + 10, finishing: ovr - 20 };
   } else if (pos.includes('GK') || pos.includes('GB')) {
-    baseStats = { ...baseStats, defense: ovr + 15, physical: ovr + 5, pace: ovr - 20, finishing: ovr - 25 };
+    baseStats = { diving: ovr + 10, handling: ovr + 10, reflexes: ovr + 10, positioning: ovr + 5, kicking: ovr, pace: ovr - 10 };
   }
 
-  const attributes = {
-    pace: Math.max(1, Math.min(99, baseStats.pace + Math.floor(Math.random() * 10) - 5)),
-    finishing: Math.max(1, Math.min(99, baseStats.finishing + Math.floor(Math.random() * 10) - 5)),
-    passing: Math.max(1, Math.min(99, baseStats.passing + Math.floor(Math.random() * 10) - 5)),
-    dribbling: Math.max(1, Math.min(99, baseStats.dribbling + Math.floor(Math.random() * 10) - 5)),
-    defense: Math.max(1, Math.min(99, baseStats.defense + Math.floor(Math.random() * 10) - 5)),
-    physical: Math.max(1, Math.min(99, baseStats.physical + Math.floor(Math.random() * 10) - 5)),
-  };
+  const attributes = {};
+  Object.keys(baseStats).forEach(attr => {
+    attributes[attr] = Math.max(1, Math.min(99, baseStats[attr] + Math.floor(Math.random() * 10) - 5));
+  });
 
   const age = player.age || 18;
   return {
@@ -2854,10 +2862,10 @@ export const updateRival = (rival, playerOvr, playerTier, playerWonBallonDor, pl
   
   const ovrDiff = newOvr - rival.ovr;
   const newAttributes = { ...(rival.attributes || {
-    pace: rival.ovr, shooting: rival.ovr, passing: rival.ovr,
+    pace: rival.ovr, finishing: rival.ovr, passing: rival.ovr,
     dribbling: rival.ovr, defense: rival.ovr, physical: rival.ovr
   }) };
-  ['pace', 'shooting', 'passing', 'dribbling', 'defense', 'physical'].forEach(attr => {
+  Object.keys(newAttributes).forEach(attr => {
     let variation = ovrDiff + (Math.floor(Math.random() * 3) - 1);
     if (newAge > 31 && (attr === 'pace' || attr === 'physical')) {
       variation -= Math.floor(Math.random() * 3);
@@ -2930,8 +2938,8 @@ export const INTERACTIVE_MATCH_SCENARIOS = [
     description: "L'attaquant adverse se présente seul face à vous dans le temps additionnel. Le stade retient son souffle.",
     options: [
       { text: "Sortir à la vitesse de l'éclair", stat: 'pace', successText: "Sortie parfaite, vous dégagez le ballon !", failText: "Trop lent, l'attaquant vous dribble et marque.", type: 'clean_sheet' },
-      { text: "Plonger pour bloquer l'angle", stat: 'defense', successText: "ARRÊT MONUMENTAL DU BOUT DES DOIGTS !", failText: "Pris à contre-pied...", type: 'clean_sheet' },
-      { text: "Rester sur ses appuis (Réflexes)", stat: 'dribbling', successText: "Arrêt réflexe du pied magnifique !", failText: "Frappe trop puissante qui vous passe entre les jambes.", type: 'clean_sheet' }
+      { text: "Plonger pour bloquer l'angle", stat: 'diving', successText: "ARRÊT MONUMENTAL DU BOUT DES DOIGTS !", failText: "Pris à contre-pied...", type: 'clean_sheet' },
+      { text: "Rester sur ses appuis (Réflexes)", stat: 'reflexes', successText: "Arrêt réflexe du pied magnifique !", failText: "Frappe trop puissante qui vous passe entre les jambes.", type: 'clean_sheet' }
     ]
   },
   {
@@ -2940,9 +2948,9 @@ export const INTERACTIVE_MATCH_SCENARIOS = [
     title: "88ème Minute : Corner Dangereux",
     description: "Corner de la dernière chance pour l'adversaire. La surface est bondée.",
     options: [
-      { text: "S'imposer dans les airs (Jeu à la main)", stat: 'physical', successText: "Vous captez le ballon au-dessus de tout le monde !", failText: "Vous relâchez le ballon... But.", type: 'clean_sheet' },
-      { text: "Dégager aux poings (Dégagement)", stat: 'passing', successText: "Dégagement puissant qui lance une contre-attaque !", failText: "Dégagement raté qui retombe sur un adversaire...", type: 'clean_sheet' },
-      { text: "Faire confiance à son placement", stat: 'dribbling', successText: "La tête adverse arrive directement dans vos gants.", failText: "Mauvais placement, le ballon finit au fond.", type: 'clean_sheet' }
+      { text: "S'imposer dans les airs (Maniabilité)", stat: 'handling', successText: "Vous captez le ballon au-dessus de tout le monde !", failText: "Vous relâchez le ballon... But.", type: 'clean_sheet' },
+      { text: "Dégager au pied", stat: 'kicking', successText: "Dégagement puissant qui lance une contre-attaque !", failText: "Dégagement raté qui retombe sur un adversaire...", type: 'clean_sheet' },
+      { text: "Faire confiance à son placement", stat: 'positioning', successText: "La tête adverse arrive directement dans vos gants.", failText: "Mauvais placement, le ballon finit au fond.", type: 'clean_sheet' }
     ]
   }
 ];

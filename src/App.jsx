@@ -1160,6 +1160,14 @@ export default function App() {
         if (updatedAttributes.finishing !== undefined) updatedAttributes.finishing = Math.max(1, updatedAttributes.finishing - technicalDecline);
         if (updatedAttributes.passing !== undefined) updatedAttributes.passing = Math.max(1, updatedAttributes.passing - technicalDecline);
         if (updatedAttributes.defense !== undefined) updatedAttributes.defense = Math.max(1, updatedAttributes.defense - technicalDecline);
+        
+        // GK Stats decline
+        if (updatedAttributes.diving !== undefined) updatedAttributes.diving = Math.max(1, updatedAttributes.diving - technicalDecline);
+        if (updatedAttributes.handling !== undefined) updatedAttributes.handling = Math.max(1, updatedAttributes.handling - technicalDecline);
+        if (updatedAttributes.kicking !== undefined) updatedAttributes.kicking = Math.max(1, updatedAttributes.kicking - technicalDecline);
+        if (updatedAttributes.reflexes !== undefined) updatedAttributes.reflexes = Math.max(1, updatedAttributes.reflexes - physicalDecline); // Reflexes often drop like physical
+        if (updatedAttributes.positioning !== undefined) updatedAttributes.positioning = Math.max(1, updatedAttributes.positioning - Math.floor(technicalDecline / 2)); // Positioning drops slower
+
       }
 
       let salaryEarnings = 0;
