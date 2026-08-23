@@ -37,7 +37,10 @@ import {
   getMatchesForClub,
   distributeExcessStats,
   updatePlayerBestCard,
-  COUNTRIES
+  COUNTRIES,
+  gkProgressionCurve,
+  getGKProgressionBoost,
+  calculateGKOVR
 } from './utils/gameData';
 import { getRoleById } from './utils/rolesData';
 
@@ -1197,9 +1200,17 @@ export default function App() {
       
       if (newInventory.includes('cryo')) inventoryEarnings -= 100000;
       if (newInventory.includes('training_center')) {
-        const statToBoost = Math.random() > 0.5 ? 'physical' : 'pace';
+        const isGkPlayer = (prev.player.position || '').toUpperCase().includes('GK');
+        const trainingStats = isGkPlayer ? ['reflexes', 'diving'] : ['physical', 'pace'];
+        const statToBoost = trainingStats[Math.random() > 0.5 ? 0 : 1];
         if (updatedAttributes[statToBoost] !== undefined && updatedAttributes[statToBoost] < 99) {
-          updatedAttributes[statToBoost] += 1;
+          // Apply goalkeeper progression boost for goalkeepers
+          if (isGkPlayer) {
+            const gkBoost = getGKProgressionBoost(prev.player, statToBoost);
+            updatedAttributes[statToBoost] += 1 + gkBoost;
+          } else {
+            updatedAttributes[statToBoost] += 1;
+          }
         }
       }
       if (newInventory.includes('nightclub')) {
@@ -1257,21 +1268,6 @@ export default function App() {
         sponsorEarnings,
         net: salaryEarnings + perfEarnings + inventoryEarnings + sponsorEarnings - taxes - lifestyleCost
       };
-
-      if (currentOvr >= 90) {
-        currentSponsor = 'Équipementier Mondial';
-        sponsorEarnings = 5000000;
-        sponsorFatigue = 15;
-      } else if (currentOvr >= 83) {
-        currentSponsor = 'Sponsor National';
-        sponsorEarnings = 1500000;
-        sponsorFatigue = 8;
-      } else if (currentOvr >= 75) {
-        currentSponsor = 'Sponsor Local';
-        sponsorEarnings = 200000;
-        sponsorFatigue = 4;
-      }
-
 
 
       const newPalmares = [...(prev.palmares || [])];

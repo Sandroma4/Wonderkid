@@ -1443,7 +1443,7 @@ const POSITION_WEIGHTS = {
   CM: { passing: 0.30, dribbling: 0.25, physical: 0.15, pace: 0.15, defense: 0.10, finishing: 0.05 },
   DEF: { defense: 0.35, physical: 0.30, passing: 0.15, pace: 0.10, dribbling: 0.05, finishing: 0.05 },
   CB: { defense: 0.35, physical: 0.30, passing: 0.15, pace: 0.10, dribbling: 0.05, finishing: 0.05 },
-  GK: { defense: 0.45, physical: 0.25, passing: 0.15, pace: 0.10, dribbling: 0.05, finishing: 0.00 },
+  GK: { diving: 0.25, reflexes: 0.25, positioning: 0.20, handling: 0.15, kicking: 0.05, pace: 0.10 },
   DEFAULT: { pace: 0.16, passing: 0.16, physical: 0.17, defense: 0.17, finishing: 0.17, dribbling: 0.17 }
 };
 
@@ -1454,7 +1454,37 @@ export const calculateOVR = (player) => {
   let weightedSum = 0;
   let totalWeight = 0;
   Object.entries(weights).forEach(([attr, weight]) => {
-    const val = Number(player.attributes[attr] ?? player.attributes[attr === 'defense' ? 'defending' : attr]) || 50;
+    // Handle special case for goalkeeper attributes where they use different names
+    let val = Number(player.attributes[attr] ?? 0);
+    if (pos === 'GK') {
+      // For goalkeepers, map the attribute names correctly
+      switch(attr) {
+        case 'diving':
+          val = Number(player.attributes.diving ?? 0);
+          break;
+        case 'reflexes':
+          val = Number(player.attributes.reflexes ?? 0);
+          break;
+        case 'positioning':
+          val = Number(player.attributes.positioning ?? 0);
+          break;
+        case 'handling':
+          val = Number(player.attributes.handling ?? 0);
+          break;
+        case 'kicking':
+          val = Number(player.attributes.kicking ?? 0);
+          break;
+        case 'pace':
+          val = Number(player.attributes.pace ?? 0);
+          break;
+        default:
+          // For other attributes, try to map them correctly
+          val = Number(player.attributes[attr] ?? 0);
+      }
+    } else {
+      // For field players, use standard mapping
+      val = Number(player.attributes[attr] ?? player.attributes[attr === 'defense' ? 'defending' : attr] ?? 0);
+    }
     weightedSum += val * weight;
     totalWeight += weight;
   });
@@ -1943,12 +1973,22 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
   };
 
   if (pos.includes('GK') || pos.includes('GB')) {
+    // For goalkeepers, apply progression curve to determine stat gains
+    const gkProgression = gkProgressionCurve(player.age, 'diving');
+    
+    // Calculate gains with progression curve applied
+    const divingGain = Math.max(0, Math.floor(primaryGain * gkProgression));
+    const reflexesGain = Math.max(0, Math.floor(secondaryGain * gkProgression));
+    const handlingGain = Math.max(0, Math.floor(dribbleGain * gkProgression));
+    const kickingGain = Math.max(0, Math.floor((secondaryGain - 1) * gkProgression));
+    const positioningGain = Math.max(0, Math.floor(dribbleGain * gkProgression));
+    
     statGains = {
-      diving: primaryGain,
-      reflexes: secondaryGain,
-      positioning: dribbleGain,
-      handling: Math.max(0, dribbleGain),
-      kicking: Math.max(0, secondaryGain - 1)
+      diving: divingGain,
+      reflexes: reflexesGain,
+      positioning: positioningGain,
+      handling: handlingGain,
+      kicking: kickingGain
     };
   }
 
@@ -3081,4 +3121,76 @@ export const getBestPlayerVersion = (player, currentClub) => {
     },
     club: currentClub
   };
+};
+
+export const gkProgressionCurve = (age, attribute) => {
+  // Define different progression phases for goalkeepers
+  // Early growth (18-25): Slow but steady
+  // Peak period (26-34): Steady growth to peak
+  // Decline (35+): Gradual decline
+  
+  if (age < 18) return 0; // No progression before 18
+  
+  // Define different multipliers for each age phase
+  let multiplier = 0;
+  
+  if (age >= 18 && age <= 25) {
+    // Slow early growth
+    multiplier = 0.3 + (age - 18) * 0.04; // From 0.3 to 0.7
+  } else if (age >= 26 && age <= 34) {
+    // Peak period with steady growth
+    multiplier = 0.7 + (age - 26) * 0.05; // From 0.7 to 1.2
+  } else if (age >= 35 && age <= 40) {
+    // Decline period
+    multiplier = 1.2 - (age - 35) * 0.15; // From 1.2 to 0.15
+  } else {
+    // Beyond 40, very slow decline or stability
+    multiplier = 0.1;
+  }
+  
+  // For different attributes, apply different multipliers
+  const attributeMultipliers = {
+    'reflexes': multiplier,
+    'diving': multiplier,
+    'handling': multiplier * 0.9,
+    'kicking': multiplier * 0.8,
+    'throwing': multiplier * 0.7,
+    'pace': multiplier * 0.6
+  };
+  
+  // Return the appropriate multiplier for this attribute
+  return attributeMultipliers[attribute] || multiplier;
+};
+
+export const getGKProgressionBoost = (player, attribute) => {
+  if (!player || !player.age) return 0;
+  
+  // Get current progression multiplier
+  const multiplier = gkProgressionCurve(player.age, attribute);
+  
+  // Apply a base boost (this is the training center effect)
+  const baseBoost = 1;
+  
+  // Calculate total boost based on age and attribute
+  return Math.floor(baseBoost * multiplier);
+};
+
+export const calculateGKOVR = (player) => {
+  if (!player || !player.attributes) return 0;
+  
+  // For goalkeepers, we use a different OVR calculation that emphasizes 
+  // specific GK attributes
+  const { reflexes, diving, handling, kicking, throwing, pace } = player.attributes;
+  
+  // Goalkeeper OVR is calculated as weighted average of key GK attributes
+  // These weights reflect the importance of each attribute for goalkeepers
+  const ovr = 
+    (reflexes * 0.25) +     // Reflexes are crucial for GK OVR
+    (diving * 0.20) +       // Diving is very important for GK OVR  
+    (handling * 0.15) +     // Handling matters a lot for goalkeepers
+    (kicking * 0.10) +      // Kicking is less critical but still important
+    (throwing * 0.10) +     // Throwing is useful for GK OVR
+    (pace * 0.20);          // Pace is important for goalkeepers
+  
+  return Math.round(ovr);
 };
