@@ -1945,7 +1945,11 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
   const ovrMultiplier = ovr > 90 ? 0.3 : ovr > 85 ? 0.5 : ovr > 80 ? 0.8 : 1.0;
   const tierMultiplier = tier === 1 ? 1.2 : tier === 2 ? 0.8 : 0.5;
   const age = player.age || 18;
-  const ageMultiplier = age >= 32 ? 0.2 : age >= 29 ? 0.5 : age >= 25 ? 0.8 : 1.0;
+  const isGkPos = pos.includes('GK') || pos.includes('GB');
+  // Les gardiens progressent plus tard et déclinent plus tard
+  const ageMultiplier = isGkPos
+    ? (age >= 35 ? 0.2 : age >= 32 ? 0.5 : age >= 28 ? 0.8 : 1.0)
+    : (age >= 32 ? 0.2 : age >= 29 ? 0.5 : age >= 25 ? 0.8 : 1.0);
   const growthFactor = ovrMultiplier * tierMultiplier * ageMultiplier;
   
   let primaryGain = rating >= 7.8 ? 4 : rating >= 7.0 ? 3 : rating >= 6.0 ? 2 : 1;

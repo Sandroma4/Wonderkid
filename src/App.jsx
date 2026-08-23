@@ -472,18 +472,34 @@ export default function App() {
     }
 
     // Multiplicateur d'âge pour les gains de stats lors des événements
-    // Même courbe que la progression de fin de saison
+    // Les gardiens mûrissent plus tard et restent au top plus longtemps
     let ageMultiplier = 1.0;
-    if (playerAge <= 18) {
-      ageMultiplier = 2.5;   // 15-18 ans : explosion des stats
-    } else if (playerAge <= 21) {
-      ageMultiplier = 1.6;   // 19-21 ans : croissance soutenue
-    } else if (playerAge <= 24) {
-      ageMultiplier = 1.1;
-    } else if (playerAge <= 28) {
-      ageMultiplier = 0.8;
+    if (isGk) {
+      // Courbe GK : pic vers 29-33 ans, déclin lent après 35
+      if (playerAge <= 18) {
+        ageMultiplier = 2.0;   // 15-18 ans : formation, croissance forte
+      } else if (playerAge <= 23) {
+        ageMultiplier = 1.5;   // 19-23 ans : développement soutenu
+      } else if (playerAge <= 28) {
+        ageMultiplier = 1.2;   // 24-28 ans : montée en puissance
+      } else if (playerAge <= 33) {
+        ageMultiplier = 0.9;   // 29-33 ans : prime, gains modérés
+      } else {
+        ageMultiplier = 0.5;   // 34+ : déclin progressif
+      }
     } else {
-      ageMultiplier = 0.5;
+      // Courbe joueur de champ : pic vers 25-28 ans
+      if (playerAge <= 18) {
+        ageMultiplier = 2.5;   // 15-18 ans : explosion des stats
+      } else if (playerAge <= 21) {
+        ageMultiplier = 1.6;   // 19-21 ans : croissance soutenue
+      } else if (playerAge <= 24) {
+        ageMultiplier = 1.1;
+      } else if (playerAge <= 28) {
+        ageMultiplier = 0.8;
+      } else {
+        ageMultiplier = 0.5;
+      }
     }
 
     const STAT_KEYS = isGk ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] : ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
@@ -1157,33 +1173,45 @@ export default function App() {
       const newCurrentYear = (prev.player.currentYear || 2024) + 1;
       const newSeason = prev.season + 1;
       const internationalTournamentDone = false;
-      const declineAge = prev.player.declineAge || 32;
+      const isGkPlayer = (prev.player.position || '').toUpperCase().includes('GK') || (prev.player.position || '').toUpperCase().includes('GB');
+      // Les gardiens déclinent 3 ans plus tard que les joueurs de champ (35 vs 32)
+      const defaultDeclineAge = isGkPlayer ? 35 : 32;
+      const declineAge = prev.player.declineAge || defaultDeclineAge;
       
       if (newAge >= declineAge) {
         const yearsPastPeak = newAge - declineAge + 1;
         
-        // Physique/Vitesse chute plus vite mais moins brutalement qu'avant
-        // Ex: 32 ans -> 1-2 pts, 35 ans -> 3-4 pts
-        const physicalDecline = Math.ceil(Math.pow(yearsPastPeak, 1.2) * 0.5) + Math.floor(Math.random() * 2);
-        
-        // Technique chute plus doucement et aléatoirement
-        // Ex: 32 ans -> 0-1 pt, 35 ans -> 1-2 pts
-        const technicalDecline = Math.floor(yearsPastPeak * 0.4) + (Math.random() > 0.7 ? 1 : 0);
-        
-        if (updatedAttributes.pace !== undefined) updatedAttributes.pace = Math.max(1, updatedAttributes.pace - physicalDecline);
-        if (updatedAttributes.physical !== undefined) updatedAttributes.physical = Math.max(1, updatedAttributes.physical - physicalDecline);
-        if (updatedAttributes.dribbling !== undefined) updatedAttributes.dribbling = Math.max(1, updatedAttributes.dribbling - technicalDecline);
-        if (updatedAttributes.finishing !== undefined) updatedAttributes.finishing = Math.max(1, updatedAttributes.finishing - technicalDecline);
-        if (updatedAttributes.passing !== undefined) updatedAttributes.passing = Math.max(1, updatedAttributes.passing - technicalDecline);
-        if (updatedAttributes.defense !== undefined) updatedAttributes.defense = Math.max(1, updatedAttributes.defense - technicalDecline);
-        
-        // GK Stats decline
-        if (updatedAttributes.diving !== undefined) updatedAttributes.diving = Math.max(1, updatedAttributes.diving - technicalDecline);
-        if (updatedAttributes.handling !== undefined) updatedAttributes.handling = Math.max(1, updatedAttributes.handling - technicalDecline);
-        if (updatedAttributes.kicking !== undefined) updatedAttributes.kicking = Math.max(1, updatedAttributes.kicking - technicalDecline);
-        if (updatedAttributes.reflexes !== undefined) updatedAttributes.reflexes = Math.max(1, updatedAttributes.reflexes - physicalDecline); // Reflexes often drop like physical
-        if (updatedAttributes.positioning !== undefined) updatedAttributes.positioning = Math.max(1, updatedAttributes.positioning - Math.floor(technicalDecline / 2)); // Positioning drops slower
-
+        if (isGkPlayer) {
+          // DÉCLIN GK : plus doux et progressif
+          // Réflexes et pace chutent en premier (composante physique)
+          // Ex: 35 ans -> 1 pt, 38 ans -> 2-3 pts
+          const gkPhysicalDecline = Math.ceil(Math.pow(yearsPastPeak, 1.1) * 0.4) + (Math.random() > 0.6 ? 1 : 0);
+          // Plongeon/Maniabilité/Jeu au pied chutent doucement
+          // Ex: 35 ans -> 0-1 pt, 38 ans -> 1-2 pts
+          const gkTechnicalDecline = Math.floor(yearsPastPeak * 0.3) + (Math.random() > 0.8 ? 1 : 0);
+          
+          if (updatedAttributes.pace !== undefined) updatedAttributes.pace = Math.max(1, updatedAttributes.pace - gkPhysicalDecline);
+          if (updatedAttributes.reflexes !== undefined) updatedAttributes.reflexes = Math.max(1, updatedAttributes.reflexes - gkPhysicalDecline);
+          if (updatedAttributes.diving !== undefined) updatedAttributes.diving = Math.max(1, updatedAttributes.diving - gkTechnicalDecline);
+          if (updatedAttributes.handling !== undefined) updatedAttributes.handling = Math.max(1, updatedAttributes.handling - gkTechnicalDecline);
+          if (updatedAttributes.kicking !== undefined) updatedAttributes.kicking = Math.max(1, updatedAttributes.kicking - Math.floor(gkTechnicalDecline * 0.5)); // Jeu au pied résiste bien
+          if (updatedAttributes.positioning !== undefined) updatedAttributes.positioning = Math.max(1, updatedAttributes.positioning - Math.floor(gkTechnicalDecline * 0.3)); // Positionnement = expérience, quasi stable
+        } else {
+          // DÉCLIN JOUEUR DE CHAMP : standard
+          // Physique/Vitesse chute plus vite
+          // Ex: 32 ans -> 1-2 pts, 35 ans -> 3-4 pts
+          const physicalDecline = Math.ceil(Math.pow(yearsPastPeak, 1.2) * 0.5) + Math.floor(Math.random() * 2);
+          // Technique chute plus doucement
+          // Ex: 32 ans -> 0-1 pt, 35 ans -> 1-2 pts
+          const technicalDecline = Math.floor(yearsPastPeak * 0.4) + (Math.random() > 0.7 ? 1 : 0);
+          
+          if (updatedAttributes.pace !== undefined) updatedAttributes.pace = Math.max(1, updatedAttributes.pace - physicalDecline);
+          if (updatedAttributes.physical !== undefined) updatedAttributes.physical = Math.max(1, updatedAttributes.physical - physicalDecline);
+          if (updatedAttributes.dribbling !== undefined) updatedAttributes.dribbling = Math.max(1, updatedAttributes.dribbling - technicalDecline);
+          if (updatedAttributes.finishing !== undefined) updatedAttributes.finishing = Math.max(1, updatedAttributes.finishing - technicalDecline);
+          if (updatedAttributes.passing !== undefined) updatedAttributes.passing = Math.max(1, updatedAttributes.passing - technicalDecline);
+          if (updatedAttributes.defense !== undefined) updatedAttributes.defense = Math.max(1, updatedAttributes.defense - technicalDecline);
+        }
       }
 
       let salaryEarnings = 0;
