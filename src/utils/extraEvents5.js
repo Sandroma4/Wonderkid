@@ -46,7 +46,7 @@ export const EXTRA_EVENTS_5 = [
     ]
   },
   {
-    id: 'extra_74', category: 'VESTIAIRE', tag: 'Opportunité', targetPosition: 'ALL', condition: () => true,
+    id: 'extra_74', category: 'VESTIAIRE', tag: 'Opportunité', targetPosition: '!GK', condition: () => true,
     description: "Le gardien de l'équipe a besoin d'aide pour tirer des penaltys à l'entraînement après la séance.",
     options: [
       { typeTag: 'Leader', text: 'Rester une heure de plus pour tirer', outcome: [

@@ -2845,12 +2845,18 @@ export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlaye
 };
 
 export const generateRival = (player) => {
-  const firstNames = ['Marco', 'Diego', 'Kévin', 'Jadon', 'Pablo', 'Joao', 'Luka', 'Ivan'];
-  const lastNames = ['Rossi', 'Silva', 'Müller', 'Lopez', 'Garcia', 'Kovac', 'Santos', 'Costa'];
+  const pos = (player.position || 'ATT').toUpperCase();
+  const isGkRival = pos.includes('GK') || pos.includes('GB');
+  
+  const firstNames = isGkRival
+    ? ['Thibaut', 'Gianluigi', 'Manuel', 'Alisson', 'Ederson', 'Jan', 'Keylor', 'Andriy']
+    : ['Marco', 'Diego', 'Kévin', 'Jadon', 'Pablo', 'Joao', 'Luka', 'Ivan'];
+  const lastNames = isGkRival
+    ? ['Courtois', 'Donnarumma', 'Neuer', 'Becker', 'Moraes', 'Oblak', 'Navas', 'Lunin']
+    : ['Rossi', 'Silva', 'Müller', 'Lopez', 'Garcia', 'Kovac', 'Santos', 'Costa'];
   const name = `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${lastNames[Math.floor(Math.random() * lastNames.length)]}`;
   const ovr = (player.ovr || 50) + Math.floor(Math.random() * 5); // Rival starts slightly better or equal
   
-  const pos = (player.position || 'ATT').toUpperCase();
   let baseStats = { pace: ovr, finishing: ovr, passing: ovr, dribbling: ovr, defense: ovr, physical: ovr };
   
   // Pondération logique selon le poste du rival
@@ -2860,7 +2866,7 @@ export const generateRival = (player) => {
     baseStats = { ...baseStats, passing: ovr + 12, dribbling: ovr + 8, finishing: ovr - 5 };
   } else if (pos.includes('DEF') || pos.includes('ARR')) {
     baseStats = { ...baseStats, defense: ovr + 15, physical: ovr + 10, finishing: ovr - 20 };
-  } else if (pos.includes('GK') || pos.includes('GB')) {
+  } else if (isGkRival) {
     baseStats = { diving: ovr + 10, handling: ovr + 10, reflexes: ovr + 10, positioning: ovr + 5, kicking: ovr, pace: ovr - 10 };
   }
 
@@ -2873,6 +2879,7 @@ export const generateRival = (player) => {
   return {
     id: `rival_${Date.now()}`,
     name,
+    position: pos, // Le rival joue au même poste que le joueur
     age,
     ovr,
     attributes,
@@ -2889,30 +2896,40 @@ export const updateRival = (rival, playerOvr, playerTier, playerWonBallonDor, pl
   if (!rival) return null;
   
   const newAge = (rival.age || 18) + 1;
+  const isGkRival = (rival.position || '').toUpperCase().includes('GK') || (rival.position || '').toUpperCase().includes('GB');
   let newOvr = rival.ovr;
   
-  if (newAge < 26) {
+  // Courbe de progression/déclin adaptée au poste
+  const peakAge = isGkRival ? 31 : 26;
+  const declineStart = isGkRival ? 35 : 31;
+  
+  if (newAge < peakAge) {
     newOvr += Math.floor(Math.random() * 4);
-  } else if (newAge > 31) {
-    newOvr -= Math.floor(Math.random() * 3) + 1;
+  } else if (newAge > declineStart) {
+    const declineRate = isGkRival ? 2 : 3; // Les GK déclinent plus lentement
+    newOvr -= Math.floor(Math.random() * declineRate) + 1;
   } else {
     newOvr += Math.floor(Math.random() * 2) - 1;
   }
   
-  if (newAge <= 31 && newOvr < playerOvr - 5) {
+  if (newAge <= declineStart && newOvr < playerOvr - 5) {
      newOvr = playerOvr - 5;
   }
   newOvr = Math.max(40, Math.min(99, newOvr));
   
   const ovrDiff = newOvr - rival.ovr;
-  const newAttributes = { ...(rival.attributes || {
-    pace: rival.ovr, finishing: rival.ovr, passing: rival.ovr,
-    dribbling: rival.ovr, defense: rival.ovr, physical: rival.ovr
-  }) };
+  const defaultAttrs = isGkRival
+    ? { diving: rival.ovr, handling: rival.ovr, reflexes: rival.ovr, positioning: rival.ovr, kicking: rival.ovr, pace: rival.ovr }
+    : { pace: rival.ovr, finishing: rival.ovr, passing: rival.ovr, dribbling: rival.ovr, defense: rival.ovr, physical: rival.ovr };
+  const newAttributes = { ...(rival.attributes || defaultAttrs) };
   Object.keys(newAttributes).forEach(attr => {
     let variation = ovrDiff + (Math.floor(Math.random() * 3) - 1);
-    if (newAge > 31 && (attr === 'pace' || attr === 'physical')) {
-      variation -= Math.floor(Math.random() * 3);
+    if (newAge > declineStart) {
+      // Les stats physiques chutent plus vite
+      const physicalStats = isGkRival ? ['pace', 'reflexes'] : ['pace', 'physical'];
+      if (physicalStats.includes(attr)) {
+        variation -= Math.floor(Math.random() * 3);
+      }
     }
     newAttributes[attr] = Math.max(15, Math.min(99, newAttributes[attr] + variation));
   });

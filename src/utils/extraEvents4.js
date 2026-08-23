@@ -151,7 +151,7 @@ export const EXTRA_EVENTS_4 = [
     ]
   },
   {
-    id: 'extra_56', category: 'CARRIÈRE', tag: 'Tension', targetPosition: 'ALL', condition: () => true,
+    id: 'extra_56', category: 'CARRIÈRE', tag: 'Tension', targetPosition: '!GK', condition: () => true,
     description: "Vous n'êtes pas d'accord avec le changement tactique de l'entraîneur qui vous éloigne du but.",
     options: [
       { typeTag: 'Clash', text: 'Râler devant le groupe', outcome: [

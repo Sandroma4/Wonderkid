@@ -1,6 +1,6 @@
 export const EXTRA_EVENTS_10 = [
   {
-    id: 'foot_10_01', category: 'ENTRAÎNEMENT', tag: 'Dépassement', targetPosition: 'ALL',
+    id: 'foot_10_01', category: 'ENTRAÎNEMENT', tag: 'Dépassement', targetPosition: '!GK',
     description: "Le coach vous demande de rester après l'entraînement pour travailler vos frappes de loin.",
     options: [
       { typeTag: 'Travailleur', text: 'Accepter avec enthousiasme', outcome: [
@@ -22,7 +22,7 @@ export const EXTRA_EVENTS_10 = [
     ]
   },
   {
-    id: 'foot_10_03', category: 'MATCH', tag: 'Dilemme', targetPosition: 'ALL',
+    id: 'foot_10_03', category: 'MATCH', tag: 'Dilemme', targetPosition: '!GK',
     description: "Vous filez seul au but mais un coéquipier est mieux placé.",
     options: [
       { typeTag: 'Égoïste', text: 'Tenter sa chance en solo', outcome: [
@@ -122,7 +122,7 @@ export const EXTRA_EVENTS_10 = [
     ]
   },
   {
-    id: 'foot_10_12', category: 'MATCH', tag: 'Tension', targetPosition: 'ALL',
+    id: 'foot_10_12', category: 'MATCH', tag: 'Tension', targetPosition: '!GK',
     description: "Fin de match, il y a pénalty pour vous mais c'est l'attaquant star qui doit tirer.",
     options: [
       { typeTag: 'Culot', text: 'Prendre le ballon des mains de la star', outcome: [

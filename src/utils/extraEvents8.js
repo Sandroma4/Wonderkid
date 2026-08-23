@@ -211,7 +211,7 @@ export const EXTRA_EVENTS_8 = [
     ]
   },
   {
-    id: 'extra_160', category: 'ENTRAÎNEMENT', tag: 'Tension', targetPosition: 'ALL', condition: () => true,
+    id: 'extra_160', category: 'ENTRAÎNEMENT', tag: 'Tension', targetPosition: '!GK', condition: () => true,
     description: "Le gardien de but est furieux parce que vous lui marquez toujours des lucarnes à l'entraînement et l'humiliez.",
     options: [
       { typeTag: 'Macho', text: 'Lui dire d\'être meilleur', outcome: [

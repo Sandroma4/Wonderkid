@@ -1,6 +1,6 @@
 export const COOP_EVENTS = [
   {
-    id: 'coop_1', category: 'FRÈRES D\'ARMES', tag: 'Penalty', targetPosition: 'ALL', condition: () => true,
+    id: 'coop_1', category: 'FRÈRES D\'ARMES', tag: 'Penalty', targetPosition: '!GK', condition: () => true,
     description: "En plein match décisif, l'arbitre siffle un penalty. Vous êtes le tireur désigné, mais votre coéquipier s'empare du ballon.",
     options: [
       { typeTag: 'Égoïste', text: 'Lui arracher le ballon et tirer', outcome: [
