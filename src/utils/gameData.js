@@ -1977,22 +1977,14 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
   };
 
   if (pos.includes('GK') || pos.includes('GB')) {
-    // For goalkeepers, apply progression curve to determine stat gains
-    const gkProgression = gkProgressionCurve(player.age, 'diving');
-    
-    // Calculate gains with progression curve applied
-    const divingGain = Math.max(0, Math.floor(primaryGain * gkProgression));
-    const reflexesGain = Math.max(0, Math.floor(secondaryGain * gkProgression));
-    const handlingGain = Math.max(0, Math.floor(dribbleGain * gkProgression));
-    const kickingGain = Math.max(0, Math.floor((secondaryGain - 1) * gkProgression));
-    const positioningGain = Math.max(0, Math.floor(dribbleGain * gkProgression));
-    
+    // Les gains sont distribués directement pour éviter les arrondis à zéro
+    // On compense le fait qu'il y ait plus de stats clés pour un GK
     statGains = {
-      diving: divingGain,
-      reflexes: reflexesGain,
-      positioning: positioningGain,
-      handling: handlingGain,
-      kicking: kickingGain
+      diving: primaryGain,
+      reflexes: primaryGain,
+      positioning: secondaryGain,
+      handling: secondaryGain,
+      kicking: Math.max(0, dribbleGain > 0 ? dribbleGain : secondaryGain - 1)
     };
   }
 
