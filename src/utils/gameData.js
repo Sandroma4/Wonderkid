@@ -171,7 +171,7 @@ export const LAST_NAMES = {
   CV: ['Silva','Tavares','Fernandes','Gomes','Semedo','Lopes','Borges','Monteiro','Correia','Soares','Pires','Andrade','Rodrigues','Varela','Cabral','Almeida','Barros','Neves','Veiga','Mendes'],
   CO: ['Rodriguez','Gomez','Gonzalez','Martinez','Garcia','Lopez','Hernandez','Sanchez','Perez','Ramirez','Diaz','Muñoz','Rojas','Moreno','Jimenez','Gutiérrez','Ruiz','Vargas','Castro','Ortiz'],
   KR: ['Kim','Lee','Park','Choi','Jung','Kang','Cho','Yoon','Jang','Lim','Han','Oh','Seo','Shin','Kwon','Hwang','Ahn','Song','Ryu','Jeon'],
-  CI: ['Kouassi','Konan','Yao','Kouadio','Kouakou','Koffi','N'Guessan','Traoré','Kouamé','Touré','Ouattara','Coulibaly','Kone','Cisse','Bamba','Brou','Sylla','Diarrassouba','Fofana','Bakayoko'],
+  CI: ['Kouassi','Konan','Yao','Kouadio','Kouakou','Koffi','N\'Guessan','Traoré','Kouamé','Touré','Ouattara','Coulibaly','Kone','Cisse','Bamba','Brou','Sylla','Diarrassouba','Fofana','Bakayoko'],
   HR: ['Knežević','Horvat','Kovačević','Pavlović','Blažević','Grgić','Babić','Polić','Jurić','Vidović','Kovačić','Tomić','Vuković','Perić','Marković','Lončar','Radić','Novak','Matić','Klarić'],
   DK: ['Nielsen','Jensen','Hansen','Pedersen','Andersen','Christensen','Larsen','Sørensen','Rasmussen','Jørgensen','Petersen','Madsen','Kristensen','Olsen','Thomsen','Christiansen','Poulsen','Johansen','Møller','Mortensen'],
   SCO: ['Smith','Brown','Wilson','Thomson','Robertson','Campbell','Stewart','Anderson','Scott','Murray','MacDonald','Reid','Taylor','Clark','Ross','Watson','Morrison','Paterson','Young','Mitchell'],
