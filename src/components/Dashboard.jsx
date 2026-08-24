@@ -955,7 +955,14 @@ export function Dashboard({
               </div>
 
               {/* ONGLET : TERRAIN (EVENTS) */}
-              <div className={`${activeMobileTab !== 'terrain' ? 'hidden md:flex' : 'flex'} md:col-span-2 flex-col                   <div className="hidden md:flex bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 shadow-2xl flex-col justify-between gap-4 h-full relative overflow-hidden">
+              <div className={`${activeMobileTab !== 'terrain' ? 'hidden md:flex' : 'flex'} md:col-span-2 flex-col space-y-4`}>
+                
+                {/* TERRAIN / EVENTS EN HAUT */}
+
+                {/* ROW: CLUB & GAUGES */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {/* Club Actuel - DESKTOP */}
+                  <div className="hidden md:flex bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 shadow-2xl flex-col justify-between gap-4 h-full relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-3 opacity-20 transform translate-x-2 -translate-y-2">
                       <div className="w-16 h-16 rounded-full blur-xl" style={{ background: `linear-gradient(135deg, ${club.primary} 0%, ${club.secondary} 100%)` }} />
                     </div>
