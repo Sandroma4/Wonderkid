@@ -135,10 +135,26 @@ export const saveGameStateLocal = (gameState) => {
   }
 };
 
+const migrateGameState = (state) => {
+  if (!state || !state.player) return state;
+  const pos = (state.player.position || '').toUpperCase();
+  if (pos.includes('GK') || pos.includes('GB')) {
+    if (state.player.attributes && state.player.attributes.handling === undefined) {
+      // Migrate outfield stats to GK stats if missing
+      state.player.attributes.diving = state.player.attributes.finishing || 70;
+      state.player.attributes.handling = state.player.attributes.dribbling || 70;
+      state.player.attributes.kicking = state.player.attributes.passing || 70;
+      state.player.attributes.reflexes = state.player.attributes.defense || 70;
+      state.player.attributes.positioning = state.player.attributes.physical || 70;
+    }
+  }
+  return state;
+};
+
 export const loadGameStateLocal = () => {
   try {
     const data = localStorage.getItem(GAME_STATE_KEY);
-    return data ? JSON.parse(data) : null;
+    return data ? migrateGameState(JSON.parse(data)) : null;
   } catch (e) {
     return null;
   }
@@ -169,7 +185,7 @@ export const loadGameStateCloud = async () => {
       .single();
       
     if (error) return null;
-    return data?.save_data;
+    return data?.save_data ? migrateGameState(data.save_data) : null;
   } catch (e) {
     console.error('Failed to load game state from cloud', e);
     return null;

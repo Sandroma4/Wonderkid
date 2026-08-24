@@ -1586,7 +1586,7 @@ export const calculatePlayerStatus = (player, club) => {
 
 export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBonus) => {
   const targetOvr = Math.floor(Math.random() * 6) + 45;
-  const statsList = enginePos === 'GK' 
+  const statsList = (enginePos === 'GK' || enginePos === 'GB')
     ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] 
     : ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
   let rawStats = {};
