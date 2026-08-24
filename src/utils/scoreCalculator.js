@@ -44,16 +44,19 @@ export const calculateCareerScore = (player, rivalConfrontations = null) => {
 
     const pos = (player.position || '').toUpperCase();
     if (pos.includes('ATT') || pos.includes('ST') || pos.includes('WING')) {
-      score += totalGoals * 20;
-    } else if (pos.includes('MID') || pos.includes('MOC') || pos.includes('MDC')) {
-      score += totalAssists * 30;
-      score += totalGoals * 5; // Little bonus for mid goals
-    } else if (pos.includes('DEF') || pos.includes('GK') || pos.includes('DC') || pos.includes('DD') || pos.includes('DG')) {
-      score += totalCleanSheets * 50;
-      score += totalGoals * 10; // Defender goals are rare
+      score += (totalGoals * 20) || 0;
+    } else if (pos.includes('MID') || pos.includes('MOC') || pos.includes('MDC') || pos.includes('MIL')) {
+      score += (totalAssists * 30) || 0;
+      score += (totalGoals * 5) || 0; // Little bonus for mid goals
+    } else if (pos.includes('DEF') || pos.includes('DC') || pos.includes('DD') || pos.includes('DG') || pos.includes('ARR')) {
+      score += (totalCleanSheets * 50) || 0;
+      score += (totalGoals * 10) || 0; // Defender goals are rare
+    } else if (pos.includes('GK') || pos.includes('GB') || pos.includes('GARDIEN')) {
+      score += (totalCleanSheets * 100) || 0; // GKs get more points for CS
+      score += (totalAssists * 10) || 0;
     } else {
       // Default fallback
-      score += totalGoals * 10 + totalAssists * 10;
+      score += (totalGoals * 10) || 0 + (totalAssists * 10) || 0;
     }
   }
 

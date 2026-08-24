@@ -955,26 +955,26 @@ export function Dashboard({
               </div>
 
               {/* ONGLET : TERRAIN (EVENTS) */}
-              <div className={`${activeMobileTab !== 'terrain' ? 'hidden md:flex' : 'flex'} md:col-span-2 flex-col space-y-4`}>
-                
-                {/* TERRAIN / EVENTS EN HAUT */}
-
-                {/* ROW: CLUB & GAUGES */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    {/* Club Actuel - DESKTOP */}
-                  <div className="hidden md:flex bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 shadow-2xl flex-col justify-between gap-4 h-full relative overflow-hidden">
+              <div className={`${activeMobileTab !== 'terrain' ? 'hidden md:flex' : 'flex'} md:col-span-2 flex-col                   <div className="hidden md:flex bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 shadow-2xl flex-col justify-between gap-4 h-full relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-3 opacity-20 transform translate-x-2 -translate-y-2">
                       <div className="w-16 h-16 rounded-full blur-xl" style={{ background: `linear-gradient(135deg, ${club.primary} 0%, ${club.secondary} 100%)` }} />
                     </div>
-                    <div className="flex items-center gap-3 relative z-10">
+                    <div className="flex items-center gap-3 relative z-10 w-full">
                       <div className="flex flex-col gap-1.5 flex-shrink-0">
                         <span className="w-4 h-4 rounded-full shadow-lg border-2 border-slate-300 dark:border-slate-800" style={{ backgroundColor: club.primary }} />
                         <span className="w-4 h-4 rounded-full shadow-lg border-2 border-slate-300 dark:border-slate-800" style={{ backgroundColor: club.secondary }} />
                       </div>
-                      <div className="truncate">
+                      <div className="truncate flex-1">
                         <span className="heading-typography text-sm font-black text-slate-800 dark:text-white block truncate tracking-wide">{club.name}</span>
                         <LeagueLabel club={club} />
                       </div>
+                      {player.nationalStatus === 'CAPITAINE' && (
+                        <div className="ml-auto flex-shrink-0">
+                          <span className="heading-typography text-[8px] font-bold uppercase tracking-widest text-slate-800 dark:text-white bg-amber-600 px-2 py-1 rounded-md shadow-sm whitespace-nowrap">
+                            © Capitaine
+                          </span>
+                        </div>
+                      )}
                     </div>
                     
                     <div className="flex flex-col sm:flex-row gap-2 mt-auto relative z-10">
@@ -983,21 +983,9 @@ export function Dashboard({
                         <span className="heading-typography text-[9px] font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 leading-none text-center">
                           {player.statusText}
                         </span>
-                        {player.nationalStatus === 'CAPITAINE' && (
-                          <span className="heading-typography text-[8px] font-bold uppercase tracking-widest text-slate-800 dark:text-white bg-amber-600 px-1.5 py-0.5 rounded shadow-sm">
-                            © Capitaine
-                          </span>
-                        )}
                       </div>
                       {/* Solde */}
                       <div className="flex-1 flex flex-row gap-1 items-stretch">
-                        {player.sponsor && player.sponsor !== 'Aucun' && (
-                          <div className="flex-1 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 px-1 py-1 rounded-xl flex items-center justify-center shadow-sm text-center">
-                            <span className="heading-typography text-[7px] md:text-[8px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider leading-tight">
-                              💎<br/>{player.sponsor}
-                            </span>
-                          </div>
-                        )}
                         <div className="flex-1 relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-2 py-1 rounded-xl flex items-center justify-center shadow-lg border border-emerald-300 text-center">
                           <div className="absolute inset-0 bg-white/20 pointer-events-none mix-blend-overlay" />
                           <span className="heading-typography text-[10px] md:text-[11px] font-black text-slate-800 dark:text-white drop-shadow-md z-10 tracking-wide leading-none">
@@ -1005,54 +993,50 @@ export function Dashboard({
                           </span>
                         </div>
                       </div>
-                      </div>
                     </div>
+                  </div>
+
                   {/* Club Actuel - MOBILE */}
-                  <div className="flex md:hidden bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 shadow-2xl items-center justify-between gap-2 h-full relative overflow-hidden">
+                  <div className="flex md:hidden bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 shadow-2xl flex-col gap-3 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-3 opacity-20 transform translate-x-2 -translate-y-2">
                       <div className="w-16 h-16 rounded-full blur-xl" style={{ background: `linear-gradient(135deg, ${club.primary} 0%, ${club.secondary} 100%)` }} />
                     </div>
-                    <div className="flex items-center gap-3 relative z-10 min-w-0">
+                    <div className="flex items-center gap-3 relative z-10 w-full">
                       <div className="flex flex-col gap-1.5 flex-shrink-0">
                         <span className="w-4 h-4 rounded-full shadow-lg border-2 border-slate-300 dark:border-slate-800" style={{ backgroundColor: club.primary }} />
                         <span className="w-4 h-4 rounded-full shadow-lg border-2 border-slate-300 dark:border-slate-800" style={{ backgroundColor: club.secondary }} />
                       </div>
-                      <div className="truncate">
+                      <div className="truncate flex-1">
                         <span className="heading-typography text-sm font-black text-slate-800 dark:text-white block truncate tracking-wide">{club.name}</span>
                         <LeagueLabel club={club} />
                       </div>
-                    </div>
-                    
-                    <div className="flex flex-col gap-1.5 relative z-10 flex-shrink-0">
-                      {/* Statut */}
-                      <div className="flex flex-col gap-1 items-end justify-center">
-                        <span className="heading-typography text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 leading-none text-right">
-                          {player.statusText}
-                        </span>
-                        {player.nationalStatus === 'CAPITAINE' && (
+                      {player.nationalStatus === 'CAPITAINE' && (
+                        <div className="flex-shrink-0">
                           <span className="heading-typography text-[7px] sm:text-[8px] font-bold uppercase tracking-widest text-slate-800 dark:text-white bg-amber-600 px-1.5 py-0.5 rounded shadow-sm">
                             © Capitaine
                           </span>
-                        )}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-row gap-2 relative z-10 w-full items-stretch justify-between">
+                      {/* Statut */}
+                      <div className="flex flex-col gap-1 items-start justify-center">
+                        <span className="heading-typography text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 leading-none text-left">
+                          {player.statusText}
+                        </span>
                       </div>
                       {/* Solde */}
-                      <div className="flex flex-row gap-1 items-stretch justify-end w-full">
-                        {player.sponsor && player.sponsor !== 'Aucun' && (
-                          <div className="flex-1 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 px-1 py-0.5 rounded-md flex items-center justify-center text-center shadow-sm">
-                            <span className="heading-typography text-[6px] sm:text-[7px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider leading-tight">
-                              💎<br/>{player.sponsor}
-                            </span>
-                          </div>
-                        )}
-                        <div className="flex-1 relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-2 py-1 rounded-md flex items-center justify-center shadow-lg border border-emerald-300">
+                      <div className="flex flex-row gap-1 items-stretch justify-end">
+                        <div className="relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-400 px-2 py-1 rounded-xl flex items-center justify-center shadow-lg border border-emerald-300 text-center">
                           <div className="absolute inset-0 bg-white/20 pointer-events-none mix-blend-overlay" />
-                          <span className="heading-typography text-[9px] sm:text-[10px] font-black text-slate-800 dark:text-white drop-shadow-md z-10 tracking-wide text-center leading-none">
+                          <span className="heading-typography text-[10px] sm:text-[11px] font-black text-slate-800 dark:text-white drop-shadow-md z-10 tracking-wide leading-none">
                             {bankBalance.toLocaleString('fr-FR')} €
                           </span>
                         </div>
                       </div>
-                      </div>
                     </div>
+                  </div>
                   {/* Gauges (États) */}
                   <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-3 shadow-2xl flex flex-col justify-center h-full">
                     <div className="space-y-2">
@@ -1325,6 +1309,26 @@ export function Dashboard({
                           </div>
                         );
                       })}
+                    </div>
+                  </div>
+                )}
+                
+                {/* SPONSORS */}
+                {player.sponsor && player.sponsor !== 'Aucun' && (
+                  <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-4 shadow-2xl mt-4">
+                    <h4 className="heading-typography text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                      <span>💎 Sponsors Officiels</span>
+                    </h4>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-3 bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/30 p-3 rounded-xl shadow-sm">
+                        <div className="flex items-center justify-center w-10 h-10 bg-indigo-500 text-white rounded-lg shadow-inner text-xl font-black">
+                          {player.sponsor.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="heading-typography text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase">{player.sponsor}</p>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">Partenaire principal</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

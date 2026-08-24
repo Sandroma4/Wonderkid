@@ -8,58 +8,84 @@ const STAGES = [
   { id: 'FINALE', name: 'Finale', difficulty: 2.2 }
 ];
 
-const TOURNAMENT_EVENTS = [
-  {
-    title: "Séance de tirs au but",
-    desc: "Le match s'éternise. C'est l'heure des tirs au but. Le coach vous regarde droit dans les yeux.",
-    options: [
-      { text: "Prendre le 5ème penalty décisif", type: 'MENTAL', baseSuccess: 0.6 },
-      { text: "Tirer en premier pour montrer la voie", type: 'LEADER', baseSuccess: 0.65 },
-      { text: "Tenter une panenka risquée", type: 'TECHNIQUE', baseSuccess: 0.4 },
-      { text: "Laisser un coéquipier plus confiant tirer", type: 'NEUTRE', baseSuccess: 0.5 }
-    ]
-  },
-  {
-    title: "Le discours de la mi-temps",
-    desc: "L'équipe est menée 1-0 à la mi-temps. Le vestiaire est silencieux et abattu.",
-    options: [
-      { text: "Pousser une gueulante pour réveiller tout le monde", type: 'LEADER', baseSuccess: 0.7 },
-      { text: "Se concentrer sur sa propre tactique avec le coach", type: 'TACTIQUE', baseSuccess: 0.6 },
-      { text: "Rassurer les jeunes joueurs stressés", type: 'MENTAL', baseSuccess: 0.65 },
-      { text: "Ne rien dire et se préparer physiquement", type: 'PHYSIQUE', baseSuccess: 0.55 }
-    ]
-  },
-  {
-    title: "Coup franc décisif",
-    desc: "90ème minute, coup franc à 25 mètres. C'est l'occasion en or pour faire basculer le match.",
-    options: [
-      { text: "Tirer en force côté ouvert", type: 'PHYSIQUE', baseSuccess: 0.6 },
-      { text: "Enrouler parfaitement au-dessus du mur", type: 'TECHNIQUE', baseSuccess: 0.65 },
-      { text: "La jouer tactique avec une combinaison inattendue", type: 'TACTIQUE', baseSuccess: 0.7 },
-      { text: "Centrer dans la boîte pour un grand défenseur", type: 'NEUTRE', baseSuccess: 0.75 }
-    ]
-  },
-  {
-    title: "Provocation adverse",
-    desc: "Le défenseur adverse n'arrête pas de vous provoquer et de vous mettre des coups discrets depuis le début du match.",
-    options: [
-      { text: "Garder son sang-froid et jouer au foot", type: 'MENTAL', baseSuccess: 0.75 },
-      { text: "Répondre par l'impact physique régulier", type: 'PHYSIQUE', baseSuccess: 0.6 },
-      { text: "Provoquer une faute pour lui faire prendre un carton", type: 'MALIN', baseSuccess: 0.55 },
-      { text: "Demander au capitaine d'intervenir", type: 'LEADER', baseSuccess: 0.65 }
-    ]
-  },
-  {
-    title: "Blessure légère",
-    desc: "Vous ressentez une petite pointe musculaire. Il reste 20 minutes de jeu dans ce match couperet.",
-    options: [
-      { text: "Serrer les dents et continuer à fond", type: 'PHYSIQUE', baseSuccess: 0.5 },
-      { text: "Gérer ses efforts et jouer plus intelligemment", type: 'TACTIQUE', baseSuccess: 0.7 },
-      { text: "Demander le changement pour ne pas pénaliser l'équipe", type: 'NEUTRE', baseSuccess: 0.8 },
-      { text: "Prendre des risques pour marquer avant de sortir", type: 'MENTAL', baseSuccess: 0.45 }
-    ]
+const getTournamentEvents = (player, tournamentName) => {
+  const pos = (player?.position || '').toUpperCase();
+  const isGk = pos.includes('GK') || pos.includes('GB') || pos.includes('GARDIEN');
+  const isDef = pos.includes('DEF') || pos.includes('DC') || pos.includes('DD') || pos.includes('DG');
+  const isMid = pos.includes('MID') || pos.includes('MC') || pos.includes('MOC') || pos.includes('MDC');
+  const isAtt = pos.includes('ATT') || pos.includes('ST') || pos.includes('BU') || pos.includes('WING');
+
+  let events = [
+    {
+      title: "Séance de tirs au but",
+      desc: "Le match s'éternise. C'est l'heure des tirs au but. Le coach vous regarde droit dans les yeux.",
+      options: [
+        { text: "Prendre le penalty décisif", type: 'MENTAL', baseSuccess: 0.6 },
+        { text: "Tirer en premier", type: 'LEADER', baseSuccess: 0.65 },
+        { text: "Tenter une panenka risquée", type: 'TECHNIQUE', baseSuccess: 0.4 },
+        { text: "Laisser un coéquipier tirer", type: 'NEUTRE', baseSuccess: 0.5 }
+      ]
+    },
+    {
+      title: "Le discours de la mi-temps",
+      desc: "L'équipe est menée 1-0 à la mi-temps. Le vestiaire est silencieux et abattu.",
+      options: [
+        { text: "Pousser une gueulante", type: 'LEADER', baseSuccess: 0.7 },
+        { text: "Se concentrer sur sa tactique", type: 'TACTIQUE', baseSuccess: 0.6 },
+        { text: "Rassurer les jeunes", type: 'MENTAL', baseSuccess: 0.65 },
+        { text: "Se préparer physiquement", type: 'PHYSIQUE', baseSuccess: 0.55 }
+      ]
+    }
+  ];
+
+  if (isGk) {
+    events.push({
+      title: `Arrêt décisif en ${tournamentName}`,
+      desc: "L'attaquant adverse se présente seul face à vous à la 89ème minute !",
+      options: [
+        { text: "Sortir vite dans ses pieds", type: 'PHYSIQUE', baseSuccess: 0.65 },
+        { text: "Rester sur ses appuis et attendre", type: 'MENTAL', baseSuccess: 0.7 },
+        { text: "Anticiper une frappe croisée", type: 'TACTIQUE', baseSuccess: 0.6 },
+        { text: "Tenter une parade réflexe", type: 'TECHNIQUE', baseSuccess: 0.65 }
+      ]
+    });
+  } else if (isDef) {
+    events.push({
+      title: `Sauvetage sur la ligne en ${tournamentName}`,
+      desc: "Le gardien est battu, le ballon se dirige vers le but vide...",
+      options: [
+        { text: "Tacle glissé désespéré", type: 'PHYSIQUE', baseSuccess: 0.6 },
+        { text: "Lecture de la trajectoire", type: 'TACTIQUE', baseSuccess: 0.75 },
+        { text: "Dégagement acrobatique", type: 'TECHNIQUE', baseSuccess: 0.5 },
+        { text: "Faire confiance au gardien", type: 'NEUTRE', baseSuccess: 0.3 }
+      ]
+    });
+  } else if (isMid) {
+    events.push({
+      title: `Passe clé en ${tournamentName}`,
+      desc: "Vous récupérez le ballon au milieu. Une brèche s'ouvre dans la défense adverse.",
+      options: [
+        { text: "Lancer l'attaquant en profondeur", type: 'TACTIQUE', baseSuccess: 0.7 },
+        { text: "Percer la ligne balle au pied", type: 'TECHNIQUE', baseSuccess: 0.6 },
+        { text: "Garder la possession", type: 'NEUTRE', baseSuccess: 0.8 },
+        { text: "Tenter une frappe lointaine", type: 'PHYSIQUE', baseSuccess: 0.45 }
+      ]
+    });
+  } else {
+    events.push({
+      title: `Balle de match en ${tournamentName}`,
+      desc: "Dernière minute, vous recevez un centre parfait dans la surface de réparation.",
+      options: [
+        { text: "Reprise de volée puissante", type: 'TECHNIQUE', baseSuccess: 0.55 },
+        { text: "Tête piquée décroisée", type: 'PHYSIQUE', baseSuccess: 0.65 },
+        { text: "Contrôle et frappe placée", type: 'MENTAL', baseSuccess: 0.7 },
+        { text: "Remise pour un partenaire", type: 'TACTIQUE', baseSuccess: 0.75 }
+      ]
+    });
   }
-];
+
+  return events;
+};
 
 const getNationalColors = (originCode) => {
   const colors = {
@@ -109,7 +135,8 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
   }, [stageIndex]);
 
   const generateEventForStage = () => {
-    const randomEvent = TOURNAMENT_EVENTS[Math.floor(Math.random() * TOURNAMENT_EVENTS.length)];
+    const events = getTournamentEvents(player, tournamentName);
+    const randomEvent = events[Math.floor(Math.random() * events.length)];
     setEvent(randomEvent);
     setResultText(null);
   };
@@ -135,13 +162,15 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
       }));
 
       if (stageIndex === STAGES.length - 1) {
-        setResultText(`🏆 Masterclass ! Vous remportez la ${tournamentName} !`);
+        const titleName = tournamentName === 'Euro' ? "la Coupe d'Europe 🇪🇺" : `la ${tournamentName}`;
+        setResultText(`🏆 Masterclass ! Vous remportez ${titleName} !`);
         setWon(true);
       } else {
         setResultText(`✅ Succès ! L'équipe nationale se qualifie pour le tour suivant !`);
       }
     } else {
-      setResultText(`❌ Échec. L'équipe nationale est éliminée de la ${tournamentName}...`);
+      const titleName = tournamentName === 'Euro' ? "la Coupe d'Europe 🇪🇺" : `la ${tournamentName}`;
+      setResultText(`❌ Échec. L'équipe nationale est éliminée de ${titleName}...`);
       setEliminated(true);
     }
     

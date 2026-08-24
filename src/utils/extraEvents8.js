@@ -1,7 +1,7 @@
 // extraEvents8.js - Événements générés dynamiquement et enrichis
 export const EXTRA_EVENTS_8 = [
   {
-    id: 'extra_146', category: 'VESTIAIRE', tag: 'Tension', targetPosition: 'ALL', condition: () => true,
+    id: 'extra_146', category: 'VESTIAIRE', tag: 'Tension', targetPosition: 'ALL', condition: (p) => { const pos = (p.position || '').toUpperCase(); return !pos.includes('GK') && !pos.includes('GB') && !pos.includes('GARDIEN'); },
     description: "Le capitaine de l'équipe vous accuse ouvertement de ne pas assez défendre lors du dernier match.",
     options: [
       { typeTag: 'Guerrier', text: 'Le défier physiquement', outcome: [

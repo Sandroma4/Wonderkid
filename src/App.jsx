@@ -1228,7 +1228,7 @@ export default function App() {
       
       if (newInventory.includes('cryo')) inventoryEarnings -= 100000;
       if (newInventory.includes('training_center')) {
-        const isGkPlayer = (prev.player.position || '').toUpperCase().includes('GK');
+        const isGkPlayer = (prev.player.position || '').toUpperCase().includes('GK') || (prev.player.position || '').toUpperCase().includes('GB') || (prev.player.position || '').toUpperCase().includes('GARDIEN');
         const trainingStats = isGkPlayer ? ['reflexes', 'diving'] : ['physical', 'pace'];
         const statToBoost = trainingStats[Math.random() > 0.5 ? 0 : 1];
         if (updatedAttributes[statToBoost] !== undefined && updatedAttributes[statToBoost] < 99) {
@@ -1270,15 +1270,15 @@ export default function App() {
       
       // currentOvr is already defined as prev.player.ovr at the start of handleProceedToNextSeasonFinal
       if (currentOvr >= 90) {
-        currentSponsor = 'Équipementier Mondial';
+        currentSponsor = ['Galactic Sports', 'Velocity', 'Apex Athletics', 'Titan Gear'][Math.floor(Math.random() * 4)];
         sponsorEarnings = 5000000;
         sponsorFatigue = 15;
       } else if (currentOvr >= 83) {
-        currentSponsor = 'Sponsor National';
+        currentSponsor = ['EuroFly', 'National Bank', 'FastWheels', 'AquaPure'][Math.floor(Math.random() * 4)];
         sponsorEarnings = 1500000;
         sponsorFatigue = 8;
       } else if (currentOvr >= 75) {
-        currentSponsor = 'Sponsor Local';
+        currentSponsor = ['Boulangerie du Coin', 'Auto-École Star', 'Pizzeria Napoli', 'Supermarché Express'][Math.floor(Math.random() * 4)];
         sponsorEarnings = 200000;
         sponsorFatigue = 4;
       }

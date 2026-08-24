@@ -109,26 +109,26 @@ export const FIRST_NAMES_FEMALE = {
 
 
 export const LAST_NAMES = {
-  FR: ['Mbappé', 'Griezmann', 'Giroud', 'Varane', 'Pogba', 'Benzema', 'Kante', 'Lloris', 'Pavard', 'Hernandez', 'Tchouaméni', 'Camavinga', 'Dembele', 'Coman', 'Kounde', 'Upamecano', 'Saliba', 'Maignan', 'Rabiot', 'Thuram', 'Zidane', 'Henry', 'Platini', 'Blanc', 'Deschamps', 'Desailly', 'Pires', 'Vieira', 'Makelele', 'Trezeguet', 'Martin', 'Bernard', 'Thomas', 'Petit', 'Robert', 'Richard', 'Durand', 'Dubois', 'Moreau', 'Laurent', 'Simon', 'Michel', 'Lefebvre', 'Leroy', 'Roux', 'David', 'Morel', 'Fournier', 'Girard', 'Bonnet'],
-  EN: ['Kane', 'Bellingham', 'Foden', 'Saka', 'Rice', 'Stones', 'Walker', 'Shaw', 'Alexander-Arnold', 'Pickford', 'Rashford', 'Grealish', 'Mount', 'Sterling', 'Trippier', 'Chilwell', 'Ramsdale', 'Gallagher', 'Palmer', 'Watkins', 'Rooney', 'Beckham', 'Gerrard', 'Lampard', 'Scholes', 'Ferdinand', 'Neville', 'Cole', 'Hart', 'Terry', 'Smith', 'Jones', 'Taylor', 'Williams', 'Brown', 'Davies', 'Evans', 'Wilson', 'Thomas', 'Roberts', 'Johnson', 'Lewis', 'Walker', 'Robinson', 'Wood', 'Thompson', 'White', 'Watson', 'Jackson', 'Wright'],
-  ES: ['Gonzalez', 'Rodriguez', 'Gomez', 'Fernandez', 'Lopez', 'Diaz', 'Martinez', 'Perez', 'Garcia', 'Sanchez', 'Romero', 'Suarez', 'Alvarez', 'Ruiz', 'Navarro', 'Torres', 'Dominguez', 'Vazquez', 'Ramos', 'Gil', 'Iniesta', 'Xavi', 'Casillas', 'Puyol', 'Villa', 'Silva', 'Morata', 'Gavi', 'Pedri', 'Yamal', 'Rodri', 'Carvajal', 'Nacho', 'Laporte', 'Simon', 'Olmo', 'Williams', 'Oyarzabal', 'Merino', 'Ruiz'],
-  IT: ['Rossi', 'Russo', 'Ferrari', 'Esposito', 'Bianchi', 'Romano', 'Colombo', 'Ricci', 'Marino', 'Greco', 'Bruno', 'Gallo', 'Conti', 'De Luca', 'Mancini', 'Costa', 'Giordano', 'Rizzo', 'Lombardi', 'Moretti', 'Donnarumma', 'Barella', 'Chiesa', 'Bastoni', 'Di Lorenzo', 'Dimarco', 'Jorginho', 'Verratti', 'Pellegrini', 'Locatelli', 'Scamacca', 'Raspadori', 'Tonali', 'Zaniolo', 'Maldini', 'Baggio', 'Del Piero', 'Totti', 'Pirlo', 'Buffon'],
-  DE: ['Müller', 'Schmidt', 'Schneider', 'Fischer', 'Weber', 'Meyer', 'Wagner', 'Becker', 'Schulz', 'Hoffmann', 'Schäfer', 'Koch', 'Bauer', 'Richter', 'Klein', 'Wolf', 'Schröder', 'Neumann', 'Schwarz', 'Zimmermann', 'Neuer', 'Kroos', 'Gündogan', 'Kimmich', 'Musiala', 'Wirtz', 'Sane', 'Gnabry', 'Havertz', 'Füllkrug', 'Rüdiger', 'Tah', 'Schlotterbeck', 'Ter Stegen', 'Beckenbauer', 'Gerd Müller', 'Matthäus', 'Klinsmann', 'Klose', 'Lahm'],
-  BR: ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Ferreira', 'Alves', 'Pereira', 'Lima', 'Gomes', 'Costa', 'Ribeiro', 'Martins', 'Carvalho', 'Almeida', 'Lopes', 'Soares', 'Fernandes', 'Vieira', 'Barbosa', 'Neymar', 'Vinícius', 'Rodrygo', 'Casemiro', 'Alisson', 'Ederson', 'Marquinhos', 'Thiago Silva', 'Richarlison', 'Raphinha', 'Pelé', 'Ronaldo', 'Ronaldinho', 'Romário', 'Cafu', 'Roberto Carlos', 'Kaká', 'Rivaldo', 'Zico', 'Socrates'],
-  AR: ['Gonzalez', 'Rodriguez', 'Gomez', 'Fernandez', 'Lopez', 'Diaz', 'Martinez', 'Perez', 'Garcia', 'Sanchez', 'Romero', 'Suarez', 'Alvarez', 'Ruiz', 'Navarro', 'Torres', 'Dominguez', 'Vazquez', 'Ramos', 'Messi', 'Di Maria', 'Martinez', 'Alvarez', 'Fernandez', 'Mac Allister', 'De Paul', 'Romero', 'Otamendi', 'Molina', 'Tagliafico', 'Dybala', 'Paredes', 'Lo Celso', 'Maradona', 'Kempes', 'Batistuta', 'Riquelme', 'Zanetti', 'Crespo', 'Aguero'],
-  NL: ['De Jong', 'Van Dijk', 'Jansen', 'De Vries', 'Van den Berg', 'Bakker', 'Visser', 'Smit', 'Meijer', 'De Boer', 'Mulder', 'Groot', 'Bos', 'Vos', 'Peters', 'Hendriks', 'Dekker', 'Brouwer', 'De Leeuw', 'Smits', 'Gakpo', 'Simons', 'Depay', 'De Ligt', 'Dumfries', 'Ake', 'Blind', 'Wijnaldum', 'Weghorst', 'Cruyff', 'Van Basten', 'Gullit', 'Rijkaard', 'Bergkamp', 'Sneijder', 'Robben', 'Van Persie', 'Van der Sar', 'Koeman', 'Seedorf'],
-  PT: ['Silva', 'Santos', 'Ferreira', 'Pereira', 'Oliveira', 'Costa', 'Rodrigues', 'Martins', 'Jesus', 'Sousa', 'Fernandes', 'Gonçalves', 'Gomes', 'Lopes', 'Marques', 'Alves', 'Almeida', 'Ribeiro', 'Pinto', 'Carvalho', 'Ronaldo', 'Fernandes', 'Silva', 'Dias', 'Pepe', 'Cancelo', 'Dalot', 'Palhinha', 'Vitinha', 'Leao', 'Felix', 'Jota', 'Ramos', 'Eusébio', 'Figo', 'Rui Costa', 'Deco', 'Pauleta', 'Nuno Gomes', 'Quaresma'],
-  US: ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin', 'Pulisic', 'McKennie', 'Adams', 'Reyna', 'Weah', 'Dest', 'Turner', 'Robinson', 'Ream', 'Balogun', 'Donovan', 'Dempsey', 'Howard', 'Bradley', 'Altidore', 'Reyna', 'Friedel', 'Bocanegra', 'Jones', 'Keller'],
-  JP: ['Sato', 'Suzuki', 'Takahashi', 'Tanaka', 'Watanabe', 'Ito', 'Yamamoto', 'Nakamura', 'Kobayashi', 'Kato', 'Yoshida', 'Yamada', 'Sasaki', 'Yamaguchi', 'Saito', 'Matsumoto', 'Inoue', 'Kimura', 'Hayashi', 'Shimizu', 'Kubo', 'Mitoma', 'Endo', 'Tomiyasu', 'Kamada', 'Doan', 'Ito', 'Minamino', 'Maeda', 'Morita', 'Kagawa', 'Honda', 'Nakata', 'Nakamura', 'Okazaki', 'Hasebe', 'Yoshida', 'Nagatomo', 'Kawashima', 'Kazu'],
-  SE: ['Johansson', 'Andersson', 'Karlsson', 'Nilsson', 'Eriksson', 'Larsson', 'Olsson', 'Persson', 'Svensson', 'Gustafsson', 'Pettersson', 'Jonsson', 'Jansson', 'Hansson', 'Bengtsson', 'Jönsson', 'Lindberg', 'Jakobsson', 'Magnusson', 'Olofsson', 'Ibrahimovic', 'Isak', 'Kulusevski', 'Forsberg', 'Lindelof', 'Olsen', 'Augustinsson', 'Krafth', 'Svanberg', 'Cajuste', 'Larsson', 'Ljungberg', 'Brolin', 'Dahlin', 'Mellberg', 'Svensson', 'Isaksson', 'Kallstrom', 'Elmander', 'Allback'],
-  NO: ['Hansen', 'Johansen', 'Olsen', 'Larsen', 'Andersen', 'Pedersen', 'Nilsen', 'Kristiansen', 'Jensen', 'Karlsen', 'Johnsen', 'Pettersen', 'Eriksen', 'Berg', 'Haugen', 'Hagen', 'Johannessen', 'Andreassen', 'Jacobsen', 'Halvorsen', 'Haaland', 'Odegaard', 'Sorloth', 'Bobb', 'Ajer', 'Nyland', 'Ryerson', 'Ostigard', 'Berge', 'Nusa', 'Solskjaer', 'Carew', 'Flo', 'Riise', 'Gamst Pedersen', 'Hangeland', 'Iversen', 'Leonhardsen', 'Rekdal', 'Mykland'],
-  DK: ['Nielsen', 'Jensen', 'Hansen', 'Pedersen', 'Andersen', 'Christensen', 'Larsen', 'Sørensen', 'Rasmussen', 'Jørgensen', 'Petersen', 'Madsen', 'Kristensen', 'Olsen', 'Thomsen', 'Christiansen', 'Poulsen', 'Johansen', 'Møller', 'Mortensen', 'Eriksen', 'Hojbjerg', 'Christensen', 'Andersen', 'Kjaer', 'Schmeichel', 'Maehle', 'Delaney', 'Poulsen', 'Damsgaard', 'Laudrup', 'Laudrup', 'Schmeichel', 'Tomasson', 'Elkjær', 'Rommedahl', 'Gravesen', 'Grønkjær', 'Bendtner', 'Agger'],
-  BE: ['Peeters', 'Janssens', 'Maes', 'Jacobs', 'Mertens', 'Willems', 'Claes', 'Goossens', 'Wouters', 'De Smet', 'Vermeulen', 'Pauwels', 'Dubois', 'Lambert', 'Dupont', 'Martin', 'Simon', 'Michel', 'Leclercq', 'Leroy', 'De Bruyne', 'Lukaku', 'Courtois', 'Hazard', 'Tielemans', 'Onana', 'Doku', 'Trossard', 'Castagne', 'Faes', 'Kompany', 'Fellaini', 'Vertonghen', 'Alderweireld', 'Mertens', 'Witsel', 'Dembele', 'Nainggolan', "Preud'homme", 'Ceulemans'],
-  CH: ['Müller', 'Meier', 'Schmid', 'Keller', 'Weber', 'Huber', 'Kaiser', 'Steiner', 'Baumann', 'Frei', 'Brunner', 'Gerber', 'Moser', 'Zimmermann', 'Widmer', 'Wyss', 'Roth', 'Suter', 'Baumgartner', 'Studer', 'Xhaka', 'Shaqiri', 'Sommer', 'Akanji', 'Embolo', 'Freuler', 'Zakaria', 'Rodriguez', 'Schar', 'Vargas', 'Frei', 'Chapuisat', 'Sforza', 'Vogel', 'Yakin', 'Barnetta', 'Inler', 'Lichtsteiner', 'Senderos', 'Behrami'],
-  CO: ['Rodriguez', 'Gomez', 'Gonzalez', 'Martinez', 'Garcia', 'Lopez', 'Hernandez', 'Sanchez', 'Perez', 'Ramirez', 'Diaz', 'Muñoz', 'Rojas', 'Moreno', 'Jimenez', 'Gutiérrez', 'Ruiz', 'Vargas', 'Castro', 'Ortiz', 'Diaz', 'Rodriguez', 'Cuadrado', 'Ospina', 'Mina', 'Sanchez', 'Uribe', 'Barrios', 'Arias', 'Falcao', 'Valderrama', 'Rincon', 'Asprilla', 'Higuita', 'Yepes', 'Cordoba', 'Mondragon', 'Aristizabal', 'Angel', 'Guarin'],
-  MA: ['Alaoui', 'Berrada', 'Benali', 'Chraibi', 'El Fassi', 'Tazi', 'Bennani', 'Zidane', 'El Amrani', 'Idrissi', 'El Othmani', 'Ouazzani', 'Guessous', 'El Malki', 'Bennis', 'El Idrissi', 'Benjelloun', 'El Khatib', 'El Mansouri', 'El Hachimi', 'Hakimi', 'Ziyech', 'Bounou', 'Amrabat', 'Saiss', 'Aguerd', 'En-Nesyri', 'Ounahi', 'Mazraoui', 'Boufal', 'Naybet', 'Hadji', 'Bassir', 'Chamakh', 'Taarabt', 'Benatia', 'Zaki', 'Bouderbala', 'El Kaddouri', 'Belhanda'],
-  NG: ['Okafor', 'Okeke', 'Okonkwo', 'Nwosu', 'Kalu', 'Ibrahim', 'Abubakar', 'Musa', 'Bello', 'Ali', 'Garba', 'Umar', 'Sani', 'Adeyemi', 'Adeleke', 'Ogunleye', 'Adeboye', 'Balogun', 'Oluwaseun', 'Adebayo', 'Osimhen', 'Lookman', 'Iwobi', 'Chukwueze', 'Ndidi', 'Ekong', 'Aribo', 'Onyeka', 'Bassey', 'Uzoho', 'Kanu', 'Okocha', 'Martins', 'Mikel', 'Yobo', 'Enyeama', 'West', 'Amokachi', 'Rufai', 'Finidi'],
-  ZA: ['Dlamini', 'Nkosi', 'Khumalo', 'Ndlovu', 'Mokoena', 'Mthembu', 'Ngcobo', 'Sithole', 'Makhanya', 'Gumede', 'Zungu', 'Zulu', 'Mabasa', 'Khoza', 'Mabena', 'Mnguni', 'Molefe', 'Motloung', 'Mofokeng', 'Motaung', 'Tau', 'Williams', 'Zwane', 'Mokoena', 'Modiba', 'Kekana', 'Mudau', 'Mvala', 'Lepasa', 'Makgopa', 'McCarthy', 'Radebe', 'Pienaar', 'Fish', 'Bartlett', 'Tshabalala', 'Modise', 'Khumalo', 'Mosimane', 'Masinga'],
+  FR: ['Martin', 'Bernard', 'Thomas', 'Petit', 'Robert', 'Richard', 'Durand', 'Dubois', 'Moreau', 'Laurent', 'Simon', 'Michel', 'Lefebvre', 'Leroy', 'Roux', 'David', 'Morel', 'Fournier', 'Girard', 'Bonnet'],
+  EN: ['Smith', 'Jones', 'Taylor', 'Williams', 'Brown', 'Davies', 'Evans', 'Wilson', 'Thomas', 'Roberts', 'Johnson', 'Lewis', 'Walker', 'Robinson', 'Wood', 'Thompson', 'White', 'Watson', 'Jackson', 'Wright'],
+  ES: ['Garcia', 'Gonzalez', 'Rodriguez', 'Fernandez', 'Lopez', 'Martinez', 'Sanchez', 'Perez', 'Gomez', 'Martin', 'Jimenez', 'Ruiz', 'Hernandez', 'Diaz', 'Moreno', 'Muñoz', 'Alvarez', 'Romero', 'Alonso', 'Gutierrez'],
+  IT: ['Rossi', 'Russo', 'Ferrari', 'Esposito', 'Bianchi', 'Romano', 'Colombo', 'Ricci', 'Marino', 'Greco', 'Bruno', 'Gallo', 'Conti', 'De Luca', 'Mancini', 'Costa', 'Giordano', 'Rizzo', 'Lombardi', 'Moretti'],
+  DE: ['Müller', 'Schmidt', 'Schneider', 'Fischer', 'Weber', 'Meyer', 'Wagner', 'Becker', 'Schulz', 'Hoffmann', 'Schäfer', 'Koch', 'Bauer', 'Richter', 'Klein', 'Wolf', 'Schröder', 'Neumann', 'Schwarz', 'Zimmermann'],
+  BR: ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Ferreira', 'Alves', 'Pereira', 'Lima', 'Gomes', 'Costa', 'Ribeiro', 'Martins', 'Carvalho', 'Almeida', 'Lopes', 'Soares', 'Fernandes', 'Vieira', 'Barbosa'],
+  AR: ['Gonzalez', 'Rodriguez', 'Gomez', 'Fernandez', 'Lopez', 'Diaz', 'Martinez', 'Perez', 'Garcia', 'Sanchez', 'Romero', 'Suarez', 'Alvarez', 'Ruiz', 'Navarro', 'Torres', 'Dominguez', 'Vazquez', 'Ramos', 'Blanco'],
+  NL: ['De Jong', 'Jansen', 'De Vries', 'Van den Berg', 'Van Dijk', 'Bakker', 'Visser', 'Smit', 'Meijer', 'De Boer', 'Mulder', 'Groot', 'Bos', 'Vos', 'Peters', 'Hendriks', 'Dekker', 'Brouwer', 'De Leeuw', 'Smits'],
+  PT: ['Silva', 'Santos', 'Ferreira', 'Pereira', 'Oliveira', 'Costa', 'Rodrigues', 'Martins', 'Jesus', 'Sousa', 'Fernandes', 'Gonçalves', 'Gomes', 'Lopes', 'Marques', 'Alves', 'Almeida', 'Ribeiro', 'Pinto', 'Carvalho'],
+  US: ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin'],
+  JP: ['Sato', 'Suzuki', 'Takahashi', 'Tanaka', 'Watanabe', 'Ito', 'Yamamoto', 'Nakamura', 'Kobayashi', 'Kato', 'Yoshida', 'Yamada', 'Sasaki', 'Yamaguchi', 'Saito', 'Matsumoto', 'Inoue', 'Kimura', 'Hayashi', 'Shimizu'],
+  SE: ['Johansson', 'Andersson', 'Karlsson', 'Nilsson', 'Eriksson', 'Larsson', 'Olsson', 'Persson', 'Svensson', 'Gustafsson', 'Pettersson', 'Jonsson', 'Jansson', 'Hansson', 'Bengtsson', 'Jönsson', 'Lindberg', 'Jakobsson', 'Magnusson', 'Olofsson'],
+  NO: ['Hansen', 'Johansen', 'Olsen', 'Larsen', 'Andersen', 'Pedersen', 'Nilsen', 'Kristiansen', 'Jensen', 'Karlsen', 'Johnsen', 'Pettersen', 'Eriksen', 'Berg', 'Haugen', 'Hagen', 'Johannessen', 'Andreassen', 'Jacobsen', 'Halvorsen'],
+  DK: ['Nielsen', 'Jensen', 'Hansen', 'Pedersen', 'Andersen', 'Christensen', 'Larsen', 'Sørensen', 'Rasmussen', 'Jørgensen', 'Petersen', 'Madsen', 'Kristensen', 'Olsen', 'Thomsen', 'Christiansen', 'Poulsen', 'Johansen', 'Møller', 'Mortensen'],
+  BE: ['Peeters', 'Janssens', 'Maes', 'Jacobs', 'Mertens', 'Willems', 'Claes', 'Goossens', 'Wouters', 'De Smet', 'Vermeulen', 'Pauwels', 'Dubois', 'Lambert', 'Dupont', 'Martin', 'Simon', 'Michel', 'Leclercq', 'Leroy'],
+  CH: ['Müller', 'Meier', 'Schmid', 'Keller', 'Weber', 'Huber', 'Kaiser', 'Steiner', 'Baumann', 'Frei', 'Brunner', 'Gerber', 'Moser', 'Zimmermann', 'Widmer', 'Wyss', 'Roth', 'Suter', 'Baumgartner', 'Studer'],
+  CO: ['Rodriguez', 'Gomez', 'Gonzalez', 'Martinez', 'Garcia', 'Lopez', 'Hernandez', 'Sanchez', 'Perez', 'Ramirez', 'Diaz', 'Muñoz', 'Rojas', 'Moreno', 'Jimenez', 'Gutiérrez', 'Ruiz', 'Vargas', 'Castro', 'Ortiz'],
+  MA: ['Alaoui', 'Berrada', 'Benali', 'Chraibi', 'El Fassi', 'Tazi', 'Bennani', 'Zidane', 'El Amrani', 'Idrissi', 'El Othmani', 'Ouazzani', 'Guessous', 'El Malki', 'Bennis', 'El Idrissi', 'Benjelloun', 'El Khatib', 'El Mansouri', 'El Hachimi'],
+  NG: ['Okafor', 'Okeke', 'Okonkwo', 'Nwosu', 'Kalu', 'Ibrahim', 'Abubakar', 'Musa', 'Bello', 'Ali', 'Garba', 'Umar', 'Sani', 'Adeyemi', 'Adeleke', 'Ogunleye', 'Adeboye', 'Balogun', 'Oluwaseun', 'Adebayo'],
+  ZA: ['Dlamini', 'Nkosi', 'Khumalo', 'Ndlovu', 'Mokoena', 'Mthembu', 'Ngcobo', 'Sithole', 'Makhanya', 'Gumede', 'Zungu', 'Zulu', 'Mabasa', 'Khoza', 'Mabena', 'Mnguni', 'Molefe', 'Motloung', 'Mofokeng', 'Motaung'],
 };
 
 
@@ -217,7 +217,7 @@ export const POSITIONS_DATA = [
   },
   {
     id: 'GARDIEN',
-    engineCode: 'GK',
+    engineCode: 'GB',
     name: 'Gardien',
     icon: '🧤',
     roles: [
@@ -2838,15 +2838,10 @@ export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlaye
 
 export const generateRival = (player) => {
   const pos = (player.position || 'ATT').toUpperCase();
-  const isGkRival = pos.includes('GK') || pos.includes('GB');
+  const isGkRival = pos.includes('GK') || pos.includes('GB') || pos.includes('GARDIEN');
   
-  const firstNames = isGkRival
-    ? ['Thibaut', 'Gianluigi', 'Manuel', 'Alisson', 'Ederson', 'Jan', 'Keylor', 'Andriy']
-    : ['Marco', 'Diego', 'Kévin', 'Jadon', 'Pablo', 'Joao', 'Luka', 'Ivan'];
-  const lastNames = isGkRival
-    ? ['Courtois', 'Donnarumma', 'Neuer', 'Becker', 'Moraes', 'Oblak', 'Navas', 'Lunin']
-    : ['Rossi', 'Silva', 'Müller', 'Lopez', 'Garcia', 'Kovac', 'Santos', 'Costa'];
-  const name = `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${lastNames[Math.floor(Math.random() * lastNames.length)]}`;
+  const nationality = player.nationality || 'FR';
+  const name = getRandomName(nationality, player.gender);
   const ovr = (player.ovr || 50) + Math.floor(Math.random() * 5); // Rival starts slightly better or equal
   
   let baseStats = { pace: ovr, finishing: ovr, passing: ovr, dribbling: ovr, defense: ovr, physical: ovr };
