@@ -637,6 +637,43 @@ export default function App() {
       }
     }
 
+    const role = prev.player.roleId ? getRoleById(prev.player.roleId) : null;
+    let excessPool = 0;
+    const oldAttributes = { ...prev.player.attributes };
+    const tempAttributes = { ...prev.player.attributes };
+    
+    if (calculatedStats.statGains) {
+       Object.entries(calculatedStats.statGains).forEach(([attr, val]) => {
+          if (tempAttributes[attr] !== undefined) {
+             const roleMultiplier = role?.multipliers?.[attr] || 1.0;
+             const modifiedGain = val * roleMultiplier;
+             const newVal = tempAttributes[attr] + modifiedGain;
+             if (newVal > 99) {
+                 excessPool += (newVal - 99);
+                 tempAttributes[attr] = 99;
+             } else {
+                 tempAttributes[attr] = newVal;
+             }
+          }
+       });
+       if (excessPool > 0) {
+           const nonMaxedStats = Object.keys(tempAttributes).filter(key => tempAttributes[key] < 99);
+           while (excessPool > 0 && nonMaxedStats.length > 0) {
+              const randomStat = nonMaxedStats[Math.floor(Math.random() * nonMaxedStats.length)];
+              tempAttributes[randomStat]++;
+              excessPool--;
+              if (tempAttributes[randomStat] >= 99) {
+                  nonMaxedStats.splice(nonMaxedStats.indexOf(randomStat), 1);
+              }
+           }
+       }
+       calculatedStats.statGains = {};
+       Object.keys(tempAttributes).forEach(attr => {
+           const diff = tempAttributes[attr] - oldAttributes[attr];
+           if (diff > 0) calculatedStats.statGains[attr] = diff;
+       });
+    }
+
     const { awards, ballonDorRank } = calculateAwards(prev.player, prev.club, calculatedStats, tournamentStats, prev.season);
     
     const fullStats = {
@@ -1122,51 +1159,11 @@ export default function App() {
       const currentRating = statsToUse ? parseFloat(statsToUse.rating) : 6.0;
 
       if (statsToUse && statsToUse.statGains) {
-        let excessPool = 0;
-        const cappedStats = []; 
-        const oldAttributes = { ...updatedAttributes };
-        
-        const role = prev.player.roleId ? getRoleById(prev.player.roleId) : null;
-        
         Object.entries(statsToUse.statGains).forEach(([attr, val]) => {
           if (updatedAttributes[attr] !== undefined) {
-            const roleMultiplier = role?.multipliers?.[attr] || 1.0;
-            const modifiedGain = val * roleMultiplier;
-            const newVal = updatedAttributes[attr] + modifiedGain;
-            if (newVal > 99) {
-              excessPool += (newVal - 99);
-              cappedStats.push(attr); 
-              updatedAttributes[attr] = 99;
-            } else {
-              updatedAttributes[attr] = newVal;
-            }
+            updatedAttributes[attr] = Math.min(99, updatedAttributes[attr] + val);
           }
         });
-        
-        if (excessPool > 0) {
-           const nonMaxedStats = Object.keys(updatedAttributes).filter(key => updatedAttributes[key] < 99);
-           while (excessPool > 0 && nonMaxedStats.length > 0) {
-              const randomStat = nonMaxedStats[Math.floor(Math.random() * nonMaxedStats.length)];
-              updatedAttributes[randomStat]++;
-              excessPool--;
-              if (updatedAttributes[randomStat] >= 99) {
-                  nonMaxedStats.splice(nonMaxedStats.indexOf(randomStat), 1);
-              }
-           }
-        }
-        
-        // Recalculer le gain de stat RÉEL (différence exacte)
-        statsToUse.statGains = {};
-        Object.keys(updatedAttributes).forEach(attr => {
-          const diff = updatedAttributes[attr] - oldAttributes[attr];
-          if (diff > 0) {
-            statsToUse.statGains[attr] = diff;
-          }
-        });
-        
-        // On supprime les variables d'UI complexes qui ne sont plus nécessaires
-        statsToUse.statOverflow = null;
-        statsToUse.cappedStats = null;
       }
 
       const newAge = prev.player.age + 1;
@@ -1426,6 +1423,7 @@ export default function App() {
         form: Math.max(10, 85 - sponsorFatigue),
         morale: Math.max(80, minMorale),
         sponsor: currentSponsor,
+        sponsorValue: sponsorEarnings,
         clubYears: (prev.player.clubYears || 0) + 1,
         coachTrust: prev.player.traits?.some(t => t.id === 'legende_club') && inventoryTrustChange < 0
           ? prev.player.coachTrust ?? 75

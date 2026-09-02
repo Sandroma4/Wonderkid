@@ -2772,7 +2772,7 @@ export const ALL_EVENTS = [
 
   // TOURNAMENT EVENTS
   {
-    id: 'wc_group_stage', category: 'WORLD_CUP', tag: 'Coupe du Monde', targetPosition: 'ALL',
+    id: 'wc_group_stage', category: 'WORLD_CUP', tag: 'Coupe du Monde', targetPosition: '!GK',
     description: "C'est votre premier match de Coupe du Monde. La pression d'un pays entier est sur vos épaules.",
     options: [
       { typeTag: 'MENTAL', text: 'Rester concentré sur le jeu', outcome: { narrative: 'Vous faites un match solide et rassurant.', effects: [{ text: '+5 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 5) }) } },
@@ -2780,11 +2780,27 @@ export const ALL_EVENTS = [
     ]
   },
   {
-    id: 'euro_knockout', category: 'EURO', tag: 'Euro', targetPosition: 'ALL',
+    id: 'euro_knockout', category: 'EURO', tag: 'Euro', targetPosition: '!GK',
     description: "Match à élimination directe de l'Euro. L'équipe adverse domine outrageusement.",
     options: [
       { typeTag: 'PHYSIQUE', text: 'Mettre de l\'impact pour réveiller l\'équipe', outcome: { narrative: 'Vous prenez un jaune mais l\'équipe se remet à jouer.', effects: [{ text: '+3 Physique', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, physical: Math.min(99, p.attributes.physical + 3) } }) } },
       { typeTag: 'TACTIQUE', text: 'Haranguer les coéquipiers pour resserrer les lignes', outcome: { narrative: 'L\'équipe retrouve son bloc. Choix de leader.', effects: [{ text: '+5 Confiance', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 5) }) } }
+    ]
+  },
+  {
+    id: 'wc_group_stage_gk', category: 'WORLD_CUP', tag: 'Coupe du Monde', targetPosition: 'GK',
+    description: "Premier match de Coupe du Monde pour vous. La pression est à son comble sur vos buts.",
+    options: [
+      { typeTag: 'MENTAL', text: 'Rassurer votre défense à chaque occasion', outcome: { narrative: 'Vous rassurez tout le bloc équipe.', effects: [{ text: '+5 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, morale: Math.min(100, p.morale + 5) }) } },
+      { typeTag: 'CONCENTRATION', text: 'Rester figé sur votre ligne, sans risque', outcome: { narrative: 'Un clean sheet rassurant sans briller.', effects: [{ text: '+3 Positionnement', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, positioning: Math.min(99, (p.attributes.positioning || 50) + 3) } }) } }
+    ]
+  },
+  {
+    id: 'euro_knockout_gk', category: 'EURO', tag: 'Euro', targetPosition: 'GK',
+    description: "Match à élimination directe de l'Euro. Vos coéquipiers reculent beaucoup trop.",
+    options: [
+      { typeTag: 'LEADERSHIP', text: 'Hurler sur vos défenseurs pour les faire remonter', outcome: { narrative: 'Ils vous écoutent, la pression s\'atténue.', effects: [{ text: '+5 Confiance', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 5) }) } },
+      { typeTag: 'RÉFLEXES', text: 'Sortir loin de vos buts pour couper les passes longues', outcome: { narrative: 'Prise de risque payante, vous soulagez la défense.', effects: [{ text: '+4 Plongeon', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, diving: Math.min(99, (p.attributes.diving || 50) + 4) } }) } }
     ]
   },
   

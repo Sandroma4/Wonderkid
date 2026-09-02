@@ -188,6 +188,8 @@ export function Dashboard({
   
   // Social feed removed
   const isGoalkeeper = (player.position || '').toUpperCase().includes('GK');
+  const isDefender = (player.position || '').toUpperCase().includes('DEF');
+  const isDefensivePlayer = isGoalkeeper || isDefender;
 
   const theme = getTheme(club?.primary, club?.secondary);
 
@@ -247,91 +249,104 @@ export function Dashboard({
             const bestVersion = getBestPlayerVersion(player, club);
             return (
               <div className="max-w-3xl w-full bg-white/95 dark:bg-slate-900/95 border border-slate-300/80 dark:border-slate-700/80 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl z-10 flex flex-col items-center text-center my-auto">
-                <div className="mb-2">
-                  <span className="heading-typography text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/40 rounded-full inline-block mb-2">
+                <div className="mb-2 md:mb-4">
+                  <span className="heading-typography text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/40 rounded-full inline-block mb-1 md:mb-2">
                     Bilan Définitif de Carrière
                   </span>
                   <h1 className="heading-typography text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 tracking-wider">
                     FIN DE CARRIÈRE
                   </h1>
-                  <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 mt-1">
-                    Félicitations pour cette belle aventure, <span className="text-amber-600 dark:text-amber-400 font-bold">{player.name}</span> !
-                  </p>
                 </div>
                 
-                {/* Zone carte joueur PRIME avec ref pour html2canvas */}
-                <div className="flex flex-col items-center my-2">
-                  <div className="text-[11px] font-bold text-amber-400/90 uppercase tracking-widest mb-1 flex items-center gap-1.5">
-                    <span>👑</span> Version Prime ({bestVersion.player.ovr} GEN)
-                  </div>
-                  <div ref={playerCardRef} className="inline-block">
-                    <PlayerCard player={bestVersion.player} club={bestVersion.club} cardType={cardStyle} />
-                  </div>
-                </div>
-
-                {/* Bouton téléchargement carte */}
-                <button
-                  onClick={async () => {
-                    if (!playerCardRef.current) return;
-                    try {
-                      const canvas = await html2canvas(playerCardRef.current, { backgroundColor: null, scale: 2 });
-                      const link = document.createElement('a');
-                      link.download = `carte-prime-${player.name.replace(/\s/g, '_')}.png`;
-                      link.href = canvas.toDataURL('image/png');
-                      link.click();
-                    } catch (e) { console.error('Export failed', e); }
-                  }}
-                  className="heading-typography text-xs font-black uppercase tracking-wider bg-amber-500 hover:bg-amber-400 text-slate-950 py-2.5 px-6 rounded-xl shadow-lg transition-all active:scale-95 flex items-center gap-2 mt-1 mb-4"
-                >
-                  📥 Télécharger ma carte Prime
-                </button>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full mt-2">
-                  <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-3.5 rounded-2xl text-center shadow-inner">
-                    <p className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Âge final</p>
-                    <p className="text-xl md:text-2xl font-black text-slate-800 dark:text-white mt-0.5">{player.age} ans</p>
-                  </div>
-                  <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-3.5 rounded-2xl text-center shadow-inner">
-                    <p className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Gains Totaux</p>
-                    <p className="text-xl md:text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5">{(bankBalance / 1000000).toFixed(1)} M€</p>
-                  </div>
-                  <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-3.5 rounded-2xl text-center shadow-inner">
-                    <p className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Sélections</p>
-                    <p className="text-xl md:text-2xl font-black text-slate-800 dark:text-white mt-0.5">{player.nationalCaps || 0}</p>
-                  </div>
-                  <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-3.5 rounded-2xl text-center shadow-inner">
-                    <p className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">OVR Prime</p>
-                    <p className="text-xl md:text-2xl font-black text-amber-600 dark:text-amber-400 mt-0.5">{bestVersion.player.ovr || player.careerMaxOvr || player.ovr}</p>
-                  </div>
-                </div>
-
-                <div className="w-full bg-slate-800/70 p-5 rounded-2xl border border-amber-500/30 mt-4 shadow-inner">
-                  <h3 className="heading-typography font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-3 text-xs flex items-center justify-center gap-1.5">
-                    <span>🏆</span> Palmarès & Distinctions
-                  </h3>
-                  {groupedPalmares.length > 0 ? (
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      {groupedPalmares.slice(0, 12).map((trophy, idx) => (
-                        <span key={idx} className="bg-white/90 dark:bg-slate-900/90 border border-amber-500/30 text-amber-600 dark:text-amber-300 px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm flex items-center gap-1.5">
-                          <span className="text-sm">{trophy.icon}</span> {trophy.text} {trophy.count > 1 && <span className="text-amber-600 dark:text-amber-400 font-bold ml-1">×{trophy.count}</span>}
-                        </span>
-                      ))}
-                      {groupedPalmares.length > 12 && <span className="text-xs text-amber-400/80 font-bold self-center">et bien d'autres...</span>}
+                <div className="flex flex-col md:flex-row w-full gap-4 md:gap-8 items-center md:items-stretch">
+                  {/* LEFT COLUMN: CARD & DOWNLOAD */}
+                  <div className="flex flex-col items-center justify-center shrink-0">
+                    <div className="text-[11px] font-bold text-amber-400/90 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                      <span>👑</span> Version Prime ({bestVersion.player.ovr} GEN)
                     </div>
-                  ) : (
-                    <p className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 italic">Aucun trophée majeur remporté.</p>
-                  )}
-                </div>
-
-                {/* Résumé du Score de la Carrière */}
-                <div className="w-full bg-slate-800/70 p-5 rounded-2xl border border-amber-500/30 mt-4 shadow-inner text-center">
-                  <h3 className="heading-typography font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-3 text-xs flex items-center justify-center gap-1.5">
-                    <span>👑</span> Score de la Carrière
-                  </h3>
-                  <div className="text-4xl md:text-5xl font-black text-amber-500 drop-shadow-md mb-2">
-                    {gameState.score?.totalScore ? gameState.score.totalScore.toLocaleString('fr-FR') : "0"}
+                    <div ref={playerCardRef} className="inline-block p-2 md:p-4" id="prime-card-wrapper">
+                      <PlayerCard player={bestVersion.player} club={bestVersion.club} cardType={cardStyle} />
+                    </div>
+                    
+                    <button
+                      onClick={async () => {
+                        if (!playerCardRef.current) return;
+                        try {
+                          const canvas = await html2canvas(playerCardRef.current, { 
+                            backgroundColor: null, 
+                            scale: 2,
+                            logging: false,
+                            onclone: (clonedDoc) => {
+                              const wrapper = clonedDoc.getElementById('prime-card-wrapper');
+                              if (wrapper && wrapper.firstChild) {
+                                const card = wrapper.firstChild;
+                                card.classList.remove('scale-75', 'md:scale-100', 'mb-[-92px]', 'mx-[-32px]', 'md:mb-0', 'md:mx-0');
+                                card.style.transform = 'none';
+                                card.style.margin = '0';
+                              }
+                            }
+                          });
+                          const link = document.createElement('a');
+                          link.download = `carte-prime-${player.name.replace(/\s/g, '_')}.png`;
+                          link.href = canvas.toDataURL('image/png');
+                          link.click();
+                        } catch (e) { console.error('Export failed', e); }
+                      }}
+                      className="heading-typography text-xs font-black uppercase tracking-wider bg-amber-500 hover:bg-amber-400 text-slate-950 py-2 md:py-2.5 px-4 md:px-6 rounded-xl shadow-lg transition-all active:scale-95 flex items-center gap-2 mt-2 md:mt-1 mb-2 md:mb-4"
+                    >
+                      📥 Télécharger
+                    </button>
                   </div>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest">Points Légendaires</p>
+
+                  {/* RIGHT COLUMN: STATS & PALMARES */}
+                  <div className="flex flex-col justify-center flex-grow w-full space-y-3">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 w-full">
+                      <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-2 md:p-3.5 rounded-2xl text-center shadow-inner">
+                        <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Âge final</p>
+                        <p className="text-lg md:text-2xl font-black text-slate-800 dark:text-white mt-0.5">{player.age} ans</p>
+                      </div>
+                      <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-2 md:p-3.5 rounded-2xl text-center shadow-inner">
+                        <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Gains Totaux</p>
+                        <p className="text-lg md:text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5">{(bankBalance / 1000000).toFixed(1)} M€</p>
+                      </div>
+                      <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-2 md:p-3.5 rounded-2xl text-center shadow-inner">
+                        <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Sélections</p>
+                        <p className="text-lg md:text-2xl font-black text-slate-800 dark:text-white mt-0.5">{player.nationalCaps || 0}</p>
+                      </div>
+                      <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-2 md:p-3.5 rounded-2xl text-center shadow-inner">
+                        <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">OVR Prime</p>
+                        <p className="text-lg md:text-2xl font-black text-amber-600 dark:text-amber-400 mt-0.5">{bestVersion.player.ovr || player.careerMaxOvr || player.ovr}</p>
+                      </div>
+                    </div>
+
+                    <div className="w-full bg-slate-800/70 p-3 md:p-5 rounded-2xl border border-amber-500/30 shadow-inner">
+                      <h3 className="heading-typography font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-2 md:mb-3 text-[10px] md:text-xs flex items-center justify-center gap-1.5">
+                        <span>🏆</span> Palmarès & Distinctions
+                      </h3>
+                      {groupedPalmares.length > 0 ? (
+                        <div className="flex flex-wrap gap-1.5 md:gap-2 justify-center">
+                          {groupedPalmares.slice(0, 12).map((trophy, idx) => (
+                            <span key={idx} className="bg-white/90 dark:bg-slate-900/90 border border-amber-500/30 text-amber-600 dark:text-amber-300 px-2 md:px-3 py-1 md:py-1.5 rounded-xl text-[10px] md:text-xs font-semibold shadow-sm flex items-center gap-1">
+                              <span className="text-xs md:text-sm">{trophy.icon}</span> {trophy.text} {trophy.count > 1 && <span className="text-amber-600 dark:text-amber-400 font-bold ml-1">×{trophy.count}</span>}
+                            </span>
+                          ))}
+                          {groupedPalmares.length > 12 && <span className="text-[10px] md:text-xs text-amber-400/80 font-bold self-center">et bien d'autres...</span>}
+                        </div>
+                      ) : (
+                        <p className="text-[10px] md:text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 italic text-center">Aucun trophée majeur remporté.</p>
+                      )}
+                    </div>
+
+                    <div className="w-full bg-slate-800/70 p-3 md:p-5 rounded-2xl border border-amber-500/30 shadow-inner text-center flex flex-col justify-center">
+                      <h3 className="heading-typography font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1 md:mb-3 text-[10px] md:text-xs flex items-center justify-center gap-1.5">
+                        <span>👑</span> Score de la Carrière
+                      </h3>
+                      <div className="text-3xl md:text-5xl font-black text-amber-500 drop-shadow-md mb-1 md:mb-2">
+                        {gameState.score?.totalScore ? gameState.score.totalScore.toLocaleString('fr-FR') : "0"}
+                      </div>
+                      <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest">Points Légendaires</p>
+                    </div>
+                  </div>
                 </div>
 
                 {player.careerHistory && player.careerHistory.length > 0 && (
@@ -347,8 +362,8 @@ export function Dashboard({
                             <th className="px-3 py-2">Saison</th>
                             <th className="px-3 py-2">Club</th>
                             <th className="px-3 py-2">GEN</th>
-                            <th className="px-3 py-2">Buts</th>
-                            <th className="px-3 py-2">Passes</th>
+                            <th className="px-3 py-2">{isDefensivePlayer ? 'Duels %' : 'Buts'}</th>
+                            <th className="px-3 py-2">{isDefensivePlayer ? 'Clean Sheets' : 'Passes'}</th>
                             <th className="px-3 py-2">Note</th>
                           </tr>
                         </thead>
@@ -364,8 +379,12 @@ export function Dashboard({
                                 <div className="text-[9px] text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase">{season.league}</div>
                               </td>
                               <td className="px-3 py-2 font-black text-amber-600 dark:text-amber-400">{season.ovr}</td>
-                              <td className="px-3 py-2 font-bold text-slate-700 dark:text-slate-200">{season.goals}</td>
-                              <td className="px-3 py-2 font-bold text-slate-700 dark:text-slate-200">{season.assists}</td>
+                              <td className="px-3 py-2 font-bold text-slate-700 dark:text-slate-200">
+                                {isDefensivePlayer ? `${Math.min(99, Math.floor(65 + season.rating * 3.5))}%` : season.goals}
+                              </td>
+                              <td className="px-3 py-2 font-bold text-slate-700 dark:text-slate-200">
+                                {isDefensivePlayer ? season.cleanSheets : season.assists}
+                              </td>
                               <td className="px-3 py-2 font-bold text-slate-700 dark:text-slate-200">{season.rating}</td>
                             </tr>
                           ))}
@@ -513,11 +532,17 @@ export function Dashboard({
                   <span className="heading-typography text-lg font-bold text-slate-800 dark:text-white mt-0.5 block">{seasonStats.matches}</span>
                 </div>
                 
-                {isGoalkeeper ? (
-                  <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
-                    <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Clean Sheets</span>
-                    <span className="heading-typography text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block">{seasonStats.cleanSheets}</span>
-                  </div>
+                {isDefensivePlayer ? (
+                  <>
+                    <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Duels %</span>
+                      <span className="heading-typography text-lg font-bold text-blue-600 dark:text-blue-400 mt-0.5 block">{Math.min(99, Math.floor(65 + seasonStats.rating * 3.5))}%</span>
+                    </div>
+                    <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Clean Sheets</span>
+                      <span className="heading-typography text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block">{seasonStats.cleanSheets}</span>
+                    </div>
+                  </>
                 ) : (
                   <>
                     <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
@@ -597,11 +622,11 @@ export function Dashboard({
                   <div className="grid grid-cols-2 gap-3">
                     {Object.entries(seasonStats.statGains).map(([attr, gain]) => {
                       const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique', diving: 'Plongeon', handling: 'Maniabilité', kicking: 'Jeu au pied', reflexes: 'Réflexes', positioning: 'Positionnement' };
-                      const newVal = Math.floor(player.attributes[attr]);
-                      const oldVal = Math.floor(player.attributes[attr] - gain);
-                      const displayGain = newVal - oldVal;
+                      const oldVal = Math.floor(player.attributes[attr] || 50);
+                      const displayGain = Math.floor(gain);
+                      const newVal = oldVal + displayGain;
                       
-                      if (displayGain === 0) return null;
+                      if (displayGain <= 0) return null;
                       
                       return (
                         <AnimatedStatBar 
@@ -1333,7 +1358,9 @@ export function Dashboard({
                         </div>
                         <div>
                           <p className="heading-typography text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase">{player.sponsor}</p>
-                          <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">Partenaire principal</p>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">
+                            Partenaire principal {player.sponsorValue ? `• ${(player.sponsorValue).toLocaleString()} €/an` : ''}
+                          </p>
                         </div>
                       </div>
                     </div>

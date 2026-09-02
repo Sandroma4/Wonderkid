@@ -95,6 +95,17 @@ export const saveCardToCollection = (player, palmares, maxOvr) => {
     trophies: palmares?.length || 0
   };
 
+  // Prevent duplicates (same name, ovr, and date)
+  const isDuplicate = current.some(card => 
+    card.name === cardData.name && 
+    card.ovr === cardData.ovr && 
+    card.date === cardData.date
+  );
+
+  if (isDuplicate) {
+    return;
+  }
+
   const updated = [cardData, ...current];
   
   try {

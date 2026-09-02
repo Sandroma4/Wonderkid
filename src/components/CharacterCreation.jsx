@@ -292,19 +292,19 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
           )}
 
           {step === 3 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[350px] overflow-y-auto pr-1">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {ORIGINS_BACKGROUNDS.map((bg) => (
                 <button
                   key={bg.id}
                   type="button"
                   onClick={() => { playSound('click'); setBackground(bg); setStep(4); }}
-                  className="p-4 rounded-xl border border-slate-300 dark:border-slate-800 bg-emerald-200 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left transition-all group"
+                  className="p-3 rounded-xl border border-slate-300 dark:border-slate-800 bg-emerald-200 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-left transition-all group"
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xl">{bg.icon}</span>
-                    <h4 className="font-black text-slate-800 dark:text-white text-sm group-hover:text-emerald-400 transition-colors">{bg.name}</h4>
+                    <span className="text-lg">{bg.icon}</span>
+                    <h4 className="font-black text-slate-800 dark:text-white text-[13px] leading-tight group-hover:text-emerald-400 transition-colors">{bg.name}</h4>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-500 dark:text-slate-400 mb-2">{bg.desc}</p>
+                  <p className="text-[10px] leading-tight text-slate-500 dark:text-slate-500 dark:text-slate-400 mb-2">{bg.desc}</p>
                   <div className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">
                     💰 Budget initial : {bg.startingMoney.toLocaleString()} €
                   </div>

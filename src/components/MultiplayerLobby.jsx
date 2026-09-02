@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { generateRoomCode, createMultiplayerRoom } from '../utils/multiplayer';
+import { generateRoomCode, createMultiplayerRoom, joinMatchmaking } from '../utils/multiplayer';
 import { playSound } from '../utils/audio';
 import { supabase } from '../supabaseClient';
 
@@ -88,6 +88,47 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
     setStatus('lobby');
   };
 
+  const matchmakingRef = React.useRef(null);
+
+  const handleRandomMatchmaking = () => {
+    playSound('click');
+    setStatus('matchmaking');
+    const mode = isCoopMode ? 'coop' : 'vs';
+    
+    const { leaveMatchmaking } = joinMatchmaking(playerId, playerName, mode, ({ roomId, isHost, opponentName }) => {
+      // Match found! Join the private room
+      leaveMatchmaking();
+      matchmakingRef.current = null;
+      
+      setRoomId(roomId);
+      setIsHost(isHost);
+      setStatus('lobby');
+      
+      const initialPlayerState = {
+        name: playerName,
+        isHost: isHost,
+        ready: false,
+        isCoop: isCoopMode
+      };
+      
+      const room = createMultiplayerRoom(roomId, playerId, initialPlayerState, (updatedPlayers) => {
+        setPlayers(updatedPlayers);
+      });
+      setRoomObj(room);
+    });
+    
+    matchmakingRef.current = leaveMatchmaking;
+  };
+
+  const cancelMatchmaking = () => {
+    playSound('click');
+    if (matchmakingRef.current) {
+      matchmakingRef.current();
+      matchmakingRef.current = null;
+    }
+    setStatus('menu');
+  };
+
   const handleStartGame = () => {
     playSound('click');
     if (roomObj) {
@@ -158,6 +199,34 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
                 Rejoindre
               </button>
             </div>
+
+            <div className="flex items-center gap-2 mt-4">
+              <div className="h-px bg-white dark:bg-slate-800 flex-1"></div>
+              <span className="text-slate-500 dark:text-slate-500 text-xs uppercase font-bold">Matchmaking</span>
+              <div className="h-px bg-white dark:bg-slate-800 flex-1"></div>
+            </div>
+
+            <button 
+              onClick={handleRandomMatchmaking}
+              className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold uppercase tracking-wide transition-colors shadow-lg shadow-indigo-900/20 flex items-center justify-center gap-2"
+            >
+              <span>🔍</span> Trouver un adversaire aléatoire
+            </button>
+          </div>
+        )}
+
+        {status === 'matchmaking' && (
+          <div className="w-full py-12 flex flex-col items-center">
+            <div className="animate-spin w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full mb-6"></div>
+            <h3 className="heading-typography text-xl font-bold text-indigo-400 mb-2">Recherche en cours...</h3>
+            <p className="text-slate-400 text-sm mb-8">Attente d'un autre joueur pour le mode {isCoopMode ? 'Frères d\'Armes' : 'Face-à-Face'}</p>
+            
+            <button 
+              onClick={cancelMatchmaking}
+              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold uppercase tracking-wide transition-colors"
+            >
+              Annuler
+            </button>
           </div>
         )}
 
