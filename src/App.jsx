@@ -30,6 +30,7 @@ import {
   generateRival,
   updateRival,
   INTERACTIVE_MATCH_SCENARIOS,
+  CUP_FINAL_SCENARIOS,
   playInteractiveMatch,
   PERKS_LIST,
   calculatePlayerValue,
@@ -947,11 +948,20 @@ export default function App() {
               return playerPos.includes(scen.targetPosition);
             });
             
+            const compatibleFinalScenarios = CUP_FINAL_SCENARIOS.filter(scen => {
+              if (scen.targetPosition === 'ALL') return true;
+              const playerPos = (prev.player.position || '').toUpperCase();
+              if (scen.targetPosition.startsWith('!')) return !playerPos.includes(scen.targetPosition.substring(1));
+              return playerPos.includes(scen.targetPosition);
+            });
+            
             const shuffledScenarios = compatibleScenarios.sort(() => 0.5 - Math.random());
+            const shuffledFinalScenarios = compatibleFinalScenarios.sort(() => 0.5 - Math.random());
+            
             const matchPhases = [
               { ...shuffledScenarios[0], time: '15ème Minute', title: `Début de Finale : ${finalName}` },
               { ...shuffledScenarios[1 % shuffledScenarios.length], time: '60ème Minute', title: `Le Tournant : ${finalName}` },
-              { ...shuffledScenarios[2 % shuffledScenarios.length], time: '89ème Minute', title: `Fin de Match : ${finalName}` }
+              { ...(shuffledFinalScenarios[0] || shuffledScenarios[2 % shuffledScenarios.length]), time: 'La Balle de Match', title: `Climax de la Finale : ${finalName}` }
             ];
 
             return {

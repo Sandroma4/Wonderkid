@@ -12,6 +12,53 @@ import { EXTRA_EVENTS_11 } from './extraEvents11';
 import { EXTRA_EVENTS_12 } from './extraEvents12';
 import { COOP_EVENTS } from './coopEvents';
 
+export const CUP_FINAL_SCENARIOS = [
+  {
+    id: 'cf_att_last_minute',
+    targetPosition: 'ATT',
+    title: "119ème Minute : L'Ultime Occasion",
+    description: "C'est la fin des prolongations. Vous êtes épuisé. Un centre fuyant arrive dans la surface. C'est la balle de match de cette finale !",
+    options: [
+      { text: "Tenter une reprise de volée acrobatique", stat: 'finishing', successText: "UN BUT D'ANTHOLOGIE ! Vous offrez le trophée d'une volée incroyable !", failText: "Vous ratez complètement le ballon... L'occasion s'envole.", type: 'goal' },
+      { text: "Contrôler et placer le ballon", stat: 'dribbling', successText: "Sang-froid exceptionnel ! Vous crochetez le gardien et marquez !", failText: "Votre contrôle est trop long, le gardien s'empare du ballon.", type: 'goal' },
+      { text: "Sauter plus haut que tout le monde", stat: 'physical', successText: "Un coup de casque monumental qui fait trembler les filets !", failText: "Le défenseur vous bouscule, pas de faute.", type: 'goal' }
+    ]
+  },
+  {
+    id: 'cf_mid_penalty',
+    targetPosition: 'MID',
+    title: "Le Pénalty du Siècle",
+    description: "90ème minute de la finale. Score de parité. L'arbitre siffle un penalty pour votre équipe. Le tireur attitré refuse de tirer sous la pression.",
+    options: [
+      { text: "Prendre ses responsabilités et frapper fort", stat: 'finishing', successText: "BOUM ! Lucarne ! Vous prenez vos responsabilités et marquez l'histoire !", failText: "Votre frappe s'écrase sur le poteau... Quelle désillusion.", type: 'goal' },
+      { text: "Tenter une Panenka pour humilier le gardien", stat: 'dribbling', successText: "INCROYABLE ! Le gardien plonge, la balle entre au ralenti ! Folie douce !", failText: "Le gardien ne bouge pas et capte la balle. C'est la honte absolue.", type: 'goal' },
+      { text: "Faire une passe décalée surprise", stat: 'passing', successText: "Du génie pur ! Votre coéquipier surgit et marque dans le but vide !", failText: "Personne n'a suivi. C'est le plus gros raté de l'histoire des finales.", type: 'assist' }
+    ]
+  },
+  {
+    id: 'cf_def_hero',
+    targetPosition: 'DEF',
+    title: "Sauvetage sur la Ligne",
+    description: "Dernière seconde de la finale. Votre gardien est battu. L'attaquant adverse frappe vers le but vide. Tout un peuple retient son souffle.",
+    options: [
+      { text: "Taper un sprint désespéré", stat: 'pace', successText: "VOUS SAUVEZ LA BALLE SUR LA LIGNE ! C'est le geste du match !", failText: "Trop tard... La balle franchit la ligne. Défaite cruelle.", type: 'clean_sheet' },
+      { text: "Se jeter de tout son corps (Tacle glissé)", stat: 'defense', successText: "Tacle légendaire ! Vous repoussez la balle in extremis !", failText: "Vous taclez le joueur. Pénalty et carton rouge. Le cauchemar.", type: 'clean_sheet' },
+      { text: "Se placer en barrage avec le corps", stat: 'physical', successText: "La frappe s'écrase sur votre torse ! Quel sacrifice !", failText: "La frappe vous transperce et finit au fond.", type: 'clean_sheet' }
+    ]
+  },
+  {
+    id: 'cf_gk_shootout',
+    targetPosition: 'GK',
+    title: "Séance de Tirs au But",
+    description: "La finale se joue aux tirs au but. C'est le tir décisif : si l'adversaire marque, tout est fini. C'est le face-à-face de votre vie.",
+    options: [
+      { text: "Se fier à son instinct et plonger à droite", stat: 'diving', successText: "PARADE MAJESTUEUSE ! Vous êtes le héros de la finale !", failText: "Le joueur tire à gauche. Fin du rêve.", type: 'clean_sheet' },
+      { text: "Regarder ses yeux et attendre le dernier moment", stat: 'reflexes', successText: "Arrêt incroyable du bout du pied ! Vous écœurez l'adversaire !", failText: "La frappe est trop forte, vous réagissez trop tard.", type: 'clean_sheet' },
+      { text: "Faire le show pour l'intimider", stat: 'positioning', successText: "Le tireur tremble face à votre pression et tire sur la barre !", failText: "Votre show ne marche pas, le ballon termine en lucarne.", type: 'clean_sheet' }
+    ]
+  }
+];
+
 export const COUNTRIES = [
   { id: "ZA", name: "Afrique du Sud" },
   { id: "DZ", name: "Algérie" },
@@ -3293,3 +3340,4 @@ export const calculateGKOVR = (player) => {
   
   return Math.round(ovr);
 };
+

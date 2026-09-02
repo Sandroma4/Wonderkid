@@ -552,5 +552,20 @@ export const EXTRA_EVENTS = [
       ] },
       { typeTag: 'Isolement', text: 'Se mettre au vert', outcome: { narrative: 'Excellente préparation invisible.', effects: [{text: '+15 Forme', style: 'positive'}], applyStats: p => ({...p, form: Math.min(100, p.form+15)}) } }
     ]
+  },
+  {
+    id: 'extra_cup_fatigue', category: 'CARRIÈRE', tag: 'Dilemme du Calendrier ⚖️', targetPosition: 'ALL', condition: (p) => p.tier <= 2,
+    description: "Calendrier infernal : vous avez une demi-finale de Coupe et un choc en Ligue des Champions la même semaine. L'entraîneur vous propose de souffler.",
+    options: [
+      { typeTag: 'Gladiateur', text: 'Tout jouer (Risqué)', outcome: [
+        { probability: 0.4, narrative: 'Vous enchaînez des prestations XXL ! Quelle légende !', effects: [{text: '+35 Confiance', style: 'positive'}, {text: '+10 Moral', style: 'positive'}], applyStats: p => ({...p, coachTrust: Math.min(100, p.coachTrust+35), morale: Math.min(100, p.morale+10)}) },
+        { probability: 0.6, narrative: 'Vous craquez physiquement et vous blessez avant la finale européenne.', effects: [{text: '-40 Forme', style: 'negative'}, {text: '-20 Moral', style: 'negative'}], applyStats: p => ({...p, form: Math.max(0, p.form-40), morale: Math.max(0, p.morale-20)}) }
+      ] },
+      { typeTag: 'Stratège', text: 'Se reposer en Coupe', outcome: [
+        { probability: 0.8, narrative: 'Vous arrivez frais et dispo pour casser la baraque en Europe.', effects: [{text: '+25 Forme', style: 'positive'}], applyStats: p => ({...p, form: Math.min(100, p.form+25)}) },
+        { probability: 0.2, narrative: 'L\'équipe perd sans vous en Coupe, le moral en prend un coup.', effects: [{text: '-15 Moral', style: 'negative'}], applyStats: p => ({...p, morale: Math.max(0, p.morale-15)}) }
+      ] },
+      { typeTag: 'Compromis', text: 'Jouer une mi-temps chaque match', outcome: { narrative: 'Un choix équilibré, validé par le staff médical.', effects: [{text: '+5 Forme', style: 'positive'}, {text: '+5 Confiance', style: 'positive'}], applyStats: p => ({...p, form: Math.min(100, p.form+5), coachTrust: Math.min(100, p.coachTrust+5)}) } }
+    ]
   }
 ];
