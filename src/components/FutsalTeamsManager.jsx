@@ -107,7 +107,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
           </div>
         </div>
 
-        <div className="mb-6 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+        <div className="mb-6 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
           <div>
             <label className="text-xs uppercase font-bold text-slate-400 mb-2 block">Formation</label>
             <div className="flex flex-wrap gap-2">
@@ -122,17 +122,31 @@ export const FutsalTeamsManager = ({ onBack }) => {
               ))}
             </div>
           </div>
-          <button 
-            onClick={handleSaveTeam}
-            className="w-full md:w-auto px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 uppercase tracking-wide text-sm"
-          >
-            Sauvegarder l'équipe
-          </button>
+          
+          <div className="flex flex-row items-center gap-3 w-full lg:w-auto">
+            <div className="flex items-center gap-3 bg-slate-800/80 px-4 py-2.5 rounded-xl border border-slate-700 shrink-0">
+               <div className="text-slate-400 text-xs uppercase font-bold tracking-wider">OVR</div>
+               <div className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 leading-none">
+                  {(() => {
+                    const players = editingTeam.players.filter(p => p !== null);
+                    if (players.length === 0) return '0';
+                    const avg = players.reduce((sum, p) => sum + (p.ovr || 0), 0) / players.length;
+                    return Math.round(avg);
+                  })()}
+                </div>
+            </div>
+            
+            <button 
+              onClick={handleSaveTeam}
+              className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 uppercase tracking-wide text-sm whitespace-nowrap"
+            >
+              Sauvegarder
+            </button>
+          </div>
         </div>
 
-        <div className="flex flex-col xl:flex-row gap-6 mb-8">
-          <div className="flex-1 max-w-2xl mx-auto w-full">
-            <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] lg:aspect-[2/3] bg-emerald-800 rounded-3xl border-8 border-slate-900 overflow-hidden shadow-2xl">
+        <div className="max-w-2xl mx-auto w-full mb-8">
+          <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] lg:aspect-[2/3] bg-emerald-800 rounded-3xl border-8 border-slate-900 overflow-hidden shadow-2xl">
               {/* Futsal Court Markings */}
               <div className="absolute inset-2 md:inset-4 border-2 border-white/40 rounded-lg pointer-events-none"></div>
               <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/40 -translate-y-1/2 pointer-events-none"></div>
@@ -216,23 +230,6 @@ export const FutsalTeamsManager = ({ onBack }) => {
                 </>
              )}
               </div>
-            </div>
-          </div>
-          
-          <div className="w-full xl:w-80 flex flex-col gap-4 shrink-0">
-            
-            <div className="bg-slate-800/80 backdrop-blur-md border border-slate-700 rounded-2xl p-5 shadow-lg text-center">
-                <div className="text-slate-400 text-xs uppercase font-bold tracking-widest mb-1">Puissance de l'équipe</div>
-                <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
-                  {(() => {
-                    const players = editingTeam.players.filter(p => p !== null);
-                    if (players.length === 0) return '0';
-                    const avg = players.reduce((sum, p) => sum + (p.ovr || 0), 0) / players.length;
-                    return Math.round(avg);
-                  })()}
-                </div>
-                <div className="text-slate-500 text-xs mt-1">{editingTeam.players.filter(p => p !== null).length} / 5 Joueurs</div>
-            </div>
           </div>
         </div>
 
