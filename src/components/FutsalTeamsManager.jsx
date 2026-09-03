@@ -130,16 +130,21 @@ export const FutsalTeamsManager = ({ onBack }) => {
           </button>
         </div>
 
-        <div className="relative w-full aspect-[4/3] md:aspect-[16/9] bg-green-800 rounded-2xl border-4 border-white/20 overflow-hidden shadow-2xl mx-auto max-w-3xl mb-8">
-          {/* Futsal Court Markings */}
-          <div className="absolute inset-2 border-2 border-white/30 rounded-sm pointer-events-none"></div>
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/30 -translate-y-1/2 pointer-events-none"></div>
-          <div className="absolute top-1/2 left-1/2 w-20 h-20 border-2 border-white/30 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-          <div className="absolute top-2 left-1/2 w-32 h-16 border-2 border-white/30 rounded-b-full -translate-x-1/2 pointer-events-none"></div>
-          <div className="absolute bottom-2 left-1/2 w-32 h-16 border-2 border-white/30 rounded-t-full -translate-x-1/2 pointer-events-none"></div>
-          
-          {/* Slots */}
-          <div className="absolute inset-0 flex flex-col justify-between py-6 md:py-12 px-4 md:px-8">
+        <div className="flex flex-col xl:flex-row gap-6 mb-8">
+          <div className="flex-1 max-w-2xl mx-auto w-full">
+            <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] lg:aspect-[2/3] bg-emerald-800 rounded-3xl border-8 border-slate-900 overflow-hidden shadow-2xl">
+              {/* Futsal Court Markings */}
+              <div className="absolute inset-2 md:inset-4 border-2 border-white/40 rounded-lg pointer-events-none"></div>
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/40 -translate-y-1/2 pointer-events-none"></div>
+              <div className="absolute top-1/2 left-1/2 w-24 h-24 border-2 border-white/40 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+              <div className="absolute top-2 md:top-4 left-1/2 w-40 h-20 border-2 border-white/40 rounded-b-full -translate-x-1/2 pointer-events-none"></div>
+              <div className="absolute bottom-2 md:bottom-4 left-1/2 w-40 h-20 border-2 border-white/40 rounded-t-full -translate-x-1/2 pointer-events-none"></div>
+              
+              {/* Wood texture overlay for Futsal */}
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-20 pointer-events-none"></div>
+              
+              {/* Slots */}
+              <div className="absolute inset-0 flex flex-col justify-between py-8 md:py-12 px-2 sm:px-6 relative z-10">
              <div className="flex justify-center w-full">
                <Slot index={0} player={editingTeam.players[0]} role={FORMATIONS[editingTeam.formation].slots[0]} onClick={() => { setActiveSlot(0); setShowCardSelector(true); }} />
              </div>
@@ -210,17 +215,41 @@ export const FutsalTeamsManager = ({ onBack }) => {
                   </div>
                 </>
              )}
+              </div>
+            </div>
           </div>
-        </div>
-        
-        {/* Helper Note */}
-        <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-4 md:p-5 flex items-start gap-3 md:gap-4 mb-8">
-          <span className="text-xl md:text-2xl mt-0.5">⚠️</span>
-          <div>
-            <h4 className="font-bold text-orange-400 text-sm md:text-base uppercase tracking-wider mb-1">Règles de composition</h4>
-            <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              Pour valider une équipe Futsal, vous devez obligatoirement aligner <strong>5 joueurs</strong> dont <strong>au moins 1 Gardien (GK)</strong> et <strong>au moins 1 Défenseur</strong>. Les statistiques de vos cartes (Vitesse, Dribble, Passe) seront cruciales pour la simulation du match.
-            </p>
+          
+          <div className="w-full xl:w-80 flex flex-col gap-4 shrink-0">
+            {/* Helper Note */}
+            <div className="bg-slate-800/80 backdrop-blur-md border border-slate-700 rounded-2xl p-5 shadow-lg relative overflow-hidden">
+              <div className="absolute -top-4 -right-4 text-6xl opacity-10">⚠️</div>
+              <h4 className="font-bold text-orange-400 text-sm md:text-base uppercase tracking-wider mb-3 flex items-center gap-2">
+                <span>📋</span> Règles de composition
+              </h4>
+              <p className="text-slate-300 text-xs md:text-sm leading-relaxed mb-3">
+                Pour valider une équipe Futsal, vous devez obligatoirement aligner <strong>5 joueurs</strong> dont :
+              </p>
+              <ul className="text-slate-300 text-xs md:text-sm leading-relaxed list-disc list-inside space-y-1 mb-3">
+                <li>Au moins <strong>1 Gardien (GK)</strong></li>
+                <li>Au moins <strong>1 Défenseur</strong> (CB, LB, RB, LWB, RWB)</li>
+              </ul>
+              <p className="text-slate-400 text-xs italic">
+                Les statistiques de vos cartes (Vitesse, Dribble, Passe) seront cruciales pour la simulation.
+              </p>
+            </div>
+            
+            <div className="bg-slate-800/80 backdrop-blur-md border border-slate-700 rounded-2xl p-5 shadow-lg text-center">
+                <div className="text-slate-400 text-xs uppercase font-bold tracking-widest mb-1">Puissance de l'équipe</div>
+                <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                  {(() => {
+                    const players = editingTeam.players.filter(p => p !== null);
+                    if (players.length === 0) return '0';
+                    const avg = players.reduce((sum, p) => sum + (p.ovr || 0), 0) / players.length;
+                    return Math.round(avg);
+                  })()}
+                </div>
+                <div className="text-slate-500 text-xs mt-1">{editingTeam.players.filter(p => p !== null).length} / 5 Joueurs</div>
+            </div>
           </div>
         </div>
 
