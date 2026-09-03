@@ -38,8 +38,8 @@ export const FutsalTeamsManager = ({ onBack }) => {
       alert("Votre équipe doit comporter 5 joueurs.");
       return;
     }
-    const hasGK = filledPlayers.some(p => p.player.position === 'GK');
-    const hasDEF = filledPlayers.some(p => ['CB', 'LB', 'RB', 'LWB', 'RWB'].includes(p.player.position));
+    const hasGK = filledPlayers.some(p => p.position === 'GK');
+    const hasDEF = filledPlayers.some(p => ['CB', 'LB', 'RB', 'LWB', 'RWB'].includes(p.position));
     
     if (!hasGK) {
       alert("Votre équipe doit comporter au moins un Gardien (GK).");
@@ -246,7 +246,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
                           onClick={() => !isSelected && handleSelectCard(card)}
                           className={`relative transition-transform duration-200 ${isSelected ? 'opacity-50 grayscale cursor-not-allowed' : 'cursor-pointer hover:scale-105 active:scale-95'}`}
                         >
-                          <MiniCard player={card.player} maxOvr={card.maxOvr} palmares={card.palmares} />
+                          <MiniCard player={card} />
                           {isSelected && <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl"><span className="text-white font-bold text-xl uppercase tracking-wider rotate-[-15deg]">Sélectionné</span></div>}
                         </div>
                       );
@@ -330,27 +330,27 @@ const Slot = ({ index, player, role, onClick }) => {
     >
       <div className={`w-14 h-14 md:w-20 md:h-20 rounded-full border-4 shadow-xl flex items-center justify-center overflow-hidden bg-slate-800 ${player ? 'border-orange-400' : 'border-white/30 border-dashed'}`}>
         {player ? (
-           <span className="font-bold text-white text-sm md:text-xl">{player.player.name.substring(0,2).toUpperCase()}</span>
+           <span className="font-bold text-white text-sm md:text-xl">{player.name.substring(0,2).toUpperCase()}</span>
         ) : (
            <span className="text-white/50 text-2xl">+</span>
         )}
       </div>
       <div className="mt-1 bg-black/60 px-2 py-0.5 rounded text-[10px] md:text-xs font-bold text-white uppercase tracking-wider backdrop-blur-sm">
-        {player ? player.player.position : role}
+        {player ? player.position : role}
       </div>
       {player && (
         <div className="absolute -top-2 -right-2 bg-gradient-to-br from-amber-300 to-yellow-600 text-black font-black text-xs px-1.5 py-0.5 rounded-md shadow-md border border-yellow-200">
-          {player.maxOvr}
+          {player.ovr}
         </div>
       )}
     </div>
   );
 };
 
-const MiniCard = ({ player, maxOvr }) => {
+const MiniCard = ({ player }) => {
   return (
     <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl p-3 flex flex-col items-center shadow-lg aspect-[2/3] justify-center relative overflow-hidden">
-      <div className="absolute top-0 right-0 bg-gradient-to-bl from-amber-400 to-orange-500 text-slate-900 font-black text-sm px-2 py-1 rounded-bl-xl">{maxOvr}</div>
+      <div className="absolute top-0 right-0 bg-gradient-to-bl from-amber-400 to-orange-500 text-slate-900 font-black text-sm px-2 py-1 rounded-bl-xl">{player.ovr}</div>
       <div className="absolute top-2 left-2 text-slate-500 font-bold text-xs">{player.position}</div>
       <div className="w-12 h-12 bg-slate-700 rounded-full mb-3 flex items-center justify-center text-xl">👤</div>
       <div className="font-bold text-white text-center text-xs w-full truncate px-1">{player.name}</div>
