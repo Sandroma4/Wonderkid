@@ -269,8 +269,10 @@ export function Dashboard({
                       <div className="text-[11px] font-bold text-amber-400/90 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                         <span>👑</span> Version Prime ({bestVersion.player.ovr} GEN)
                       </div>
-                      <div ref={playerCardRef} className="inline-block p-2 scale-90 md:scale-100 transform origin-top" id="prime-card-wrapper">
-                        <PlayerCard player={bestVersion.player} club={bestVersion.club} cardType={cardStyle} />
+                      <div className="inline-block p-2 scale-90 md:scale-100 transform origin-top">
+                        <div ref={playerCardRef} className="inline-block" style={{ backgroundColor: 'transparent' }}>
+                          <PlayerCard player={bestVersion.player} club={bestVersion.club} cardType={cardStyle} />
+                        </div>
                       </div>
                       
                       <button
@@ -280,16 +282,8 @@ export function Dashboard({
                             const canvas = await html2canvas(playerCardRef.current, { 
                               backgroundColor: null, 
                               scale: 2,
-                              logging: false,
-                              onclone: (clonedDoc) => {
-                                const wrapper = clonedDoc.getElementById('prime-card-wrapper');
-                                if (wrapper && wrapper.firstChild) {
-                                  const card = wrapper.firstChild;
-                                  card.classList.remove('scale-75', 'scale-90', 'md:scale-100', 'mb-[-92px]', 'mx-[-32px]', 'md:mb-0', 'md:mx-0');
-                                  card.style.transform = 'none';
-                                  card.style.margin = '0';
-                                }
-                              }
+                              useCORS: true,
+                              logging: false
                             });
                             const link = document.createElement('a');
                             link.download = `carte-prime-${player.name.replace(/\s/g, '_')}.png`;
