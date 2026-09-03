@@ -25,9 +25,9 @@ export const CardCollection = ({ onBack }) => {
         ← Retour
       </button>
 
-      <div className="flex items-center gap-4 mb-6 md:mb-8 relative z-10 w-full max-w-6xl mx-auto pt-16 md:pt-0">
-        <div className="text-left w-full text-center md:text-left">
-          <h1 className="heading-typography text-3xl md:text-5xl font-black text-slate-800 dark:text-white uppercase tracking-tight drop-shadow-lg leading-none">
+      <div className="flex flex-col items-center justify-center mb-6 md:mb-8 relative z-10 w-full max-w-6xl mx-auto pt-16 md:pt-0">
+        <div className="w-full text-center">
+          <h1 className="heading-typography text-3xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-tight drop-shadow-lg leading-none">
             Hall of <span className="text-emerald-600 dark:text-emerald-400">Fame</span>
           </h1>
           <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm md:text-base font-medium">Votre collection de légendes. L'histoire s'écrit ici.</p>

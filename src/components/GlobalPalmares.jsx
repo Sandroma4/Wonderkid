@@ -22,8 +22,8 @@ export const GlobalPalmares = ({ onBack }) => {
         >
           ← Retour
         </button>
-        <div className="flex items-center gap-4 mb-6 w-full pt-16 md:pt-0">
-          <h2 className="w-full text-center md:text-left heading-typography text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 uppercase tracking-widest drop-shadow-sm">
+        <div className="flex flex-col items-center justify-center mb-6 w-full pt-16 md:pt-0">
+          <h2 className="w-full text-center heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 uppercase tracking-widest drop-shadow-sm">
             Palmarès Global
           </h2>
         </div>

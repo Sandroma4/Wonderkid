@@ -160,12 +160,12 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
           ← Retour
         </button>
         
-        <div className="flex items-center gap-4 mb-4 mt-16 md:mt-12 w-full text-center md:text-left">
+        <div className="flex flex-col items-center justify-center mb-4 mt-16 md:mt-12 w-full text-center">
           <div className="w-full">
-            <h2 className="heading-typography text-2xl font-black text-slate-800 dark:text-white uppercase tracking-wider mb-1 leading-none">
+            <h2 className="heading-typography text-3xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-wider mb-2 leading-none drop-shadow-sm">
               La Course à la Carrière
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
               {(!isHost ? players.find(p => p.isHost)?.isCoop : isCoopMode) ? 'Devenez Frères d\'Armes, évoluez dans le même club et gagnez la Ligue des Champions ensemble !' : 'Affrontez un ami en direct. Créez votre joueur, vivez votre carrière en simultané, et comparez vos scores finaux !'}
             </p>
           </div>

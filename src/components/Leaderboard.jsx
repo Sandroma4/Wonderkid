@@ -55,8 +55,8 @@ export const Leaderboard = ({ onBack }) => {
         >
           ← Retour
         </button>
-        <div className="flex items-center gap-4 mb-4 md:mb-8 w-full text-center md:text-left pt-16 md:pt-0">
-          <h1 className="w-full heading-typography text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
+        <div className="flex flex-col items-center justify-center mb-4 md:mb-8 w-full pt-16 md:pt-0">
+          <h1 className="w-full text-center heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
             CLASSEMENT
           </h1>
         </div>

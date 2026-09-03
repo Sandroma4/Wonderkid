@@ -97,8 +97,8 @@ export const FutsalTeamsManager = ({ onBack }) => {
         ← Retour
       </button>
 
-      <div className="flex items-center gap-4 mb-6 mt-16 md:mt-0 text-center md:text-left">
-        <h2 className="w-full heading-typography text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
+      <div className="flex flex-col items-center justify-center mb-6 mt-16 md:mt-0 text-center w-full">
+        <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
           Création d'équipe
         </h2>
       </div>
@@ -308,8 +308,8 @@ export const FutsalTeamsManager = ({ onBack }) => {
         ← Retour
       </button>
 
-      <div className="flex items-center gap-4 mb-6 md:mb-10 mt-16 md:mt-0 text-center md:text-left">
-        <h2 className="w-full heading-typography text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
+      <div className="flex flex-col items-center justify-center mb-6 md:mb-10 mt-16 md:mt-0 text-center w-full">
+        <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
           Gestion Futsal
         </h2>
       </div>

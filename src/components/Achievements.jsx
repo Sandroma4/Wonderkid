@@ -39,12 +39,12 @@ export const Achievements = ({ onBack }) => {
         >
           ← Retour
         </button>
-        <div className="flex items-center gap-4 mb-6 pt-16 md:pt-0">
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="heading-typography text-2xl md:text-3xl font-black text-slate-800 dark:text-white uppercase tracking-widest drop-shadow-sm leading-none">
+        <div className="flex flex-col items-center justify-center mb-6 pt-16 md:pt-0">
+          <div className="w-full text-center">
+            <h2 className="heading-typography text-3xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-widest drop-shadow-sm leading-none">
               Succès
             </h2>
-            <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-1">{completionRate}% complété</p>
+            <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-2">{completionRate}% complété</p>
           </div>
         </div>
 

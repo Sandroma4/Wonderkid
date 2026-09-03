@@ -129,12 +129,12 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
         >
           ← Retour
         </button>
-        <div className="flex items-center gap-4 mb-4 md:mb-8 mt-16 md:mt-4 relative z-10 w-full text-center md:text-left max-w-sm mx-auto">
+        <div className="flex flex-col items-center justify-center mb-4 md:mb-8 mt-16 md:mt-4 relative z-10 w-full text-center max-w-sm mx-auto">
           <div className="w-full">
-            <h2 className="heading-typography text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 uppercase tracking-wider mb-1 leading-none">
+            <h2 className="heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 uppercase tracking-wider mb-2 leading-none">
               FUTSAL (5v5)
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
               Affrontez d'autres joueurs avec votre équipe composée de vos 5 meilleures cartes du Hall of Fame.
             </p>
           </div>
