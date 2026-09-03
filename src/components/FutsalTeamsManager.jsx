@@ -144,7 +144,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-20 pointer-events-none"></div>
               
               {/* Slots */}
-              <div className="absolute inset-0 flex flex-col justify-between py-8 md:py-12 px-2 sm:px-6 relative z-10">
+              <div className="absolute inset-0 flex flex-col justify-between py-4 sm:py-6 md:py-8 px-2 sm:px-4 relative z-10">
              <div className="flex justify-center w-full">
                <Slot index={0} player={editingTeam.players[0]} role={FORMATIONS[editingTeam.formation].slots[0]} onClick={() => { setActiveSlot(0); setShowCardSelector(true); }} />
              </div>
@@ -379,8 +379,8 @@ const Slot = ({ index, player, role, onClick }) => {
       className={`relative flex flex-col items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 ${player ? '' : 'opacity-70 hover:opacity-100'}`}
     >
       {player ? (
-        <div className="flex justify-center items-start w-full h-[110px] md:h-[140px] overflow-visible pointer-events-none drop-shadow-xl">
-          <PlayerCard player={player} club={player.club} className="scale-[0.35] md:scale-[0.45] origin-top" />
+        <div className="flex justify-center items-start w-[95px] h-[130px] sm:w-[110px] sm:h-[150px] md:w-[120px] md:h-[170px] overflow-visible pointer-events-none drop-shadow-2xl">
+          <PlayerCard player={player} club={player.club} className="!scale-[0.35] sm:!scale-[0.4] md:!scale-[0.45] origin-top !mb-0 !mx-0" />
         </div>
       ) : (
         <>
