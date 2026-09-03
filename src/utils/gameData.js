@@ -2136,7 +2136,7 @@ export const ALL_EVENTS = [
     description: "Votre ancien club amateur fête ses 50 ans et vous supplie de venir jouer un match de gala sur leur terrain bosselé en pleine semaine de championnat.",
     options: [
       {
-        text: "Faire acte de présence (Sécurité)", typeTag: "Respect",
+        text: "Faire acte de présence", typeTag: "Respect",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2151,7 +2151,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Jouer le match sérieusement (Progression)", typeTag: "Engagement",
+        text: "Jouer le match sérieusement", typeTag: "Engagement",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.physical || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2166,7 +2166,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Jouer pour humilier l'adversaire (Coup d'Éclat)", typeTag: "Showman",
+        text: "Jouer pour humilier l'adversaire", typeTag: "Showman",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2181,7 +2181,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Financer la buvette pour se faire excuser (Gestion)", typeTag: "Astuce",
+        text: "Financer la buvette pour se faire excuser", typeTag: "Astuce",
         outcome: {
           narrative: "Votre don généreux compense votre absence. Vous restez chez vous pour récupérer.",
           effects: [{text: "-15 000€", style: "negative"}, {text: "+15 Forme", style: "positive"}, {text: "+10 Confiance", style: "positive"}],
@@ -2196,7 +2196,7 @@ export const ALL_EVENTS = [
     description: "Un influenceur freestyle très connu débarque à votre entraînement et vous défie dans un 1v1 diffusé en direct devant des millions de viewers.",
     options: [
       {
-        text: "Refuser poliment pour s'entraîner (Sécurité)", typeTag: "Discipline",
+        text: "Refuser poliment pour s'entraîner", typeTag: "Discipline",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2211,7 +2211,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Faire quelques jongles sympas (Progression)", typeTag: "Showman modéré",
+        text: "Faire quelques jongles sympas", typeTag: "Showman modéré",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.dribbling || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2226,7 +2226,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "L'humilier avec un petit pont en direct (Coup d'Éclat)", typeTag: "Audace",
+        text: "L'humilier avec un petit pont en direct", typeTag: "Audace",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2241,7 +2241,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Prendre la honte exprès pour amuser le coach (Gestion)", typeTag: "Kamikaze",
+        text: "Prendre la honte exprès pour amuser le coach", typeTag: "Kamikaze",
         outcome: {
           narrative: "Vous vous ridiculisez, mais votre capacité d'autodérision rassure le staff.",
           effects: [{text: "-25 Moral", style: "negative"}, {text: "+25 Confiance", style: "positive"}],
@@ -2256,7 +2256,7 @@ export const ALL_EVENTS = [
     description: "Un 'grand frère' de votre ancien quartier, qui vous a protégé jeune, a de gros ennuis judiciaires. Il demande votre soutien public.",
     options: [
       {
-        text: "Faire un post évasif sur Instagram (Sécurité)", typeTag: "Prudence",
+        text: "Faire un post évasif sur Instagram", typeTag: "Prudence",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2271,7 +2271,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Appeler le président pour demander de l'aide (Progression)", typeTag: "Négociation",
+        text: "Appeler le président pour demander de l'aide", typeTag: "Négociation",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2286,7 +2286,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Soutien médiatique absolu face caméras (Coup d'Éclat)", typeTag: "Loyauté pure",
+        text: "Soutien médiatique absolu face caméras", typeTag: "Loyauté pure",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2301,7 +2301,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Engager le meilleur avocat discrètement (Gestion)", typeTag: "L'Ombre",
+        text: "Engager le meilleur avocat discrètement", typeTag: "L'Ombre",
         outcome: {
           narrative: "L'argent résout le problème dans le silence absolu.",
           effects: [{text: "-100 000€", style: "negative"}, {text: "+20 Confiance", style: "positive"}, {text: "+10 Moral", style: "positive"}],
@@ -2316,7 +2316,7 @@ export const ALL_EVENTS = [
     description: "Une immense marque concurrente au sponsor principal de votre club veut vous signer à prix d'or uniquement grâce au nom de votre père.",
     options: [
       {
-        text: "Ignorer l'offre et rester loyal (Sécurité)", typeTag: "Fidélité",
+        text: "Ignorer l'offre et rester loyal", typeTag: "Fidélité",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2331,7 +2331,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Négocier une hausse avec le club via cette offre (Progression)", typeTag: "Business",
+        text: "Négocier une hausse avec le club via cette offre", typeTag: "Business",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.pace || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2346,7 +2346,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Signer le contrat concurrent (Coup d'Éclat)", typeTag: "Avidité",
+        text: "Signer le contrat concurrent", typeTag: "Avidité",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2361,7 +2361,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Demander à papa de régler l'affaire (Gestion)", typeTag: "Piston",
+        text: "Demander à papa de régler l'affaire", typeTag: "Piston",
         outcome: {
           narrative: "Votre père trouve un compromis financier apaisé. L'honneur du club est sauf.",
           effects: [{text: "-20 Moral", style: "negative"}, {text: "+250 000€", style: "positive"}, {text: "+15 Confiance", style: "positive"}],
@@ -2376,7 +2376,7 @@ export const ALL_EVENTS = [
     description: "Plusieurs de vos anciens camarades du centre de formation se rebellent contre la tactique stricte du coach pro.",
     options: [
       {
-        text: "Rester neutre (Sécurité)", typeTag: "Observation",
+        text: "Rester neutre", typeTag: "Observation",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2391,7 +2391,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Jouer les médiateurs entre jeunes et staff (Progression)", typeTag: "Diplomate",
+        text: "Jouer les médiateurs entre jeunes et staff", typeTag: "Diplomate",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2406,7 +2406,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Mener la fronde et renverser la tactique (Coup d'Éclat)", typeTag: "Rébellion",
+        text: "Mener la fronde et renverser la tactique", typeTag: "Rébellion",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2421,7 +2421,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Dénoncer les meneurs en privé au coach (Gestion)", typeTag: "Balance",
+        text: "Dénoncer les meneurs en privé au coach", typeTag: "Balance",
         outcome: {
           narrative: "Le coach écarte les rebelles. Vous devenez son lieutenant absolu.",
           effects: [{text: "-30 Moral", style: "negative"}, {text: "+40 Confiance", style: "positive"}],
@@ -2445,7 +2445,7 @@ export const ALL_EVENTS = [
     description: "Un journaliste sportif très agressif tente de vous faire dire du mal du système de jeu actuel du coach.",
     options: [
       {
-        text: "Répondre avec des phrases bateaux (Sécurité)", typeTag: "Langue de bois",
+        text: "Répondre avec des phrases bateaux", typeTag: "Langue de bois",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2460,7 +2460,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Défendre brillamment la tactique (Progression)", typeTag: "Charisme",
+        text: "Défendre brillamment la tactique", typeTag: "Charisme",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2475,7 +2475,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Critiquer publiquement le système (Coup d'Éclat)", typeTag: "Rébellion",
+        text: "Critiquer publiquement le système", typeTag: "Rébellion",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2490,7 +2490,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Couper court à l'interview prématurément (Gestion)", typeTag: "Fuite",
+        text: "Couper court à l'interview prématurément", typeTag: "Fuite",
         outcome: {
           narrative: "Vous partez en plein milieu. Les médias vous détestent, mais vous vous préservez mentalement.",
           effects: [{text: "-20 Moral", style: "negative"}, {text: "+25 Forme", style: "positive"}],
@@ -2504,7 +2504,7 @@ export const ALL_EVENTS = [
     description: "Vos coéquipiers vous invitent à la plus grosse soirée de l'année en boîte de nuit, 48h avant un match crucial.",
     options: [
       {
-        text: "Refuser pour dormir (Sécurité)", typeTag: "Pro",
+        text: "Refuser pour dormir", typeTag: "Pro",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2519,7 +2519,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Y aller mais ne boire que de l'eau (Progression)", typeTag: "Contrôle",
+        text: "Y aller mais ne boire que de l'eau", typeTag: "Contrôle",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.physical || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2534,7 +2534,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Finir sur les tables jusqu'à l'aube (Coup d'Éclat)", typeTag: "No Limit",
+        text: "Finir sur les tables jusqu'à l'aube", typeTag: "No Limit",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2549,7 +2549,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Payer un carré VIP au groupe sans y aller (Gestion)", typeTag: "Mécène",
+        text: "Payer un carré VIP au groupe sans y aller", typeTag: "Mécène",
         outcome: {
           narrative: "Vous dépensez une fortune pour eux, ils vous adorent. Vous dormez comme un bébé.",
           effects: [{text: "-25 000€", style: "negative"}, {text: "+20 Forme", style: "positive"}, {text: "+10 Moral", style: "positive"}],
@@ -2563,7 +2563,7 @@ export const ALL_EVENTS = [
     description: "L'entraînement officiel est terminé sous une pluie battante. Que faites-vous ?",
     options: [
       {
-        text: "Rentrer se doucher (Sécurité)", typeTag: "Récupération",
+        text: "Rentrer se doucher", typeTag: "Récupération",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2578,7 +2578,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Travail devant le but (Progression)", typeTag: "Finition",
+        text: "Travail devant le but", typeTag: "Finition",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.finishing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2593,7 +2593,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Parcours physique extrême de 2h (Coup d'Éclat)", typeTag: "Machine",
+        text: "Parcours physique extrême de 2h", typeTag: "Machine",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2608,7 +2608,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Payer des séances de kiné privé pour tous (Gestion)", typeTag: "Soin",
+        text: "Payer des séances de kiné privé pour tous", typeTag: "Soin",
         outcome: {
           narrative: "Un investissement sur votre corps. Vous êtes plus frais que jamais.",
           effects: [{text: "-10 000€", style: "negative"}, {text: "+20 Forme", style: "positive"}, {text: "+10 Confiance", style: "positive"}],
@@ -2622,7 +2622,7 @@ export const ALL_EVENTS = [
     description: "Une marque de malbouffe vous offre une somme astronomique pour une publicité. Le club déconseille.",
     options: [
       {
-        text: "Refuser sagement (Sécurité)", typeTag: "Éthique",
+        text: "Refuser sagement", typeTag: "Éthique",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2637,7 +2637,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Négocier pour des repas sains (Progression)", typeTag: "Négociation",
+        text: "Négocier pour des repas sains", typeTag: "Négociation",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.defense || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2652,7 +2652,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Signer le gros contrat cash (Coup d'Éclat)", typeTag: "Jackpot",
+        text: "Signer le gros contrat cash", typeTag: "Jackpot",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2667,7 +2667,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Révéler l'offre toxique à la presse pour soigner son image (Gestion)", typeTag: "Lanceur d'alerte",
+        text: "Révéler l'offre toxique à la presse pour soigner son image", typeTag: "Lanceur d'alerte",
         outcome: {
           narrative: "Vous êtes salué par les ONG de santé. Le coach est fier de vous.",
           effects: [{text: "-15 Moral", style: "negative"}, {text: "+40 Confiance", style: "positive"}],
@@ -2681,7 +2681,7 @@ export const ALL_EVENTS = [
     description: "Des supporters agressifs attendent sous la pluie à la sortie du stade après un mauvais match.",
     options: [
       {
-        text: "Les esquiver par la porte arrière (Sécurité)", typeTag: "Fuite",
+        text: "Les esquiver par la porte arrière", typeTag: "Fuite",
         outcome: [
           {
             probability: (p) => { let prob = 0.8; if (p.form < 50) prob *= 0.8; if (p.morale > 70) prob = 1.0; return prob; },
@@ -2696,7 +2696,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Aller leur parler calmement (Progression)", typeTag: "Courage",
+        text: "Aller leur parler calmement", typeTag: "Courage",
         outcome: [
           {
             probability: (p) => { let prob = 0.5 + ((p.attributes?.passing || 50) - 70) * 0.01; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2711,7 +2711,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Les affronter physiquement (Coup d'Éclat)", typeTag: "Guerrier",
+        text: "Les affronter physiquement", typeTag: "Guerrier",
         outcome: [
           {
             probability: (p) => { let prob = 0.2; if (p.coachTrust > 80) prob += 0.3; if (p.form < 50) prob *= 0.8; return Math.max(0.1, Math.min(0.9, prob)); },
@@ -2726,7 +2726,7 @@ export const ALL_EVENTS = [
         ]
       },
       {
-        text: "Offrir des maillots dédicacés pour calmer la foule (Gestion)", typeTag: "Pacifiste riche",
+        text: "Offrir des maillots dédicacés pour calmer la foule", typeTag: "Pacifiste riche",
         outcome: {
           narrative: "L'émeute se transforme en séance de dédicaces amicale. Magie du foot.",
           effects: [{text: "-15 000€", style: "negative"}, {text: "+20 Moral", style: "positive"}],
@@ -2777,7 +2777,7 @@ export const ALL_EVENTS = [
     description: "Pressing très haut de l'adversaire, vous avez la balle dans vos 20 mètres.",
     options: [
       { typeTag: 'PASSE', text: 'Trouver le milieu avec une passe laser', outcome: { narrative: 'La relance casse 3 lignes !', effects: [{ text: '+5 PASSE', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, passing: Math.min(99, p.attributes.passing + 5) } }) } },
-      { typeTag: 'DÉGAGEMENT', text: 'Envoyer un grand ballon devant (Sécurité)', outcome: { narrative: 'Pas beau, mais efficace.', effects: [{ text: '+3 DÉFENSE', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, defense: Math.min(99, p.attributes.defense + 3) } }) } }
+      { typeTag: 'DÉGAGEMENT', text: 'Envoyer un grand ballon devant', outcome: { narrative: 'Pas beau, mais efficace.', effects: [{ text: '+3 DÉFENSE', style: 'positive' }], applyStats: (p) => ({ ...p, attributes: { ...p.attributes, defense: Math.min(99, p.attributes.defense + 3) } }) } }
     ]
   },
 
