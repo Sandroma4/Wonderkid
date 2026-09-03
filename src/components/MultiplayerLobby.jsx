@@ -153,19 +153,22 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
       
       <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-6 shadow-2xl relative z-10 flex flex-col items-center text-center">
         
-        <button 
-          onClick={() => { playSound('click'); onBack(); }}
-          className="absolute top-4 left-4 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 z-50 whitespace-nowrap"
-        >
-          ← Retour
-        </button>
-
-        <h2 className="heading-typography text-2xl font-black text-slate-800 dark:text-white uppercase tracking-wider mb-2 mt-16">
-          La Course à la Carrière
-        </h2>
-        <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400 text-sm mb-8 px-4">
-          {(!isHost ? players.find(p => p.isHost)?.isCoop : isCoopMode) ? 'Devenez Frères d\'Armes, évoluez dans le même club et gagnez la Ligue des Champions ensemble !' : 'Affrontez un ami en direct. Créez votre joueur, vivez votre carrière en simultané, et comparez vos scores finaux !'}
-        </p>
+        <div className="flex items-center gap-4 mb-4 mt-6 md:mt-12 w-full text-left">
+          <button 
+            onClick={() => { playSound('click'); onBack(); }}
+            className="shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
+          >
+            ← Retour
+          </button>
+          <div>
+            <h2 className="heading-typography text-2xl font-black text-slate-800 dark:text-white uppercase tracking-wider mb-1 leading-none">
+              La Course à la Carrière
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm">
+              {(!isHost ? players.find(p => p.isHost)?.isCoop : isCoopMode) ? 'Devenez Frères d\'Armes, évoluez dans le même club et gagnez la Ligue des Champions ensemble !' : 'Affrontez un ami en direct. Créez votre joueur, vivez votre carrière en simultané, et comparez vos scores finaux !'}
+            </p>
+          </div>
+        </div>
 
         {status === 'menu' && (
           <div className="w-full space-y-4">

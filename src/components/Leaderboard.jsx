@@ -49,17 +49,16 @@ export const Leaderboard = ({ onBack }) => {
           <button onClick={() => setActiveTab('solo')} className={`px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase transition-all ${activeTab === 'solo' ? 'bg-amber-500 text-white shadow-lg scale-105' : 'bg-white/50 text-slate-600 hover:bg-white/80'}`}>Solo</button>
           <button onClick={() => setActiveTab('coop')} className={`px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase transition-all ${activeTab === 'coop' ? 'bg-blue-500 text-white shadow-lg scale-105' : 'bg-white/50 text-slate-600 hover:bg-white/80'}`}>Coop</button>
         </div>
-        <div className="flex items-center justify-between mb-4 md:mb-8">
+        <div className="flex items-center gap-4 mb-4 md:mb-8 w-full text-left">
           <button 
             onClick={() => { playSound('click'); onBack(); }}
-            className="text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
+            className="shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
           >
             ← Retour
           </button>
-          <h1 className="heading-typography text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
+          <h1 className="heading-typography text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
             CLASSEMENT
           </h1>
-          <div className="w-10 md:w-20"></div> {/* Spacer for centering */}
         </div>
 
         <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-2xl md:rounded-3xl p-3 md:p-6 shadow-2xl backdrop-blur-sm min-h-[60vh]">

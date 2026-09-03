@@ -16,17 +16,16 @@ export const GlobalPalmares = ({ onBack }) => {
       <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10 px-2 md:px-0">
         
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4 mb-6 w-full">
           <button 
             onClick={() => { playSound('click'); onBack(); }}
-            className="text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700"
+            className="shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
           >
             ← Retour
           </button>
-          <h2 className="heading-typography flex-1 text-center text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 uppercase tracking-widest drop-shadow-sm">
+          <h2 className="heading-typography text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 uppercase tracking-widest drop-shadow-sm text-left">
             Palmarès Global
           </h2>
-          <div className="w-24" />
         </div>
 
         {/* Content */}

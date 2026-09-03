@@ -123,19 +123,22 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
       
       <div className="max-w-2xl w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl relative z-10 flex flex-col items-center text-center">
         
-        <button 
-          onClick={() => { playSound('click'); onBack(); }}
-          className="absolute top-4 left-4 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 z-50 whitespace-nowrap"
-        >
-          ← Retour
-        </button>
-
-        <h2 className="heading-typography text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 uppercase tracking-wider mb-2 mt-12 md:mt-4">
-          FUTSAL (5v5)
-        </h2>
-        <p className="text-slate-500 dark:text-slate-400 text-sm mb-8 px-4">
-          Affrontez d'autres joueurs avec votre équipe composée de vos 5 meilleures cartes du Hall of Fame.
-        </p>
+        <div className="flex items-center gap-4 mb-4 md:mb-8 mt-4 relative z-10 w-full text-left max-w-sm mx-auto">
+          <button 
+            onClick={() => { playSound('click'); onBack(); }}
+            className="shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
+          >
+            ← Retour
+          </button>
+          <div>
+            <h2 className="heading-typography text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 uppercase tracking-wider mb-1 leading-none">
+              FUTSAL (5v5)
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm">
+              Affrontez d'autres joueurs avec votre équipe composée de vos 5 meilleures cartes du Hall of Fame.
+            </p>
+          </div>
+        </div>
 
         {status === 'menu' && (
           <div className="w-full max-w-sm mx-auto space-y-4">
