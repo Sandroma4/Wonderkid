@@ -378,20 +378,19 @@ const Slot = ({ index, player, role, onClick }) => {
       onClick={onClick}
       className={`relative flex flex-col items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 ${player ? '' : 'opacity-70 hover:opacity-100'}`}
     >
-      <div className={`w-14 h-14 md:w-20 md:h-20 rounded-full border-4 shadow-xl flex items-center justify-center overflow-hidden bg-slate-800 ${player ? 'border-orange-400' : 'border-white/30 border-dashed'}`}>
-        {player ? (
-           <span className="font-bold text-white text-sm md:text-xl">{player.name.substring(0,2).toUpperCase()}</span>
-        ) : (
-           <span className="text-white/50 text-2xl">+</span>
-        )}
-      </div>
-      <div className="mt-1 bg-black/60 px-2 py-0.5 rounded text-[10px] md:text-xs font-bold text-white uppercase tracking-wider backdrop-blur-sm">
-        {player ? player.position : role}
-      </div>
-      {player && (
-        <div className="absolute -top-2 -right-2 bg-gradient-to-br from-amber-300 to-yellow-600 text-black font-black text-xs px-1.5 py-0.5 rounded-md shadow-md border border-yellow-200">
-          {player.ovr}
+      {player ? (
+        <div className="flex justify-center items-start w-full h-[110px] md:h-[140px] overflow-visible pointer-events-none drop-shadow-xl">
+          <PlayerCard player={player} club={player.club} className="scale-[0.35] md:scale-[0.45] origin-top" />
         </div>
+      ) : (
+        <>
+          <div className="w-14 h-14 md:w-20 md:h-20 rounded-full border-4 shadow-xl flex items-center justify-center overflow-hidden bg-slate-800 border-white/30 border-dashed">
+            <span className="text-white/50 text-2xl">+</span>
+          </div>
+          <div className="mt-1 bg-black/60 px-2 py-0.5 rounded text-[10px] md:text-xs font-bold text-white uppercase tracking-wider backdrop-blur-sm">
+            {role}
+          </div>
+        </>
       )}
     </div>
   );
