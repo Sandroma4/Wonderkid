@@ -119,7 +119,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
             <div className="flex flex-col gap-y-[10px]">
               {stats.slice(0, 3).map((st, idx) => (
                 <div key={idx} className="flex items-center justify-start gap-1.5">
-                  <span className={`font-black text-[19px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+                  <span className={`font-semibold text-[19px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                     {st.val}
                   </span>
                   <span className={`text-[15px] font-medium uppercase leading-none ${themeStyles.textSecondary}`}>
@@ -131,7 +131,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
             <div className="flex flex-col gap-y-[10px]">
               {stats.slice(3, 6).map((st, idx) => (
                 <div key={idx} className="flex items-center justify-start gap-1.5">
-                  <span className={`font-black text-[19px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+                  <span className={`font-semibold text-[19px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                     {st.val}
                   </span>
                   <span className={`text-[15px] font-medium uppercase leading-none ${themeStyles.textSecondary}`}>
