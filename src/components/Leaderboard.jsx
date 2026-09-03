@@ -49,14 +49,14 @@ export const Leaderboard = ({ onBack }) => {
           <button onClick={() => setActiveTab('solo')} className={`px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase transition-all ${activeTab === 'solo' ? 'bg-amber-500 text-white shadow-lg scale-105' : 'bg-white/50 text-slate-600 hover:bg-white/80'}`}>Solo</button>
           <button onClick={() => setActiveTab('coop')} className={`px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase transition-all ${activeTab === 'coop' ? 'bg-blue-500 text-white shadow-lg scale-105' : 'bg-white/50 text-slate-600 hover:bg-white/80'}`}>Coop</button>
         </div>
-        <div className="flex items-center gap-4 mb-4 md:mb-8 w-full text-left">
-          <button 
-            onClick={() => { playSound('click'); onBack(); }}
-            className="shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
-          >
-            ← Retour
-          </button>
-          <h1 className="heading-typography text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
+        <button 
+          onClick={() => { playSound('click'); onBack(); }}
+          className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+        >
+          ← Retour
+        </button>
+        <div className="flex items-center gap-4 mb-4 md:mb-8 w-full text-center md:text-left pt-16 md:pt-0">
+          <h1 className="w-full heading-typography text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
             CLASSEMENT
           </h1>
         </div>

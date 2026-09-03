@@ -33,14 +33,14 @@ export const Achievements = ({ onBack }) => {
       <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10">
         
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <button 
-            onClick={() => { playSound('click'); onBack(); }}
-            className="shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
-          >
-            ← Retour
-          </button>
-          <div className="flex-1 text-left">
+        <button 
+          onClick={() => { playSound('click'); onBack(); }}
+          className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+        >
+          ← Retour
+        </button>
+        <div className="flex items-center gap-4 mb-6 pt-16 md:pt-0">
+          <div className="flex-1 text-center md:text-left">
             <h2 className="heading-typography text-2xl md:text-3xl font-black text-slate-800 dark:text-white uppercase tracking-widest drop-shadow-sm leading-none">
               Succès
             </h2>

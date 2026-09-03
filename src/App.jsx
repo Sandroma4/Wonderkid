@@ -46,7 +46,21 @@ import {
 import { getRoleById } from './utils/rolesData';
 
 export default function App() {
-  const [appView, setAppView] = useState('mainMenu');
+  const [viewHistory, setViewHistory] = useState(['mainMenu']);
+  const appView = viewHistory[viewHistory.length - 1];
+
+  const setAppView = (view) => {
+    if (view === 'mainMenu') {
+      setViewHistory(['mainMenu']);
+    } else {
+      setViewHistory(prev => [...prev, view]);
+    }
+  };
+
+  const handleBack = () => {
+    setViewHistory(prev => prev.length > 1 ? prev.slice(0, -1) : ['mainMenu']);
+    setInviteCode(null);
+  };
   const [inviteCode, setInviteCode] = useState(null); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
   const [gameState, setGameState] = useState(null);
   const [multiplayerContext, setMultiplayerContext] = useState(null);
@@ -1769,7 +1783,7 @@ export default function App() {
   };
 
   if (appView === 'futsalManager') {
-    return <FutsalTeamsManager onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
+    return <FutsalTeamsManager onBack={handleBack} />;
   }
 
   if (appView === 'futsalLobby') {
@@ -1831,19 +1845,19 @@ export default function App() {
   }
 
   if (appView === 'globalPalmares') {
-    return <GlobalPalmares onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
+    return <GlobalPalmares onBack={handleBack} />;
   }
 
   if (appView === 'achievements') {
-    return <Achievements onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
+    return <Achievements onBack={handleBack} />;
   }
 
   if (appView === 'leaderboard') {
-    return <Leaderboard onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
+    return <Leaderboard onBack={handleBack} />;
   }
 
   if (appView === 'cardCollection') {
-    return <CardCollection onBack={() => { setInviteCode(null); setAppView('mainMenu'); }} />;
+    return <CardCollection onBack={handleBack} />;
   }
 
   
@@ -1851,7 +1865,7 @@ export default function App() {
     return <MultiplayerLobby 
       initialInviteCode={inviteCode}
       multiplayerContext={multiplayerContext}
-      onBack={() => { setInviteCode(null); setAppView('mainMenu'); }}
+      onBack={handleBack}
       onStart={(roomObj, playerId, players, roomId, isHost, isCoop) => {
         setMultiplayerContext({ roomObj, playerId, players, roomId, isHost, isCoopMode: isCoop });
         setAppView('career');

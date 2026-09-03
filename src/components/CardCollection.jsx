@@ -18,18 +18,19 @@ export const CardCollection = ({ onBack }) => {
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-900/20 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3"></div>
 
-      <div className="flex items-center gap-4 mb-6 md:mb-8 relative z-10 w-full max-w-6xl mx-auto">
-        <button 
-          onClick={() => { playSound('click'); onBack(); }}
-          className="shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap"
-        >
-          ← Retour
-        </button>
-        <div className="text-left">
+      <button 
+        onClick={() => { playSound('click'); onBack(); }}
+        className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+      >
+        ← Retour
+      </button>
+
+      <div className="flex items-center gap-4 mb-6 md:mb-8 relative z-10 w-full max-w-6xl mx-auto pt-16 md:pt-0">
+        <div className="text-left w-full text-center md:text-left">
           <h1 className="heading-typography text-3xl md:text-5xl font-black text-slate-800 dark:text-white uppercase tracking-tight drop-shadow-lg leading-none">
             Hall of <span className="text-emerald-600 dark:text-emerald-400">Fame</span>
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm md:text-base font-medium hidden md:block">Votre collection de légendes. L'histoire s'écrit ici.</p>
+          <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm md:text-base font-medium">Votre collection de légendes. L'histoire s'écrit ici.</p>
         </div>
       </div>
 

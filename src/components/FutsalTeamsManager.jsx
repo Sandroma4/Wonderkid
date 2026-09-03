@@ -90,13 +90,20 @@ export const FutsalTeamsManager = ({ onBack }) => {
   if (editingTeam) {
     return (
       <div className="w-full max-w-4xl mx-auto p-4 md:p-8 animate-fade-in flex flex-col h-full overflow-y-auto pb-32 relative">
+        <button 
+        onClick={() => { playSound('click'); setEditingTeam(null); }}
+        className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+      >
+        ← Retour
+      </button>
+
+      <div className="flex items-center gap-4 mb-6 mt-16 md:mt-0 text-center md:text-left">
+        <h2 className="w-full heading-typography text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
+          Création d'équipe
+        </h2>
+      </div>
+
         <div className="flex items-center gap-4 mb-6 md:mb-8 sticky top-0 bg-[#0f172a] z-10 py-4 border-b border-slate-700/50 backdrop-blur-md bg-opacity-80">
-          <button 
-            onClick={() => { playSound('click'); setEditingTeam(null); }}
-            className="p-2 md:p-3 rounded-xl bg-slate-800 text-white hover:bg-slate-700 transition-colors"
-          >
-            ← Retour
-          </button>
           <div className="flex-1">
             <input 
               type="text" 
@@ -294,14 +301,15 @@ export const FutsalTeamsManager = ({ onBack }) => {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 md:p-8 animate-fade-in flex flex-col h-full overflow-y-auto pb-32">
-      <div className="flex items-center gap-4 mb-6 md:mb-10">
-        <button 
-          onClick={() => { playSound('click'); onBack(); }}
-          className="p-2 md:p-3 rounded-xl bg-white/10 dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-white/20 dark:hover:bg-slate-700 transition-colors"
-        >
-          ← Retour
-        </button>
-        <h2 className="heading-typography text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
+      <button 
+        onClick={() => { playSound('click'); onBack(); }}
+        className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+      >
+        ← Retour
+      </button>
+
+      <div className="flex items-center gap-4 mb-6 md:mb-10 mt-16 md:mt-0 text-center md:text-left">
+        <h2 className="w-full heading-typography text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
           Gestion Futsal
         </h2>
       </div>
