@@ -114,10 +114,10 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         </div>
 
         {/* LES 6 STATISTIQUES (CHIFFRES + TEXTES) */}
-        <div className="absolute top-[60.5%] w-full px-10 z-20">
-          <div className="grid grid-cols-2 gap-x-3 gap-y-[10px]">
+        <div className="absolute top-[60.5%] w-full flex justify-center z-20">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-[10px]">
             {stats.map((st, idx) => (
-              <div key={idx} className="flex items-center justify-start gap-1.5">
+              <div key={idx} className="flex items-center justify-start gap-1.5 w-[65px]">
                 <span className={`font-black text-[19px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                   {st.val}
                 </span>
