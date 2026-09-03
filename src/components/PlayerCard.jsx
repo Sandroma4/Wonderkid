@@ -108,7 +108,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
 
         {/* NOM DU JOUEUR */}
         <div className="absolute top-[52%] w-full text-center z-20">
-          <h3 className={`text-[19px] font-black tracking-widest uppercase truncate px-6 ${themeStyles.textPrimary}`}>
+          <h3 className={`text-[19px] font-black tracking-widest uppercase truncate px-6 pb-1 pt-0.5 leading-snug ${themeStyles.textPrimary}`}>
             {lastName}
           </h3>
         </div>
