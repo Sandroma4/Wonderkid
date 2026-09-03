@@ -39,15 +39,15 @@ export const FutsalTeamsManager = ({ onBack }) => {
       alert("Votre équipe doit comporter 5 joueurs.");
       return;
     }
-    const hasGK = filledPlayers.some(p => p.position === 'GK');
-    const hasDEF = filledPlayers.some(p => ['CB', 'LB', 'RB', 'LWB', 'RWB'].includes(p.position));
+    const hasGK = filledPlayers.some(p => p.position === 'GB' || p.position === 'GK');
+    const hasDEF = filledPlayers.some(p => p.position === 'DEF' || ['CB', 'LB', 'RB', 'LWB', 'RWB'].includes(p.position));
     
     if (!hasGK) {
       alert("Votre équipe doit comporter au moins un Gardien (GK).");
       return;
     }
     if (!hasDEF) {
-      alert("Votre équipe doit comporter au moins un Défenseur (CB/LB/RB/LWB/RWB).");
+      alert("Votre équipe doit comporter au moins un Défenseur (DEF).");
       return;
     }
 
@@ -262,29 +262,47 @@ export const FutsalTeamsManager = ({ onBack }) => {
               </div>
               
               <div className="flex-1 overflow-y-auto pb-20">
-                {collection.length === 0 ? (
-                  <div className="text-center p-12 bg-slate-900 rounded-2xl border border-slate-800">
-                    <p className="text-slate-400">Votre Hall of Fame est vide. Terminez des carrières pour débloquer des cartes.</p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {collection.map(card => {
-                      const isSelected = editingTeam.players.some(p => p && p.id === card.id);
-                      return (
-                        <div 
-                          key={card.id} 
-                          onClick={() => !isSelected && handleSelectCard(card)}
-                          className={`relative transition-transform duration-200 ${isSelected ? 'opacity-50 grayscale cursor-not-allowed' : 'cursor-pointer hover:scale-105 active:scale-95'}`}
-                        >
-                          <div className="flex justify-center w-full h-[250px] overflow-visible">
-                            <PlayerCard player={card} club={card.club} className="scale-[0.6] sm:scale-75 md:scale-90 origin-top" />
+                {(() => {
+                  const activeRole = (activeSlot !== null && editingTeam) ? FORMATIONS[editingTeam.formation].slots[activeSlot] : null;
+                  const allowedPositions = activeRole === 'GK' ? ['GB', 'GK'] 
+                                         : activeRole === 'DEF' ? ['DEF', 'CB', 'LB', 'RB', 'LWB', 'RWB']
+                                         : activeRole === 'MID' ? ['MID', 'CDM', 'CM', 'CAM', 'RM', 'LM']
+                                         : activeRole === 'FWD' ? ['ATT', 'ST', 'CF', 'RW', 'LW']
+                                         : [];
+                                         
+                  const filteredCollection = collection.filter(card => {
+                    if (!activeRole) return true;
+                    return allowedPositions.includes(card.position);
+                  });
+
+                  if (filteredCollection.length === 0) {
+                    return (
+                      <div className="text-center p-12 bg-slate-900 rounded-2xl border border-slate-800">
+                        <p className="text-slate-400">Aucun joueur ne correspond au poste de {activeRole}. Jouez d'autres carrières pour débloquer des cartes !</p>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {filteredCollection.map(card => {
+                        const isSelected = editingTeam.players.some(p => p && p.id === card.id);
+                        return (
+                          <div 
+                            key={card.id} 
+                            onClick={() => !isSelected && handleSelectCard(card)}
+                            className={`relative transition-transform duration-200 ${isSelected ? 'opacity-50 grayscale cursor-not-allowed' : 'cursor-pointer hover:scale-105 active:scale-95'}`}
+                          >
+                            <div className="flex justify-center w-full h-[250px] overflow-visible">
+                              <PlayerCard player={card} club={card.club} className="scale-[0.6] sm:scale-75 md:scale-90 origin-top" />
+                            </div>
+                            {isSelected && <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70 rounded-xl"><span className="text-white font-bold text-xl uppercase tracking-wider rotate-[-15deg]">Sélectionné</span></div>}
                           </div>
-                          {isSelected && <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70 rounded-xl"><span className="text-white font-bold text-xl uppercase tracking-wider rotate-[-15deg]">Sélectionné</span></div>}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
             </div>
           </div>
