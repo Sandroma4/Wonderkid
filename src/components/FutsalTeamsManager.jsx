@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getFutsalTeams, saveFutsalTeams, getCardCollection } from '../utils/storage';
 import { playSound } from '../utils/audio';
+import { PlayerCard } from './PlayerCard';
 
 const FORMATIONS = {
   '1-2-1': { name: 'Losange (1-2-1)', slots: ['GK', 'DEF', 'MID', 'MID', 'FWD'] },
@@ -246,8 +247,10 @@ export const FutsalTeamsManager = ({ onBack }) => {
                           onClick={() => !isSelected && handleSelectCard(card)}
                           className={`relative transition-transform duration-200 ${isSelected ? 'opacity-50 grayscale cursor-not-allowed' : 'cursor-pointer hover:scale-105 active:scale-95'}`}
                         >
-                          <MiniCard player={card} />
-                          {isSelected && <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl"><span className="text-white font-bold text-xl uppercase tracking-wider rotate-[-15deg]">Sélectionné</span></div>}
+                          <div className="flex justify-center w-full h-[250px] overflow-visible">
+                            <PlayerCard player={card} club={card.club} className="scale-[0.6] sm:scale-75 md:scale-90 origin-top" />
+                          </div>
+                          {isSelected && <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70 rounded-xl"><span className="text-white font-bold text-xl uppercase tracking-wider rotate-[-15deg]">Sélectionné</span></div>}
                         </div>
                       );
                     })}
@@ -347,13 +350,3 @@ const Slot = ({ index, player, role, onClick }) => {
   );
 };
 
-const MiniCard = ({ player }) => {
-  return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl p-3 flex flex-col items-center shadow-lg aspect-[2/3] justify-center relative overflow-hidden">
-      <div className="absolute top-0 right-0 bg-gradient-to-bl from-amber-400 to-orange-500 text-slate-900 font-black text-sm px-2 py-1 rounded-bl-xl">{player.ovr}</div>
-      <div className="absolute top-2 left-2 text-slate-500 font-bold text-xs">{player.position}</div>
-      <div className="w-12 h-12 bg-slate-700 rounded-full mb-3 flex items-center justify-center text-xl">👤</div>
-      <div className="font-bold text-white text-center text-xs w-full truncate px-1">{player.name}</div>
-    </div>
-  );
-};
