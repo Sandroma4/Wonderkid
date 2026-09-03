@@ -30,17 +30,17 @@ export const Achievements = ({ onBack }) => {
   return (
     <div className="min-h-screen bg-emerald-200 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
-      <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10">
+      <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10 pt-4 md:pt-8">
         
         {/* Header */}
-        <button 
-          onClick={() => { playSound('click'); onBack(); }}
-          className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
-        >
-          ← Retour
-        </button>
-        <div className="flex flex-col items-center justify-center mb-6 pt-16 md:pt-0">
-          <div className="w-full text-center">
+        <div className="relative flex flex-col items-center justify-center mb-6 w-full">
+          <button 
+            onClick={() => { playSound('click'); onBack(); }}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+          >
+            ← Retour
+          </button>
+          <div className="w-full text-center px-16 md:px-24">
             <h2 className="heading-typography text-3xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-widest drop-shadow-sm leading-none">
               Succès
             </h2>

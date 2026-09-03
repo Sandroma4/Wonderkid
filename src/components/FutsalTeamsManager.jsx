@@ -90,17 +90,18 @@ export const FutsalTeamsManager = ({ onBack }) => {
   if (editingTeam) {
     return (
       <div className="w-full max-w-4xl mx-auto p-4 md:p-8 animate-fade-in flex flex-col h-full overflow-y-auto pb-32 relative">
+      <div className="relative flex flex-col items-center justify-center mb-6 w-full pt-4 md:pt-8">
         <button 
-        onClick={() => { playSound('click'); setEditingTeam(null); }}
-        className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
-      >
-        ← Retour
-      </button>
-
-      <div className="flex flex-col items-center justify-center mb-6 mt-16 md:mt-0 text-center w-full">
-        <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
-          Création d'équipe
-        </h2>
+          onClick={() => { playSound('click'); setEditingTeam(null); }}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg -ml-2 md:-ml-4"
+        >
+          ← Retour
+        </button>
+        <div className="w-full text-center px-12 md:px-16">
+          <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
+            Création d'équipe
+          </h2>
+        </div>
       </div>
 
         <div className="flex items-center gap-4 mb-6 md:mb-8 sticky top-0 bg-[#0f172a] z-10 py-4 border-b border-slate-700/50 backdrop-blur-md bg-opacity-80">
@@ -301,17 +302,18 @@ export const FutsalTeamsManager = ({ onBack }) => {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 md:p-8 animate-fade-in flex flex-col h-full overflow-y-auto pb-32">
-      <button 
-        onClick={() => { playSound('click'); onBack(); }}
-        className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
-      >
-        ← Retour
-      </button>
-
-      <div className="flex flex-col items-center justify-center mb-6 md:mb-10 mt-16 md:mt-0 text-center w-full">
-        <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
-          Gestion Futsal
-        </h2>
+      <div className="relative flex flex-col items-center justify-center mb-6 md:mb-10 w-full pt-4 md:pt-8">
+        <button 
+          onClick={() => { playSound('click'); onBack(); }}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg -ml-2 md:-ml-4"
+        >
+          ← Retour
+        </button>
+        <div className="w-full text-center px-12 md:px-16">
+          <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
+            Gestion Futsal
+          </h2>
+        </div>
       </div>
 
       <button 

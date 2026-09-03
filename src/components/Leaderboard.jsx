@@ -44,21 +44,24 @@ export const Leaderboard = ({ onBack }) => {
     <div className="min-h-screen bg-emerald-200 dark:bg-[#0F172A] p-3 md:p-6 text-slate-700 dark:text-slate-200 relative overflow-hidden font-sans flex flex-col items-center">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-10"></div>
       
-      <div className="w-full max-w-3xl relative z-10">
+      <div className="w-full max-w-3xl relative z-10 pt-4 md:pt-8">
+        <div className="relative flex flex-col items-center justify-center mb-6 w-full">
+          <button 
+            onClick={() => { playSound('click'); onBack(); }}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+          >
+            ← Retour
+          </button>
+          <div className="w-full text-center px-16 md:px-24">
+            <h1 className="w-full text-center heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
+              CLASSEMENT
+            </h1>
+          </div>
+        </div>
+
         <div className="flex justify-center mb-6 gap-4">
           <button onClick={() => setActiveTab('solo')} className={`px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase transition-all ${activeTab === 'solo' ? 'bg-amber-500 text-white shadow-lg scale-105' : 'bg-white/50 text-slate-600 hover:bg-white/80'}`}>Solo</button>
           <button onClick={() => setActiveTab('coop')} className={`px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase transition-all ${activeTab === 'coop' ? 'bg-blue-500 text-white shadow-lg scale-105' : 'bg-white/50 text-slate-600 hover:bg-white/80'}`}>Coop</button>
-        </div>
-        <button 
-          onClick={() => { playSound('click'); onBack(); }}
-          className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
-        >
-          ← Retour
-        </button>
-        <div className="flex flex-col items-center justify-center mb-4 md:mb-8 w-full pt-16 md:pt-0">
-          <h1 className="w-full text-center heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
-            CLASSEMENT
-          </h1>
         </div>
 
         <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-2xl md:rounded-3xl p-3 md:p-6 shadow-2xl backdrop-blur-sm min-h-[60vh]">

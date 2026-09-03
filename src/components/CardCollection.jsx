@@ -15,18 +15,14 @@ export const CardCollection = ({ onBack }) => {
   return (
     <div className="min-h-screen bg-emerald-200 dark:bg-slate-950 p-3 md:p-8 relative overflow-hidden flex flex-col">
       {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-900/20 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3"></div>
-
-      <button 
-        onClick={() => { playSound('click'); onBack(); }}
-        className="fixed top-4 left-4 md:top-6 md:left-6 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
-      >
-        ← Retour
-      </button>
-
-      <div className="flex flex-col items-center justify-center mb-6 md:mb-8 relative z-10 w-full max-w-6xl mx-auto pt-16 md:pt-0">
-        <div className="w-full text-center">
+      <div className="relative flex flex-col items-center justify-center mb-6 md:mb-8 w-full max-w-6xl mx-auto pt-4 md:pt-8">
+        <button 
+          onClick={() => { playSound('click'); onBack(); }}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+        >
+          ← Retour
+        </button>
+        <div className="w-full text-center px-16 md:px-24">
           <h1 className="heading-typography text-3xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-tight drop-shadow-lg leading-none">
             Hall of <span className="text-emerald-600 dark:text-emerald-400">Fame</span>
           </h1>
