@@ -4,11 +4,11 @@ import { playSound } from '../utils/audio';
 import { PlayerCard } from './PlayerCard';
 
 const FORMATIONS = {
-  '1-2-1': { name: 'Losange (1-2-1)', slots: ['GK', 'DEF', 'MID', 'MID', 'FWD'] },
-  '2-2': { name: 'Carré (2-2)', slots: ['GK', 'DEF', 'DEF', 'FWD', 'FWD'] },
-  '2-1-1': { name: 'Pyramide (2-1-1)', slots: ['GK', 'DEF', 'DEF', 'MID', 'FWD'] },
-  '1-1-2': { name: 'Y Inversé (1-1-2)', slots: ['GK', 'DEF', 'MID', 'FWD', 'FWD'] },
-  '3-1': { name: 'Défensif (3-1)', slots: ['GK', 'DEF', 'DEF', 'DEF', 'FWD'] }
+  '1-2-1': { name: 'Losange (1-2-1)', slots: ['GK', 'DEF', 'MIL', 'MIL', 'ATT'] },
+  '2-2': { name: 'Carré (2-2)', slots: ['GK', 'DEF', 'DEF', 'ATT', 'ATT'] },
+  '2-1-1': { name: 'Pyramide (2-1-1)', slots: ['GK', 'DEF', 'DEF', 'MIL', 'ATT'] },
+  '1-1-2': { name: 'Y Inversé (1-1-2)', slots: ['GK', 'DEF', 'MIL', 'ATT', 'ATT'] },
+  '3-1': { name: 'Défensif (3-1)', slots: ['GK', 'DEF', 'DEF', 'DEF', 'ATT'] }
 };
 
 export const FutsalTeamsManager = ({ onBack }) => {
@@ -151,11 +151,11 @@ export const FutsalTeamsManager = ({ onBack }) => {
              
              {editingTeam.formation === '1-2-1' && (
                 <>
-                  <div className="flex justify-around w-full px-8 md:px-16">
-                     <Slot index={1} player={editingTeam.players[1]} role={FORMATIONS[editingTeam.formation].slots[1]} onClick={() => { setActiveSlot(1); setShowCardSelector(true); }} />
-                     <Slot index={2} player={editingTeam.players[2]} role={FORMATIONS[editingTeam.formation].slots[2]} onClick={() => { setActiveSlot(2); setShowCardSelector(true); }} />
-                  </div>
                   <div className="flex justify-center w-full">
+                     <Slot index={1} player={editingTeam.players[1]} role={FORMATIONS[editingTeam.formation].slots[1]} onClick={() => { setActiveSlot(1); setShowCardSelector(true); }} />
+                  </div>
+                  <div className="flex justify-between w-full px-4 md:px-16">
+                     <Slot index={2} player={editingTeam.players[2]} role={FORMATIONS[editingTeam.formation].slots[2]} onClick={() => { setActiveSlot(2); setShowCardSelector(true); }} />
                      <Slot index={3} player={editingTeam.players[3]} role={FORMATIONS[editingTeam.formation].slots[3]} onClick={() => { setActiveSlot(3); setShowCardSelector(true); }} />
                   </div>
                   <div className="flex justify-center w-full">
@@ -165,11 +165,11 @@ export const FutsalTeamsManager = ({ onBack }) => {
              )}
              {editingTeam.formation === '2-2' && (
                 <>
-                  <div className="flex justify-around w-full px-12 md:px-24">
+                  <div className="flex justify-around w-full px-8 md:px-24">
                      <Slot index={1} player={editingTeam.players[1]} role={FORMATIONS[editingTeam.formation].slots[1]} onClick={() => { setActiveSlot(1); setShowCardSelector(true); }} />
                      <Slot index={2} player={editingTeam.players[2]} role={FORMATIONS[editingTeam.formation].slots[2]} onClick={() => { setActiveSlot(2); setShowCardSelector(true); }} />
                   </div>
-                  <div className="flex justify-around w-full px-12 md:px-24">
+                  <div className="flex justify-around w-full px-8 md:px-24 mt-auto">
                      <Slot index={3} player={editingTeam.players[3]} role={FORMATIONS[editingTeam.formation].slots[3]} onClick={() => { setActiveSlot(3); setShowCardSelector(true); }} />
                      <Slot index={4} player={editingTeam.players[4]} role={FORMATIONS[editingTeam.formation].slots[4]} onClick={() => { setActiveSlot(4); setShowCardSelector(true); }} />
                   </div>
@@ -220,23 +220,6 @@ export const FutsalTeamsManager = ({ onBack }) => {
           </div>
           
           <div className="w-full xl:w-80 flex flex-col gap-4 shrink-0">
-            {/* Helper Note */}
-            <div className="bg-slate-800/80 backdrop-blur-md border border-slate-700 rounded-2xl p-5 shadow-lg relative overflow-hidden">
-              <div className="absolute -top-4 -right-4 text-6xl opacity-10">⚠️</div>
-              <h4 className="font-bold text-orange-400 text-sm md:text-base uppercase tracking-wider mb-3 flex items-center gap-2">
-                <span>📋</span> Règles de composition
-              </h4>
-              <p className="text-slate-300 text-xs md:text-sm leading-relaxed mb-3">
-                Pour valider une équipe Futsal, vous devez obligatoirement aligner <strong>5 joueurs</strong> dont :
-              </p>
-              <ul className="text-slate-300 text-xs md:text-sm leading-relaxed list-disc list-inside space-y-1 mb-3">
-                <li>Au moins <strong>1 Gardien (GK)</strong></li>
-                <li>Au moins <strong>1 Défenseur</strong> (CB, LB, RB, LWB, RWB)</li>
-              </ul>
-              <p className="text-slate-400 text-xs italic">
-                Les statistiques de vos cartes (Vitesse, Dribble, Passe) seront cruciales pour la simulation.
-              </p>
-            </div>
             
             <div className="bg-slate-800/80 backdrop-blur-md border border-slate-700 rounded-2xl p-5 shadow-lg text-center">
                 <div className="text-slate-400 text-xs uppercase font-bold tracking-widest mb-1">Puissance de l'équipe</div>
@@ -266,8 +249,8 @@ export const FutsalTeamsManager = ({ onBack }) => {
                   const activeRole = (activeSlot !== null && editingTeam) ? FORMATIONS[editingTeam.formation].slots[activeSlot] : null;
                   const allowedPositions = activeRole === 'GK' ? ['GB', 'GK'] 
                                          : activeRole === 'DEF' ? ['DEF', 'CB', 'LB', 'RB', 'LWB', 'RWB']
-                                         : activeRole === 'MID' ? ['MID', 'CDM', 'CM', 'CAM', 'RM', 'LM']
-                                         : activeRole === 'FWD' ? ['ATT', 'ST', 'CF', 'RW', 'LW']
+                                         : activeRole === 'MIL' ? ['MID', 'MIL', 'CDM', 'CM', 'CAM', 'RM', 'LM']
+                                         : activeRole === 'ATT' ? ['ATT', 'FWD', 'ST', 'CF', 'RW', 'LW']
                                          : [];
                                          
                   const filteredCollection = collection.filter(card => {
@@ -379,8 +362,8 @@ const Slot = ({ index, player, role, onClick }) => {
       className={`relative flex flex-col items-center justify-center cursor-pointer transition-transform hover:scale-110 active:scale-95 ${player ? '' : 'opacity-70 hover:opacity-100'}`}
     >
       {player ? (
-        <div className="flex justify-center items-start w-[95px] h-[130px] sm:w-[110px] sm:h-[150px] md:w-[120px] md:h-[170px] overflow-visible pointer-events-none drop-shadow-2xl">
-          <PlayerCard player={player} club={player.club} className="!scale-[0.35] sm:!scale-[0.4] md:!scale-[0.45] origin-top !mb-0 !mx-0" />
+        <div className="flex justify-center items-start w-[110px] h-[150px] sm:w-[130px] sm:h-[185px] md:w-[145px] md:h-[210px] overflow-visible pointer-events-none drop-shadow-2xl">
+          <PlayerCard player={player} club={player.club} className="!scale-[0.42] sm:!scale-[0.5] md:!scale-[0.55] origin-top !mb-0 !mx-0" />
         </div>
       ) : (
         <>
