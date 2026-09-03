@@ -879,8 +879,29 @@ export function Dashboard({
               <div className={`${activeMobileTab !== 'joueur' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1`}>
                 {/* BLOC CARTE FUT DU JOUEUR */}
                 <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-0 md:p-4 shadow-2xl flex flex-col items-center h-fit">
-                  <button onClick={() => window.print()} className="w-full mb-2 text-xs font-bold uppercase tracking-wider bg-white dark:bg-slate-800 text-slate-800 dark:text-white py-1.5 rounded-xl shadow-md hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">📸 Exporter ma Carte</button>
-                  <PlayerCard player={player} club={club} cardType="auto" />
+                  <button 
+                    onClick={async () => {
+                      if (!playerCardRef.current) return;
+                      try {
+                        const canvas = await html2canvas(playerCardRef.current, { 
+                          backgroundColor: null, 
+                          scale: 2,
+                          useCORS: true,
+                          logging: false
+                        });
+                        const link = document.createElement('a');
+                        link.download = `carte-${player.name.replace(/\s/g, '_')}.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                      } catch (e) { console.error('Export failed', e); }
+                    }} 
+                    className="w-full mb-2 text-xs font-bold uppercase tracking-wider bg-white dark:bg-slate-800 text-slate-800 dark:text-white py-1.5 rounded-xl shadow-md hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors"
+                  >
+                    📸 Exporter ma Carte
+                  </button>
+                  <div ref={playerCardRef} className="inline-block" style={{ backgroundColor: 'transparent' }}>
+                    <PlayerCard player={player} club={club} cardType="auto" />
+                  </div>
                 </div>
                 <div>
                   {/* STATS DÉTAILLÉES */}
