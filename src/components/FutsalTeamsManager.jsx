@@ -123,36 +123,37 @@ export const FutsalTeamsManager = ({ onBack }) => {
             </div>
           </div>
           
-          <div className="flex flex-row items-center gap-3 w-full lg:w-auto">
-            <div className="flex items-center gap-3 bg-slate-800/80 px-4 py-2.5 rounded-xl border border-slate-700 shrink-0">
-               <div className="text-slate-400 text-xs uppercase font-bold tracking-wider">OVR</div>
-               <div className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 leading-none">
-                  {(() => {
-                    const players = editingTeam.players.filter(p => p !== null);
-                    if (players.length === 0) return '0';
-                    const avg = players.reduce((sum, p) => sum + (p.ovr || 0), 0) / players.length;
-                    return Math.round(avg);
-                  })()}
-                </div>
-            </div>
-            
-            <button 
-              onClick={handleSaveTeam}
-              className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 uppercase tracking-wide text-sm whitespace-nowrap"
-            >
-              Sauvegarder
-            </button>
-          </div>
+          <button 
+            onClick={handleSaveTeam}
+            className="w-full lg:w-auto px-8 py-3 bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 uppercase tracking-wide text-sm whitespace-nowrap"
+          >
+            Sauvegarder l'équipe
+          </button>
         </div>
 
-        <div className="max-w-2xl mx-auto w-full mb-8">
-          <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] lg:aspect-[2/3] bg-emerald-800 rounded-3xl border-8 border-slate-900 overflow-hidden shadow-2xl">
+        <div className="max-w-xl mx-auto w-full mb-8">
+          <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] max-h-[65vh] bg-emerald-800 rounded-3xl border-8 border-slate-900 overflow-hidden shadow-2xl">
+              {/* OVR Badge inside pitch */}
+              <div className="absolute top-4 right-4 z-20 bg-slate-900/90 backdrop-blur-md px-3 py-2 rounded-xl border border-slate-700 shadow-xl flex flex-col items-center justify-center">
+                 <div className="text-slate-400 text-[10px] uppercase font-bold tracking-widest leading-tight mb-0.5">OVR</div>
+                 <div className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 leading-none">
+                    {(() => {
+                      const players = editingTeam.players.filter(p => p !== null);
+                      if (players.length === 0) return '0';
+                      const avg = players.reduce((sum, p) => sum + (p.ovr || 0), 0) / players.length;
+                      return Math.round(avg);
+                    })()}
+                  </div>
+              </div>
+
               {/* Futsal Court Markings */}
               <div className="absolute inset-2 md:inset-4 border-2 border-white/40 rounded-lg pointer-events-none"></div>
               <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/40 -translate-y-1/2 pointer-events-none"></div>
               <div className="absolute top-1/2 left-1/2 w-24 h-24 border-2 border-white/40 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-              <div className="absolute top-2 md:top-4 left-1/2 w-40 h-20 border-2 border-white/40 rounded-b-full -translate-x-1/2 pointer-events-none"></div>
-              <div className="absolute bottom-2 md:bottom-4 left-1/2 w-40 h-20 border-2 border-white/40 rounded-t-full -translate-x-1/2 pointer-events-none"></div>
+              
+              {/* Rectangular Penalty Areas */}
+              <div className="absolute top-2 md:top-4 left-1/2 w-48 h-20 border-2 border-white/40 border-t-0 -translate-x-1/2 pointer-events-none"></div>
+              <div className="absolute bottom-2 md:bottom-4 left-1/2 w-48 h-20 border-2 border-white/40 border-b-0 -translate-x-1/2 pointer-events-none"></div>
               
               {/* Wood texture overlay for Futsal */}
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-20 pointer-events-none"></div>
