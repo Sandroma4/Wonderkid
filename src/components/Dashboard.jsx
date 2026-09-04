@@ -127,7 +127,8 @@ export function Dashboard({
   onStayCurrentClub,
   onBuyLifestyleItem,
   onRetire,
-  onRestartGame
+  onRestartGame,
+  onPlayAsHeir
 }) {
   const [cardStyle, setCardStyle] = useState('auto');
   const [activeMobileTab, setActiveMobileTab] = useState('terrain');
@@ -463,7 +464,15 @@ export function Dashboard({
                 </div>
 
                 {/* Footer (Fixed at bottom) */}
-                <div className="shrink-0 mt-3 md:mt-4 pt-3 border-t border-slate-200/20 dark:border-slate-700/50">
+                <div className="shrink-0 mt-3 md:mt-4 pt-3 border-t border-slate-200/20 dark:border-slate-700/50 flex flex-col gap-2">
+                  {gameState.hasHeir && (
+                    <button 
+                      onClick={() => { playSound('click'); onPlayAsHeir(); }} 
+                      className="w-full py-3 md:py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white rounded-xl font-black text-sm md:text-base uppercase tracking-wider transition-all shadow-xl active:scale-95"
+                    >
+                      Continuer avec son fils/sa fille 👶
+                    </button>
+                  )}
                   <button 
                     onClick={() => { playSound('click'); onRestartGame(); }} 
                     className="w-full py-3 md:py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 rounded-xl font-black text-sm md:text-base uppercase tracking-wider transition-all shadow-xl active:scale-95"

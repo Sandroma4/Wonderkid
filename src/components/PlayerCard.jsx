@@ -168,7 +168,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
 
   let countryCode = typeof player.origin === 'object' ? player.origin?.id : (player.origin || 'FR');
   if (countryCode && countryCode.length > 3) countryCode = 'FR';
-  const lastName = player.lastName || (player.name ? player.name.trim().split(' ').pop() : 'JOUEUR');
+  const displayName = player.name || 'JOUEUR';
 
   const wrapperClasses = exportMode 
     ? `relative inline-block select-none ${className}`
@@ -223,7 +223,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         {/* NOM DU JOUEUR */}
         <div className={`absolute w-full text-center z-20 ${themeStyles.layout?.nameTop || 'top-[52%]'}`}>
           <h3 className={`text-[19px] font-black tracking-widest uppercase truncate px-6 pb-1 pt-0.5 leading-snug ${themeStyles.textPrimary}`}>
-            {lastName}
+            {displayName}
           </h3>
         </div>
 

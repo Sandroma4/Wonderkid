@@ -43,7 +43,9 @@ import {
   COUNTRIES,
   gkProgressionCurve,
   getGKProgressionBoost,
-  calculateGKOVR
+  calculateGKOVR,
+  getRandomName,
+  generateYoungPlayerStats
 } from './utils/gameData';
 import { getRoleById } from './utils/rolesData';
 
@@ -1712,6 +1714,7 @@ export default function App() {
         palmares: newPalmares,
         rival: updatedRival,
         isRetired: isForcedRetirement,
+        hasHeir: isForcedRetirement ? Math.random() < 0.1 : false,
         internationalTournamentDone: false,
         isInternationalTournament: false,
         pendingStatsForIntl: null,
@@ -1816,6 +1819,7 @@ export default function App() {
       return {
         ...prev,
         isRetired: true,
+        hasHeir: Math.random() < 0.1,
         score: calculateCareerScore({ ...prev.player, bankBalance: prev.bankBalance }, prev.rivalConfrontations)
       };
     });
@@ -1830,6 +1834,56 @@ export default function App() {
     setMultiplayerContext(null);
     setGameState(null);
     setAppView('mainMenu');
+  };
+
+  const handlePlayAsHeir = () => {
+    const parentPlayer = gameState.player;
+    const accountData = getAccountData();
+    const hasCoachFav = accountData.unlockedPerks.includes('coach_favorite');
+    const hasMediaDarling = accountData.unlockedPerks.includes('media_darling');
+    const hasRichKid = accountData.unlockedPerks.includes('rich_kid');
+
+    const randomFullName = getRandomName(parentPlayer.origin || 'FR', parentPlayer.gender?.id || 'M');
+    const newFirstName = randomFullName.split(' ')[0];
+    const inheritedLastName = parentPlayer.lastName || (parentPlayer.name ? parentPlayer.name.split(' ').pop() : 'Jr.');
+    const heirName = `${newFirstName} ${inheritedLastName}`;
+    
+    const enginePos = parentPlayer.position || 'ATT';
+    let baseStats = { pace: 70, finishing: 70, passing: 70, dribbling: 70, defense: 70, physical: 70 };
+    if (enginePos === 'GB' || enginePos === 'GK') {
+      baseStats = { diving: 70, handling: 70, kicking: 70, reflexes: 70, pace: 70, positioning: 70 };
+    }
+    const heirAttributes = generateYoungPlayerStats ? generateYoungPlayerStats(enginePos, baseStats) : baseStats;
+    const heirOvr = calculateOVR({ position: enginePos, attributes: heirAttributes });
+
+    const heirPlayer = {
+      ...parentPlayer,
+      firstName: newFirstName,
+      lastName: inheritedLastName,
+      name: heirName,
+      age: 15,
+      currentYear: parentPlayer.currentYear + (parentPlayer.age - 15),
+      valueHistory: [],
+      form: 85,
+      morale: 80,
+      coachTrust: hasCoachFav ? 95 : 75,
+      hype: hasMediaDarling ? 100 : 0,
+      nationalCaps: 0,
+      injuryDuration: 0,
+      inventory: [],
+      bankBalance: Math.floor((gameState.bankBalance || 0) * 0.1) + (hasRichKid ? 500000 : 0),
+      palmares: [],
+      careerOvrSum: 0,
+      careerSeasons: 0,
+      careerRatingSum: 0,
+      careerMaxOvr: 0,
+      nationalStatus: 'BANC',
+      attributes: heirAttributes,
+      ovr: heirOvr,
+      bestCard: null // Reset best card for the heir
+    };
+    
+    handleStartGame(heirPlayer);
   };
 
   if (appView === 'cosmeticsStore') {
@@ -2063,6 +2117,7 @@ export default function App() {
       onBuyLifestyleItem={handleBuyLifestyleItem}
       onRetire={handleRetire}
       onRestartGame={handleRestartGame}
+      onPlayAsHeir={handlePlayAsHeir}
       onQuit={handleRestartGame}
     />
     {showPseudoModal && (
