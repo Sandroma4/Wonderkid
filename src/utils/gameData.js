@@ -3019,6 +3019,7 @@ export const generateRival = (player) => {
     age,
     ovr,
     attributes,
+    avatar: player.rivalAvatar || null,
     club: ALL_CLUBS[Math.floor(Math.random() * ALL_CLUBS.length)],
     history: [],
     headToHeadWins: 0,

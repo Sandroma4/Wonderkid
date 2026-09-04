@@ -1310,10 +1310,17 @@ export function Dashboard({
                         )}
                       </div>
 
-                      {/* CARTE RIVAL */}
-                      <div className="flex justify-center items-center relative z-10 gap-0 mb-2">
-                        <div className="flex flex-col items-center transform scale-90 origin-bottom">
-                          <span className="text-[10px] font-bold text-rose-500 uppercase mb-2">Rival</span>
+                      {/* CARTES FACE A FACE */}
+                      <div className="flex justify-center items-center relative z-10 gap-4 mb-2 w-full">
+                        <div className="flex flex-col items-center transform scale-[0.80] origin-center -mx-6">
+                          <span className="text-[12px] font-bold text-slate-500 uppercase mb-2">Vous</span>
+                          <PlayerCard player={player} club={club} cardType="auto" />
+                        </div>
+                        <div className="flex flex-col items-center justify-center z-20 shrink-0 mt-4">
+                           <span className="text-2xl font-black text-rose-500 italic drop-shadow-md">VS</span>
+                        </div>
+                        <div className="flex flex-col items-center transform scale-[0.80] origin-center -mx-6">
+                          <span className="text-[12px] font-bold text-rose-500 uppercase mb-2">Rival</span>
                           <PlayerCard player={{ ...rival, origin: rivalCountryId }} club={rival.club} cardType="auto" />
                         </div>
                       </div>

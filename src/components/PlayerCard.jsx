@@ -164,12 +164,12 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       >
         {/* AVATAR JOUEUR */}
         {player.avatar && (
-          <div className="absolute top-[15%] left-[25%] w-[180px] h-[140px] z-10 flex justify-end items-end overflow-visible pointer-events-none">
+          <div className="absolute top-[17%] left-[32%] w-[140px] h-[120px] z-10 flex justify-end items-end overflow-visible pointer-events-none">
             <img 
               src={`/${player.avatar}`} 
               alt="" 
               onError={(e) => { e.target.style.display = 'none'; }}
-              className="w-full h-[150%] object-contain object-bottom drop-shadow-xl saturate-[1.1] brightness-[0.95]" 
+              className="w-full h-[135%] object-contain object-bottom drop-shadow-xl saturate-[1.1] brightness-[0.95]" 
             />
           </div>
         )}

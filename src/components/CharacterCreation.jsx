@@ -165,11 +165,13 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     const lastName = nameParts.slice(1).join(' ') || 'Inconnu';
     
     let avatar = null;
+    let rivalAvatar = null;
     const allowedFolders = getEthnicityFolders(country.id);
     const chosenFolder = allowedFolders[Math.floor(Math.random() * allowedFolders.length)];
     if (regensList[chosenFolder] && regensList[chosenFolder].length > 0) {
       const images = regensList[chosenFolder];
       avatar = images[Math.floor(Math.random() * images.length)];
+      rivalAvatar = images[Math.floor(Math.random() * images.length)];
     }
 
     const playerData = {
@@ -194,6 +196,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
       bankBalance: background.startingMoney || 0,
       palmares: [],
       avatar: avatar,
+      rivalAvatar: rivalAvatar,
       perks: (() => {
         if (background?.id === 'STREET') return ['bg_street'];
         if (background?.id === 'ACADEMY') return ['bg_academy'];
