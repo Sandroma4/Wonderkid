@@ -1714,7 +1714,7 @@ export default function App() {
         palmares: newPalmares,
         rival: updatedRival,
         isRetired: isForcedRetirement,
-        hasHeir: isForcedRetirement ? Math.random() < 0.1 : false,
+        hasHeir: isForcedRetirement ? Math.random() < 0.03 : false,
         internationalTournamentDone: false,
         isInternationalTournament: false,
         pendingStatsForIntl: null,
@@ -1819,7 +1819,7 @@ export default function App() {
       return {
         ...prev,
         isRetired: true,
-        hasHeir: Math.random() < 0.1,
+        hasHeir: Math.random() < 0.03,
         score: calculateCareerScore({ ...prev.player, bankBalance: prev.bankBalance }, prev.rivalConfrontations)
       };
     });
