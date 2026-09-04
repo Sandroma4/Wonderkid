@@ -11,6 +11,7 @@ import { Achievements } from './components/Achievements';
 import { Leaderboard } from './components/Leaderboard';
 import { CardCollection } from './components/CardCollection';
 import { ClashLobby } from './components/ClashLobby';
+import { CosmeticsStore } from './components/CosmeticsStore';
 import { playSound } from './utils/audio';
 import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession, getAccountData, saveAccountData } from './utils/storage';
 import { createMultiplayerRoom } from './utils/multiplayer';
@@ -1830,6 +1831,10 @@ export default function App() {
     setGameState(null);
     setAppView('mainMenu');
   };
+
+  if (appView === 'cosmeticsStore') {
+    return <CosmeticsStore onBack={handleBack} />;
+  }
 
   if (appView === 'fiveManager') {
     return <FiveTeamsManager onBack={handleBack} />;

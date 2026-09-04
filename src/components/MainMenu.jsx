@@ -597,6 +597,19 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
             </div>
           </button>
 
+          <button 
+            onClick={() => { playSound('click'); onNavigate('cosmeticsStore'); }}
+            className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-pink-500/20 to-rose-700/20 border border-pink-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-pink-500/30 hover:border-pink-400 hover:shadow-[0_0_20px_rgba(236,72,153,0.2)] active:scale-95"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-xl md:text-2xl">✨</span>
+                <span className="heading-typography text-pink-600 dark:text-pink-400 font-bold text-base md:text-lg tracking-wide uppercase">Boutique Cosmétique</span>
+              </div>
+              <span className="text-pink-500 group-hover:translate-x-1 transition-transform">➔</span>
+            </div>
+          </button>
+
             </>
           )}
         </div>

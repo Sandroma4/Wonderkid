@@ -235,9 +235,15 @@ const ACCOUNT_DATA_KEY = 'golden_xi_account_data';
 export const getAccountData = () => {
   try {
     const data = localStorage.getItem(ACCOUNT_DATA_KEY);
-    return data ? JSON.parse(data) : { goldenCoins: 0, unlockedPerks: [] };
+    const parsed = data ? JSON.parse(data) : {};
+    return {
+      goldenCoins: parsed.goldenCoins || 0,
+      unlockedPerks: parsed.unlockedPerks || [],
+      unlockedCosmetics: parsed.unlockedCosmetics || ['default'],
+      equippedCosmetic: parsed.equippedCosmetic || 'default'
+    };
   } catch (e) {
-    return { goldenCoins: 0, unlockedPerks: [] };
+    return { goldenCoins: 0, unlockedPerks: [], unlockedCosmetics: ['default'], equippedCosmetic: 'default' };
   }
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlagIcon } from './FlagIcon';
 import { calculateOVR } from '../utils/gameData';
+import { getAccountData } from '../utils/storage';
 
 export const PlayerCard = React.memo(({ player, club, cardType = 'auto', className = "" }) => {
   if (!player) return null;
@@ -10,7 +11,12 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
 
   // Choix automatique ou manuel du thème de la carte
   let theme = cardType;
-  if (theme === 'auto') {
+  const equipped = getAccountData().equippedCosmetic;
+  const hasCosmetic = equipped && equipped !== 'default' && cardType === 'auto' && !isGk;
+  
+  if (hasCosmetic) {
+    theme = equipped;
+  } else if (theme === 'auto') {
     if (ovr >= 85) theme = 'totw';
     else if (ovr >= 75) theme = 'gold';
     else if (ovr >= 65) theme = 'silver';
@@ -49,6 +55,54 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       textPrimary: 'text-[#3b2111]',
       textSecondary: 'text-[#3b2111]',
       accent: 'border-[#3b2111]/30'
+    },
+    bronze_alt: {
+      bgImage: "url('/cosmetics/metals.png')",
+      bgPos: '0% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#c07b58]',
+      textSecondary: 'hidden',
+      hideLabels: true
+    },
+    silver_alt: {
+      bgImage: "url('/cosmetics/metals.png')",
+      bgPos: '50% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#8cb8d3]',
+      textSecondary: 'hidden',
+      hideLabels: true
+    },
+    gold_alt: {
+      bgImage: "url('/cosmetics/metals.png')",
+      bgPos: '100% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#2a2a2a]',
+      textSecondary: 'hidden',
+      hideLabels: true
+    },
+    stone: {
+      bgImage: "url('/cosmetics/fantasy.png')",
+      bgPos: '0% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#ebdd9f]',
+      textSecondary: 'hidden',
+      hideLabels: true
+    },
+    cyberpunk: {
+      bgImage: "url('/cosmetics/fantasy.png')",
+      bgPos: '50% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#0efaff]',
+      textSecondary: 'hidden',
+      hideLabels: true
+    },
+    earth: {
+      bgImage: "url('/cosmetics/fantasy.png')",
+      bgPos: '100% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#f6c589]',
+      textSecondary: 'hidden',
+      hideLabels: true
     }
   }[theme];
 
