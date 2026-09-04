@@ -3,11 +3,11 @@ import { playSound } from '../utils/audio';
 import { getAccountData, saveAccountData } from '../utils/storage';
 
 export const ACCOUNT_PERKS = [
-  { id: 'coach_favorite', name: "Chouchou du Coach", desc: "Commence chaque carrière avec une forte Confiance du Coach.", price: 150, icon: '🫂' },
-  { id: 'rich_kid', name: "Héritier", desc: "Commence avec 500 000 € sur le compte en banque.", price: 200, icon: '💎' },
-  { id: 'media_darling', name: "Chouchou des Médias", desc: "Débute la carrière avec +100 points de Hype.", price: 300, icon: '📸' },
-  { id: 'titan_body', name: "Corps en Titane", desc: "Réduit drastiquement les risques de blessures aléatoires.", price: 500, icon: '🛡️' },
-  { id: 'local_legend', name: "Légende Locale", desc: "+5 OVR à la création de votre joueur.", price: 1000, icon: '🌟' }
+  { id: 'coach_favorite', name: "Chouchou du Coach", desc: "Commence chaque carrière avec une forte Confiance du Coach.", price: 350, icon: '🫂' },
+  { id: 'rich_kid', name: "Héritier", desc: "Commence avec 500 000 € sur le compte en banque.", price: 500, icon: '💎' },
+  { id: 'media_darling', name: "Chouchou des Médias", desc: "Débute la carrière avec +100 points de Hype.", price: 750, icon: '📸' },
+  { id: 'titan_body', name: "Corps en Titane", desc: "Réduit drastiquement les risques de blessures aléatoires.", price: 1250, icon: '🛡️' },
+  { id: 'local_legend', name: "Légende Locale", desc: "+5 OVR à la création de votre joueur.", price: 2500, icon: '🌟' }
 ];
 
 export function AccountShopModal({ onClose }) {
