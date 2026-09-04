@@ -23,14 +23,15 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
   }
 
   const basicLayout = {
-    ovrTop: 'top-[14%]',
-    ovrLeft: 'left-[14%]',
-    avatarTop: 'top-[16%]',
+    ovrTop: 'top-[11%]',
+    ovrLeft: 'left-[10%]',
+    avatarTop: 'top-[19%]',
     avatarLeft: 'left-[32%]',
     nameTop: 'top-[56%]',
-    statsTop: 'top-[66%]',
+    statsTop: 'top-[65%]',
     statsGapY: 'gap-y-[6px]',
-    statsGapX: 'gap-x-[110px]',
+    statsGapX: 'gap-x-[75px]',
+    statsShift: '-ml-9',
     hideCustomLabels: true
   };
 
@@ -219,7 +220,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         </div>
 
         {/* LES 6 STATISTIQUES (CHIFFRES UNIQUEMENT) */}
-        <div className={`absolute w-full flex justify-center z-20 ${themeStyles.layout?.statsTop || 'top-[61%]'}`}>
+        <div className={`absolute w-full flex justify-center z-20 ${themeStyles.layout?.statsTop || 'top-[61%]'} ${themeStyles.layout?.statsShift || ''}`}>
           <div className={`flex ${themeStyles.layout?.statsGapX || 'gap-x-[50px]'}`}>
             <div className={`flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
               {stats.slice(0, 3).map((st, idx) => (
