@@ -11,7 +11,7 @@ import { Achievements } from './components/Achievements';
 import { Leaderboard } from './components/Leaderboard';
 import { CardCollection } from './components/CardCollection';
 import { playSound } from './utils/audio';
-import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession } from './utils/storage';
+import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession, getAccountData, saveAccountData } from './utils/storage';
 import { createMultiplayerRoom } from './utils/multiplayer';
 import { PseudonymModal } from './components/PseudonymModal';
 import { checkAchievements } from './utils/achievementsData';
@@ -314,6 +314,11 @@ export default function App() {
   }, [multiplayerContext?.players, gameState?.isWaitingForMercato]);
 
   const handleStartGame = (playerData) => {
+    const accountData = getAccountData();
+    const hasCoachFav = accountData.unlockedPerks.includes('coach_favorite');
+    const hasMediaDarling = accountData.unlockedPerks.includes('media_darling');
+    const hasRichKid = accountData.unlockedPerks.includes('rich_kid');
+
     let tempPlayer = {
       ...playerData,
       age: 15,
@@ -321,11 +326,12 @@ export default function App() {
       valueHistory: [],
       form: 85,
       morale: 80,
-      coachTrust: 75,
+      coachTrust: hasCoachFav ? 95 : 75,
+      hype: hasMediaDarling ? 100 : 0,
       nationalCaps: 0,
       injuryDuration: 0,
       inventory: [],
-      bankBalance: 0,
+      bankBalance: hasRichKid ? 500000 : 0,
       palmares: [],
       careerOvrSum: 0,
       careerSeasons: 0,
@@ -1719,6 +1725,15 @@ export default function App() {
       // Save card to local Hall of Fame collection (prime version)
       saveCardToCollection(player, palmares, maxOvr);
       
+      // Calculate and save Golden Coins
+      const earnedCoins = 100 + Math.floor(totalScore / 1000);
+      const accountData = getAccountData();
+      accountData.goldenCoins += earnedCoins;
+      saveAccountData(accountData);
+      
+      // Save earned coins temporarily in state so the Dashboard can show them
+      setGameState(prev => ({ ...prev, earnedCoinsThisRun: earnedCoins }));
+
       const realName = player.name;
       const nationality = typeof player.origin === 'object' ? player.origin?.id : player.origin;
       

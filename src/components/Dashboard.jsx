@@ -331,6 +331,11 @@ export function Dashboard({
                             {gameState.score?.totalScore ? gameState.score.totalScore.toLocaleString('fr-FR') : "0"}
                           </div>
                           <p className="text-[8px] md:text-[9px] text-slate-400 uppercase tracking-widest leading-none">Pts Légendaires</p>
+                          {gameState.earnedCoinsThisRun > 0 && (
+                            <div className="mt-2 text-[10px] md:text-xs font-bold text-yellow-300 bg-black/20 rounded-lg py-1 px-2 inline-block">
+                              +{gameState.earnedCoinsThisRun} Golden Coins 🪙
+                            </div>
+                          )}
                           {gameState.score?.isNemesisSlayer && (
                              <div className="absolute -top-3 -right-3 bg-rose-600 border-2 border-slate-900 text-white text-[9px] md:text-[10px] font-black uppercase px-2 py-1 rounded-lg transform rotate-6 shadow-lg">
                                Némésis Slayer ⚔️

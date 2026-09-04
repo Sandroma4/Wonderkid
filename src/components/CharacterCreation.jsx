@@ -3,6 +3,7 @@ import { FlagIcon } from './FlagIcon';
 import { playSound } from '../utils/audio';
 import { COUNTRIES, GENDERS, ORIGINS_BACKGROUNDS, POSITIONS_DATA, LIFESTYLES, CHALLENGES_LIST, getRandomName, generateYoungPlayerStats, calculateOVR } from '../utils/gameData';
 import { supabase } from '../supabaseClient';
+import { getAccountData } from '../utils/storage';
 
 
 const CONTINENTS = {
@@ -90,6 +91,14 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     let baseStats = { pace: 70, finishing: 70, passing: 70, dribbling: 70, defense: 70, physical: 70 };
     if (enginePos === 'GB' || enginePos === 'GK') {
       baseStats = { diving: 70, handling: 70, kicking: 70, reflexes: 70, pace: 70, positioning: 70 };
+    }
+    
+    // Apply Account Perks
+    const accountData = getAccountData();
+    if (accountData.unlockedPerks.includes('local_legend')) {
+      for (const key in baseStats) {
+        baseStats[key] += 5;
+      }
     }
     
     const finalAttributes = generateYoungPlayerStats(enginePos, baseStats, background?.statBonus);

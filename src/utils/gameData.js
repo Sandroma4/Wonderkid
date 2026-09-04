@@ -11,6 +11,7 @@ import { EXTRA_EVENTS_10 } from './extraEvents10';
 import { EXTRA_EVENTS_11 } from './extraEvents11';
 import { EXTRA_EVENTS_12 } from './extraEvents12';
 import { COOP_EVENTS } from './coopEvents';
+import { getAccountData } from './storage';
 
 export const CUP_FINAL_SCENARIOS = [
   {
@@ -2938,6 +2939,8 @@ export const CHALLENGES_LIST = [
 
 export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlayed = 38, tournaments = {}, clubTier = null, isCoopMode = false) => { 
   const playerPosition = player?.position || 'ALL'; 
+  const accountData = getAccountData();
+  const hasTitanBody = accountData.unlockedPerks.includes('titan_body');
   
   const compatibleEvents = ALL_EVENTS.filter(ev => { 
     if (ev.category === 'FRÈRES D\'ARMES' && !isCoopMode) return false;
@@ -2959,6 +2962,11 @@ export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlaye
     
     // Evaluate specific conditions like age, OVR, bankBalance, etc.
     if (ev.condition && !ev.condition(player)) return false;
+    
+    // Titan Body logic: 80% chance to dodge injury events
+    if (hasTitanBody && (ev.category === 'INJURY' || (ev.title && ev.title.toLowerCase().includes('blessure')))) {
+      if (Math.random() < 0.8) return false;
+    }
     
     return true; 
   }); 

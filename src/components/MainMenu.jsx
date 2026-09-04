@@ -3,6 +3,7 @@ import { playSound } from '../utils/audio';
 import { supabase } from '../supabaseClient';
 
 import { FriendsModal } from './FriendsModal';
+import { AccountShopModal } from './AccountShopModal';
 
 export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   const [user, setUser] = useState(null);
@@ -98,6 +99,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   const [showPlayOptions, setShowPlayOptions] = useState(false);
   const [showFiveOptions, setShowFiveOptions] = useState(false);
   const [showCareerOptions, setShowCareerOptions] = useState(false);
+  const [showAccountShop, setShowAccountShop] = useState(false);
   const [incomingInvite, setIncomingInvite] = useState(null);
   const [newPseudonym, setNewPseudonym] = useState('');
   const [settingError, setSettingError] = useState('');
@@ -567,10 +569,26 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
             </div>
           </button>
 
+          <button 
+            onClick={() => { playSound('click'); setShowAccountShop(true); }}
+            className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500/20 to-amber-700/20 border border-amber-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-amber-500/30 hover:border-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] active:scale-95"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-xl md:text-2xl">🛍️</span>
+                <span className="heading-typography text-amber-600 dark:text-amber-400 font-bold text-base md:text-lg tracking-wide uppercase">Boutique de Compte</span>
+              </div>
+              <span className="text-amber-500 group-hover:translate-x-1 transition-transform">➔</span>
+            </div>
+          </button>
 
             </>
           )}
         </div>
+        
+        {showAccountShop && (
+          <AccountShopModal onClose={() => setShowAccountShop(false)} />
+        )}
         
         <div className="mt-12 text-slate-500 dark:text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-widest opacity-60">
           Wonderkid - Beta 0.1

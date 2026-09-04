@@ -229,3 +229,22 @@ export const loadMultiplayerSession = () => {
 export const clearMultiplayerSession = () => {
   localStorage.removeItem('wonderkid_mp_session');
 };
+
+const ACCOUNT_DATA_KEY = 'golden_xi_account_data';
+
+export const getAccountData = () => {
+  try {
+    const data = localStorage.getItem(ACCOUNT_DATA_KEY);
+    return data ? JSON.parse(data) : { goldenCoins: 0, unlockedPerks: [] };
+  } catch (e) {
+    return { goldenCoins: 0, unlockedPerks: [] };
+  }
+};
+
+export const saveAccountData = (data) => {
+  try {
+    localStorage.setItem(ACCOUNT_DATA_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.error('Failed to save account data', e);
+  }
+};
