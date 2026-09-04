@@ -225,14 +225,14 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         <div className={`absolute w-full z-20 ${themeStyles.layout?.statsTop || 'top-[61%]'}`}>
           <div className={`absolute flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsLeftCol || 'left-[22%]'} ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
             {stats.slice(0, 3).map((st, idx) => (
-              <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+              <span key={idx} className={`font-bold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                 {st.val}
               </span>
             ))}
           </div>
           <div className={`absolute flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsRightCol || 'left-[62%]'} ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
             {stats.slice(3, 6).map((st, idx) => (
-              <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+              <span key={idx} className={`font-bold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                 {st.val}
               </span>
             ))}
