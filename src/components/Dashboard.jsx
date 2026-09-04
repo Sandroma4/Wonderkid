@@ -136,6 +136,8 @@ export function Dashboard({
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [selectedOfferClub, setSelectedOfferClub] = useState(null);
   const playerCardRef = useRef(null);
+  const exportCardRef = useRef(null);
+  const exportPrimeCardRef = useRef(null);
   
   const { 
     player, club, season, eventsList, eventStep, totalEvents, currentEvent,
@@ -277,9 +279,9 @@ export function Dashboard({
                       
                       <button
                         onClick={async () => {
-                          if (!playerCardRef.current) return;
+                          if (!exportPrimeCardRef.current) return;
                           try {
-                            const canvas = await html2canvas(playerCardRef.current, { 
+                            const canvas = await html2canvas(exportPrimeCardRef.current, { 
                               backgroundColor: null, 
                               scale: 2,
                               useCORS: true,
@@ -891,9 +893,9 @@ export function Dashboard({
                 <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-0 md:p-4 shadow-2xl flex flex-col items-center h-fit">
                   <button 
                     onClick={async () => {
-                      if (!playerCardRef.current) return;
+                      if (!exportCardRef.current) return;
                       try {
-                        const canvas = await html2canvas(playerCardRef.current, { 
+                        const canvas = await html2canvas(exportCardRef.current, { 
                           backgroundColor: null, 
                           scale: 2,
                           useCORS: true,
@@ -1471,6 +1473,18 @@ export function Dashboard({
         player={player} 
         onBuyItem={onBuyLifestyleItem} 
       />
+
+      {/* HIDDEN CARDS FOR CLEAN HTML2CANVAS EXPORT */}
+      <div style={{ position: 'fixed', left: '-9999px', top: 0, opacity: 0, pointerEvents: 'none' }}>
+        <div ref={exportCardRef}>
+          <PlayerCard player={player} club={club} cardType={cardStyle} exportMode={true} />
+        </div>
+        {bestVersion && (
+          <div ref={exportPrimeCardRef}>
+            <PlayerCard player={bestVersion.player} club={bestVersion.club} cardType={cardStyle} exportMode={true} />
+          </div>
+        )}
+      </div>
       
     </>
   );

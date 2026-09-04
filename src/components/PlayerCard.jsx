@@ -2,7 +2,7 @@ import React from 'react';
 import { FlagIcon } from './FlagIcon';
 import { calculateOVR } from '../utils/gameData';
 
-export const PlayerCard = React.memo(({ player, club, cardType = 'auto', className = "" }) => {
+export const PlayerCard = React.memo(({ player, club, cardType = 'auto', className = '', exportMode = false }) => {
   if (!player) return null;
 
   const ovr = player.ovr || calculateOVR(player);
@@ -33,7 +33,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
     statsRightCol: 'left-[57%]',
     flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.5)] mt-[14px] mb-[4px]',
     flagClass: 'w-[38px] h-[22px] object-cover rounded-[1px]',
-    clubTop: 'top-[45%]',
+    clubTop: 'top-[44%]',
     clubLeft: 'left-[15%]',
     hideCustomLabels: true
   };
@@ -170,8 +170,12 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
   if (countryCode && countryCode.length > 3) countryCode = 'FR';
   const lastName = player.lastName || (player.name ? player.name.trim().split(' ').pop() : 'JOUEUR');
 
+  const wrapperClasses = exportMode 
+    ? `relative inline-block select-none ${className}`
+    : `relative inline-block select-none transform transition-transform duration-300 hover:scale-[1.02] scale-75 md:scale-100 origin-top mb-[-92px] mx-[-32px] md:mb-0 md:mx-0 ${className}`;
+
   return (
-    <div className={`relative inline-block select-none transform transition-transform duration-300 hover:scale-[1.02] scale-75 md:scale-100 origin-top mb-[-92px] mx-[-32px] md:mb-0 md:mx-0 ${className}`}>
+    <div className={wrapperClasses}>
       {/* Wrapper de l'image de la carte */}
       <div 
         className="w-[260px] h-[370px] relative drop-shadow-2xl bg-no-repeat mx-auto"
