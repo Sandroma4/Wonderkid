@@ -96,7 +96,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   const [showSettings, setShowSettings] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
   const [showPlayOptions, setShowPlayOptions] = useState(false);
-  const [showFutsalOptions, setShowFutsalOptions] = useState(false);
+  const [showFiveOptions, setShowFiveOptions] = useState(false);
   const [showCareerOptions, setShowCareerOptions] = useState(false);
   const [incomingInvite, setIncomingInvite] = useState(null);
   const [newPseudonym, setNewPseudonym] = useState('');
@@ -455,23 +455,23 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
                 <div>
                   <button 
-                    onClick={() => { playSound('click'); setShowFutsalOptions(!showFutsalOptions); }}
+                    onClick={() => { playSound('click'); setShowFiveOptions(!showFiveOptions); }}
                     className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 border border-orange-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] active:scale-95"
                   >
                     <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
                     <div className="flex items-center justify-between relative z-10">
                       <div className="flex items-center gap-3">
                         <span className="text-xl md:text-2xl">⚽</span>
-                        <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Futsal</span>
+                        <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Five</span>
                       </div>
-                      <span className={`text-orange-200 transition-transform ${showFutsalOptions ? 'rotate-90' : 'group-hover:translate-x-1'}`}>➔</span>
+                      <span className={`text-orange-200 transition-transform ${showFiveOptions ? 'rotate-90' : 'group-hover:translate-x-1'}`}>➔</span>
                     </div>
                   </button>
                   
-                  {showFutsalOptions && (
+                  {showFiveOptions && (
                     <div className="flex flex-col gap-3 pl-4 border-l-2 border-orange-500/30 ml-2 mt-3 animate-fade-in">
                       <button 
-                        onClick={() => { playSound('click'); onNavigate('futsalManager'); }}
+                        onClick={() => { playSound('click'); onNavigate('fiveManager'); }}
                         className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 border border-orange-400/50 p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] active:scale-95"
                       >
                         <div className="flex items-center justify-between relative z-10">
@@ -484,7 +484,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                       </button>
 
                       <button 
-                        onClick={() => { playSound('click'); onNavigate('futsalLobby'); }}
+                        onClick={() => { playSound('click'); onNavigate('fiveLobby'); }}
                         className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-orange-600 to-red-700 border border-red-500/50 p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(239,68,68,0.4)] active:scale-95"
                       >
                         <div className="flex items-center justify-between relative z-10">

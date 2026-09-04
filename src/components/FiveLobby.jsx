@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { generateRoomCode, createMultiplayerRoom } from '../utils/multiplayer';
 import { playSound } from '../utils/audio';
 import { supabase } from '../supabaseClient';
-import { getFutsalTeams } from '../utils/storage';
+import { getFiveTeams } from '../utils/storage';
 
-export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
+export const FiveLobby = ({ onStart, onBack, multiplayerContext }) => {
   const [roomId, setRoomId] = useState(multiplayerContext ? multiplayerContext.roomId : '');
   const [joinCode, setJoinCode] = useState('');
   const [players, setPlayers] = useState(multiplayerContext ? multiplayerContext.players : []);
@@ -25,7 +25,7 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
       }
     };
     fetchUser();
-    setMyTeams(getFutsalTeams());
+    setMyTeams(getFiveTeams());
   }, []);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
       name: playerName,
       isHost: true,
       ready: false,
-      futsalTeam: null
+      fiveTeam: null
     };
     
     const room = createMultiplayerRoom(code, playerId, initialPlayerState, (updatedPlayers) => {
@@ -79,7 +79,7 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
       name: playerName,
       isHost: false,
       ready: false,
-      futsalTeam: null
+      fiveTeam: null
     };
     
     const room = createMultiplayerRoom(joinCode.toUpperCase(), playerId, initialPlayerState, (updatedPlayers) => {
@@ -94,7 +94,7 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
     setSelectedTeamId(teamId);
     const team = myTeams.find(t => t.id === teamId);
     if (roomObj) {
-      roomObj.updateState({ futsalTeam: team, ready: true });
+      roomObj.updateState({ fiveTeam: team, ready: true });
     }
   };
 
@@ -115,7 +115,7 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
     }
   }, [players, status, onStart, roomObj, playerId, roomId, isHost]);
 
-  const allPlayersReady = players.length === 2 && players.every(p => p.ready && p.futsalTeam);
+  const allPlayersReady = players.length === 2 && players.every(p => p.ready && p.fiveTeam);
 
   return (
     <div className="app-typography min-h-[100dvh] bg-red-900 flex flex-col items-center justify-center p-4 relative overflow-hidden">
@@ -132,7 +132,7 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
           </button>
           <div className="w-full text-center px-12 md:px-16">
             <h2 className="heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 uppercase tracking-wider mb-2 leading-none">
-              FUTSAL (5v5)
+              FIVE (5v5)
             </h2>
             <p className="text-slate-500 dark:text-slate-400 text-sm">
               Affrontez d'autres joueurs avec votre équipe composée de vos 5 meilleures cartes du Hall of Fame.
@@ -144,7 +144,7 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
           <div className="w-full max-w-sm mx-auto space-y-4">
             {myTeams.length === 0 ? (
               <div className="p-4 bg-orange-500/10 border border-orange-500/50 rounded-xl text-orange-400 font-bold mb-4">
-                Vous devez d'abord créer une équipe Futsal dans le menu "Gestion Futsal" avant de pouvoir jouer en ligne.
+                Vous devez d'abord créer une équipe Five dans le menu "Gestion Five" avant de pouvoir jouer en ligne.
               </div>
             ) : (
               <>
@@ -239,7 +239,7 @@ export const FutsalLobby = ({ onStart, onBack, multiplayerContext }) => {
                 disabled={!allPlayersReady}
                 className="w-full max-w-sm py-4 bg-orange-600 hover:bg-orange-500 disabled:bg-slate-800 disabled:text-slate-500 text-white rounded-xl font-bold uppercase tracking-wide transition-all shadow-lg shadow-orange-900/20 disabled:shadow-none"
               >
-                {players.length < 2 ? 'Attente des joueurs' : (!allPlayersReady ? 'En attente des équipes' : 'Lancer le Match Futsal')}
+                {players.length < 2 ? 'Attente des joueurs' : (!allPlayersReady ? 'En attente des équipes' : 'Lancer le Match Five')}
               </button>
             ) : (
               <div className="w-full max-w-sm py-4 bg-slate-800 text-slate-400 rounded-xl font-bold uppercase tracking-wide border border-slate-700 flex justify-center items-center gap-2">

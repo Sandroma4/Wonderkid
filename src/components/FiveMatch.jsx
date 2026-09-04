@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { playSound } from '../utils/audio';
 
-export const FutsalMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) => {
+export const FiveMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) => {
   const [phase, setPhase] = useState(1);
   const [score, setScore] = useState({ host: 0, guest: 0 });
   const [myAction, setMyAction] = useState(null);
@@ -13,8 +13,8 @@ export const FutsalMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) 
   const me = players.find(p => p.playerId === playerId);
   const opponent = players.find(p => p.playerId !== playerId);
   
-  const myTeam = me.futsalTeam;
-  const oppTeam = opponent.futsalTeam;
+  const myTeam = me.fiveTeam;
+  const oppTeam = opponent.fiveTeam;
 
   // Attacker is Host on odd phases, Guest on even phases
   const amIAttacking = (phase % 2 !== 0 && isHost) || (phase % 2 === 0 && !isHost);
@@ -39,14 +39,14 @@ export const FutsalMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) 
   useEffect(() => {
     if (roomObj) {
       roomObj.setOnBroadcast((payload) => {
-        if (payload.type === 'FUTSAL_ACTION' && payload.phase === phase) {
+        if (payload.type === 'FIVE_ACTION' && payload.phase === phase) {
           setOpponentAction(payload.action);
-        } else if (payload.type === 'FUTSAL_NEXT_PHASE') {
+        } else if (payload.type === 'FIVE_NEXT_PHASE') {
           setPhase(payload.nextPhase);
           setMyAction(null);
           setOpponentAction(null);
           setResolving(false);
-        } else if (payload.type === 'FUTSAL_RESOLVE') {
+        } else if (payload.type === 'FIVE_RESOLVE') {
           setResolving(true);
           setTimeout(() => {
             setLogs(prev => [...prev, payload.log]);
@@ -57,7 +57,7 @@ export const FutsalMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) 
               if (payload.isEnd) {
                 setMatchEnded(true);
               } else if (isHost) {
-                roomObj.sendBroadcast({ type: 'FUTSAL_NEXT_PHASE', nextPhase: phase + 1 });
+                roomObj.sendBroadcast({ type: 'FIVE_NEXT_PHASE', nextPhase: phase + 1 });
               }
             }, 3000);
           }, 1000);
@@ -75,7 +75,7 @@ export const FutsalMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) 
   const handleSelectAction = (actionId) => {
     playSound('click');
     setMyAction(actionId);
-    roomObj.sendBroadcast({ type: 'FUTSAL_ACTION', phase, action: actionId });
+    roomObj.sendBroadcast({ type: 'FIVE_ACTION', phase, action: actionId });
   };
 
   const resolvePhase = () => {
@@ -124,7 +124,7 @@ export const FutsalMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) 
     const isEnd = phase >= 6; // 6 actions = 3 attacks each
 
     roomObj.sendBroadcast({
-      type: 'FUTSAL_RESOLVE',
+      type: 'FIVE_RESOLVE',
       log: { phase, text: logText, goalFor },
       goalFor,
       isEnd

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getFutsalTeams, saveFutsalTeams, getCardCollection } from '../utils/storage';
+import { getFiveTeams, saveFiveTeams, getCardCollection } from '../utils/storage';
 import { playSound } from '../utils/audio';
 import { PlayerCard } from './PlayerCard';
 
@@ -11,7 +11,7 @@ const FORMATIONS = {
   '3-1': { name: 'Défensif (3-1)', slots: ['GK', 'DEF', 'DEF', 'DEF', 'ATT'] }
 };
 
-export const FutsalTeamsManager = ({ onBack }) => {
+export const FiveTeamsManager = ({ onBack }) => {
   const [teams, setTeams] = useState([]);
   const [collection, setCollection] = useState([]);
   const [editingTeam, setEditingTeam] = useState(null);
@@ -19,14 +19,14 @@ export const FutsalTeamsManager = ({ onBack }) => {
   const [activeSlot, setActiveSlot] = useState(null);
 
   useEffect(() => {
-    setTeams(getFutsalTeams());
+    setTeams(getFiveTeams());
     setCollection(getCardCollection());
   }, []);
 
   const handleCreateTeam = () => {
     setEditingTeam({
       id: Date.now().toString(),
-      name: `Équipe Futsal ${teams.length + 1}`,
+      name: `Équipe Five ${teams.length + 1}`,
       formation: '1-2-1',
       players: [null, null, null, null, null]
     });
@@ -59,7 +59,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
       newTeams.push(editingTeam);
     }
     setTeams(newTeams);
-    saveFutsalTeams(newTeams);
+    saveFiveTeams(newTeams);
     setEditingTeam(null);
     playSound('levelUp');
   };
@@ -82,7 +82,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
     if (window.confirm("Supprimer cette équipe ?")) {
       const newTeams = teams.filter(t => t.id !== id);
       setTeams(newTeams);
-      saveFutsalTeams(newTeams);
+      saveFiveTeams(newTeams);
       playSound('click');
     }
   };
@@ -154,7 +154,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
                   </div>
               </div>
 
-              {/* Futsal Court Markings */}
+              {/* Five Court Markings */}
               <div className="absolute inset-2 md:inset-4 border-2 border-white/40 rounded-lg pointer-events-none"></div>
               <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/40 -translate-y-1/2 pointer-events-none"></div>
               <div className="absolute top-1/2 left-1/2 w-24 h-24 border-2 border-white/40 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
@@ -163,7 +163,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
               <div className="absolute top-2 md:top-4 left-1/2 w-48 h-20 border-2 border-white/40 border-t-0 -translate-x-1/2 pointer-events-none"></div>
               <div className="absolute bottom-2 md:bottom-4 left-1/2 w-48 h-20 border-2 border-white/40 border-b-0 -translate-x-1/2 pointer-events-none"></div>
               
-              {/* Wood texture overlay for Futsal */}
+              {/* Wood texture overlay for Five */}
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-20 pointer-events-none"></div>
               
               {/* Slots */}
@@ -311,7 +311,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
         </button>
         <div className="w-full text-center px-12 md:px-16">
           <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
-            Gestion Futsal
+            Gestion Five
           </h2>
         </div>
       </div>
@@ -327,7 +327,7 @@ export const FutsalTeamsManager = ({ onBack }) => {
         <div className="text-center p-12 bg-slate-900 rounded-2xl border border-slate-800 border-dashed">
           <div className="text-4xl mb-4">👟</div>
           <h3 className="heading-typography text-xl font-bold text-white mb-2 uppercase">Aucune équipe</h3>
-          <p className="text-slate-400 max-w-md mx-auto">Créez votre première équipe de Futsal avec vos meilleures cartes du Hall of Fame pour affronter d'autres joueurs en ligne.</p>
+          <p className="text-slate-400 max-w-md mx-auto">Créez votre première équipe de Five avec vos meilleures cartes du Hall of Fame pour affronter d'autres joueurs en ligne.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">

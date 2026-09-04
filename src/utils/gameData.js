@@ -294,7 +294,7 @@ export const ORIGINS_BACKGROUNDS = [
   { id: 'STREET', name: 'Quartiers Populaires', icon: '🔥', desc: 'Forgé sur le béton. Vous jouez avec la rage de vaincre.', startingMoney: 2000, statBonus: { dribbling: 5, pace: 3 } },
   { id: 'AMATEUR', name: 'Football Amateur', icon: '🚜', desc: 'Découvert sur le tard. Habitué au combat physique.', startingMoney: 4000, statBonus: { physical: 6, defense: 2 } },
   { id: 'LEGACY', name: 'Héritage Pro', icon: '👑', desc: 'Enfant d\'un ancien pro. Une aisance naturelle.', startingMoney: 40000, statBonus: { finishing: 3, passing: 3 } },
-  { id: 'FUTSAL', name: 'Pépite Futsal', icon: '⚡', desc: 'Technique dans les petits espaces et feintes.', startingMoney: 6000, statBonus: { dribbling: 4, finishing: 3 } }
+  { id: 'FIVE', name: 'Pépite Five', icon: '⚡', desc: 'Technique dans les petits espaces et feintes.', startingMoney: 6000, statBonus: { dribbling: 4, finishing: 3 } }
 ];
 
 export const POSITIONS_DATA = [
@@ -307,7 +307,7 @@ export const POSITIONS_DATA = [
       { id: 'buteur', name: 'Buteur', description: 'Finisseur axial pur, obsédé par le but.', baseStats: { pace: 72, finishing: 85, passing: 58, dribbling: 65, defense: 30, physical: 75 } },
       { id: 'bg_street', name: 'Dalleux (Origine)', desc: 'Bonus de stats dans les moments difficiles.', icon: '🔥', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
   { id: 'bg_academy', name: 'Élève Modèle (Origine)', desc: 'La confiance du coach est plus facile à gagner', icon: '📚', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
-  { id: 'bg_futsal', name: 'Technique Pure (Origine)', desc: 'Augmente considérablement les dribbles et la vista', icon: '⚡', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
+  { id: 'bg_five', name: 'Technique Pure (Origine)', desc: 'Augmente considérablement les dribbles et la vista', icon: '⚡', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
   { id: 'renard', name: 'Renard de surface', description: 'Opportuniste redoutable dans la zone de vérité.', baseStats: { pace: 68, finishing: 88, passing: 55, dribbling: 62, defense: 28, physical: 70 } },
       { id: 'faux9', name: 'Faux 9', description: 'Décroche pour créer le jeu et distribuer.', baseStats: { pace: 75, finishing: 74, passing: 78, dribbling: 76, defense: 35, physical: 65 } },
       { id: 'ailier', name: 'Ailier', description: 'Perpétuelle percussion sur les côtés et centres.', baseStats: { pace: 88, finishing: 70, passing: 68, dribbling: 84, defense: 35, physical: 62 } }
@@ -2191,8 +2191,8 @@ export const ALL_EVENTS = [
     ]
   },
   {
-    id: 'origin_futsal_1', category: 'LIFESTYLE', tag: 'Le Défi Viral',
-    condition: (player) => player.background?.id === 'FUTSAL' && Math.random() > 0.4,
+    id: 'origin_five_1', category: 'LIFESTYLE', tag: 'Le Défi Viral',
+    condition: (player) => player.background?.id === 'FIVE' && Math.random() > 0.4,
     description: "Un influenceur freestyle très connu débarque à votre entraînement et vous défie dans un 1v1 diffusé en direct devant des millions de viewers.",
     options: [
       {
@@ -2919,7 +2919,7 @@ export const ALL_EVENTS = [
 export const PERKS_LIST = [
   { id: 'bg_street', name: 'Dalleux (Origine)', desc: 'Bonus de stats dans les moments difficiles.', icon: '🔥', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
   { id: 'bg_academy', name: 'Élève Modèle (Origine)', desc: 'La confiance du coach est plus facile à gagner', icon: '📚', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
-  { id: 'bg_futsal', name: 'Technique Pure (Origine)', desc: 'Augmente considérablement les dribbles et la vista', icon: '⚡', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
+  { id: 'bg_five', name: 'Technique Pure (Origine)', desc: 'Augmente considérablement les dribbles et la vista', icon: '⚡', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
   { id: 'renard', name: 'Renard des surfaces', desc: 'Augmente les buts de 30%', icon: '🦊', roles: ['ST', 'ATT'] },
   { id: 'maestro', name: 'Maestro', desc: 'Augmente les passes décisives de 30%', icon: '🎩', roles: ['MID', 'CM', 'ATT'] },
   { id: 'mur', name: 'Muraille', desc: 'Augmente les clean sheets de 30%', icon: '🧱', roles: ['DEF', 'CB', 'GK'] },

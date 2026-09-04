@@ -125,7 +125,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
         if (background?.id === 'ACADEMY') return ['bg_academy'];
         if (background?.id === 'LEGACY') return ['star'];
         if (background?.id === 'AMATEUR') return ['increvable'];
-        if (background?.id === 'FUTSAL') return ['bg_futsal'];
+        if (background?.id === 'FIVE') return ['bg_five'];
         return [];
       })()
     };

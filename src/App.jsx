@@ -3,9 +3,9 @@ import { CharacterCreation } from './components/CharacterCreation';
 import { Dashboard } from './components/Dashboard';
 import { MainMenu } from './components/MainMenu';
 import { MultiplayerLobby } from './components/MultiplayerLobby';
-import { FutsalLobby } from './components/FutsalLobby';
-import { FutsalTeamsManager } from './components/FutsalTeamsManager';
-import { FutsalMatch } from './components/FutsalMatch';
+import { FiveLobby } from './components/FiveLobby';
+import { FiveTeamsManager } from './components/FiveTeamsManager';
+import { FiveMatch } from './components/FiveMatch';
 import { GlobalPalmares } from './components/GlobalPalmares';
 import { Achievements } from './components/Achievements';
 import { Leaderboard } from './components/Leaderboard';
@@ -1782,16 +1782,16 @@ export default function App() {
     setAppView('mainMenu');
   };
 
-  if (appView === 'futsalManager') {
-    return <FutsalTeamsManager onBack={handleBack} />;
+  if (appView === 'fiveManager') {
+    return <FiveTeamsManager onBack={handleBack} />;
   }
 
-  if (appView === 'futsalLobby') {
-    return <FutsalLobby 
+  if (appView === 'fiveLobby') {
+    return <FiveLobby 
       multiplayerContext={multiplayerContext}
       onStart={(roomObj, playerId, players, roomId, isHost) => {
         setMultiplayerContext({ roomObj, playerId, players, roomId, isHost, isCoop: false });
-        setAppView('futsalMatch');
+        setAppView('fiveMatch');
       }}
       onBack={() => {
         if (multiplayerContext?.roomObj) multiplayerContext.roomObj.leaveRoom();
@@ -1802,8 +1802,8 @@ export default function App() {
     />
   }
 
-  if (appView === 'futsalMatch') {
-    return <FutsalMatch 
+  if (appView === 'fiveMatch') {
+    return <FiveMatch 
       roomObj={multiplayerContext.roomObj}
       playerId={multiplayerContext.playerId}
       players={multiplayerContext.players}
