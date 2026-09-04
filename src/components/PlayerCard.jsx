@@ -1,7 +1,6 @@
 import React from 'react';
 import { FlagIcon } from './FlagIcon';
 import { calculateOVR } from '../utils/gameData';
-import { getAccountData } from '../utils/storage';
 
 export const PlayerCard = React.memo(({ player, club, cardType = 'auto', className = "" }) => {
   if (!player) return null;
@@ -11,11 +10,11 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
 
   // Choix automatique ou manuel du thème de la carte
   let theme = cardType;
-  const equipped = getAccountData().equippedCosmetic;
-  const hasCosmetic = equipped && equipped !== 'default' && cardType === 'auto' && !isGk;
+  const appliedCosmetic = player.appliedCosmetic;
+  const hasCosmetic = appliedCosmetic && cardType === 'auto' && !isGk;
   
   if (hasCosmetic) {
-    theme = equipped;
+    theme = appliedCosmetic;
   } else if (theme === 'auto') {
     if (ovr >= 85) theme = 'totw';
     else if (ovr >= 75) theme = 'gold';
@@ -101,6 +100,30 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       bgPos: '100% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#f6c589]',
+      textSecondary: 'hidden',
+      hideLabels: true
+    },
+    elite1: {
+      bgImage: "url('/cosmetics/elite.png')",
+      bgPos: '0% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#a7f3d0]',
+      textSecondary: 'hidden',
+      hideLabels: true
+    },
+    elite2: {
+      bgImage: "url('/cosmetics/elite.png')",
+      bgPos: '50% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#fecdd3]',
+      textSecondary: 'hidden',
+      hideLabels: true
+    },
+    elite3: {
+      bgImage: "url('/cosmetics/elite.png')",
+      bgPos: '100% 0%',
+      bgSize: '300% 100%',
+      textPrimary: 'text-[#bfdbfe]',
       textSecondary: 'hidden',
       hideLabels: true
     }

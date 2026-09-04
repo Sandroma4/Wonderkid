@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { getAccountData, saveAccountData } from '../utils/storage';
 import { playSound } from '../utils/audio';
 
-const COSMETICS = [
-  { id: 'default', name: 'Classique', type: 'auto', price: 0, category: 'Base' },
-  { id: 'bronze_alt', name: 'Bronze Gravé', image: '/cosmetics/metals.png', bgPos: '0% 0%', price: 100, category: 'Métaux' },
-  { id: 'silver_alt', name: 'Argent Sombre', image: '/cosmetics/metals.png', bgPos: '50% 0%', price: 100, category: 'Métaux' },
-  { id: 'gold_alt', name: 'Or Pur', image: '/cosmetics/metals.png', bgPos: '100% 0%', price: 100, category: 'Métaux' },
-  { id: 'stone', name: 'Roche Ancienne', image: '/cosmetics/fantasy.png', bgPos: '0% 0%', price: 500, category: 'Fantasy' },
-  { id: 'cyberpunk', name: 'Néon Cyberpunk', image: '/cosmetics/fantasy.png', bgPos: '50% 0%', price: 500, category: 'Fantasy' },
-  { id: 'earth', name: 'Terre Aride', image: '/cosmetics/fantasy.png', bgPos: '100% 0%', price: 500, category: 'Fantasy' }
+export const COSMETICS_DATA = [
+  { id: 'bronze_alt', name: 'Bronze Gravé', image: '/cosmetics/metals.png', bgPos: '0% 0%', price: 10, category: 'Métaux (<65 OVR)', minOvr: 0, maxOvr: 64 },
+  { id: 'silver_alt', name: 'Argent Sombre', image: '/cosmetics/metals.png', bgPos: '50% 0%', price: 10, category: 'Métaux (65-74 OVR)', minOvr: 65, maxOvr: 74 },
+  { id: 'gold_alt', name: 'Or Pur', image: '/cosmetics/metals.png', bgPos: '100% 0%', price: 10, category: 'Métaux (75-84 OVR)', minOvr: 75, maxOvr: 84 },
+  { id: 'stone', name: 'Roche Ancienne', image: '/cosmetics/fantasy.png', bgPos: '0% 0%', price: 30, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
+  { id: 'cyberpunk', name: 'Néon Cyberpunk', image: '/cosmetics/fantasy.png', bgPos: '50% 0%', price: 30, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
+  { id: 'earth', name: 'Terre Aride', image: '/cosmetics/fantasy.png', bgPos: '100% 0%', price: 30, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
+  { id: 'elite1', name: 'Elite 87+', image: '/cosmetics/elite.png', bgPos: '0% 0%', price: 50, category: 'Elite (87+ OVR)', minOvr: 87, maxOvr: 99 },
+  { id: 'elite2', name: 'Elite 90+', image: '/cosmetics/elite.png', bgPos: '50% 0%', price: 50, category: 'Elite (90+ OVR)', minOvr: 90, maxOvr: 99 },
+  { id: 'elite3', name: 'Elite 93+', image: '/cosmetics/elite.png', bgPos: '100% 0%', price: 50, category: 'Elite (93+ OVR)', minOvr: 93, maxOvr: 99 }
 ];
 
 export const CosmeticsStore = ({ onBack }) => {
-  const [account, setAccount] = useState({ goldenCoins: 0, unlockedCosmetics: ['default'], equippedCosmetic: 'default' });
+  const [account, setAccount] = useState({ goldenCoins: 0, unlockedPerks: [], cosmeticsInventory: {} });
 
   useEffect(() => {
     setAccount(getAccountData());
@@ -21,30 +23,22 @@ export const CosmeticsStore = ({ onBack }) => {
 
   const handleBuy = (cosmetic) => {
     playSound('click');
-    if (account.unlockedCosmetics.includes(cosmetic.id)) return;
-    
     if (account.goldenCoins >= cosmetic.price) {
       playSound('coins');
+      const currentQty = account.cosmeticsInventory?.[cosmetic.id] || 0;
       const newAccount = {
         ...account,
         goldenCoins: account.goldenCoins - cosmetic.price,
-        unlockedCosmetics: [...account.unlockedCosmetics, cosmetic.id],
-        equippedCosmetic: cosmetic.id // Auto equip on buy
+        cosmeticsInventory: {
+          ...account.cosmeticsInventory,
+          [cosmetic.id]: currentQty + 1
+        }
       };
       saveAccountData(newAccount);
       setAccount(newAccount);
     } else {
       alert("Fonds insuffisants !");
     }
-  };
-
-  const handleEquip = (cosmetic) => {
-    playSound('click');
-    if (!account.unlockedCosmetics.includes(cosmetic.id)) return;
-    
-    const newAccount = { ...account, equippedCosmetic: cosmetic.id };
-    saveAccountData(newAccount);
-    setAccount(newAccount);
   };
 
   return (
@@ -65,7 +59,7 @@ export const CosmeticsStore = ({ onBack }) => {
           <h1 className="heading-typography text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 uppercase tracking-tight drop-shadow-lg leading-none">
             Boutique Cosmétique
           </h1>
-          <p className="text-slate-400 mt-2 text-sm md:text-lg font-medium">Personnalisez vos cartes avec vos Golden Coins.</p>
+          <p className="text-slate-400 mt-2 text-sm md:text-lg font-medium">Achetez des designs consommables pour vos cartes du Hall of Fame.</p>
         </div>
         
         <div className="bg-slate-800/80 border border-amber-500/50 rounded-full px-6 py-2 shadow-[0_0_15px_rgba(245,158,11,0.3)] flex items-center gap-3">
@@ -74,69 +68,53 @@ export const CosmeticsStore = ({ onBack }) => {
         </div>
         
         <p className="text-rose-400 mt-4 text-xs max-w-lg text-center bg-rose-900/20 p-2 rounded-lg border border-rose-900/50">
-          ⚠️ Note : Les gardiens de but (GK) ne sont pas affectés par ces designs personnalisés.
+          ⚠️ Note : Les gardiens de but (GK) ne sont pas affectés par ces designs personnalisés. Les cosmétiques s'appliquent une seule fois par carte.
         </p>
       </div>
 
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-        {COSMETICS.map(cosmetic => {
-          const isUnlocked = account.unlockedCosmetics.includes(cosmetic.id);
-          const isEquipped = account.equippedCosmetic === cosmetic.id;
+        {COSMETICS_DATA.map(cosmetic => {
+          const ownedQty = account.cosmeticsInventory?.[cosmetic.id] || 0;
           
           return (
-            <div key={cosmetic.id} className={`flex flex-col bg-slate-800/50 rounded-3xl p-6 border transition-all ${isEquipped ? 'border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.3)]' : 'border-slate-700 hover:border-slate-500'}`}>
+            <div key={cosmetic.id} className="flex flex-col bg-slate-800/50 rounded-3xl p-6 border border-slate-700 hover:border-slate-500 transition-all">
               <div className="flex justify-between items-center mb-6">
                 <div>
                   <h3 className="text-xl font-bold text-white">{cosmetic.name}</h3>
                   <span className="text-xs text-slate-400 uppercase font-bold">{cosmetic.category}</span>
                 </div>
-                {!isUnlocked && (
-                  <div className="flex items-center gap-1 bg-slate-900/80 px-3 py-1 rounded-lg border border-slate-700">
-                    <span className="font-bold text-amber-400">{cosmetic.price}</span>
-                    <span className="text-sm">💰</span>
-                  </div>
-                )}
+                <div className="flex items-center gap-1 bg-slate-900/80 px-3 py-1 rounded-lg border border-slate-700">
+                  <span className="font-bold text-amber-400">{cosmetic.price}</span>
+                  <span className="text-sm">💰</span>
+                </div>
               </div>
               
-              <div className="flex-1 flex justify-center items-center mb-6 min-h-[300px]">
-                {cosmetic.id === 'default' ? (
-                  <div className="w-[180px] h-[256px] bg-slate-700 rounded-xl flex items-center justify-center border-4 border-slate-600 shadow-xl">
-                    <span className="text-slate-400 font-bold uppercase text-xl">Thème Auto</span>
+              <div className="flex-1 flex justify-center items-center mb-6 min-h-[300px] relative">
+                <div 
+                  className="w-[180px] h-[256px] relative drop-shadow-2xl bg-no-repeat shadow-2xl transition-transform hover:scale-105"
+                  style={{
+                    backgroundImage: `url('${cosmetic.image}')`,
+                    backgroundPosition: cosmetic.bgPos,
+                    backgroundSize: '300% 100%',
+                    backgroundColor: 'transparent'
+                  }}
+                />
+                
+                {ownedQty > 0 && (
+                  <div className="absolute top-0 right-10 bg-amber-500 text-slate-900 font-black px-3 py-1 rounded-full shadow-lg border-2 border-white translate-x-1/2 -translate-y-1/2">
+                    x{ownedQty}
                   </div>
-                ) : (
-                  <div 
-                    className="w-[180px] h-[256px] relative drop-shadow-2xl bg-no-repeat shadow-2xl transition-transform hover:scale-105"
-                    style={{
-                      backgroundImage: `url('${cosmetic.image}')`,
-                      backgroundPosition: cosmetic.bgPos,
-                      backgroundSize: '300% 100%',
-                      backgroundColor: 'transparent'
-                    }}
-                  />
                 )}
               </div>
               
               <div className="mt-auto">
-                {isEquipped ? (
-                  <button disabled className="w-full py-3 rounded-xl font-bold text-slate-900 bg-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.5)]">
-                    Équipé ✅
-                  </button>
-                ) : isUnlocked ? (
-                  <button 
-                    onClick={() => handleEquip(cosmetic)}
-                    className="w-full py-3 rounded-xl font-bold text-white bg-slate-700 hover:bg-slate-600 border border-slate-600 transition-colors"
-                  >
-                    Équiper
-                  </button>
-                ) : (
-                  <button 
-                    onClick={() => handleBuy(cosmetic)}
-                    disabled={account.goldenCoins < cosmetic.price}
-                    className={`w-full py-3 rounded-xl font-bold text-white transition-all ${account.goldenCoins >= cosmetic.price ? 'bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-900/50' : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'}`}
-                  >
-                    {account.goldenCoins >= cosmetic.price ? 'Acheter' : 'Fonds Insuffisants'}
-                  </button>
-                )}
+                <button 
+                  onClick={() => handleBuy(cosmetic)}
+                  disabled={account.goldenCoins < cosmetic.price}
+                  className={`w-full py-3 rounded-xl font-bold text-white transition-all ${account.goldenCoins >= cosmetic.price ? 'bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-900/50' : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'}`}
+                >
+                  {account.goldenCoins >= cosmetic.price ? 'Acheter 1x' : 'Fonds Insuffisants'}
+                </button>
               </div>
             </div>
           );

@@ -115,6 +115,19 @@ export const saveCardToCollection = (player, palmares, maxOvr) => {
   }
 };
 
+export const updateCardInCollection = (cardId, updates) => {
+  const current = getCardCollection();
+  const index = current.findIndex(c => c.id === cardId);
+  if (index === -1) return;
+  
+  current[index] = { ...current[index], ...updates };
+  try {
+    localStorage.setItem(CARD_COLLECTION_KEY, JSON.stringify(current));
+  } catch (e) {
+    console.error('Failed to update card in collection', e);
+  }
+};
+
 export const getFiveTeams = () => {
   try {
     const data = localStorage.getItem(FIVE_TEAMS_KEY);
@@ -239,11 +252,10 @@ export const getAccountData = () => {
     return {
       goldenCoins: parsed.goldenCoins || 0,
       unlockedPerks: parsed.unlockedPerks || [],
-      unlockedCosmetics: parsed.unlockedCosmetics || ['default'],
-      equippedCosmetic: parsed.equippedCosmetic || 'default'
+      cosmeticsInventory: parsed.cosmeticsInventory || {}
     };
   } catch (e) {
-    return { goldenCoins: 0, unlockedPerks: [], unlockedCosmetics: ['default'], equippedCosmetic: 'default' };
+    return { goldenCoins: 0, unlockedPerks: [], cosmeticsInventory: {} };
   }
 };
 
