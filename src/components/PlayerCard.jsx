@@ -202,31 +202,21 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
           </h3>
         </div>
 
-        {/* LES 6 STATISTIQUES (CHIFFRES + TEXTES) */}
-        <div className="absolute top-[60.5%] w-full flex justify-center z-20">
-          <div className="flex gap-x-6">
-            <div className="flex flex-col gap-y-[10px]">
+        {/* LES 6 STATISTIQUES (CHIFFRES UNIQUEMENT) */}
+        <div className="absolute top-[61%] w-full flex justify-center z-20">
+          <div className="flex gap-x-[50px]">
+            <div className="flex flex-col gap-y-[9px] items-end w-[35px] pr-2">
               {stats.slice(0, 3).map((st, idx) => (
-                <div key={idx} className="flex items-center justify-start gap-1.5">
-                  <span className={`font-semibold text-[19px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
-                    {st.val}
-                  </span>
-                  <span className={`text-[15px] font-medium uppercase leading-none ${themeStyles.textSecondary}`}>
-                    {st.label}
-                  </span>
-                </div>
+                <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+                  {st.val}
+                </span>
               ))}
             </div>
-            <div className="flex flex-col gap-y-[10px]">
+            <div className="flex flex-col gap-y-[9px] items-end w-[35px] pr-2">
               {stats.slice(3, 6).map((st, idx) => (
-                <div key={idx} className="flex items-center justify-start gap-1.5">
-                  <span className={`font-semibold text-[19px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
-                    {st.val}
-                  </span>
-                  <span className={`text-[15px] font-medium uppercase leading-none ${themeStyles.textSecondary}`}>
-                    {st.label}
-                  </span>
-                </div>
+                <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+                  {st.val}
+                </span>
               ))}
             </div>
           </div>
