@@ -23,15 +23,15 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
   }
 
   const basicLayout = {
-    ovrTop: 'top-[11%]',
-    ovrLeft: 'left-[8%]',
-    avatarTop: 'top-[32%]',
+    ovrTop: 'top-[10%]',
+    ovrLeft: 'left-[14%]',
+    avatarTop: 'top-[22%]',
     avatarLeft: 'left-[30%]',
     nameTop: 'top-[56%]',
-    statsTop: 'top-[65%]',
+    statsTop: 'top-[67%]',
     statsGapY: 'gap-y-[6px]',
     statsLeftCol: 'left-[10%]',
-    statsRightCol: 'left-[51%]',
+    statsRightCol: 'left-[61%]',
     flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.5)] mt-[14px] mb-[4px]',
     flagClass: 'w-[38px] h-[22px] object-cover rounded-[1px]',
     hideCustomLabels: true
@@ -225,14 +225,14 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         <div className={`absolute w-full z-20 ${themeStyles.layout?.statsTop || 'top-[61%]'}`}>
           <div className={`absolute flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsLeftCol || 'left-[22%]'} ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
             {stats.slice(0, 3).map((st, idx) => (
-              <span key={idx} className={`font-bold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+              <span key={idx} className={`font-bold text-[22px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                 {st.val}
               </span>
             ))}
           </div>
           <div className={`absolute flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsRightCol || 'left-[62%]'} ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
             {stats.slice(3, 6).map((st, idx) => (
-              <span key={idx} className={`font-bold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+              <span key={idx} className={`font-bold text-[22px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                 {st.val}
               </span>
             ))}
