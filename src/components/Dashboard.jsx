@@ -323,7 +323,7 @@ export function Dashboard({
                         </div>
 
                         {/* Score Box */}
-                        <div className="w-full md:w-1/3 bg-slate-800/70 p-3 rounded-2xl border border-amber-500/30 shadow-inner text-center flex flex-col justify-center min-h-[80px]">
+                        <div className="w-full md:w-1/3 bg-slate-800/70 p-3 rounded-2xl border border-amber-500/30 shadow-inner text-center flex flex-col justify-center min-h-[80px] relative">
                           <h3 className="heading-typography font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1 text-[10px] md:text-xs flex items-center justify-center gap-1.5">
                             <span>👑</span> Score Carrière
                           </h3>
@@ -331,6 +331,11 @@ export function Dashboard({
                             {gameState.score?.totalScore ? gameState.score.totalScore.toLocaleString('fr-FR') : "0"}
                           </div>
                           <p className="text-[8px] md:text-[9px] text-slate-400 uppercase tracking-widest leading-none">Pts Légendaires</p>
+                          {gameState.score?.isNemesisSlayer && (
+                             <div className="absolute -top-3 -right-3 bg-rose-600 border-2 border-slate-900 text-white text-[9px] md:text-[10px] font-black uppercase px-2 py-1 rounded-lg transform rotate-6 shadow-lg">
+                               Némésis Slayer ⚔️
+                             </div>
+                          )}
                         </div>
                       </div>
 
@@ -1269,74 +1274,88 @@ export function Dashboard({
               {/* ONGLET : CARRIÈRE (TROPHÉES & ÉTAT) */}
               <div className={`${activeMobileTab !== 'carriere' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1`}>
 
-                {/* BLOC CARTE FUT DU RIVAL (JUSTE LA CARTE) */}
+                {/* BLOC COMPARATIF NÉMÉSIS */}
                 {rival && (() => {
                   const rivalCountryId = rival.club ? rival.club.origin : 'FR';
-                  return (
-                    <div className="bg-white dark:bg-slate-900 border border-rose-900/50 rounded-3xl p-0 md:p-4 shadow-2xl flex flex-col items-center h-fit relative overflow-hidden">
-                      <div className="absolute -top-4 -right-4 p-4 opacity-10 text-6xl transform rotate-12 pointer-events-none">⚔️</div>
-                      <h4 className="heading-typography text-[10px] font-black text-rose-500 uppercase tracking-widest mb-3 w-full text-center">Carte du Rival</h4>
-                      <PlayerCard 
-                        player={{ ...rival, origin: rivalCountryId }} 
-                        club={rival.club} 
-                        cardType="auto" 
-                      />
-                    </div>
-                  );
-                })()}
-
-                {/* RIVAL INFO (sans la carte) */}
-                {rival && (() => {
-                  const rivalInitials = rival.name ? (() => {
-                    const p = rival.name.trim().split(' ');
-                    if (p.length === 1) return p[0].substring(0, 2).toUpperCase();
-                    return (p[0][0] + '.' + p[p.length - 1][0]).toUpperCase();
-                  })() : '??';
                   
-                  const rivalCountryId = rival.club ? rival.club.origin : 'FR';
+                  let playerBdOrs = 0;
+                  let playerTotalTrophies = 0;
+                  if (palmares) {
+                     playerBdOrs = (palmares.awards || []).filter(a => a.name === "Ballon d'Or").length;
+                     if (palmares.tournaments) {
+                        Object.values(palmares.tournaments).forEach(arr => {
+                           if (Array.isArray(arr)) playerTotalTrophies += arr.length;
+                        });
+                     }
+                  }
+                  
+                  const h2hWon = gameState.rivalConfrontations?.won || 0;
+                  const h2hLost = gameState.rivalConfrontations?.lost || 0;
+                  const h2hDrawn = gameState.rivalConfrontations?.drawn || 0;
                   
                   return (
-                    <div className="bg-white dark:bg-slate-900 border border-rose-900/50 rounded-3xl p-4 shadow-2xl flex flex-col relative overflow-hidden gap-4">
+                    <div className="bg-white dark:bg-slate-900 border border-rose-900/50 rounded-3xl p-4 shadow-2xl flex flex-col relative overflow-hidden gap-4 mt-4">
                       <div className="absolute -top-4 -right-4 p-4 opacity-10 text-6xl transform rotate-12 pointer-events-none">⚔️</div>
-                      <div className="w-full flex justify-between items-center px-1 relative z-10">
-                        <h4 className="heading-typography text-[10px] font-black text-rose-500 uppercase tracking-widest">Rival Historique</h4>
+                      <div className="w-full flex justify-between items-center px-1 relative z-10 mb-2">
+                        <h4 className="heading-typography text-[12px] font-black text-rose-500 uppercase tracking-widest">Némésis</h4>
                         {player.ovr > rival.ovr ? (
-                          <span className="text-emerald-600 dark:text-emerald-400 text-xs font-bold bg-emerald-400/10 px-2 py-0.5 rounded shadow-sm">DOMINÉ</span>
+                          <span className="text-emerald-600 dark:text-emerald-400 text-[10px] font-bold bg-emerald-400/10 px-2 py-0.5 rounded shadow-sm">DOMINÉ</span>
                         ) : (
-                          <span className="text-rose-600 dark:text-rose-400 text-xs font-bold bg-rose-400/10 px-2 py-0.5 rounded shadow-sm">MENAÇANT</span>
+                          <span className="text-rose-600 dark:text-rose-400 text-[10px] font-bold bg-rose-400/10 px-2 py-0.5 rounded shadow-sm">MENAÇANT</span>
                         )}
                       </div>
 
-                      <div className="flex items-center gap-3 relative z-10 bg-white/50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-300/80 dark:border-slate-700/50">
-                         <div className="w-10 h-10 bg-gradient-to-br from-slate-700 to-slate-800 text-slate-800 dark:text-white rounded-xl flex items-center justify-center font-black text-sm shadow-inner flex-shrink-0 tracking-widest border border-slate-400 dark:border-slate-600">{rivalInitials}</div>
-                         <div className="truncate flex-1">
-                           <p className="font-black text-slate-800 dark:text-white text-sm leading-tight truncate">{rival.name}</p>
-                           <div className="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 truncate mt-1 font-medium">
-                             <span>{rival.club?.name || 'Club Inconnu'}</span>
-                             <span className="text-slate-600">•</span>
-                             <FlagIcon code={rivalCountryId} className="w-3.5 h-2.5 rounded-[1px] shadow-sm" />
-                             <span className="text-slate-600">•</span>
-                             <span className="text-slate-600 dark:text-slate-300">GEN <span className="font-black text-rose-500 text-[11px]">{rival.ovr}</span></span>
-                           </div>
-                         </div>
-                      </div>
-                      
-                      <div className="w-full flex flex-row items-center justify-around bg-white/50 dark:bg-slate-800/50 p-2 rounded-xl border border-slate-300 dark:border-slate-700 relative z-10 gap-1 md:gap-0">
-                        <div className="flex flex-col items-center justify-center gap-0.5 md:gap-0 w-full text-center">
-                          <span className="text-sm md:text-lg block text-center">🌟</span>
-                          <span className="text-slate-800 dark:text-white font-bold text-sm">{rival.ballonDorCount || 0} <span className="md:hidden text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-normal ml-1">Ballons d'Or</span></span>
+                      {/* CARTES FACE A FACE */}
+                      <div className="flex justify-around items-end relative z-10 gap-0 mb-2">
+                        <div className="flex flex-col items-center w-1/2 transform scale-90 origin-bottom">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase mb-2">Vous</span>
+                          <PlayerCard player={player} club={club} cardType="auto" />
                         </div>
-                        <div className="flex flex-col items-center justify-center gap-0.5 md:gap-0 w-full text-center border-l border-slate-600/50">
-                          <span className="text-sm md:text-lg block text-center">🏆</span>
-                          <span className="text-slate-800 dark:text-white font-bold text-sm">{rival.trophiesCount || 0} <span className="md:hidden text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-normal ml-1">Trophées</span></span>
+                        <div className="flex flex-col items-center justify-center h-full pb-20 -mx-4 z-20">
+                           <span className="text-3xl font-black text-rose-500 italic drop-shadow-md">VS</span>
                         </div>
-                        <div className="flex flex-col items-center justify-center gap-0.5 md:gap-0 w-full text-center border-l border-slate-600/50">
-                          <span className="text-sm md:text-lg block text-center">⚔️</span>
-                          <span className="text-slate-800 dark:text-white font-bold text-[10px]">
-                            {gameState.rivalConfrontations?.won || 0}V - {gameState.rivalConfrontations?.drawn || 0}N - {gameState.rivalConfrontations?.lost || 0}D
-                          </span>
+                        <div className="flex flex-col items-center w-1/2 transform scale-90 origin-bottom">
+                          <span className="text-[10px] font-bold text-rose-500 uppercase mb-2">Rival</span>
+                          <PlayerCard player={{ ...rival, origin: rivalCountryId }} club={rival.club} cardType="auto" />
                         </div>
                       </div>
+
+                      {/* STATS COMPARATIVES */}
+                      <div className="w-full flex flex-col gap-2 relative z-10 bg-white/50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-300 dark:border-slate-700">
+                        
+                        <div className="flex justify-between items-center w-full">
+                          <span className={`font-bold text-sm w-1/3 text-center ${playerBdOrs > (rival.ballonDorCount || 0) ? 'text-emerald-500' : 'text-slate-800 dark:text-white'}`}>{playerBdOrs}</span>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase w-1/3 text-center">Ballons d'Or</span>
+                          <span className={`font-bold text-sm w-1/3 text-center ${(rival.ballonDorCount || 0) > playerBdOrs ? 'text-rose-500' : 'text-slate-800 dark:text-white'}`}>{rival.ballonDorCount || 0}</span>
+                        </div>
+                        
+                        <div className="w-full h-px bg-slate-300 dark:bg-slate-700/50"></div>
+                        
+                        <div className="flex justify-between items-center w-full">
+                          <span className={`font-bold text-sm w-1/3 text-center ${playerTotalTrophies > (rival.trophiesCount || 0) ? 'text-emerald-500' : 'text-slate-800 dark:text-white'}`}>{playerTotalTrophies}</span>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase w-1/3 text-center">Trophées</span>
+                          <span className={`font-bold text-sm w-1/3 text-center ${(rival.trophiesCount || 0) > playerTotalTrophies ? 'text-rose-500' : 'text-slate-800 dark:text-white'}`}>{rival.trophiesCount || 0}</span>
+                        </div>
+
+                      </div>
+
+                      {/* JAUGE H2H */}
+                      <div className="w-full flex flex-col gap-1 relative z-10 mt-2">
+                        <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider mb-1">
+                          <span className="text-emerald-500">{h2hWon} Victoires</span>
+                          <span className="text-slate-400">Confrontations</span>
+                          <span className="text-rose-500">{h2hLost} Défaites</span>
+                        </div>
+                        <div className="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex shadow-inner">
+                          {h2hWon > 0 && <div style={{ width: `${(h2hWon / Math.max(1, h2hWon + h2hLost + h2hDrawn)) * 100}%` }} className="h-full bg-emerald-500"></div>}
+                          {h2hDrawn > 0 && <div style={{ width: `${(h2hDrawn / Math.max(1, h2hWon + h2hLost + h2hDrawn)) * 100}%` }} className="h-full bg-slate-400"></div>}
+                          {h2hLost > 0 && <div style={{ width: `${(h2hLost / Math.max(1, h2hWon + h2hLost + h2hDrawn)) * 100}%` }} className="h-full bg-rose-500"></div>}
+                        </div>
+                        {h2hWon === 0 && h2hLost === 0 && h2hDrawn === 0 && (
+                          <span className="text-center text-[9px] text-slate-500 mt-1 italic">Aucune rencontre directe pour l'instant.</span>
+                        )}
+                      </div>
+
                     </div>
                   );
                 })()}

@@ -3017,7 +3017,7 @@ export const generateRival = (player) => {
   };
 };
 
-export const updateRival = (rival, playerOvr, playerTier, playerWonBallonDor, playerWonCL) => {
+export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, playerWonCL) => {
   if (!rival) return null;
   
   const newAge = (rival.age || 18) + 1;
@@ -3081,15 +3081,65 @@ export const updateRival = (rival, playerOvr, playerTier, playerWonBallonDor, pl
     newTrophiesCount++; // Gagne un championnat national par exemple
   }
 
+  // Logique de transfert du Rival (IA)
+  let currentClub = rival.club || ALL_CLUBS[0];
+  let newClub = currentClub;
+  const currentTier = currentClub.tier || 3;
+  let targetTier = currentTier;
+  let shouldTransfer = false;
+
+  // Progression naturelle vers les tops clubs
+  if (newOvr > 85 && currentTier > 1) {
+    targetTier = 1;
+    shouldTransfer = true;
+  } else if (newOvr > 75 && currentTier > 2) {
+    targetTier = 2;
+    shouldTransfer = true;
+  } else if (newOvr > 88 && currentTier === 1 && Math.random() < 0.15) {
+    // Top joueur qui change de top club (transfert blockbuster)
+    shouldTransfer = true;
+  }
+
+  // Logique de "Némésis" : Si le joueur est dans un gros club (Tier 1 ou 2), 
+  // le rival va essayer de rejoindre la même ligue/pays pour l'affronter directement !
+  let targetOrigin = null;
+  if (playerClub && playerClub.tier <= 2 && newOvr >= 80 && Math.random() < 0.5) {
+      targetOrigin = playerClub.origin; // Le rival veut aller dans le même championnat
+      targetTier = playerClub.tier;
+      shouldTransfer = true;
+  }
+
+  if (shouldTransfer) {
+      let possibleClubs = ALL_CLUBS.filter(c => c.tier === targetTier && c.id !== currentClub.id);
+      
+      // Filtrer par origine si on a une cible Némésis
+      if (targetOrigin) {
+          const nemesisClubs = possibleClubs.filter(c => c.origin === targetOrigin && c.id !== playerClub.id);
+          if (nemesisClubs.length > 0) {
+              possibleClubs = nemesisClubs;
+          }
+      }
+
+      if (possibleClubs.length > 0) {
+          newClub = possibleClubs[Math.floor(Math.random() * possibleClubs.length)];
+          // Historique de transfert (optionnel, pour l'affichage plus tard)
+          const transferHistory = rival.history || [];
+          transferHistory.push({ age: newAge, from: currentClub.name, to: newClub.name });
+          rival.history = transferHistory;
+      }
+  }
+
   return { 
     ...rival, 
     age: newAge,
     attributes: newAttributes,
     ovr: newOvr,
+    club: newClub,
     ballonDorCount: newBallonDorCount,
     trophiesCount: newTrophiesCount,
     justWonBallonDor: rivalWonBallonDor, // flag for events
-    justWonCL: rivalWonCL
+    justWonCL: rivalWonCL,
+    history: rival.history || []
   };
 };
 

@@ -1003,17 +1003,19 @@ export default function App() {
             const isClContender = prev.club.tier === 1 && prev.rival.club.tier === 1;
             
             if (sameLeague || (isClContender && Math.random() < 0.3)) {
-                const compatibleScenarios = INTERACTIVE_MATCH_SCENARIOS.filter(scen => {
-                  if (scen.targetPosition === 'ALL') return true;
-                  const playerPos = (prev.player.position || '').toUpperCase();
-                  if (scen.targetPosition.startsWith('!')) return !playerPos.includes(scen.targetPosition.substring(1));
-                  return playerPos.includes(scen.targetPosition);
-                });
-                const shuffledScenarios = compatibleScenarios.sort(() => 0.5 - Math.random());
+                // Derby Tactique Choice
                 const matchPhases = [
-                  { ...shuffledScenarios[0], time: '15ème Minute', title: `Derby contre ${prev.rival.name}` },
-                  { ...shuffledScenarios[1 % shuffledScenarios.length], time: '60ème Minute', title: `Le Tournant du Derby` },
-                  { ...shuffledScenarios[2 % shuffledScenarios.length], time: '89ème Minute', title: `Fin du Derby` }
+                  {
+                    id: 'derby_tactical_choice',
+                    title: `Derby contre ${prev.rival.name}`,
+                    description: "C'est l'heure du grand Derby ! Choisissez votre approche tactique pour ce match crucial face à votre Némésis.",
+                    time: "Coup d'envoi",
+                    options: [
+                      { text: "Agressif (Haut Risque/Récompense)", type: 'agressif' },
+                      { text: "Neutre (Équilibré)", type: 'neutre' },
+                      { text: "Défensif (Contre-attaque, Faible Risque)", type: 'defensif' }
+                    ]
+                  }
                 ];
                 return {
                   ...prev,
@@ -1044,7 +1046,35 @@ export default function App() {
   const handlePlayInteractiveMatch = (optionIndex) => {
     setGameState((prev) => {
       const currentPhase = prev.interactiveMatchPhases[prev.interactiveMatchCurrentPhaseIndex];
-      const result = playInteractiveMatch(currentPhase, optionIndex, prev.player);
+      let result;
+
+      if (currentPhase.id === 'derby_tactical_choice') {
+        const option = currentPhase.options[optionIndex];
+        const ovrDiff = (prev.player.ovr || 70) - (prev.rival?.ovr || 70);
+        let winChance = 50; // Base chance 50%
+        
+        if (option.type === 'agressif') {
+           // Très sensible à la différence de GEN. Grosse récompense si ça passe.
+           winChance = 50 + (ovrDiff * 3); 
+        } else if (option.type === 'defensif') {
+           // Moins sensible, chance plus "flat"
+           winChance = 50 + (ovrDiff * 0.5); 
+        } else {
+           // Neutre
+           winChance = 50 + (ovrDiff * 1.5);
+        }
+        
+        // Cap
+        winChance = Math.max(10, Math.min(90, winChance));
+        
+        const isSuccess = Math.random() * 100 < winChance;
+        result = {
+          success: isSuccess,
+          narrative: isSuccess ? "Votre tactique a payé ! L'équipe a dominé les débats du début à la fin face au rival !" : "La tactique adverse était supérieure, vous êtes complètement passés à côté de ce derby..."
+        };
+      } else {
+        result = playInteractiveMatch(currentPhase, optionIndex, prev.player);
+      }
       
       const newScore = prev.interactiveMatchScore + (result.success ? 1 : -1);
       
@@ -1058,8 +1088,8 @@ export default function App() {
 
   const handleContinueFromInteractiveMatch = () => {
     setGameState((prev) => {
-      // Si on n'a pas fini les 3 phases
-      if (prev.interactiveMatchCurrentPhaseIndex < 2) {
+      // Si on n'a pas fini toutes les phases
+      if (prev.interactiveMatchCurrentPhaseIndex < (prev.interactiveMatchPhases.length - 1)) {
         return {
           ...prev,
           interactiveMatchCurrentPhaseIndex: prev.interactiveMatchCurrentPhaseIndex + 1,
@@ -1528,7 +1558,7 @@ export default function App() {
       let seasonEvents = getRandomSeasonEvents(finalUpdatedPlayer, prev.completedEvents, matchesPlayed, predictedTournaments, prev.club.tier, multiplayerContext?.isCoopMode);
       const hasPlayerWonBallonDor = statsToUse?.awards?.some(a => a.text === "Ballon d'Or");
       const hasPlayerWonCL = statsToUse?.tournaments?.championsLeague?.stage === 'Vainqueur';
-      const updatedRival = updateRival(prev.rival, finalUpdatedPlayer.ovr, prev.club.tier, hasPlayerWonBallonDor, hasPlayerWonCL);
+      const updatedRival = updateRival(prev.rival, finalUpdatedPlayer.ovr, prev.club, hasPlayerWonBallonDor, hasPlayerWonCL);
 
       if (updatedRival && updatedRival.justWonBallonDor) {
         seasonEvents.unshift({

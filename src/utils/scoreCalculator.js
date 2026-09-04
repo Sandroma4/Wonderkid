@@ -69,13 +69,16 @@ export const calculateCareerScore = (player, rivalConfrontations = null) => {
   score += avgOvr * 300;
   score += (avgRating * 2000);
 
-  // Rival Impact
+  // Rival Impact (Némésis Slayer)
+  let isNemesisSlayer = false;
   if (rivalConfrontations) {
     const diff = (rivalConfrontations.won || 0) - (rivalConfrontations.lost || 0);
     if (diff > 0) {
-      score += diff * 2000;
+      score += diff * 5000;
+      score += 15000; // Énorme bonus pour la domination
+      isNemesisSlayer = true;
     } else if (diff < 0) {
-      score += diff * 1000; // Negative score impact
+      score += diff * 2000; // Malus si le rival vous a dominé
     }
   }
 
@@ -91,6 +94,7 @@ export const calculateCareerScore = (player, rivalConfrontations = null) => {
     totalScore: Math.round(score),
     maxOvr,
     avgOvr: parseFloat(avgOvr.toFixed(1)),
-    avgRating: parseFloat(avgRating.toFixed(2))
+    avgRating: parseFloat(avgRating.toFixed(2)),
+    isNemesisSlayer
   };
 };
