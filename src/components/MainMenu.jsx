@@ -9,6 +9,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
   const [user, setUser] = useState(null);
   const [hasSave, setHasSave] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const [showShopHub, setShowShopHub] = useState(false);
 
   const toggleTheme = () => {
     playSound('click');
@@ -585,28 +586,15 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
           </button>
 
           <button 
-            onClick={() => { playSound('click'); setShowAccountShop(true); }}
+            onClick={() => { playSound('click'); setShowShopHub(true); }}
             className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500/20 to-amber-700/20 border border-amber-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-amber-500/30 hover:border-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] active:scale-95"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">🛍️</span>
-                <span className="heading-typography text-amber-600 dark:text-amber-400 font-bold text-base md:text-lg tracking-wide uppercase">Boutique de Compte</span>
+                <span className="heading-typography text-amber-600 dark:text-amber-400 font-bold text-base md:text-lg tracking-wide uppercase">Boutique</span>
               </div>
               <span className="text-amber-500 group-hover:translate-x-1 transition-transform">➔</span>
-            </div>
-          </button>
-
-          <button 
-            onClick={() => { playSound('click'); onNavigate('cosmeticsStore'); }}
-            className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-pink-500/20 to-rose-700/20 border border-pink-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-pink-500/30 hover:border-pink-400 hover:shadow-[0_0_20px_rgba(236,72,153,0.2)] active:scale-95"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-xl md:text-2xl">✨</span>
-                <span className="heading-typography text-pink-600 dark:text-pink-400 font-bold text-base md:text-lg tracking-wide uppercase">Boutique Cosmétique</span>
-              </div>
-              <span className="text-pink-500 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
           </button>
 
@@ -616,6 +604,39 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
         
         {showAccountShop && (
           <AccountShopModal onClose={() => setShowAccountShop(false)} />
+        )}
+
+        {showShopHub && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+            <div className="bg-[#0F172A] w-full max-w-md rounded-3xl p-6 border border-slate-700 shadow-2xl flex flex-col gap-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-black text-white">🛍️ Boutique</h2>
+                <button onClick={() => setShowShopHub(false)} className="text-slate-400 hover:text-white text-xl font-bold">✕</button>
+              </div>
+              
+              <button 
+                onClick={() => { playSound('click'); setShowShopHub(false); setShowAccountShop(true); }}
+                className="w-full text-left p-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 hover:border-amber-500 transition-all flex items-center justify-between group"
+              >
+                <div>
+                  <div className="text-amber-400 font-bold text-lg">Améliorations de Compte</div>
+                  <div className="text-sm text-slate-400 group-hover:text-slate-300">Atouts permanents pour vos carrières</div>
+                </div>
+                <span className="text-2xl group-hover:scale-110 transition-transform">⚡</span>
+              </button>
+              
+              <button 
+                onClick={() => { playSound('click'); setShowShopHub(false); onNavigate('cosmeticsStore'); }}
+                className="w-full text-left p-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 hover:border-pink-500 transition-all flex items-center justify-between group"
+              >
+                <div>
+                  <div className="text-pink-400 font-bold text-lg">Cosmétiques de Cartes</div>
+                  <div className="text-sm text-slate-400 group-hover:text-slate-300">Designs pour le Hall of Fame</div>
+                </div>
+                <span className="text-2xl group-hover:scale-110 transition-transform">✨</span>
+              </button>
+            </div>
+          </div>
         )}
         
         <div className="mt-12 text-slate-500 dark:text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-widest opacity-60">
