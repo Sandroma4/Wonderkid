@@ -41,7 +41,8 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
   const handleClaimReward = () => {
     if (rewardClaimed) return;
     playSound('coins');
-    const reward = (clashContext.wins * 50) + (clashContext.draws * 15);
+    let reward = (clashContext.wins * 3) + (clashContext.draws * 1);
+    if (clashContext.wins === 4) reward += 5; // Bonus Flawless
     const accountData = getAccountData();
     accountData.goldenCoins += reward;
     saveAccountData(accountData);
