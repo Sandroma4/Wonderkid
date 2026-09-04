@@ -25,13 +25,15 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
   const basicLayout = {
     ovrTop: 'top-[11%]',
     ovrLeft: 'left-[10%]',
-    avatarTop: 'top-[19%]',
+    avatarTop: 'top-[22%]',
     avatarLeft: 'left-[32%]',
     nameTop: 'top-[56%]',
     statsTop: 'top-[65%]',
     statsGapY: 'gap-y-[6px]',
-    statsGapX: 'gap-x-[75px]',
-    statsShift: '-ml-9',
+    statsGapX: 'gap-x-[64px]',
+    statsShift: '-ml-10',
+    flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.4)] mt-[5px] mb-[5px]',
+    flagClass: 'w-[34px] h-[22px] object-cover rounded-[1px]',
     hideCustomLabels: true
   };
 
@@ -200,8 +202,8 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
             {player.position || 'ATT'}
           </span>
           
-          <div className="shadow-sm mt-2 mb-1.5">
-            <FlagIcon code={countryCode} className="w-7 h-4 rounded-sm" />
+          <div className={themeStyles.layout?.flagWrapper || 'shadow-sm mt-2 mb-1.5'}>
+            <FlagIcon code={countryCode} className={themeStyles.layout?.flagClass || 'w-7 h-4 rounded-sm'} />
           </div>
 
           {club && (
