@@ -279,7 +279,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                   </button>
                 ))}
               </div>
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2.5 sm:gap-3 max-h-[350px] overflow-y-auto pr-1">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2.5 sm:gap-3 max-h-[50vh] md:max-h-[600px] overflow-y-auto pr-1">
                 {COUNTRIES.filter(c => getContinentForCountry(c.id) === activeContinent).map((c) => (
                   <button
                     key={c.id}

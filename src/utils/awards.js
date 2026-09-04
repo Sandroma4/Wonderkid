@@ -144,7 +144,7 @@ export const simulateTournaments = (player, club, seasonStats, seasonIndex, last
   };
 
   if (playsCL) {
-    tournaments.championsLeague = simulateEuroCup(88, 68, 65, 62, [13, 13, 12, 6]);
+    tournaments.championsLeague = simulateEuroCup(88, 84, 80, 76, [13, 13, 12, 6]);
   } else if (playsEL) {
     tournaments.europaLeague = simulateEuroCup(82, 64, 61, 58, [13, 13, 12, 6]);
   } else if (playsECL) {

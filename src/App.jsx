@@ -1024,9 +1024,9 @@ export default function App() {
                     description: "C'est l'heure du grand Derby ! Choisissez votre approche tactique pour ce match crucial face à votre Némésis.",
                     time: "Coup d'envoi",
                     options: [
-                      { text: "Agressif (Haut Risque/Récompense)", type: 'agressif' },
-                      { text: "Neutre (Équilibré)", type: 'neutre' },
-                      { text: "Défensif (Contre-attaque, Faible Risque)", type: 'defensif' }
+                      { text: "Agressif", type: 'agressif' },
+                      { text: "Neutre", type: 'neutre' },
+                      { text: "Défensif", type: 'defensif' }
                     ]
                   }
                 ];

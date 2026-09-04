@@ -1298,12 +1298,8 @@ export function Dashboard({
                   let playerBdOrs = 0;
                   let playerTotalTrophies = 0;
                   if (palmares) {
-                     playerBdOrs = (palmares.awards || []).filter(a => a.name === "Ballon d'Or").length;
-                     if (palmares.tournaments) {
-                        Object.values(palmares.tournaments).forEach(arr => {
-                           if (Array.isArray(arr)) playerTotalTrophies += arr.length;
-                        });
-                     }
+                     playerBdOrs = palmares.filter(a => a.text === "Ballon d'Or").length;
+                     playerTotalTrophies = palmares.filter(a => a.type === 'collective').length;
                   }
                   
                   const h2hWon = gameState.rivalConfrontations?.won || 0;
