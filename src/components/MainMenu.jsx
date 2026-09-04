@@ -441,6 +441,20 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                   </div>
                 </button>
 
+                              <button 
+                  onClick={() => { playSound('click'); onNavigate('clashLobby'); }}
+                  className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-fuchsia-600 to-fuchsia-800 border border-fuchsia-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(192,38,211,0.4)] active:scale-95"
+                >
+                  <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
+                  <div className="flex items-center justify-between relative z-10">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl md:text-2xl">🔥</span>
+                      <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Clash d'Équipes (Solo)</span>
+                    </div>
+                    <span className="text-fuchsia-600 dark:text-fuchsia-300 group-hover:translate-x-1 transition-transform">➔</span>
+                  </div>
+                </button>
+
                                 <button 
                   onClick={() => { playSound('click'); onNavigate('multiplayerLobbyCoop'); }}
                   className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-violet-600 to-violet-800 border border-violet-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] active:scale-95"

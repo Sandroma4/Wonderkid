@@ -10,6 +10,7 @@ import { GlobalPalmares } from './components/GlobalPalmares';
 import { Achievements } from './components/Achievements';
 import { Leaderboard } from './components/Leaderboard';
 import { CardCollection } from './components/CardCollection';
+import { ClashLobby } from './components/ClashLobby';
 import { playSound } from './utils/audio';
 import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession, getAccountData, saveAccountData } from './utils/storage';
 import { createMultiplayerRoom } from './utils/multiplayer';
@@ -61,7 +62,10 @@ export default function App() {
     setViewHistory(prev => prev.length > 1 ? prev.slice(0, -1) : ['mainMenu']);
     setInviteCode(null);
   };
-  const [inviteCode, setInviteCode] = useState(null); // 'mainMenu', 'career', 'globalPalmares', 'achievements', 'cardCollection'
+  const [inviteCode, setInviteCode] = useState('');
+  const [clashContext, setClashContext] = useState(null);
+
+  // Initialize or handle browser history for view routinglobalPalmares', 'achievements', 'cardCollection'
   const [gameState, setGameState] = useState(null);
   const [multiplayerContext, setMultiplayerContext] = useState(null);
 
@@ -1905,6 +1909,29 @@ export default function App() {
     return <CardCollection onBack={handleBack} />;
   }
 
+  if (appView === 'clashLobby') {
+    return <ClashLobby 
+      clashContext={clashContext}
+      setClashContext={setClashContext}
+      onBack={handleBack} 
+      onStartMatch={(myTeam, oppTeam, matchIndex) => {
+        // We need a way to pass this to FiveMatch
+        // Wait, FiveMatch expects players [{fiveTeam, isHost...}]
+        // Let's create a clash match context or use the multiplayer context.
+        setMultiplayerContext({
+          isClashMode: true,
+          matchIndex,
+          players: [
+            { playerId: 'me', name: 'Moi', fiveTeam: myTeam, isHost: true },
+            { playerId: 'ai', name: oppTeam.pseudo, fiveTeam: oppTeam, isHost: false }
+          ],
+          playerId: 'me',
+          isHost: true
+        });
+        setAppView('fiveMatch');
+      }} 
+    />;
+  }
   
   if (appView === 'multiplayerLobby' || appView === 'multiplayerLobbyCoop') {
     return <MultiplayerLobby 
@@ -1917,6 +1944,35 @@ export default function App() {
         setGameState(null);
       }}
       initialCoopMode={appView === 'multiplayerLobbyCoop'}
+    />;
+  }
+
+  if (appView === 'fiveMatch' && multiplayerContext) {
+    return <FiveMatch 
+      roomObj={multiplayerContext.roomObj} 
+      playerId={multiplayerContext.playerId} 
+      players={multiplayerContext.players} 
+      isHost={multiplayerContext.isHost} 
+      isClashMode={multiplayerContext.isClashMode}
+      onEndMatch={(result) => {
+        if (multiplayerContext.isClashMode) {
+          setClashContext(prev => {
+            const newLeague = [...prev.league];
+            newLeague[prev.currentMatchIndex].result = result;
+            return {
+              ...prev,
+              league: newLeague,
+              currentMatchIndex: prev.currentMatchIndex + 1,
+              wins: prev.wins + (result === 'win' ? 1 : 0),
+              draws: prev.draws + (result === 'draw' ? 1 : 0),
+              losses: prev.losses + (result === 'loss' ? 1 : 0)
+            };
+          });
+          setAppView('clashLobby');
+        } else {
+          setAppView('mainMenu');
+        }
+      }} 
     />;
   }
 

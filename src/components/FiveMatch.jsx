@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { playSound } from '../utils/audio';
 
-export const FiveMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) => {
+export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onEndMatch }) => {
   const [phase, setPhase] = useState(1);
   const [score, setScore] = useState({ host: 0, guest: 0 });
   const [myAction, setMyAction] = useState(null);
@@ -37,7 +37,7 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) =>
   const oppStats = calculateTeamStats(oppTeam);
 
   useEffect(() => {
-    if (roomObj) {
+    if (roomObj && !isClashMode) {
       roomObj.setOnBroadcast((payload) => {
         if (payload.type === 'FIVE_ACTION' && payload.phase === phase) {
           setOpponentAction(payload.action);
@@ -64,18 +64,30 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) =>
         }
       });
     }
-  }, [roomObj, phase, isHost]);
+  }, [roomObj, phase, isHost, isClashMode]);
 
   useEffect(() => {
-    if (isHost && myAction && opponentAction && !resolving) {
+    if ((isHost || isClashMode) && myAction && opponentAction && !resolving) {
       resolvePhase();
     }
-  }, [myAction, opponentAction, isHost, resolving]);
+  }, [myAction, opponentAction, isHost, isClashMode, resolving]);
 
   const handleSelectAction = (actionId) => {
     playSound('click');
     setMyAction(actionId);
-    roomObj.sendBroadcast({ type: 'FIVE_ACTION', phase, action: actionId });
+    
+    if (isClashMode) {
+      // Simulate AI opponent action
+      const aiAttackingActions = ['tir', 'passe', 'dribble'];
+      const aiDefendingActions = ['blocage', 'interception', 'tacle'];
+      const isAIAttacking = (phase % 2 !== 0 && !isHost) || (phase % 2 === 0 && isHost);
+      const aiActionList = isAIAttacking ? aiAttackingActions : aiDefendingActions;
+      // Add slight intelligent weight based on tier (currently just random)
+      const randomAction = aiActionList[Math.floor(Math.random() * aiActionList.length)];
+      setOpponentAction(randomAction);
+    } else {
+      roomObj.sendBroadcast({ type: 'FIVE_ACTION', phase, action: actionId });
+    }
   };
 
   const resolvePhase = () => {
@@ -122,13 +134,33 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) =>
     }
 
     const isEnd = phase >= 6; // 6 actions = 3 attacks each
-
-    roomObj.sendBroadcast({
-      type: 'FIVE_RESOLVE',
-      log: { phase, text: logText, goalFor },
-      goalFor,
-      isEnd
-    });
+    
+    if (isClashMode) {
+      // Simulate the broadcast logic locally
+      setTimeout(() => {
+        setLogs(prev => [...prev, { phase, text: logText, goalFor }]);
+        if (goalFor === 'host') setScore(s => ({ ...s, host: s.host + 1 }));
+        if (goalFor === 'guest') setScore(s => ({ ...s, guest: s.guest + 1 }));
+        
+        setTimeout(() => {
+          if (isEnd) {
+            setMatchEnded(true);
+          } else {
+            setPhase(prev => prev + 1);
+            setMyAction(null);
+            setOpponentAction(null);
+            setResolving(false);
+          }
+        }, 3000);
+      }, 1000);
+    } else {
+      roomObj.sendBroadcast({
+        type: 'FIVE_RESOLVE',
+        log: { phase, text: logText, goalFor },
+        goalFor,
+        isEnd
+      });
+    }
   };
 
   if (matchEnded) {
@@ -150,7 +182,7 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, onEndMatch }) =>
            </h2>
            
            <button 
-             onClick={() => { playSound('click'); onEndMatch(); }}
+             onClick={() => { playSound('click'); onEndMatch(iWon ? 'win' : isDraw ? 'draw' : 'loss'); }}
              className="px-8 py-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl text-xl uppercase transition-transform active:scale-95"
            >
              Quitter
