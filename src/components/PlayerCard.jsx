@@ -28,12 +28,14 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
     avatarTop: 'top-[22%]',
     avatarLeft: 'left-[30%]',
     nameTop: 'top-[56%]',
-    statsTop: 'top-[67%]',
+    statsTop: 'top-[66%]',
     statsGapY: 'gap-y-[6px]',
     statsLeftCol: 'left-[10%]',
-    statsRightCol: 'left-[61%]',
+    statsRightCol: 'left-[57%]',
     flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.5)] mt-[14px] mb-[4px]',
     flagClass: 'w-[38px] h-[22px] object-cover rounded-[1px]',
+    clubTop: 'top-[35%]',
+    clubLeft: 'left-[10%]',
     hideCustomLabels: true
   };
 
@@ -205,14 +207,15 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
           <div className={themeStyles.layout?.flagWrapper || 'shadow-sm mt-2 mb-1.5'}>
             <FlagIcon code={countryCode} className={themeStyles.layout?.flagClass || 'w-7 h-4 rounded-sm'} />
           </div>
-
-          {club && (
-            <div className="flex -space-x-1 mt-1 drop-shadow-sm">
-              <span className="w-5 h-5 rounded-full border border-black/30 shadow-sm" style={{ backgroundColor: club.primary }} />
-              <span className="w-5 h-5 rounded-full border border-black/30 shadow-sm" style={{ backgroundColor: club.secondary || club.primary }} />
-            </div>
-          )}
         </div>
+
+        {/* COULEURS DU CLUB (ISOLÉ) */}
+        {club && (
+          <div className={`absolute z-20 flex -space-x-1 drop-shadow-sm ${themeStyles.layout?.clubTop || 'top-[30%]'} ${themeStyles.layout?.clubLeft || 'left-[16%]'}`}>
+            <span className="w-5 h-5 rounded-full border border-black/30 shadow-sm" style={{ backgroundColor: club.primary }} />
+            <span className="w-5 h-5 rounded-full border border-black/30 shadow-sm" style={{ backgroundColor: club.secondary || club.primary }} />
+          </div>
+        )}
 
         {/* NOM DU JOUEUR */}
         <div className={`absolute w-full text-center z-20 ${themeStyles.layout?.nameTop || 'top-[52%]'}`}>
