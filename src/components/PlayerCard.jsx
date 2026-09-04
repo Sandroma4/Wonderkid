@@ -33,8 +33,8 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
     statsRightCol: 'left-[57%]',
     flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.5)] mt-[14px] mb-[4px]',
     flagClass: 'w-[38px] h-[22px] object-cover rounded-[1px]',
-    clubTop: 'top-[35%]',
-    clubLeft: 'left-[10%]',
+    clubTop: 'top-[45%]',
+    clubLeft: 'left-[15%]',
     hideCustomLabels: true
   };
 
@@ -199,7 +199,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
           <span className={`text-[32px] font-black leading-none tracking-tight drop-shadow-md ${themeStyles.textPrimary}`}>
             {ovr}
           </span>
-          <span className={`text-[11px] font-black uppercase tracking-wider mt-0.5 ${themeStyles.textSecondary}`}>
+          <span className={`text-[14px] font-black uppercase tracking-wider mt-0.5 ${themeStyles.textSecondary}`}>
             {player.position || 'ATT'}
           </span>
           
