@@ -24,33 +24,33 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
 
   const themeStyles = {
     totw: {
-      bgImage: "url('/cards.png')",
-      bgPos: '100% 0%', // Fallback to Gold for TOTW
-      bgSize: '300% 100%',
+      bgImage: "url('/card_gold.png')",
+      bgPos: 'center',
+      bgSize: '100% 100%',
       textPrimary: 'text-[#3f311c]',
       textSecondary: 'text-[#3f311c]',
       accent: 'border-[#3f311c]/30'
     },
     gold: {
-      bgImage: "url('/cards.png')",
-      bgPos: '100% 0%',
-      bgSize: '300% 100%',
+      bgImage: "url('/card_gold.png')",
+      bgPos: 'center',
+      bgSize: '100% 100%',
       textPrimary: 'text-[#3f311c]',
       textSecondary: 'text-[#3f311c]',
       accent: 'border-[#3f311c]/30'
     },
     silver: {
-      bgImage: "url('/cards.png')",
-      bgPos: '50% 0%',
-      bgSize: '300% 100%',
+      bgImage: "url('/card_silver.png')",
+      bgPos: 'center',
+      bgSize: '100% 100%',
       textPrimary: 'text-[#1e293b]',
       textSecondary: 'text-[#1e293b]',
       accent: 'border-[#1e293b]/30'
     },
     bronze: {
-      bgImage: "url('/cards.png')",
-      bgPos: '0% 0%',
-      bgSize: '300% 100%',
+      bgImage: "url('/card_bronze.png')",
+      bgPos: 'center',
+      bgSize: '100% 100%',
       textPrimary: 'text-[#3b2111]',
       textSecondary: 'text-[#3b2111]',
       accent: 'border-[#3b2111]/30'
