@@ -1725,8 +1725,8 @@ export default function App() {
       // Save card to local Hall of Fame collection (prime version)
       saveCardToCollection(player, palmares, maxOvr);
       
-      // Calculate and save Golden Coins
-      const earnedCoins = 100 + Math.floor(totalScore / 1000);
+      // Calculate and save Golden Coins (Nouvelle formule plus lente)
+      const earnedCoins = 10 + Math.floor(totalScore / 2500);
       const accountData = getAccountData();
       accountData.goldenCoins += earnedCoins;
       saveAccountData(accountData);
