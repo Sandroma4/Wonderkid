@@ -22,15 +22,15 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
     else theme = 'bronze';
   }
   const basicLayout = {
-    ovrTop: 'top-[11%]',
-    ovrLeft: 'left-[8%]',
-    avatarTop: 'top-[32%]',
+    ovrTop: 'top-[10%]',
+    ovrLeft: 'left-[14%]',
+    avatarTop: 'top-[22%]',
     avatarLeft: 'left-[30%]',
     nameTop: 'top-[56%]',
-    statsTop: 'top-[65%]',
+    statsTop: 'top-[66%]',
     statsGapY: 'gap-y-[6px]',
     statsLeftCol: 'left-[10%]',
-    statsRightCol: 'left-[51%]',
+    statsRightCol: 'left-[57%]',
     flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.5)] mt-[14px] mb-[4px]',
     flagClass: 'w-[38px] h-[22px] object-cover rounded-[1px]',
     clubTop: 'top-[35%]',
