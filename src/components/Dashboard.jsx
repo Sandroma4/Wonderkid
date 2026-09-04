@@ -1317,6 +1317,18 @@ export function Dashboard({
                         <div className="inline-block" style={{ backgroundColor: 'transparent' }}>
                           <PlayerCard player={{ ...rival, origin: rivalCountryId }} club={rival.club} cardType="auto" />
                         </div>
+                        {rival.club && (
+                          <div className="mt-3 text-center bg-white/40 dark:bg-slate-800/40 px-4 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-0.5">Club Actuel</span>
+                            <span className="text-xs font-black text-slate-800 dark:text-white flex items-center gap-1.5 justify-center">
+                              <div className="flex -space-x-1">
+                                <span className="w-2.5 h-2.5 rounded-full border border-black/20" style={{ backgroundColor: rival.club.primary }} />
+                                <span className="w-2.5 h-2.5 rounded-full border border-black/20" style={{ backgroundColor: rival.club.secondary || rival.club.primary }} />
+                              </div>
+                              {rival.club.name}
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       {/* STATS COMPARATIVES */}
