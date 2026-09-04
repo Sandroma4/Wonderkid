@@ -1714,7 +1714,10 @@ export const calculatePlayerValue = (player, club) => {
     else if (club.tier === 3) leagueMod = 0.70;
   }
 
-  let finalValue = baseValue * ageMultiplier * formMod * moraleMod * tierMod * natMod * leagueMod;
+  // Hype personnelle (Perk "Chouchou des Médias" ou événements)
+  const personalHypeMod = 1.0 + ((player.hype || 0) / 100) * 0.30; // Jusqu'à +30% de valeur
+
+  let finalValue = baseValue * ageMultiplier * formMod * moraleMod * tierMod * natMod * leagueMod * personalHypeMod;
   
   // Légère fluctuation aléatoire (+/- 2%) du marché
   finalValue *= (0.98 + Math.random() * 0.04);
