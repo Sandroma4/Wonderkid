@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getFiveTeams, getAccountData, saveAccountData } from '../utils/storage';
-import { playSound, playCoinsSound } from '../utils/audio';
+import { playSound } from '../utils/audio';
 import { generateClashLeague } from '../utils/clashGenerator';
 
 export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext }) => {
