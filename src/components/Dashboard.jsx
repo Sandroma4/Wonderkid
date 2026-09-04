@@ -886,7 +886,7 @@ export function Dashboard({
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               
               {/* ONGLET : JOUEUR (CARTE & STATS) */}
-              <div className={`${activeMobileTab !== 'joueur' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1`}>
+              <div className={`${activeMobileTab !== 'joueur' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1 md:order-first md:order-last`}>
                 {/* BLOC CARTE FUT DU JOUEUR */}
                 <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-0 md:p-4 shadow-2xl flex flex-col items-center h-fit">
                   <button 
@@ -1299,7 +1299,7 @@ export function Dashboard({
                   const h2hDrawn = gameState.rivalConfrontations?.drawn || 0;
                   
                   return (
-                    <div className="bg-white dark:bg-slate-900 border border-rose-900/50 rounded-3xl p-4 shadow-2xl flex flex-col relative overflow-hidden gap-4 mt-4">
+                    <div className="bg-white dark:bg-slate-900 border border-rose-900/50 rounded-3xl p-4 shadow-2xl flex flex-col relative overflow-hidden gap-4">
                       <div className="absolute -top-4 -right-4 p-4 opacity-10 text-6xl transform rotate-12 pointer-events-none">⚔️</div>
                       <div className="w-full flex justify-between items-center px-1 relative z-10 mb-2">
                         <h4 className="heading-typography text-[12px] font-black text-rose-500 uppercase tracking-widest">Némésis</h4>
@@ -1310,17 +1310,9 @@ export function Dashboard({
                         )}
                       </div>
 
-                      {/* CARTES FACE A FACE */}
-                      <div className="flex justify-center items-center relative z-10 gap-4 mb-2 w-full">
-                        <div className="flex flex-col items-center transform scale-[0.80] origin-center -mx-6">
-                          <span className="text-[12px] font-bold text-slate-500 uppercase mb-2">Vous</span>
-                          <PlayerCard player={player} club={club} cardType="auto" />
-                        </div>
-                        <div className="flex flex-col items-center justify-center z-20 shrink-0 mt-4">
-                           <span className="text-2xl font-black text-rose-500 italic drop-shadow-md">VS</span>
-                        </div>
-                        <div className="flex flex-col items-center transform scale-[0.80] origin-center -mx-6">
-                          <span className="text-[12px] font-bold text-rose-500 uppercase mb-2">Rival</span>
+                      {/* CARTE RIVAL SEULE */}
+                      <div className="flex flex-col items-center justify-center relative z-10 mb-2 w-full">
+                        <div className="inline-block" style={{ backgroundColor: 'transparent' }}>
                           <PlayerCard player={{ ...rival, origin: rivalCountryId }} club={rival.club} cardType="auto" />
                         </div>
                       </div>
