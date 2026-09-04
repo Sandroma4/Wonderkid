@@ -374,7 +374,6 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
                 onClick={() => { playSound('click'); setShowPlayOptions(false); }}
                 className="w-full relative group overflow-hidden rounded-2xl bg-white/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 transition-all duration-300 hover:bg-slate-300 dark:hover:bg-slate-700 active:scale-95 flex items-center gap-2 justify-center"
               >
-                <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400">⬅️</span>
                 <span className="heading-typography text-slate-600 dark:text-slate-300 font-bold text-sm tracking-wide uppercase">Retour</span>
               </button>
 
