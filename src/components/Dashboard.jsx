@@ -1319,15 +1319,19 @@ export function Dashboard({
                           <PlayerCard player={{ ...rival, origin: rivalCountryId }} club={rival.club} cardType="auto" />
                         </div>
                         {rival.club && (
-                          <div className="mt-3 text-center bg-white/40 dark:bg-slate-800/40 px-4 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block mb-0.5">Club Actuel</span>
-                            <span className="text-xs font-black text-slate-800 dark:text-white flex items-center gap-1.5 justify-center">
+                          <div className="mt-3 bg-white/40 dark:bg-slate-800/40 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm inline-flex items-center justify-center gap-2">
+                            <div className="flex items-center gap-1.5">
                               <div className="flex -space-x-1">
                                 <span className="w-2.5 h-2.5 rounded-full border border-black/20" style={{ backgroundColor: rival.club.primary }} />
                                 <span className="w-2.5 h-2.5 rounded-full border border-black/20" style={{ backgroundColor: rival.club.secondary || rival.club.primary }} />
                               </div>
-                              {rival.club.name}
-                            </span>
+                              <span className="text-xs font-black text-slate-800 dark:text-white">{rival.club.name}</span>
+                            </div>
+                            <span className="text-slate-300 dark:text-slate-600">|</span>
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{rival.club.leagueName}</span>
+                              <FlagIcon code={rival.club.origin} className="w-3 h-2 rounded-[1px] shadow-sm" />
+                            </div>
                           </div>
                         )}
                       </div>
