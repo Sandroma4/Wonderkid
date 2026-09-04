@@ -148,20 +148,23 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
   }, [players, status, onStart, roomObj, playerId]);
 
   return (
-    <div className="app-typography min-h-[100dvh] bg-emerald-200 dark:bg-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div className="app-typography min-h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-[0.03]"></div>
+      
+      <div className="w-full max-w-md mx-auto flex justify-start mb-4 relative z-10">
+        <button 
+          onClick={() => { playSound('click'); onBack(); }}
+          className="text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 px-4 py-2 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 shadow-lg font-bold"
+        >
+          Retour
+        </button>
+      </div>
       
       <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-6 shadow-2xl relative z-10 flex flex-col items-center text-center">
         
         <div className="relative flex flex-col items-center justify-center mb-6 w-full">
-          <button 
-            onClick={() => { playSound('click'); onBack(); }}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg -ml-4 md:-ml-6"
-          >
-            ← Retour
-          </button>
           
-          <div className="w-full text-center px-12 md:px-16">
+          <div className="w-full text-center px-4">
             <h2 className="heading-typography text-3xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-wider mb-2 leading-none drop-shadow-sm">
               La Course à la Carrière
             </h2>

@@ -56,15 +56,19 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
   const nextOpponent = currentMatchIndex < 4 ? clashLeague[currentMatchIndex] : null;
 
   return (
-    <div className="min-h-screen bg-slate-900 p-4 md:p-8 relative overflow-hidden flex flex-col text-white">
-      <div className="relative flex flex-col items-center justify-center mb-6 md:mb-8 w-full max-w-6xl mx-auto pt-4 md:pt-8">
+    <div className="min-h-screen bg-[#0F172A] p-4 md:p-8 relative overflow-hidden flex flex-col text-white">
+      
+      <div className="w-full max-w-6xl mx-auto flex justify-start mb-4 relative z-10">
         <button 
           onClick={() => { playSound('click'); onBack(); }}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-white bg-slate-800/80 hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-700 whitespace-nowrap shadow-lg"
+          className="text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 px-4 py-2 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 shadow-lg font-bold"
         >
           Retour
         </button>
-        <div className="w-full text-center px-16 md:px-24">
+      </div>
+
+      <div className="relative flex flex-col items-center justify-center mb-6 md:mb-8 w-full max-w-6xl mx-auto pt-2">
+        <div className="w-full text-center px-4">
           <h1 className="heading-typography text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-fuchsia-600 uppercase tracking-tight drop-shadow-lg leading-none">
             Clash d'Équipes
           </h1>
