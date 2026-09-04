@@ -163,6 +163,8 @@ export function Dashboard({
     };
   }
 
+  const bestVersion = isRetired ? getBestPlayerVersion(player, club) : null;
+
 
   const effectiveStats = getEffectiveStats(player);
 
@@ -248,7 +250,6 @@ export function Dashboard({
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
           {(() => {
-            const bestVersion = getBestPlayerVersion(player, club);
             return (
               <div className="max-w-5xl w-full bg-white/95 dark:bg-slate-900/95 border border-slate-300/80 dark:border-slate-700/80 backdrop-blur-md rounded-3xl p-4 md:p-6 shadow-2xl z-10 flex flex-col my-auto max-h-[95dvh] lg:max-h-[90dvh]">
                 
