@@ -5,7 +5,56 @@ import { COUNTRIES, GENDERS, ORIGINS_BACKGROUNDS, POSITIONS_DATA, LIFESTYLES, CH
 import { supabase } from '../supabaseClient';
 import { getAccountData } from '../utils/storage';
 
-
+const getEthnicityFolders = (countryId) => {
+  const m = {
+    'FR': ['France', 'WestAfrica', 'Maghreb', 'Afrocaribbean'],
+    'ES': ['Spain'],
+    'IT': ['Italia'],
+    'EN': ['Anglosphere', 'MixedRace', 'Afrocaribbean'],
+    'DE': ['CentralEurope', 'Turkish'],
+    'BE': ['CentralEurope', 'CentralAfrica'],
+    'HR': ['WestBalkan'],
+    'DK': ['Scandinavian'],
+    'SCO': ['Anglosphere'],
+    'GR': ['AlbanianGreek', 'EastBalkan'],
+    'NO': ['Scandinavian'],
+    'NL': ['Netherlands', 'Afrocaribbean'],
+    'PL': ['WestSlavic', 'Poland'],
+    'PT': ['Portugal', 'BrazilMixed'],
+    'CH': ['CentralEurope'],
+    'TR': ['Turkish'],
+    'ZA': ['SouthernAfrica', 'WF'],
+    'DZ': ['Maghreb'],
+    'CV': ['WestAfrica'],
+    'CI': ['WestAfrica'],
+    'EG': ['Mashriq', 'Maghreb'],
+    'GH': ['WestAfrica'],
+    'MA': ['Maghreb'],
+    'NG': ['WestAfrica'],
+    'CD': ['CentralAfrica'],
+    'SN': ['WestAfrica'],
+    'TN': ['Maghreb'],
+    'AR': ['SouthConeSA', 'Mestizo'],
+    'BR': ['BrazilMixed', 'Afroamerican'],
+    'CO': ['NorthernSA', 'Mestizo'],
+    'EC': ['NorthernSA', 'IndigenousSA'],
+    'US': ['Anglosphere', 'Afroamerican'],
+    'MX': ['Mestizo'],
+    'UY': ['SouthConeSA'],
+    'SA': ['ArabGulf'],
+    'AU': ['Anglosphere', 'PacificIslanders'],
+    'KR': ['Korea'],
+    'AE': ['ArabGulf'],
+    'IQ': ['Mashriq'],
+    'IR': ['Iran'],
+    'JP': ['Japan'],
+    'JO': ['Mashriq'],
+    'UZ': ['Uzbekistan'],
+    'PS': ['Mashriq'],
+    'QA': ['ArabGulf']
+  };
+  return m[countryId] || ['Staff'];
+};
 const CONTINENTS = {
   'Europe': ['DE', 'EN', 'BE', 'HR', 'DK', 'SCO', 'ES', 'FR', 'GR', 'IT', 'NO', 'NL', 'PL', 'PT', 'CH', 'TR'],
   'Afrique': ['ZA', 'DZ', 'CV', 'CI', 'EG', 'GH', 'MA', 'NG', 'CD', 'SN', 'TN'],
@@ -43,6 +92,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
   }, [multiplayerContext?.players, isWaitingForOpponent, playerDataReady, onStartGame]);
 
   const [challenge, setChallenge] = useState(null);
+  const [regensList, setRegensList] = useState({});
   
   // Initialize playerName on mount
   useEffect(() => {
@@ -52,6 +102,12 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
         setUser(session.user);
       }
     });
+    
+    // Fetch regens
+    fetch('/regens_list.json')
+      .then(res => res.json())
+      .then(data => setRegensList(data))
+      .catch(e => console.error("Could not load regens list", e));
   }, []);
   
   const [background, setBackground] = useState(ORIGINS_BACKGROUNDS[0]);
@@ -107,6 +163,14 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     const nameParts = playerName.trim().split(' ');
     const firstName = nameParts[0] || 'Joueur';
     const lastName = nameParts.slice(1).join(' ') || 'Inconnu';
+    
+    let avatar = null;
+    const allowedFolders = getEthnicityFolders(country.id);
+    const chosenFolder = allowedFolders[Math.floor(Math.random() * allowedFolders.length)];
+    if (regensList[chosenFolder] && regensList[chosenFolder].length > 0) {
+      const images = regensList[chosenFolder];
+      avatar = images[Math.floor(Math.random() * images.length)];
+    }
 
     const playerData = {
       firstName,
@@ -129,6 +193,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
       morale: 80,
       bankBalance: background.startingMoney || 0,
       palmares: [],
+      avatar: avatar,
       perks: (() => {
         if (background?.id === 'STREET') return ['bg_street'];
         if (background?.id === 'ACADEMY') return ['bg_academy'];

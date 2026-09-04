@@ -162,6 +162,18 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
           backgroundColor: 'transparent'
         }}
       >
+        {/* AVATAR JOUEUR */}
+        {player.avatar && (
+          <div className="absolute top-[15%] left-[25%] w-[180px] h-[140px] z-10 flex justify-end items-end overflow-visible pointer-events-none">
+            <img 
+              src={`/${player.avatar}`} 
+              alt="" 
+              onError={(e) => { e.target.style.display = 'none'; }}
+              className="w-full h-[150%] object-contain object-bottom drop-shadow-xl saturate-[1.1] brightness-[0.95]" 
+            />
+          </div>
+        )}
+
         {/* OVR & POS & FLAG (TOP LEFT) */}
         <div className="absolute top-[15.5%] left-[16%] flex flex-col items-center z-20 w-[50px]">
           <span className={`text-[32px] font-black leading-none tracking-tight drop-shadow-md ${themeStyles.textPrimary}`}>
