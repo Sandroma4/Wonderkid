@@ -24,16 +24,16 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
 
   const basicLayout = {
     ovrTop: 'top-[11%]',
-    ovrLeft: 'left-[11%]',
-    avatarTop: 'top-[25%]',
+    ovrLeft: 'left-[8%]',
+    avatarTop: 'top-[26%]',
     avatarLeft: 'left-[32%]',
     nameTop: 'top-[56%]',
     statsTop: 'top-[65%]',
     statsGapY: 'gap-y-[6px]',
-    statsGapX: 'gap-x-[60px]',
-    statsShift: '-ml-3',
+    statsLeftCol: 'left-[18%]',
+    statsRightCol: 'left-[52%]',
     flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.4)] mt-[5px] mb-[4px]',
-    flagClass: 'w-[36px] h-[24px] object-cover rounded-[1px]',
+    flagClass: 'w-[28px] h-[18px] object-cover rounded-[1px]',
     hideCustomLabels: true
   };
 
@@ -194,7 +194,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         )}
 
         {/* OVR & POS & FLAG (TOP LEFT) */}
-        <div className={`absolute flex flex-col items-center z-20 w-[50px] ${themeStyles.layout?.ovrTop || 'top-[15.5%]'} ${themeStyles.layout?.ovrLeft || 'left-[16%]'}`}>
+        <div className={`absolute flex flex-col items-center z-20 w-[45px] ${themeStyles.layout?.ovrTop || 'top-[15.5%]'} ${themeStyles.layout?.ovrLeft || 'left-[16%]'}`}>
           <span className={`text-[32px] font-black leading-none tracking-tight drop-shadow-md ${themeStyles.textPrimary}`}>
             {ovr}
           </span>
@@ -222,22 +222,20 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         </div>
 
         {/* LES 6 STATISTIQUES (CHIFFRES UNIQUEMENT) */}
-        <div className={`absolute w-full flex justify-center z-20 ${themeStyles.layout?.statsTop || 'top-[61%]'} ${themeStyles.layout?.statsShift || ''}`}>
-          <div className={`flex ${themeStyles.layout?.statsGapX || 'gap-x-[50px]'}`}>
-            <div className={`flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
-              {stats.slice(0, 3).map((st, idx) => (
-                <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
-                  {st.val}
-                </span>
-              ))}
-            </div>
-            <div className={`flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
-              {stats.slice(3, 6).map((st, idx) => (
-                <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
-                  {st.val}
-                </span>
-              ))}
-            </div>
+        <div className={`absolute w-full z-20 ${themeStyles.layout?.statsTop || 'top-[61%]'}`}>
+          <div className={`absolute flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsLeftCol || 'left-[22%]'} ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
+            {stats.slice(0, 3).map((st, idx) => (
+              <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+                {st.val}
+              </span>
+            ))}
+          </div>
+          <div className={`absolute flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsRightCol || 'left-[62%]'} ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
+            {stats.slice(3, 6).map((st, idx) => (
+              <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
+                {st.val}
+              </span>
+            ))}
           </div>
         </div>
       </div>
