@@ -22,6 +22,18 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
     else theme = 'bronze';
   }
 
+  const basicLayout = {
+    ovrTop: 'top-[17%]',
+    ovrLeft: 'left-[16%]',
+    avatarTop: 'top-[15%]',
+    avatarLeft: 'left-[26%]',
+    nameTop: 'top-[57%]',
+    statsTop: 'top-[65%]',
+    statsGapY: 'gap-y-[20px]',
+    statsGapX: 'gap-x-[85px]',
+    hideCustomLabels: true
+  };
+
   const themeStyles = {
     totw: {
       bgImage: "url('/card_gold.png')",
@@ -29,7 +41,8 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       bgSize: '100% 100%',
       textPrimary: 'text-[#3f311c]',
       textSecondary: 'text-[#3f311c]',
-      accent: 'border-[#3f311c]/30'
+      accent: 'border-[#3f311c]/30',
+      layout: basicLayout
     },
     gold: {
       bgImage: "url('/card_gold.png')",
@@ -37,7 +50,8 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       bgSize: '100% 100%',
       textPrimary: 'text-[#3f311c]',
       textSecondary: 'text-[#3f311c]',
-      accent: 'border-[#3f311c]/30'
+      accent: 'border-[#3f311c]/30',
+      layout: basicLayout
     },
     silver: {
       bgImage: "url('/card_silver.png')",
@@ -45,7 +59,8 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       bgSize: '100% 100%',
       textPrimary: 'text-[#1e293b]',
       textSecondary: 'text-[#1e293b]',
-      accent: 'border-[#1e293b]/30'
+      accent: 'border-[#1e293b]/30',
+      layout: basicLayout
     },
     bronze: {
       bgImage: "url('/card_bronze.png')",
@@ -53,7 +68,8 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       bgSize: '100% 100%',
       textPrimary: 'text-[#3b2111]',
       textSecondary: 'text-[#3b2111]',
-      accent: 'border-[#3b2111]/30'
+      accent: 'border-[#3b2111]/30',
+      layout: basicLayout
     },
     bronze_alt: {
       bgImage: "url('/cosmetics/metals.png')",
@@ -164,7 +180,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       >
         {/* AVATAR JOUEUR */}
         {player.avatar && (
-          <div className="absolute top-[17%] left-[32%] w-[140px] h-[120px] z-10 flex justify-end items-end overflow-visible pointer-events-none">
+          <div className={`absolute w-[140px] h-[120px] z-10 flex justify-end items-end overflow-visible pointer-events-none ${themeStyles.layout?.avatarTop || 'top-[17%]'} ${themeStyles.layout?.avatarLeft || 'left-[32%]'}`}>
             <img 
               src={`/${player.avatar}`} 
               alt="" 
@@ -175,7 +191,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         )}
 
         {/* OVR & POS & FLAG (TOP LEFT) */}
-        <div className="absolute top-[15.5%] left-[16%] flex flex-col items-center z-20 w-[50px]">
+        <div className={`absolute flex flex-col items-center z-20 w-[50px] ${themeStyles.layout?.ovrTop || 'top-[15.5%]'} ${themeStyles.layout?.ovrLeft || 'left-[16%]'}`}>
           <span className={`text-[32px] font-black leading-none tracking-tight drop-shadow-md ${themeStyles.textPrimary}`}>
             {ovr}
           </span>
@@ -196,23 +212,23 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
         </div>
 
         {/* NOM DU JOUEUR */}
-        <div className="absolute top-[52%] w-full text-center z-20">
+        <div className={`absolute w-full text-center z-20 ${themeStyles.layout?.nameTop || 'top-[52%]'}`}>
           <h3 className={`text-[19px] font-black tracking-widest uppercase truncate px-6 pb-1 pt-0.5 leading-snug ${themeStyles.textPrimary}`}>
             {lastName}
           </h3>
         </div>
 
         {/* LES 6 STATISTIQUES (CHIFFRES UNIQUEMENT) */}
-        <div className="absolute top-[61%] w-full flex justify-center z-20">
-          <div className="flex gap-x-[50px]">
-            <div className="flex flex-col gap-y-[9px] items-end w-[35px] pr-2">
+        <div className={`absolute w-full flex justify-center z-20 ${themeStyles.layout?.statsTop || 'top-[61%]'}`}>
+          <div className={`flex ${themeStyles.layout?.statsGapX || 'gap-x-[50px]'}`}>
+            <div className={`flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
               {stats.slice(0, 3).map((st, idx) => (
                 <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                   {st.val}
                 </span>
               ))}
             </div>
-            <div className="flex flex-col gap-y-[9px] items-end w-[35px] pr-2">
+            <div className={`flex flex-col items-end w-[35px] pr-2 ${themeStyles.layout?.statsGapY || 'gap-y-[9px]'}`}>
               {stats.slice(3, 6).map((st, idx) => (
                 <span key={idx} className={`font-semibold text-[18px] tracking-tighter leading-none ${themeStyles.textPrimary}`}>
                   {st.val}
