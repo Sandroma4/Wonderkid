@@ -25,15 +25,15 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
   const basicLayout = {
     ovrTop: 'top-[11%]',
     ovrLeft: 'left-[8%]',
-    avatarTop: 'top-[26%]',
-    avatarLeft: 'left-[32%]',
+    avatarTop: 'top-[32%]',
+    avatarLeft: 'left-[30%]',
     nameTop: 'top-[56%]',
     statsTop: 'top-[65%]',
     statsGapY: 'gap-y-[6px]',
-    statsLeftCol: 'left-[18%]',
-    statsRightCol: 'left-[52%]',
-    flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.4)] mt-[5px] mb-[4px]',
-    flagClass: 'w-[28px] h-[18px] object-cover rounded-[1px]',
+    statsLeftCol: 'left-[10%]',
+    statsRightCol: 'left-[51%]',
+    flagWrapper: 'shadow-[0_0_3px_rgba(0,0,0,0.5)] mt-[14px] mb-[4px]',
+    flagClass: 'w-[38px] h-[22px] object-cover rounded-[1px]',
     hideCustomLabels: true
   };
 
