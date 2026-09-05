@@ -127,7 +127,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       bgImage: "url('/cosmetics/elite.png')",
       bgPos: '0% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#a7f3d0]',
+      textPrimary: 'text-[#5c3a21]',
       textSecondary: 'hidden',
       hideLabels: true
     },
@@ -135,7 +135,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       bgImage: "url('/cosmetics/elite.png')",
       bgPos: '50% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#fecdd3]',
+      textPrimary: 'text-[#cbd5e1]',
       textSecondary: 'hidden',
       hideLabels: true
     },
@@ -143,7 +143,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       bgImage: "url('/cosmetics/elite.png')",
       bgPos: '100% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#bfdbfe]',
+      textPrimary: 'text-[#b8860b]',
       textSecondary: 'hidden',
       hideLabels: true
     }
