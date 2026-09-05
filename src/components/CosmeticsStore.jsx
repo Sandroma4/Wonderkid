@@ -68,7 +68,7 @@ export const CosmeticsStore = ({ onBack }) => {
         </div>
         
         <p className="text-rose-400 mt-4 text-xs max-w-lg text-center bg-rose-900/20 p-2 rounded-lg border border-rose-900/50">
-          ⚠️ Note : Les gardiens de but (GK) ne sont pas affectés par ces designs personnalisés. Les cosmétiques s'appliquent une seule fois par carte.
+          ⚠️ Note : Les cosmétiques s'appliquent une seule fois par carte.
         </p>
       </div>
 

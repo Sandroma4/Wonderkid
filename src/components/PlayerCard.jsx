@@ -11,7 +11,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
   // Choix automatique ou manuel du thème de la carte
   let theme = cardType;
   const appliedCosmetic = player.appliedCosmetic;
-  const hasCosmetic = appliedCosmetic && cardType === 'auto' && !isGk;
+  const hasCosmetic = appliedCosmetic && cardType === 'auto';
   
   if (hasCosmetic) {
     theme = appliedCosmetic;
@@ -76,7 +76,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       layout: basicLayout
     },
     bronze_alt: {
-      bgImage: "url('/cosmetics/metals.png?v=2')",
+      bgImage: `url('/cosmetics/metals${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '0% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#5c3a21]',
@@ -84,7 +84,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     silver_alt: {
-      bgImage: "url('/cosmetics/metals.png?v=2')",
+      bgImage: `url('/cosmetics/metals${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '50% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#1e293b]',
@@ -92,7 +92,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     gold_alt: {
-      bgImage: "url('/cosmetics/metals.png?v=2')",
+      bgImage: `url('/cosmetics/metals${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '100% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#fcd34d]',
@@ -100,7 +100,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     stone: {
-      bgImage: "url('/cosmetics/fantasy.png?v=2')",
+      bgImage: `url('/cosmetics/fantasy${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '0% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#94a3b8]',
@@ -108,7 +108,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     cyberpunk: {
-      bgImage: "url('/cosmetics/fantasy.png?v=2')",
+      bgImage: `url('/cosmetics/fantasy${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '50% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#94a3b8]',
@@ -116,7 +116,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     earth: {
-      bgImage: "url('/cosmetics/fantasy.png?v=2')",
+      bgImage: `url('/cosmetics/fantasy${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '100% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#451a03]',
@@ -124,7 +124,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     elite1: {
-      bgImage: "url('/cosmetics/elite.png?v=2')",
+      bgImage: `url('/cosmetics/elite${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '0% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#5c3a21]',
@@ -132,7 +132,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     elite2: {
-      bgImage: "url('/cosmetics/elite.png?v=2')",
+      bgImage: `url('/cosmetics/elite${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '50% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#cbd5e1]',
@@ -140,7 +140,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     elite3: {
-      bgImage: "url('/cosmetics/elite.png?v=2')",
+      bgImage: `url('/cosmetics/elite${isGk ? '_gk' : ''}.png?v=2')`,
       bgPos: '100% 0%',
       bgSize: '300% 100%',
       textPrimary: 'text-[#b8860b]',
