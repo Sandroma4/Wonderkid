@@ -9,9 +9,9 @@ export const COSMETICS_DATA = [
   { id: 'stone', name: 'Roche Ancienne', image: '/cosmetics/fantasy.png', bgPos: '0% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
   { id: 'cyberpunk', name: 'Néon Cyberpunk', image: '/cosmetics/fantasy.png', bgPos: '50% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
   { id: 'earth', name: 'Terre Aride', image: '/cosmetics/fantasy.png', bgPos: '100% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
-  { id: 'elite1', name: 'Elite 87+', image: '/cosmetics/elite.png', bgPos: '0% 0%', price: 35, category: 'Elite (87+ OVR)', minOvr: 87, maxOvr: 99 },
-  { id: 'elite2', name: 'Elite 90+', image: '/cosmetics/elite.png', bgPos: '50% 0%', price: 50, category: 'Elite (90+ OVR)', minOvr: 90, maxOvr: 99 },
-  { id: 'elite3', name: 'Elite 93+', image: '/cosmetics/elite.png', bgPos: '100% 0%', price: 75, category: 'Elite (93+ OVR)', minOvr: 93, maxOvr: 99 }
+  { id: 'elite1', name: 'Elite 87+', image: '/cosmetics/elite.png?v=2', bgPos: '0% 0%', price: 35, category: 'Elite (87+ OVR)', minOvr: 87, maxOvr: 99 },
+  { id: 'elite2', name: 'Elite 90+', image: '/cosmetics/elite.png?v=2', bgPos: '50% 0%', price: 50, category: 'Elite (90+ OVR)', minOvr: 90, maxOvr: 99 },
+  { id: 'elite3', name: 'Elite 93+', image: '/cosmetics/elite.png?v=2', bgPos: '100% 0%', price: 75, category: 'Elite (93+ OVR)', minOvr: 93, maxOvr: 99 }
 ];
 
 export const CosmeticsStore = ({ onBack }) => {
