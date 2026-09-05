@@ -3,9 +3,9 @@ import { getAccountData, saveAccountData } from '../utils/storage';
 import { playSound } from '../utils/audio';
 
 export const COSMETICS_DATA = [
-  { id: 'bronze_alt', name: 'Bronze Gravé', image: '/cosmetics/metals.png', bgPos: '0% 0%', price: 5, category: 'Métaux (<65 OVR)', minOvr: 0, maxOvr: 64 },
-  { id: 'silver_alt', name: 'Argent Sombre', image: '/cosmetics/metals.png', bgPos: '50% 0%', price: 10, category: 'Métaux (65-74 OVR)', minOvr: 65, maxOvr: 74 },
-  { id: 'gold_alt', name: 'Or Pur', image: '/cosmetics/metals.png', bgPos: '100% 0%', price: 15, category: 'Métaux (75-84 OVR)', minOvr: 75, maxOvr: 84 },
+  { id: 'bronze_alt', name: 'Bronze Gravé', image: '/cosmetics/metals.png?v=2', bgPos: '0% 0%', price: 5, category: 'Métaux (<65 OVR)', minOvr: 0, maxOvr: 64 },
+  { id: 'silver_alt', name: 'Argent Sombre', image: '/cosmetics/metals.png?v=2', bgPos: '50% 0%', price: 10, category: 'Métaux (65-74 OVR)', minOvr: 65, maxOvr: 74 },
+  { id: 'gold_alt', name: 'Or Pur', image: '/cosmetics/metals.png?v=2', bgPos: '100% 0%', price: 15, category: 'Métaux (75-84 OVR)', minOvr: 75, maxOvr: 84 },
   { id: 'stone', name: 'Roche Ancienne', image: '/cosmetics/fantasy.png', bgPos: '0% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
   { id: 'cyberpunk', name: 'Néon Cyberpunk', image: '/cosmetics/fantasy.png', bgPos: '50% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
   { id: 'earth', name: 'Terre Aride', image: '/cosmetics/fantasy.png', bgPos: '100% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },

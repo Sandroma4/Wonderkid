@@ -76,26 +76,26 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       layout: basicLayout
     },
     bronze_alt: {
-      bgImage: "url('/cosmetics/metals.png')",
+      bgImage: "url('/cosmetics/metals.png?v=2')",
       bgPos: '0% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#c07b58]',
+      textPrimary: 'text-[#5c3a21]',
       textSecondary: 'hidden',
       hideLabels: true
     },
     silver_alt: {
-      bgImage: "url('/cosmetics/metals.png')",
+      bgImage: "url('/cosmetics/metals.png?v=2')",
       bgPos: '50% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#8cb8d3]',
+      textPrimary: 'text-[#1e293b]',
       textSecondary: 'hidden',
       hideLabels: true
     },
     gold_alt: {
-      bgImage: "url('/cosmetics/metals.png')",
+      bgImage: "url('/cosmetics/metals.png?v=2')",
       bgPos: '100% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#2a2a2a]',
+      textPrimary: 'text-[#fcd34d]',
       textSecondary: 'hidden',
       hideLabels: true
     },
