@@ -543,13 +543,13 @@ export function Dashboard({
       
 
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
-          <div className="max-w-3xl w-full bg-white/95 dark:bg-slate-900/95 border border-slate-300/80 dark:border-slate-700/50 backdrop-blur-md rounded-2xl md:rounded-3xl p-3 md:p-7 shadow-2xl z-10 flex flex-col md:flex-row gap-2 md:gap-6 items-center justify-center h-[95%] md:h-auto overflow-hidden">
+          <div className="max-w-3xl w-full bg-white/95 dark:bg-slate-900/95 border border-slate-300/80 dark:border-slate-700/50 backdrop-blur-md rounded-2xl md:rounded-3xl p-4 md:p-7 shadow-2xl z-10 flex flex-col md:flex-row gap-4 md:gap-6 items-center md:items-stretch justify-center max-h-[95dvh] md:h-auto overflow-y-auto stylish-scrollbar">
             
-            <div className="flex flex-col items-center scale-[0.55] md:scale-100 origin-center -mt-24 md:mt-0 shrink-0">
+            <div className="flex flex-col items-center scale-[0.65] md:scale-100 origin-top shrink-0 -mb-32 md:-mb-0 mt-2 md:mt-0">
               <PlayerCard player={player} club={club} cardType={cardStyle} />
             </div>
 
-            <div className="flex-1 space-y-2 md:space-y-5 w-full flex flex-col min-h-0 shrink -mt-16 md:mt-0">
+            <div className="flex-1 space-y-3 md:space-y-5 w-full flex flex-col shrink">
               <div className="shrink-0 text-center md:text-left">
                 <span className="heading-typography text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm bg-white dark:bg-slate-900 text-slate-800 dark:text-white">
                   Bilan de la Saison {season} • {club.name}
@@ -1072,12 +1072,12 @@ export function Dashboard({
                 )}
                 
                 {/* SPONSORS */}
-                {player.sponsor && player.sponsor !== 'Aucun' && (
-                  <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-4 shadow-2xl">
-                    <h4 className="heading-typography text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                      <span>💎 Sponsors Officiels</span>
-                    </h4>
-                    <div className="flex flex-col gap-2">
+                <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-4 shadow-2xl">
+                  <h4 className="heading-typography text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <span>💎 Sponsors Officiels</span>
+                  </h4>
+                  <div className="flex flex-col gap-2">
+                    {player.sponsor && player.sponsor !== 'Aucun' ? (
                       <div className="flex items-center gap-3 bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/30 p-3 rounded-xl shadow-sm">
                         <div className="flex items-center justify-center w-10 h-10 bg-indigo-500 text-white rounded-lg shadow-inner text-xl font-black">
                           {player.sponsor.charAt(0)}
@@ -1089,9 +1089,14 @@ export function Dashboard({
                           </p>
                         </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-slate-600 rounded-xl">
+                        <span className="text-2xl mb-1 opacity-50">🤝</span>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 text-center font-medium">Aucun sponsor pour le moment.<br/>Gagnez en notoriété pour attirer des offres !</p>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
 
               {/* ONGLET : TERRAIN (EVENTS) */}
