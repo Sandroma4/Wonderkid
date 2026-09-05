@@ -12,6 +12,8 @@ import { Leaderboard } from './components/Leaderboard';
 import { CardCollection } from './components/CardCollection';
 import { ClashLobby } from './components/ClashLobby';
 import { CosmeticsStore } from './components/CosmeticsStore';
+import { updateChallengeProgress } from './utils/dailyChallenges';
+import { DailyChallengesModal } from './components/DailyChallengesModal';
 import { playSound } from './utils/audio';
 import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession, getAccountData, saveAccountData } from './utils/storage';
 import { createMultiplayerRoom } from './utils/multiplayer';
@@ -69,6 +71,9 @@ export default function App() {
   const [clashContext, setClashContext] = useState(null);
 
   // Initialize or handle browser history for view routinglobalPalmares', 'achievements', 'cardCollection'
+  const [showAchievements, setShowAchievements] = useState(false);
+  const [showDailyChallenges, setShowDailyChallenges] = useState(false);
+  const [showMultiplayerLobby, setShowMultiplayerLobby] = useState(false);
   const [gameState, setGameState] = useState(null);
   const [multiplayerContext, setMultiplayerContext] = useState(null);
 
@@ -704,6 +709,21 @@ export default function App() {
 
     const { awards, ballonDorRank } = calculateAwards(prev.player, prev.club, calculatedStats, tournamentStats, prev.season);
     
+    // MAJ DEFIS QUOTIDIENS
+    updateChallengeProgress('PLAY_SEASON', 1);
+    updateChallengeProgress('REACH_OVR', prev.player.ovr || 0);
+    
+    if (calculatedStats.goals) updateChallengeProgress('SCORE_GOALS', calculatedStats.goals);
+    if (calculatedStats.assists) updateChallengeProgress('ASSISTS', calculatedStats.assists);
+    if (calculatedStats.cleanSheets) updateChallengeProgress('CLEAN_SHEETS', calculatedStats.cleanSheets);
+    
+    const ballonDor = awards.filter(a => a.toLowerCase().includes("ballon d'or")).length;
+    if (ballonDor > 0) updateChallengeProgress('WIN_BALLON_DOR', ballonDor);
+    
+    const wonTrophies = Object.values(tournamentStats).filter(t => t.stage === 'Vainqueur').length;
+    if (wonTrophies > 0) updateChallengeProgress('WIN_TROPHY', wonTrophies);
+    // FIN DEFIS QUOTIDIENS
+
     const fullStats = {
       ...calculatedStats,
       tournaments: tournamentStats,
@@ -1947,6 +1967,16 @@ export default function App() {
     return (
       <>
         {showPseudoModal && <PseudonymModal onConfirm={handlePseudoConfirm} />}
+        <div className="flex flex-col items-center gap-4 p-8">
+            <button
+              onClick={() => { playSound('click'); setShowDailyChallenges(true); }}
+              className="group relative bg-slate-800/80 border border-slate-700 hover:border-amber-500/50 p-6 rounded-3xl overflow-hidden transition-all hover:scale-105 active:scale-95 flex flex-col items-center justify-center gap-3 w-40 h-40"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <span className="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform">📅</span>
+              <span className="font-bold text-slate-300 group-hover:text-amber-400 text-sm uppercase tracking-wider text-center z-10">Défis<br/>Quotidiens</span>
+            </button>
+        </div>
         <MainMenu onNavigate={setAppView} onLoadGame={handleLoadGame} onJoinInvite={(code) => { setInviteCode(code); setAppView('multiplayerLobby'); }} />
       </>
     );
@@ -2120,6 +2150,9 @@ export default function App() {
       onPlayAsHeir={handlePlayAsHeir}
       onQuit={handleRestartGame}
     />
+    {showDailyChallenges && (
+      <DailyChallengesModal onClose={() => setShowDailyChallenges(false)} />
+    )}
     {showPseudoModal && (
       <PseudonymModal 
         onSave={() => setShowPseudoModal(false)}
