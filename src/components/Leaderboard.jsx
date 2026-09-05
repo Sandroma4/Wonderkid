@@ -45,18 +45,19 @@ export const Leaderboard = ({ onBack }) => {
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-10"></div>
       
       <div className="w-full max-w-3xl relative z-10 pt-4 md:pt-8">
-        <div className="relative flex flex-col items-center justify-center mb-6 w-full">
+        <div className="flex items-center justify-between mb-4 md:mb-6 w-full gap-2 pt-2 md:pt-0">
           <button 
             onClick={() => { playSound('click'); onBack(); }}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+            className="z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:px-4 md:py-2.5 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 shadow-sm flex items-center justify-center min-w-[44px] min-h-[44px]"
           >
-            ← Retour
+            <span className="text-xl leading-none">←</span> <span className="hidden md:inline font-bold ml-2 uppercase tracking-wider text-[10px] md:text-xs">Retour</span>
           </button>
-          <div className="w-full text-center px-16 md:px-24">
-            <h1 className="w-full text-center heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
+          <div className="flex-1 text-center">
+            <h1 className="heading-typography text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
               CLASSEMENT
             </h1>
           </div>
+          <div className="w-[44px] md:w-[100px] shrink-0"></div>
         </div>
 
         <div className="flex justify-center mb-6 gap-4">

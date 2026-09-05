@@ -51,19 +51,20 @@ export const CardCollection = ({ onBack }) => {
 
   return (
     <div className="min-h-screen bg-emerald-200 dark:bg-slate-950 p-3 md:p-8 relative overflow-hidden flex flex-col">
-      <div className="relative flex flex-col items-center justify-center mb-6 md:mb-8 w-full max-w-6xl mx-auto pt-4 md:pt-8">
+      <div className="flex items-center justify-between mb-6 md:mb-8 w-full max-w-6xl mx-auto pt-2 md:pt-4">
         <button 
           onClick={() => { playSound('click'); onBack(); }}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
+          className="z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:px-4 md:py-2.5 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 shadow-sm flex items-center justify-center min-w-[44px] min-h-[44px]"
         >
-          ← Retour
+          <span className="text-xl leading-none">←</span> <span className="hidden md:inline font-bold ml-2 uppercase tracking-wider text-[10px] md:text-xs">Retour</span>
         </button>
-        <div className="w-full text-center px-16 md:px-24">
-          <h1 className="heading-typography text-3xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-tight drop-shadow-lg leading-none">
+        <div className="flex-1 text-center px-2">
+          <h1 className="heading-typography text-2xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-tight drop-shadow-lg leading-none">
             Hall of <span className="text-emerald-600 dark:text-emerald-400">Fame</span>
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm md:text-base font-medium">Votre collection de légendes. L'histoire s'écrit ici.</p>
+          <p className="text-slate-500 dark:text-slate-400 mt-2 text-[10px] md:text-base font-medium">Votre collection de légendes. L'histoire s'écrit ici.</p>
         </div>
+        <div className="w-[44px] md:w-[100px] shrink-0"></div>
       </div>
 
       <div className="relative z-10 flex-1 overflow-y-auto">

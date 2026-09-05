@@ -307,7 +307,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                         key={g.id}
                         type="button"
                         onClick={() => handleSelectGender(g)}
-                        className={`p-2 sm:p-6 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-1 sm:gap-3 relative overflow-hidden group ${
+                        className={`p-2 sm:p-6 min-h-[160px] rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-2 sm:gap-3 relative overflow-hidden group ${
                           isSelected
                             ? 'border-emerald-400 bg-emerald-500/20 shadow-[0_0_35px_rgba(16,185,129,0.35)] scale-[1.02]'
                             : 'border-slate-300 dark:border-slate-800 bg-slate-950/80 hover:border-emerald-400/50 hover:bg-emerald-500/10'
@@ -315,7 +315,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                       >
                         {/* Glowing radial halo backdrop */}
                         <div
-                          className={`absolute w-24 h-24 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full blur-3xl transition-all duration-300 pointer-events-none ${
+                          className={`absolute w-36 h-36 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full blur-3xl transition-all duration-300 pointer-events-none ${
                             isSelected
                               ? 'bg-emerald-400/45 opacity-100 scale-110'
                               : 'bg-emerald-500/20 opacity-50 group-hover:opacity-90 group-hover:scale-105'
@@ -326,11 +326,11 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                           <img
                             src={g.id === 'F' ? "/female_silhouette.png" : "/male_silhouette.png"}
                             alt={g.name}
-                            className="w-24 h-24 sm:w-48 sm:h-48 md:w-64 md:h-64 object-contain filter drop-shadow-[0_0_20px_rgba(52,211,153,0.85)] drop-shadow-[0_0_45px_rgba(16,185,129,0.6)] brightness-110 contrast-125 transition-transform duration-300 group-hover:scale-105"
+                            className="w-36 h-36 sm:w-48 sm:h-48 md:w-64 md:h-64 object-contain filter drop-shadow-[0_0_20px_rgba(52,211,153,0.85)] drop-shadow-[0_0_45px_rgba(16,185,129,0.6)] brightness-110 contrast-125 transition-transform duration-300 group-hover:scale-105"
                           />
                         </div>
 
-                        <div className="font-extrabold text-slate-800 dark:text-white text-base md:text-lg z-10 tracking-wide">
+                        <div className="font-extrabold text-slate-800 dark:text-white text-base md:text-lg z-10 tracking-wide mt-2">
                           {g.name}
                         </div>
                       </button>
