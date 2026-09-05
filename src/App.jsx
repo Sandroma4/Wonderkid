@@ -1967,6 +1967,9 @@ export default function App() {
     return (
       <>
         {showPseudoModal && <PseudonymModal onConfirm={handlePseudoConfirm} />}
+        {showDailyChallenges && (
+          <DailyChallengesModal onClose={() => setShowDailyChallenges(false)} />
+        )}
         <MainMenu 
           onNavigate={setAppView} 
           onLoadGame={handleLoadGame} 
