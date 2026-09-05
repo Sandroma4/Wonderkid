@@ -895,7 +895,7 @@ export function Dashboard({
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               
               {/* ONGLET : JOUEUR (CARTE & STATS) */}
               <div className={`${activeMobileTab !== 'joueur' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1`}>
@@ -1036,8 +1036,8 @@ export function Dashboard({
                 )}
               </div>
 
-              {/* ONGLET : MARCHÉ */}
-              <div className={`${activeMobileTab !== 'marche' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1`}>
+              {/* ONGLET : MARCHÉ - placé après Carrière sur desktop via order */}
+              <div className={`${activeMobileTab !== 'marche' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1 md:order-last`}>
                 {/* GRAPH VALEUR MARCHANDE */}
                 {player.valueHistory && player.valueHistory.length > 0 && (
                   <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 md:p-5 shadow-2xl flex flex-col h-fit relative">
