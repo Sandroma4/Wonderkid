@@ -20,7 +20,7 @@ const getTheme = (primary = '#2563EB', secondary = '#60A5FA') => {
   };
 };
 
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback, memo } from 'react';
 import html2canvas from 'html2canvas';
 import { PlayerCard } from './PlayerCard';
 import { LifestyleShopModal } from './LifestyleShopModal';
@@ -34,7 +34,7 @@ import { getTraitDetails } from '../utils/traitsData';
 import { COUNTRIES } from '../utils/gameData';
 import { FlagIcon } from './FlagIcon';
 
-const AnimatedStatBar = ({ label, oldVal, newVal, gain }) => {
+const AnimatedStatBar = memo(({ label, oldVal, newVal, gain }) => {
   const [currentVal, setCurrentVal] = useState(oldVal);
   const [displayVal, setDisplayVal] = useState(oldVal);
 
@@ -74,9 +74,9 @@ const AnimatedStatBar = ({ label, oldVal, newVal, gain }) => {
       </div>
     </div>
   );
-};
+});
 
-const LeagueLabel = ({ club }) => {
+const LeagueLabel = memo(({ club }) => {
   if (!club) return null;
   const countryObj = COUNTRIES.find(c => c.id === club.origin);
   const countryName = countryObj ? countryObj.name : club.origin;
@@ -86,7 +86,7 @@ const LeagueLabel = ({ club }) => {
       <FlagIcon code={club.origin} className="w-3 h-2 rounded-[1px] shadow-sm" />
     </span>
   );
-};
+});
 
 
 const formatEventCategory = (cat) => {

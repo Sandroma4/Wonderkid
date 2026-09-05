@@ -1,27 +1,10 @@
-import { useState, useEffect } from 'react';
-import { CharacterCreation } from './components/CharacterCreation';
-import { Dashboard } from './components/Dashboard';
-import { MainMenu } from './components/MainMenu';
-import { MultiplayerLobby } from './components/MultiplayerLobby';
-import { FiveLobby } from './components/FiveLobby';
-import { FiveTeamsManager } from './components/FiveTeamsManager';
-import { FiveMatch } from './components/FiveMatch';
-import { GlobalPalmares } from './components/GlobalPalmares';
-import { Achievements } from './components/Achievements';
-import { Leaderboard } from './components/Leaderboard';
-import { CardCollection } from './components/CardCollection';
-import { ClashLobby } from './components/ClashLobby';
-import { CosmeticsStore } from './components/CosmeticsStore';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { updateChallengeProgress } from './utils/dailyChallenges';
-import { DailyChallengesModal } from './components/DailyChallengesModal';
 import { playSound } from './utils/audio';
 import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession, getAccountData, saveAccountData } from './utils/storage';
 import { createMultiplayerRoom } from './utils/multiplayer';
-import { PseudonymModal } from './components/PseudonymModal';
 import { checkAchievements } from './utils/achievementsData';
 import { simulateTournaments, calculateAwards, calculateUniqueAwards, updateClubOvr } from './utils/awards';
-import { InternationalTournamentModal } from './components/InternationalTournamentModal';
-import { RoleSelectionModal } from './components/RoleSelectionModal';
 import { supabase } from './supabaseClient';
 import { calculateCareerScore } from './utils/scoreCalculator';
 import { 
@@ -50,6 +33,39 @@ import {
   generateYoungPlayerStats
 } from './utils/gameData';
 import { getRoleById } from './utils/rolesData';
+
+// Petits modaux gardés en import statique (toujours nécessaires)
+import { PseudonymModal } from './components/PseudonymModal';
+import { InternationalTournamentModal } from './components/InternationalTournamentModal';
+import { RoleSelectionModal } from './components/RoleSelectionModal';
+import { DailyChallengesModal } from './components/DailyChallengesModal';
+
+// Composants page en lazy loading — ne se chargent que quand on les visite
+const CharacterCreation = lazy(() => import('./components/CharacterCreation').then(m => ({ default: m.CharacterCreation })));
+const Dashboard = lazy(() => import('./components/Dashboard').then(m => ({ default: m.Dashboard })));
+const MainMenu = lazy(() => import('./components/MainMenu').then(m => ({ default: m.MainMenu })));
+const MultiplayerLobby = lazy(() => import('./components/MultiplayerLobby').then(m => ({ default: m.MultiplayerLobby })));
+const FiveLobby = lazy(() => import('./components/FiveLobby').then(m => ({ default: m.FiveLobby })));
+const FiveTeamsManager = lazy(() => import('./components/FiveTeamsManager').then(m => ({ default: m.FiveTeamsManager })));
+const FiveMatch = lazy(() => import('./components/FiveMatch').then(m => ({ default: m.FiveMatch })));
+const GlobalPalmares = lazy(() => import('./components/GlobalPalmares').then(m => ({ default: m.GlobalPalmares })));
+const Achievements = lazy(() => import('./components/Achievements').then(m => ({ default: m.Achievements })));
+const Leaderboard = lazy(() => import('./components/Leaderboard').then(m => ({ default: m.Leaderboard })));
+const CardCollection = lazy(() => import('./components/CardCollection').then(m => ({ default: m.CardCollection })));
+const ClashLobby = lazy(() => import('./components/ClashLobby').then(m => ({ default: m.ClashLobby })));
+const CosmeticsStore = lazy(() => import('./components/CosmeticsStore').then(m => ({ default: m.CosmeticsStore })));
+
+// Spinner de fallback Suspense
+const PageLoader = () => (
+  <div className="fixed inset-0 bg-[#0F172A] flex items-center justify-center z-50">
+    <div className="flex flex-col items-center gap-4">
+      <div className="w-12 h-12 border-4 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin"></div>
+      <span className="text-slate-400 text-sm font-medium tracking-widest uppercase">Chargement…</span>
+    </div>
+  </div>
+);
+
+
 
 export default function App() {
   const [viewHistory, setViewHistory] = useState(['mainMenu']);
@@ -1907,11 +1923,11 @@ export default function App() {
   };
 
   if (appView === 'cosmeticsStore') {
-    return <CosmeticsStore onBack={handleBack} />;
+    return <Suspense fallback={<PageLoader />}><CosmeticsStore onBack={handleBack} /></Suspense>;
   }
 
   if (appView === 'fiveManager') {
-    return <FiveTeamsManager onBack={handleBack} />;
+    return <Suspense fallback={<PageLoader />}><FiveTeamsManager onBack={handleBack} /></Suspense>;
   }
 
   if (appView === 'fiveLobby') {
@@ -1965,73 +1981,80 @@ export default function App() {
 
   if (appView === 'mainMenu') {
     return (
-      <>
-        {showPseudoModal && <PseudonymModal onConfirm={handlePseudoConfirm} />}
-        {showDailyChallenges && (
-          <DailyChallengesModal onClose={() => setShowDailyChallenges(false)} />
-        )}
-        <MainMenu 
-          onNavigate={setAppView} 
-          onLoadGame={handleLoadGame} 
-          onJoinInvite={(code) => { setInviteCode(code); setAppView('multiplayerLobby'); }} 
-          onOpenDailyChallenges={() => { playSound('click'); setShowDailyChallenges(true); }}
-        />
-      </>
+      <Suspense fallback={<PageLoader />}>
+        <>
+          {showPseudoModal && <PseudonymModal onConfirm={handlePseudoConfirm} />}
+          {showDailyChallenges && (
+            <DailyChallengesModal onClose={() => setShowDailyChallenges(false)} />
+          )}
+          <MainMenu 
+            onNavigate={setAppView} 
+            onLoadGame={handleLoadGame} 
+            onJoinInvite={(code) => { setInviteCode(code); setAppView('multiplayerLobby'); }} 
+            onOpenDailyChallenges={() => { playSound('click'); setShowDailyChallenges(true); }}
+          />
+        </>
+      </Suspense>
     );
   }
 
   if (appView === 'globalPalmares') {
-    return <GlobalPalmares onBack={handleBack} />;
+    return <Suspense fallback={<PageLoader />}><GlobalPalmares onBack={handleBack} /></Suspense>;
   }
 
   if (appView === 'achievements') {
-    return <Achievements onBack={handleBack} />;
+    return <Suspense fallback={<PageLoader />}><Achievements onBack={handleBack} /></Suspense>;
   }
 
   if (appView === 'leaderboard') {
-    return <Leaderboard onBack={handleBack} />;
+    return <Suspense fallback={<PageLoader />}><Leaderboard onBack={handleBack} /></Suspense>;
   }
 
   if (appView === 'cardCollection') {
-    return <CardCollection onBack={handleBack} />;
+    return <Suspense fallback={<PageLoader />}><CardCollection onBack={handleBack} /></Suspense>;
   }
 
   if (appView === 'clashLobby') {
-    return <ClashLobby 
-      clashContext={clashContext}
-      setClashContext={setClashContext}
-      onBack={handleBack} 
-      onStartMatch={(myTeam, oppTeam, matchIndex) => {
-        // We need a way to pass this to FiveMatch
-        // Wait, FiveMatch expects players [{fiveTeam, isHost...}]
-        // Let's create a clash match context or use the multiplayer context.
-        setMultiplayerContext({
-          isClashMode: true,
-          matchIndex,
-          players: [
-            { playerId: 'me', name: 'Moi', fiveTeam: myTeam, isHost: true },
-            { playerId: 'ai', name: oppTeam.pseudo, fiveTeam: oppTeam, isHost: false }
-          ],
-          playerId: 'me',
-          isHost: true
-        });
-        setAppView('fiveMatch');
-      }} 
-    />;
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <ClashLobby 
+          clashContext={clashContext}
+          setClashContext={setClashContext}
+          onBack={handleBack} 
+          onStartMatch={(myTeam, oppTeam, matchIndex) => {
+            setMultiplayerContext({
+              isClashMode: true,
+              matchIndex,
+              players: [
+                { playerId: 'me', name: 'Moi', fiveTeam: myTeam, isHost: true },
+                { playerId: 'ai', name: oppTeam.pseudo, fiveTeam: oppTeam, isHost: false }
+              ],
+              playerId: 'me',
+              isHost: true
+            });
+            setAppView('fiveMatch');
+          }} 
+        />
+      </Suspense>
+    );
   }
   
   if (appView === 'multiplayerLobby' || appView === 'multiplayerLobbyCoop') {
-    return <MultiplayerLobby 
-      initialInviteCode={inviteCode}
-      multiplayerContext={multiplayerContext}
-      onBack={handleBack}
-      onStart={(roomObj, playerId, players, roomId, isHost, isCoop) => {
-        setMultiplayerContext({ roomObj, playerId, players, roomId, isHost, isCoopMode: isCoop });
-        setAppView('career');
-        setGameState(null);
-      }}
-      initialCoopMode={appView === 'multiplayerLobbyCoop'}
-    />;
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <MultiplayerLobby 
+          initialInviteCode={inviteCode}
+          multiplayerContext={multiplayerContext}
+          onBack={handleBack}
+          onStart={(roomObj, playerId, players, roomId, isHost, isCoop) => {
+            setMultiplayerContext({ roomObj, playerId, players, roomId, isHost, isCoopMode: isCoop });
+            setAppView('career');
+            setGameState(null);
+          }}
+          initialCoopMode={appView === 'multiplayerLobbyCoop'}
+        />
+      </Suspense>
+    );
   }
 
   if (appView === 'fiveMatch' && multiplayerContext) {
@@ -2076,7 +2099,11 @@ export default function App() {
   };
 
   if (appView === 'career' && !gameState) {
-    return <CharacterCreation onStartGame={handleStartGame} multiplayerContext={multiplayerContext} onRestartGame={handleRestartGame} />;
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <CharacterCreation onStartGame={handleStartGame} multiplayerContext={multiplayerContext} onRestartGame={handleRestartGame} />
+      </Suspense>
+    );
   }
 
   if (gameState && gameState.isInternationalTournament) {
@@ -2121,45 +2148,47 @@ export default function App() {
   }
 
   return (
-    <>
-      <Dashboard
-        gameState={gameState}
-        multiplayerContext={multiplayerContext}
-      activeOutcome={activeOutcome}
-      onChooseClub={handleChooseClub}
-      onSelectOption={handleSelectOption}
-      onContinueFromOutcome={handleContinueFromOutcome}
-      onPlayInteractiveMatch={handlePlayInteractiveMatch}
-      onContinueFromInteractiveMatch={handleContinueFromInteractiveMatch}
-      onCloseInteractiveMatch={handleCloseInteractiveMatch}
-      onNextSeason={() => {
-        if (gameState.transferMarketOffers && gameState.transferMarketOffers.length > 0) {
-          setGameState((prev) => ({ ...prev, seasonStats: null }));
-        } else {
-          handleProceedToNextSeasonFinal();
-        }
-      }}
-      onAcceptTransferOffer={handleAcceptTransferOffer}
-      onRejectTransferOffer={handleRejectTransferOffer}
-      onStayCurrentClub={handleStayCurrentClub}
-      onBuyLifestyleItem={handleBuyLifestyleItem}
-      onRetire={handleRetire}
-      onRestartGame={handleRestartGame}
-      onPlayAsHeir={handlePlayAsHeir}
-      onQuit={handleRestartGame}
-    />
-    {showDailyChallenges && (
-      <DailyChallengesModal onClose={() => setShowDailyChallenges(false)} />
-    )}
-    {showPseudoModal && (
-      <PseudonymModal 
-        onSave={() => setShowPseudoModal(false)}
-        onClose={() => setShowPseudoModal(false)}
+    <Suspense fallback={<PageLoader />}>
+      <>
+        <Dashboard
+          gameState={gameState}
+          multiplayerContext={multiplayerContext}
+        activeOutcome={activeOutcome}
+        onChooseClub={handleChooseClub}
+        onSelectOption={handleSelectOption}
+        onContinueFromOutcome={handleContinueFromOutcome}
+        onPlayInteractiveMatch={handlePlayInteractiveMatch}
+        onContinueFromInteractiveMatch={handleContinueFromInteractiveMatch}
+        onCloseInteractiveMatch={handleCloseInteractiveMatch}
+        onNextSeason={() => {
+          if (gameState.transferMarketOffers && gameState.transferMarketOffers.length > 0) {
+            setGameState((prev) => ({ ...prev, seasonStats: null }));
+          } else {
+            handleProceedToNextSeasonFinal();
+          }
+        }}
+        onAcceptTransferOffer={handleAcceptTransferOffer}
+        onRejectTransferOffer={handleRejectTransferOffer}
+        onStayCurrentClub={handleStayCurrentClub}
+        onBuyLifestyleItem={handleBuyLifestyleItem}
+        onRetire={handleRetire}
+        onRestartGame={handleRestartGame}
+        onPlayAsHeir={handlePlayAsHeir}
+        onQuit={handleRestartGame}
       />
-    )}
-    {gameState?.needsTraitSelection && (
-      <RoleSelectionModal onSelect={handleRoleSelection} playerPosition={gameState.player.position} />
-    )}
-    </>
+      {showDailyChallenges && (
+        <DailyChallengesModal onClose={() => setShowDailyChallenges(false)} />
+      )}
+      {showPseudoModal && (
+        <PseudonymModal 
+          onSave={() => setShowPseudoModal(false)}
+          onClose={() => setShowPseudoModal(false)}
+        />
+      )}
+      {gameState?.needsTraitSelection && (
+        <RoleSelectionModal onSelect={handleRoleSelection} playerPosition={gameState.player.position} />
+      )}
+      </>
+    </Suspense>
   );
 }
