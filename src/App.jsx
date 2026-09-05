@@ -1967,17 +1967,12 @@ export default function App() {
     return (
       <>
         {showPseudoModal && <PseudonymModal onConfirm={handlePseudoConfirm} />}
-        <div className="flex flex-col items-center gap-4 p-8">
-            <button
-              onClick={() => { playSound('click'); setShowDailyChallenges(true); }}
-              className="group relative bg-slate-800/80 border border-slate-700 hover:border-amber-500/50 p-6 rounded-3xl overflow-hidden transition-all hover:scale-105 active:scale-95 flex flex-col items-center justify-center gap-3 w-40 h-40"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <span className="text-4xl drop-shadow-lg group-hover:scale-110 transition-transform">📅</span>
-              <span className="font-bold text-slate-300 group-hover:text-amber-400 text-sm uppercase tracking-wider text-center z-10">Défis<br/>Quotidiens</span>
-            </button>
-        </div>
-        <MainMenu onNavigate={setAppView} onLoadGame={handleLoadGame} onJoinInvite={(code) => { setInviteCode(code); setAppView('multiplayerLobby'); }} />
+        <MainMenu 
+          onNavigate={setAppView} 
+          onLoadGame={handleLoadGame} 
+          onJoinInvite={(code) => { setInviteCode(code); setAppView('multiplayerLobby'); }} 
+          onOpenDailyChallenges={() => { playSound('click'); setShowDailyChallenges(true); }}
+        />
       </>
     );
   }

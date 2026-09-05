@@ -5,7 +5,7 @@ import { supabase } from '../supabaseClient';
 import { FriendsModal } from './FriendsModal';
 import { AccountShopModal } from './AccountShopModal';
 
-export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
+export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChallenges }) => {
   const [user, setUser] = useState(null);
   const [hasSave, setHasSave] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
@@ -600,6 +600,18 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite }) => {
 
             </>
           )}
+          <button 
+            onClick={() => { playSound('click'); onOpenDailyChallenges(); }}
+            className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500/20 to-orange-700/20 border border-orange-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-orange-500/30 hover:border-orange-400 hover:shadow-[0_0_20px_rgba(249,115,22,0.2)] active:scale-95"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-xl md:text-2xl">📅</span>
+                <span className="heading-typography text-orange-600 dark:text-orange-400 font-bold text-base md:text-lg tracking-wide uppercase">Défis Quotidiens</span>
+              </div>
+              <span className="text-orange-500 group-hover:translate-x-1 transition-transform">➔</span>
+            </div>
+          </button>
         </div>
         
         {showAccountShop && (
