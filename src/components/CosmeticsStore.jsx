@@ -6,9 +6,9 @@ export const COSMETICS_DATA = [
   { id: 'bronze_alt', name: 'Bronze Gravé', image: '/cosmetics/metals.png?v=2', bgPos: '0% 0%', price: 5, category: 'Métaux (<65 OVR)', minOvr: 0, maxOvr: 64 },
   { id: 'silver_alt', name: 'Argent Sombre', image: '/cosmetics/metals.png?v=2', bgPos: '50% 0%', price: 10, category: 'Métaux (65-74 OVR)', minOvr: 65, maxOvr: 74 },
   { id: 'gold_alt', name: 'Or Pur', image: '/cosmetics/metals.png?v=2', bgPos: '100% 0%', price: 15, category: 'Métaux (75-84 OVR)', minOvr: 75, maxOvr: 84 },
-  { id: 'stone', name: 'Roche Ancienne', image: '/cosmetics/fantasy.png', bgPos: '0% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
-  { id: 'cyberpunk', name: 'Néon Cyberpunk', image: '/cosmetics/fantasy.png', bgPos: '50% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
-  { id: 'earth', name: 'Terre Aride', image: '/cosmetics/fantasy.png', bgPos: '100% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
+  { id: 'stone', name: 'Roche Ancienne', image: '/cosmetics/fantasy.png?v=2', bgPos: '0% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
+  { id: 'cyberpunk', name: 'Néon Cyberpunk', image: '/cosmetics/fantasy.png?v=2', bgPos: '50% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
+  { id: 'earth', name: 'Terre Aride', image: '/cosmetics/fantasy.png?v=2', bgPos: '100% 0%', price: 25, category: 'Fantasy (85+ OVR)', minOvr: 85, maxOvr: 99 },
   { id: 'elite1', name: 'Elite 87+', image: '/cosmetics/elite.png?v=2', bgPos: '0% 0%', price: 35, category: 'Elite (87+ OVR)', minOvr: 87, maxOvr: 99 },
   { id: 'elite2', name: 'Elite 90+', image: '/cosmetics/elite.png?v=2', bgPos: '50% 0%', price: 50, category: 'Elite (90+ OVR)', minOvr: 90, maxOvr: 99 },
   { id: 'elite3', name: 'Elite 93+', image: '/cosmetics/elite.png?v=2', bgPos: '100% 0%', price: 75, category: 'Elite (93+ OVR)', minOvr: 93, maxOvr: 99 }

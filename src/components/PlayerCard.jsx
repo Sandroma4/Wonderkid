@@ -100,26 +100,26 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
       hideLabels: true
     },
     stone: {
-      bgImage: "url('/cosmetics/fantasy.png')",
+      bgImage: "url('/cosmetics/fantasy.png?v=2')",
       bgPos: '0% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#ebdd9f]',
+      textPrimary: 'text-[#94a3b8]',
       textSecondary: 'hidden',
       hideLabels: true
     },
     cyberpunk: {
-      bgImage: "url('/cosmetics/fantasy.png')",
+      bgImage: "url('/cosmetics/fantasy.png?v=2')",
       bgPos: '50% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#0efaff]',
+      textPrimary: 'text-[#94a3b8]',
       textSecondary: 'hidden',
       hideLabels: true
     },
     earth: {
-      bgImage: "url('/cosmetics/fantasy.png')",
+      bgImage: "url('/cosmetics/fantasy.png?v=2')",
       bgPos: '100% 0%',
       bgSize: '300% 100%',
-      textPrimary: 'text-[#f6c589]',
+      textPrimary: 'text-[#451a03]',
       textSecondary: 'hidden',
       hideLabels: true
     },
