@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { updateChallengeProgress } from './utils/dailyChallenges';
 import { playSound } from './utils/audio';
+import { preloadEvents } from './utils/eventsLoader';
 import { saveToGlobalPalmares, unlockAchievement, saveGameStateLocal, saveGameStateCloud, loadGameStateLocal, loadGameStateCloud, getPseudonym, savePseudonym, saveCardToCollection, saveMultiplayerSession, loadMultiplayerSession, clearMultiplayerSession, getAccountData, saveAccountData } from './utils/storage';
 import { createMultiplayerRoom } from './utils/multiplayer';
 import { checkAchievements } from './utils/achievementsData';
@@ -83,6 +84,12 @@ export default function App() {
     setViewHistory(prev => prev.length > 1 ? prev.slice(0, -1) : ['mainMenu']);
     setInviteCode(null);
   };
+
+  // Précharger les events dès le chargement du menu principal
+  // pour qu'ils soient disponibles dès la première saison
+  useEffect(() => {
+    preloadEvents();
+  }, []);
   const [inviteCode, setInviteCode] = useState('');
   const [clashContext, setClashContext] = useState(null);
 

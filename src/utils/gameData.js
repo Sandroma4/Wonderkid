@@ -1,17 +1,6 @@
-import { EXTRA_EVENTS } from './extraEvents';
-import { EXTRA_EVENTS_2 } from './extraEvents2';
-import { EXTRA_EVENTS_3 } from './extraEvents3';
-import { EXTRA_EVENTS_4 } from './extraEvents4';
-import { EXTRA_EVENTS_5 } from './extraEvents5';
-import { EXTRA_EVENTS_6 } from './extraEvents6';
-import { EXTRA_EVENTS_7 } from './extraEvents7';
-import { EXTRA_EVENTS_8 } from './extraEvents8';
-import { EXTRA_EVENTS_9 } from './extraEvents9';
-import { EXTRA_EVENTS_10 } from './extraEvents10';
-import { EXTRA_EVENTS_11 } from './extraEvents11';
-import { EXTRA_EVENTS_12 } from './extraEvents12';
-import { COOP_EVENTS } from './coopEvents';
+import { getLoadedEvents } from './eventsLoader';
 import { getAccountData } from './storage';
+
 
 export const CUP_FINAL_SCENARIOS = [
   {
@@ -268,6 +257,7 @@ export const getRandomEvent = (step, total, player = {}) => {
   const isFirst = step === 1;
   const isLast = step === total;
   const pos = (player.position || 'DEFAULT').toUpperCase();
+  const ALL_EVENTS = getLoadedEvents();
 
   const validEvents = ALL_EVENTS.filter(e => {
     if (isFirst && !e.isFirstTime) return false;
@@ -2132,6 +2122,8 @@ export const simulateSeasonStats = (player, currentClub, interactiveMatchResult 
 };
 
 
+// ALL_EVENTS est maintenant chargé paresseusement via eventsLoader.js
+// Les events locaux (CUP_FINAL_SCENARIOS, etc.) restent ici en statique
 export const ALL_EVENTS = [
   // ÉVÉNEMENTS EXCLUSIFS LIES AUX ORIGINES SOCIALES (PROBABILISTES)
   {
@@ -2944,8 +2936,10 @@ export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlaye
   const playerPosition = player?.position || 'ALL'; 
   const accountData = getAccountData();
   const hasTitanBody = accountData.unlockedPerks.includes('titan_body');
+  // Fusionne les events locaux (gameData) avec les events chargés dynamiquement
+  const ALL_LOADED = [...ALL_EVENTS, ...getLoadedEvents()];
   
-  const compatibleEvents = ALL_EVENTS.filter(ev => { 
+  const compatibleEvents = ALL_LOADED.filter(ev => { 
     if (ev.category === 'FRÈRES D\'ARMES' && !isCoopMode) return false;
     
     if (ev.targetPosition && ev.targetPosition !== 'ALL') {

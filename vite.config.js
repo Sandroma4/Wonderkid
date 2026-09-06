@@ -24,12 +24,25 @@ export default defineConfig({
           if (id.includes('node_modules')) {
             return 'vendor-misc';
           }
-          // Game data: extraEvents (very large, ~480 KB)
-          if (id.includes('extraEvents')) {
-            return 'game-events';
+          // Event data: split en 4 chunks pour un meilleur cache navigateur
+          // Chunk A: événements 1-3
+          if (id.includes('extraEvents.') || id.includes('extraEvents2') || id.includes('extraEvents3')) {
+            return 'events-a';
           }
-          // Game data: main data file
-          if (id.includes('gameData')) {
+          // Chunk B: événements 4-6
+          if (id.includes('extraEvents4') || id.includes('extraEvents5') || id.includes('extraEvents6')) {
+            return 'events-b';
+          }
+          // Chunk C: événements 7-9
+          if (id.includes('extraEvents7') || id.includes('extraEvents8') || id.includes('extraEvents9')) {
+            return 'events-c';
+          }
+          // Chunk D: événements 10-12 + coop
+          if (id.includes('extraEvents10') || id.includes('extraEvents11') || id.includes('extraEvents12') || id.includes('coopEvents')) {
+            return 'events-d';
+          }
+          // Game data: main data file (sans les extraEvents maintenant)
+          if (id.includes('gameData') || id.includes('eventsLoader')) {
             return 'game-data';
           }
           // Game utils
