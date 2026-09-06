@@ -358,6 +358,16 @@ const REAL_CLUBS = {
     { name: 'White Star Woluwe', ovr: 66, primary: '#FF0000', secondary: '#FFFFFF' },
     { name: 'KVK Tienen', ovr: 65, primary: '#0000FF', secondary: '#FFFFFF' }
   ],
+  CM: [
+    { name: 'Awa FF', ovr: 72, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Louves Minproff', ovr: 71, primary: '#008000', secondary: '#FF0000' },
+    { name: 'Amazones FAP', ovr: 70, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Eclair de Sa\'a', ovr: 69, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Lekie FF', ovr: 68, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'FC Ebolowa', ovr: 67, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Caïman Filles', ovr: 66, primary: '#FFD700', secondary: '#000000' },
+    { name: 'Renaissance Athlétique', ovr: 65, primary: '#FF0000', secondary: '#000000' }
+  ],
   CV: [
     { name: 'Seven Stars', ovr: 68, primary: '#0000FF', secondary: '#FFFFFF' },
     { name: 'Llana FC', ovr: 67, primary: '#FF0000', secondary: '#FFFFFF' },

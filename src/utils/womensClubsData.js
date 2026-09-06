@@ -10,8 +10,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
   {
@@ -24,7 +24,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "physical",
+    "preferredStat": "dribbling",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
@@ -38,7 +38,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "defense",
+    "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
@@ -52,8 +52,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
   {
@@ -66,7 +66,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "finishing",
+    "preferredStat": "passing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
@@ -80,7 +80,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "defense",
+    "preferredStat": "passing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
@@ -94,8 +94,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
   {
@@ -109,7 +109,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
     "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
   {
@@ -122,8 +122,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
   {
@@ -137,7 +137,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
     "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
   {
@@ -150,8 +150,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
   {
@@ -164,58 +164,44 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (ZA)",
     "desc": "Ligue 1 Féminine (ZA)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ZA)"
   },
   {
     "id": "W_DZ_13",
-    "ovr": 67,
+    "ovr": 65,
     "name": "FC Féminin",
     "origin": "DZ",
-    "primary": "#E30613",
-    "secondary": "#FFFFFF",
+    "primary": "#FFFFFF",
+    "secondary": "#000000",
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (DZ)",
     "desc": "Ligue 1 Féminine (DZ)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DZ)"
   },
   {
     "id": "W_DZ_14",
-    "ovr": 70,
+    "ovr": 71,
     "name": "AS Féminin",
     "origin": "DZ",
-    "primary": "#FFFF00",
-    "secondary": "#0000FF",
+    "primary": "#000000",
+    "secondary": "#FFFFFF",
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (DZ)",
     "desc": "Ligue 1 Féminine (DZ)",
-    "preferredStat": "passing",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DZ)"
   },
   {
     "id": "W_DZ_15",
-    "ovr": 59,
+    "ovr": 62,
     "name": "US Féminin",
     "origin": "DZ",
-    "primary": "#FFA500",
-    "secondary": "#000000",
-    "tier": 2,
-    "leagueName": "Ligue 1 Féminine (DZ)",
-    "desc": "Ligue 1 Féminine (DZ)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
-    "pitch": "Ligue 1 Féminine (DZ)"
-  },
-  {
-    "id": "W_DZ_16",
-    "ovr": 61,
-    "name": "Sporting Féminin",
-    "origin": "DZ",
-    "primary": "#800080",
+    "primary": "#0000FF",
     "secondary": "#FFFFFF",
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (DZ)",
@@ -225,11 +211,11 @@ export const ALL_WOMENS_CLUBS = [
     "pitch": "Ligue 1 Féminine (DZ)"
   },
   {
-    "id": "W_DZ_17",
-    "ovr": 59,
-    "name": "Racing Féminin",
+    "id": "W_DZ_16",
+    "ovr": 64,
+    "name": "Sporting Féminin",
     "origin": "DZ",
-    "primary": "#000000",
+    "primary": "#0000FF",
     "secondary": "#FFFFFF",
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (DZ)",
@@ -239,17 +225,31 @@ export const ALL_WOMENS_CLUBS = [
     "pitch": "Ligue 1 Féminine (DZ)"
   },
   {
-    "id": "W_DZ_18",
-    "ovr": 56,
-    "name": "Athletic Féminin",
+    "id": "W_DZ_17",
+    "ovr": 59,
+    "name": "Racing Féminin",
     "origin": "DZ",
     "primary": "#008000",
+    "secondary": "#FFFFFF",
+    "tier": 2,
+    "leagueName": "Ligue 1 Féminine (DZ)",
+    "desc": "Ligue 1 Féminine (DZ)",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
+    "pitch": "Ligue 1 Féminine (DZ)"
+  },
+  {
+    "id": "W_DZ_18",
+    "ovr": 61,
+    "name": "Athletic Féminin",
+    "origin": "DZ",
+    "primary": "#E30613",
     "secondary": "#FFFFFF",
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DZ)",
     "desc": "Ligue 1 Féminine (DZ)",
     "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (DZ)"
   },
   {
@@ -262,8 +262,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DE)"
   },
   {
@@ -276,8 +276,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DE)"
   },
   {
@@ -290,7 +290,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "pace",
+    "preferredStat": "finishing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (DE)"
   },
@@ -304,7 +304,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (DE)"
   },
@@ -318,7 +318,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "passing",
+    "preferredStat": "finishing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DE)"
   },
@@ -332,8 +332,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (DE)"
   },
   {
@@ -347,7 +347,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
     "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (DE)"
   },
   {
@@ -360,8 +360,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (DE)"
   },
   {
@@ -374,8 +374,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (DE)"
   },
   {
@@ -388,8 +388,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (DE)"
   },
   {
@@ -402,8 +402,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DE)",
     "desc": "Ligue 1 Féminine (DE)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (DE)"
   },
   {
@@ -430,8 +430,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
@@ -444,7 +444,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "pace",
+    "preferredStat": "physical",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EN)"
   },
@@ -458,8 +458,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
@@ -472,8 +472,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
@@ -486,8 +486,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
@@ -500,8 +500,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
@@ -514,8 +514,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
@@ -528,8 +528,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
@@ -542,8 +542,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
@@ -556,7 +556,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "passing",
+    "preferredStat": "pace",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EN)"
   },
@@ -570,7 +570,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (EN)"
   },
@@ -584,13 +584,13 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (EN)",
     "desc": "Ligue 1 Féminine (EN)",
-    "preferredStat": "physical",
+    "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (EN)"
   },
   {
     "id": "W_SA_43",
-    "ovr": 65,
+    "ovr": 69,
     "name": "FC Féminin",
     "origin": "SA",
     "primary": "#000000",
@@ -598,63 +598,63 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (SA)",
     "desc": "Ligue 1 Féminine (SA)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SA)"
   },
   {
     "id": "W_SA_44",
-    "ovr": 68,
+    "ovr": 69,
     "name": "AS Féminin",
     "origin": "SA",
-    "primary": "#008000",
+    "primary": "#800080",
     "secondary": "#FFFFFF",
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (SA)",
     "desc": "Ligue 1 Féminine (SA)",
-    "preferredStat": "pace",
+    "preferredStat": "passing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SA)"
   },
   {
     "id": "W_SA_45",
-    "ovr": 56,
+    "ovr": 63,
     "name": "US Féminin",
-    "origin": "SA",
-    "primary": "#FFFF00",
-    "secondary": "#0000FF",
-    "tier": 2,
-    "leagueName": "Ligue 1 Féminine (SA)",
-    "desc": "Ligue 1 Féminine (SA)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
-    "pitch": "Ligue 1 Féminine (SA)"
-  },
-  {
-    "id": "W_SA_46",
-    "ovr": 63,
-    "name": "Sporting Féminin",
-    "origin": "SA",
-    "primary": "#0000FF",
-    "secondary": "#FFFFFF",
-    "tier": 2,
-    "leagueName": "Ligue 1 Féminine (SA)",
-    "desc": "Ligue 1 Féminine (SA)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
-    "pitch": "Ligue 1 Féminine (SA)"
-  },
-  {
-    "id": "W_SA_47",
-    "ovr": 63,
-    "name": "Racing Féminin",
     "origin": "SA",
     "primary": "#E30613",
     "secondary": "#FFFFFF",
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (SA)",
     "desc": "Ligue 1 Féminine (SA)",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
+    "pitch": "Ligue 1 Féminine (SA)"
+  },
+  {
+    "id": "W_SA_46",
+    "ovr": 56,
+    "name": "Sporting Féminin",
+    "origin": "SA",
+    "primary": "#800080",
+    "secondary": "#FFFFFF",
+    "tier": 2,
+    "leagueName": "Ligue 1 Féminine (SA)",
+    "desc": "Ligue 1 Féminine (SA)",
     "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
+    "pitch": "Ligue 1 Féminine (SA)"
+  },
+  {
+    "id": "W_SA_47",
+    "ovr": 59,
+    "name": "Racing Féminin",
+    "origin": "SA",
+    "primary": "#800000",
+    "secondary": "#FFFFFF",
+    "tier": 2,
+    "leagueName": "Ligue 1 Féminine (SA)",
+    "desc": "Ligue 1 Féminine (SA)",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SA)"
   },
@@ -663,13 +663,13 @@ export const ALL_WOMENS_CLUBS = [
     "ovr": 59,
     "name": "Athletic Féminin",
     "origin": "SA",
-    "primary": "#000000",
+    "primary": "#0000FF",
     "secondary": "#FFFFFF",
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (SA)",
     "desc": "Ligue 1 Féminine (SA)",
     "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SA)"
   },
   {
@@ -682,7 +682,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "defense",
+    "preferredStat": "passing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AR)"
   },
@@ -696,7 +696,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "physical",
+    "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AR)"
   },
@@ -710,8 +710,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -724,7 +724,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "defense",
+    "preferredStat": "physical",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AR)"
   },
@@ -738,8 +738,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -752,8 +752,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -767,7 +767,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
     "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -780,8 +780,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -794,8 +794,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "defense",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -808,8 +808,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -822,8 +822,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -836,8 +836,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AR)",
     "desc": "Ligue 1 Féminine (AR)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AR)"
   },
   {
@@ -850,8 +850,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (AU)"
   },
   {
@@ -864,8 +864,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AU)"
   },
   {
@@ -878,8 +878,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AU)"
   },
   {
@@ -892,7 +892,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "physical",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AU)"
   },
@@ -906,8 +906,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (AU)"
   },
   {
@@ -920,7 +920,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "physical",
+    "preferredStat": "passing",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AU)"
   },
@@ -934,7 +934,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "finishing",
+    "preferredStat": "dribbling",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AU)"
   },
@@ -948,8 +948,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AU)"
   },
   {
@@ -963,7 +963,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
     "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AU)"
   },
   {
@@ -976,7 +976,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "defense",
+    "preferredStat": "passing",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AU)"
   },
@@ -990,8 +990,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (AU)"
   },
   {
@@ -1004,8 +1004,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (AU)",
     "desc": "Ligue 1 Féminine (AU)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AU)"
   },
   {
@@ -1018,7 +1018,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "defense",
+    "preferredStat": "physical",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BE)"
   },
@@ -1032,7 +1032,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "physical",
+    "preferredStat": "dribbling",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (BE)"
   },
@@ -1046,8 +1046,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BE)"
   },
   {
@@ -1060,7 +1060,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "finishing",
+    "preferredStat": "passing",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (BE)"
   },
@@ -1074,7 +1074,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "dribbling",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BE)"
   },
@@ -1088,7 +1088,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "defense",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BE)"
   },
@@ -1102,8 +1102,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BE)"
   },
   {
@@ -1116,8 +1116,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "defense",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (BE)"
   },
   {
@@ -1130,8 +1130,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BE)"
   },
   {
@@ -1144,7 +1144,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "pace",
+    "preferredStat": "defense",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (BE)"
   },
@@ -1158,8 +1158,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "passing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BE)"
   },
   {
@@ -1172,8 +1172,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BE)",
     "desc": "Ligue 1 Féminine (BE)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (BE)"
   },
   {
@@ -1186,8 +1186,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BR)"
   },
   {
@@ -1200,8 +1200,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BR)"
   },
   {
@@ -1214,8 +1214,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BR)"
   },
   {
@@ -1228,7 +1228,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "pace",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BR)"
   },
@@ -1242,7 +1242,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "pace",
+    "preferredStat": "dribbling",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BR)"
   },
@@ -1256,8 +1256,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BR)"
   },
   {
@@ -1270,7 +1270,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "dribbling",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BR)"
   },
@@ -1284,8 +1284,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (BR)"
   },
   {
@@ -1298,7 +1298,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "dribbling",
+    "preferredStat": "physical",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BR)"
   },
@@ -1312,8 +1312,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (BR)"
   },
   {
@@ -1326,7 +1326,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BR)"
   },
@@ -1340,8 +1340,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (BR)",
     "desc": "Ligue 1 Féminine (BR)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (BR)"
   },
   {
@@ -1354,8 +1354,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CV)",
     "desc": "Ligue 1 Féminine (CV)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CV)"
   },
   {
@@ -1368,8 +1368,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CV)",
     "desc": "Ligue 1 Féminine (CV)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CV)"
   },
   {
@@ -1382,7 +1382,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CV)",
     "desc": "Ligue 1 Féminine (CV)",
-    "preferredStat": "physical",
+    "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CV)"
   },
@@ -1396,8 +1396,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CV)",
     "desc": "Ligue 1 Féminine (CV)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CV)"
   },
   {
@@ -1410,8 +1410,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CV)",
     "desc": "Ligue 1 Féminine (CV)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CV)"
   },
   {
@@ -1424,8 +1424,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1438,8 +1438,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1452,8 +1452,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1466,8 +1466,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1495,7 +1495,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
     "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1508,8 +1508,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1523,7 +1523,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
     "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1536,8 +1536,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1550,8 +1550,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1564,8 +1564,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CO)"
   },
   {
@@ -1578,7 +1578,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (CO)",
     "desc": "Ligue 1 Féminine (CO)",
-    "preferredStat": "pace",
+    "preferredStat": "finishing",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CO)"
   },
@@ -1593,7 +1593,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
     "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (KR)"
   },
   {
@@ -1620,7 +1620,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
-    "preferredStat": "pace",
+    "preferredStat": "dribbling",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (KR)"
   },
@@ -1635,7 +1635,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
     "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (KR)"
   },
   {
@@ -1649,7 +1649,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
     "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (KR)"
   },
   {
@@ -1662,7 +1662,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
-    "preferredStat": "physical",
+    "preferredStat": "finishing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (KR)"
   },
@@ -1690,8 +1690,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (KR)"
   },
   {
@@ -1704,8 +1704,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
-    "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (KR)"
   },
   {
@@ -1718,7 +1718,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
-    "preferredStat": "defense",
+    "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (KR)"
   },
@@ -1732,8 +1732,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (KR)"
   },
   {
@@ -1746,8 +1746,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (KR)",
     "desc": "Ligue 1 Féminine (KR)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (KR)"
   },
   {
@@ -1760,8 +1760,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CI)",
     "desc": "Ligue 1 Féminine (CI)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CI)"
   },
   {
@@ -1775,7 +1775,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (CI)",
     "desc": "Ligue 1 Féminine (CI)",
     "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CI)"
   },
   {
@@ -1788,8 +1788,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CI)",
     "desc": "Ligue 1 Féminine (CI)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CI)"
   },
   {
@@ -1802,8 +1802,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CI)",
     "desc": "Ligue 1 Féminine (CI)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CI)"
   },
   {
@@ -1816,8 +1816,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CI)",
     "desc": "Ligue 1 Féminine (CI)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CI)"
   },
   {
@@ -1830,8 +1830,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (HR)",
     "desc": "Ligue 1 Féminine (HR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (HR)"
   },
   {
@@ -1844,8 +1844,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (HR)",
     "desc": "Ligue 1 Féminine (HR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (HR)"
   },
   {
@@ -1858,8 +1858,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (HR)",
     "desc": "Ligue 1 Féminine (HR)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (HR)"
   },
   {
@@ -1872,7 +1872,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (HR)",
     "desc": "Ligue 1 Féminine (HR)",
-    "preferredStat": "physical",
+    "preferredStat": "passing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (HR)"
   },
@@ -1886,7 +1886,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (HR)",
     "desc": "Ligue 1 Féminine (HR)",
-    "preferredStat": "finishing",
+    "preferredStat": "dribbling",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (HR)"
   },
@@ -1900,8 +1900,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -1914,8 +1914,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -1928,8 +1928,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -1956,8 +1956,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -1970,8 +1970,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -1984,8 +1984,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -1998,8 +1998,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -2012,8 +2012,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -2027,7 +2027,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
     "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -2040,8 +2040,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -2054,8 +2054,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (DK)",
     "desc": "Ligue 1 Féminine (DK)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (DK)"
   },
   {
@@ -2068,7 +2068,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
-    "preferredStat": "defense",
+    "preferredStat": "dribbling",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
@@ -2082,8 +2082,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2097,7 +2097,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
     "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2111,7 +2111,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
     "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2125,7 +2125,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
     "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2152,8 +2152,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2166,8 +2166,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2180,7 +2180,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
-    "preferredStat": "pace",
+    "preferredStat": "physical",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
@@ -2194,8 +2194,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2208,8 +2208,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2222,8 +2222,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (SCO)",
     "desc": "Ligue 1 Féminine (SCO)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (SCO)"
   },
   {
@@ -2236,8 +2236,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (EG)",
     "desc": "Ligue 1 Féminine (EG)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (EG)"
   },
   {
@@ -2250,8 +2250,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (EG)",
     "desc": "Ligue 1 Féminine (EG)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EG)"
   },
   {
@@ -2264,7 +2264,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (EG)",
     "desc": "Ligue 1 Féminine (EG)",
-    "preferredStat": "passing",
+    "preferredStat": "finishing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EG)"
   },
@@ -2278,8 +2278,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (EG)",
     "desc": "Ligue 1 Féminine (EG)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (EG)"
   },
   {
@@ -2292,7 +2292,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (EG)",
     "desc": "Ligue 1 Féminine (EG)",
-    "preferredStat": "dribbling",
+    "preferredStat": "pace",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (EG)"
   },
@@ -2307,7 +2307,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (AE)",
     "desc": "Ligue 1 Féminine (AE)",
     "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AE)"
   },
   {
@@ -2320,8 +2320,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (AE)",
     "desc": "Ligue 1 Féminine (AE)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (AE)"
   },
   {
@@ -2334,8 +2334,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (AE)",
     "desc": "Ligue 1 Féminine (AE)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AE)"
   },
   {
@@ -2348,8 +2348,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (AE)",
     "desc": "Ligue 1 Féminine (AE)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (AE)"
   },
   {
@@ -2362,8 +2362,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (EC)",
     "desc": "Ligue 1 Féminine (EC)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (EC)"
   },
   {
@@ -2376,7 +2376,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (EC)",
     "desc": "Ligue 1 Féminine (EC)",
-    "preferredStat": "defense",
+    "preferredStat": "physical",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (EC)"
   },
@@ -2391,7 +2391,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (EC)",
     "desc": "Ligue 1 Féminine (EC)",
     "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (EC)"
   },
   {
@@ -2404,7 +2404,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (EC)",
     "desc": "Ligue 1 Féminine (EC)",
-    "preferredStat": "defense",
+    "preferredStat": "passing",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (EC)"
   },
@@ -2418,8 +2418,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (EC)",
     "desc": "Ligue 1 Féminine (EC)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (EC)"
   },
   {
@@ -2432,8 +2432,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (ES)"
   },
   {
@@ -2446,7 +2446,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
-    "preferredStat": "passing",
+    "preferredStat": "dribbling",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ES)"
   },
@@ -2460,8 +2460,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ES)"
   },
   {
@@ -2474,8 +2474,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ES)"
   },
   {
@@ -2488,8 +2488,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ES)"
   },
   {
@@ -2502,7 +2502,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
-    "preferredStat": "passing",
+    "preferredStat": "physical",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (ES)"
   },
@@ -2531,7 +2531,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
     "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (ES)"
   },
   {
@@ -2544,8 +2544,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (ES)"
   },
   {
@@ -2559,7 +2559,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
     "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (ES)"
   },
   {
@@ -2573,7 +2573,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
     "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (ES)"
   },
   {
@@ -2586,7 +2586,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (ES)",
     "desc": "Ligue 1 Féminine (ES)",
-    "preferredStat": "passing",
+    "preferredStat": "finishing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (ES)"
   },
@@ -2601,7 +2601,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
     "preferredStat": "defense",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (US)"
   },
   {
@@ -2614,7 +2614,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
-    "preferredStat": "passing",
+    "preferredStat": "finishing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (US)"
   },
@@ -2628,7 +2628,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
-    "preferredStat": "physical",
+    "preferredStat": "dribbling",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (US)"
   },
@@ -2642,7 +2642,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
-    "preferredStat": "pace",
+    "preferredStat": "finishing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (US)"
   },
@@ -2657,7 +2657,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
     "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (US)"
   },
   {
@@ -2671,7 +2671,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
     "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (US)"
   },
   {
@@ -2684,7 +2684,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
-    "preferredStat": "dribbling",
+    "preferredStat": "finishing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (US)"
   },
@@ -2698,8 +2698,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
-    "preferredStat": "defense",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (US)"
   },
   {
@@ -2713,7 +2713,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
     "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (US)"
   },
   {
@@ -2726,8 +2726,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (US)"
   },
   {
@@ -2741,7 +2741,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
     "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (US)"
   },
   {
@@ -2754,7 +2754,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (US)",
     "desc": "Ligue 1 Féminine (US)",
-    "preferredStat": "passing",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (US)"
   },
@@ -2768,8 +2768,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (FR)"
   },
   {
@@ -2782,8 +2782,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (FR)"
   },
   {
@@ -2796,7 +2796,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "passing",
+    "preferredStat": "finishing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
@@ -2810,8 +2810,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
   {
@@ -2824,8 +2824,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
   {
@@ -2838,8 +2838,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
   {
@@ -2852,8 +2852,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
   {
@@ -2866,8 +2866,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "passing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
   {
@@ -2880,7 +2880,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "pace",
+    "preferredStat": "dribbling",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (FR)"
   },
@@ -2894,7 +2894,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "physical",
+    "preferredStat": "finishing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
@@ -2908,7 +2908,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "finishing",
+    "preferredStat": "physical",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
@@ -2922,8 +2922,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (FR)",
     "desc": "Ligue 1 Féminine (FR)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (FR)"
   },
   {
@@ -2936,8 +2936,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (GH)",
     "desc": "Ligue 1 Féminine (GH)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (GH)"
   },
   {
@@ -2950,8 +2950,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (GH)",
     "desc": "Ligue 1 Féminine (GH)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (GH)"
   },
   {
@@ -2965,7 +2965,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (GH)",
     "desc": "Ligue 1 Féminine (GH)",
     "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (GH)"
   },
   {
@@ -2978,8 +2978,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (GH)",
     "desc": "Ligue 1 Féminine (GH)",
-    "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (GH)"
   },
   {
@@ -2992,8 +2992,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (GH)",
     "desc": "Ligue 1 Féminine (GH)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (GH)"
   },
   {
@@ -3006,8 +3006,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (GR)",
     "desc": "Ligue 1 Féminine (GR)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (GR)"
   },
   {
@@ -3020,8 +3020,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (GR)",
     "desc": "Ligue 1 Féminine (GR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (GR)"
   },
   {
@@ -3034,8 +3034,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (GR)",
     "desc": "Ligue 1 Féminine (GR)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (GR)"
   },
   {
@@ -3048,8 +3048,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (GR)",
     "desc": "Ligue 1 Féminine (GR)",
-    "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (GR)"
   },
   {
@@ -3062,8 +3062,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (GR)",
     "desc": "Ligue 1 Féminine (GR)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (GR)"
   },
   {
@@ -3076,8 +3076,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (IQ)",
     "desc": "Ligue 1 Féminine (IQ)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IQ)"
   },
   {
@@ -3091,7 +3091,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (IQ)",
     "desc": "Ligue 1 Féminine (IQ)",
     "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IQ)"
   },
   {
@@ -3104,8 +3104,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (IQ)",
     "desc": "Ligue 1 Féminine (IQ)",
-    "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IQ)"
   },
   {
@@ -3118,8 +3118,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (IQ)",
     "desc": "Ligue 1 Féminine (IQ)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IQ)"
   },
   {
@@ -3132,8 +3132,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (IR)",
     "desc": "Ligue 1 Féminine (IR)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IR)"
   },
   {
@@ -3146,8 +3146,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (IR)",
     "desc": "Ligue 1 Féminine (IR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IR)"
   },
   {
@@ -3160,8 +3160,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (IR)",
     "desc": "Ligue 1 Féminine (IR)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (IR)"
   },
   {
@@ -3174,8 +3174,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (IR)",
     "desc": "Ligue 1 Féminine (IR)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IR)"
   },
   {
@@ -3188,7 +3188,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (IR)",
     "desc": "Ligue 1 Féminine (IR)",
-    "preferredStat": "pace",
+    "preferredStat": "defense",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IR)"
   },
@@ -3202,8 +3202,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IT)"
   },
   {
@@ -3217,7 +3217,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
     "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IT)"
   },
   {
@@ -3230,7 +3230,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "defense",
+    "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IT)"
   },
@@ -3244,8 +3244,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IT)"
   },
   {
@@ -3258,8 +3258,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (IT)"
   },
   {
@@ -3272,7 +3272,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "physical",
+    "preferredStat": "finishing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IT)"
   },
@@ -3286,7 +3286,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "defense",
+    "preferredStat": "pace",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IT)"
   },
@@ -3300,7 +3300,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "passing",
+    "preferredStat": "pace",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IT)"
   },
@@ -3314,8 +3314,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (IT)"
   },
   {
@@ -3328,7 +3328,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "pace",
+    "preferredStat": "finishing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IT)"
   },
@@ -3342,8 +3342,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IT)"
   },
   {
@@ -3356,8 +3356,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (IT)",
     "desc": "Ligue 1 Féminine (IT)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (IT)"
   },
   {
@@ -3370,8 +3370,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3385,7 +3385,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
     "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3398,8 +3398,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3412,8 +3412,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3426,8 +3426,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3440,8 +3440,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3454,7 +3454,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "physical",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JP)"
   },
@@ -3468,8 +3468,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3482,7 +3482,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "defense",
+    "preferredStat": "passing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JP)"
   },
@@ -3496,8 +3496,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3510,8 +3510,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3524,8 +3524,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (JP)",
     "desc": "Ligue 1 Féminine (JP)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JP)"
   },
   {
@@ -3538,8 +3538,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (JO)",
     "desc": "Ligue 1 Féminine (JO)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (JO)"
   },
   {
@@ -3552,8 +3552,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (JO)",
     "desc": "Ligue 1 Féminine (JO)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (JO)"
   },
   {
@@ -3566,8 +3566,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (JO)",
     "desc": "Ligue 1 Féminine (JO)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (JO)"
   },
   {
@@ -3581,7 +3581,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (JO)",
     "desc": "Ligue 1 Féminine (JO)",
     "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (JO)"
   },
   {
@@ -3594,8 +3594,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (MA)",
     "desc": "Ligue 1 Féminine (MA)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (MA)"
   },
   {
@@ -3608,8 +3608,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (MA)",
     "desc": "Ligue 1 Féminine (MA)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MA)"
   },
   {
@@ -3622,8 +3622,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (MA)",
     "desc": "Ligue 1 Féminine (MA)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MA)"
   },
   {
@@ -3636,8 +3636,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (MA)",
     "desc": "Ligue 1 Féminine (MA)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (MA)"
   },
   {
@@ -3650,7 +3650,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (MA)",
     "desc": "Ligue 1 Féminine (MA)",
-    "preferredStat": "physical",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MA)"
   },
@@ -3664,7 +3664,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "dribbling",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MX)"
   },
@@ -3678,7 +3678,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "finishing",
+    "preferredStat": "physical",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MX)"
   },
@@ -3692,7 +3692,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (MX)"
   },
@@ -3706,8 +3706,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MX)"
   },
   {
@@ -3720,7 +3720,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "defense",
+    "preferredStat": "passing",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (MX)"
   },
@@ -3734,8 +3734,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (MX)"
   },
   {
@@ -3748,7 +3748,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "defense",
+    "preferredStat": "finishing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (MX)"
   },
@@ -3762,8 +3762,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MX)"
   },
   {
@@ -3776,7 +3776,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "dribbling",
+    "preferredStat": "physical",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (MX)"
   },
@@ -3790,8 +3790,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (MX)"
   },
   {
@@ -3804,8 +3804,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MX)"
   },
   {
@@ -3818,8 +3818,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (MX)",
     "desc": "Ligue 1 Féminine (MX)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (MX)"
   },
   {
@@ -3832,8 +3832,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (NG)",
     "desc": "Ligue 1 Féminine (NG)",
-    "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NG)"
   },
   {
@@ -3846,8 +3846,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (NG)",
     "desc": "Ligue 1 Féminine (NG)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NG)"
   },
   {
@@ -3861,7 +3861,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (NG)",
     "desc": "Ligue 1 Féminine (NG)",
     "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NG)"
   },
   {
@@ -3874,7 +3874,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NG)",
     "desc": "Ligue 1 Féminine (NG)",
-    "preferredStat": "pace",
+    "preferredStat": "physical",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (NG)"
   },
@@ -3888,8 +3888,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NG)",
     "desc": "Ligue 1 Féminine (NG)",
-    "preferredStat": "defense",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NG)"
   },
   {
@@ -3902,8 +3902,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NG)",
     "desc": "Ligue 1 Féminine (NG)",
-    "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NG)"
   },
   {
@@ -3916,8 +3916,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (NO)"
   },
   {
@@ -3930,7 +3930,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NO)"
   },
@@ -3944,8 +3944,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NO)"
   },
   {
@@ -3959,7 +3959,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
     "preferredStat": "defense",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NO)"
   },
   {
@@ -3972,7 +3972,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "physical",
+    "preferredStat": "finishing",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NO)"
   },
@@ -3986,7 +3986,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "physical",
+    "preferredStat": "pace",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (NO)"
   },
@@ -4000,8 +4000,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (NO)"
   },
   {
@@ -4014,7 +4014,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "passing",
+    "preferredStat": "finishing",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NO)"
   },
@@ -4028,8 +4028,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NO)"
   },
   {
@@ -4042,7 +4042,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NO)"
   },
@@ -4056,8 +4056,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NO)"
   },
   {
@@ -4070,8 +4070,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (NO)",
     "desc": "Ligue 1 Féminine (NO)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (NO)"
   },
   {
@@ -4084,8 +4084,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (UZ)",
     "desc": "Ligue 1 Féminine (UZ)",
-    "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (UZ)"
   },
   {
@@ -4098,8 +4098,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (UZ)",
     "desc": "Ligue 1 Féminine (UZ)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (UZ)"
   },
   {
@@ -4112,7 +4112,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (UZ)",
     "desc": "Ligue 1 Féminine (UZ)",
-    "preferredStat": "finishing",
+    "preferredStat": "defense",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (UZ)"
   },
@@ -4126,8 +4126,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (UZ)",
     "desc": "Ligue 1 Féminine (UZ)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (UZ)"
   },
   {
@@ -4140,8 +4140,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (UZ)",
     "desc": "Ligue 1 Féminine (UZ)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (UZ)"
   },
   {
@@ -4154,8 +4154,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (PS)",
     "desc": "Ligue 1 Féminine (PS)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (PS)"
   },
   {
@@ -4168,8 +4168,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (PS)",
     "desc": "Ligue 1 Féminine (PS)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (PS)"
   },
   {
@@ -4182,8 +4182,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (PS)",
     "desc": "Ligue 1 Féminine (PS)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "passing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (PS)"
   },
   {
@@ -4196,7 +4196,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (PS)",
     "desc": "Ligue 1 Féminine (PS)",
-    "preferredStat": "passing",
+    "preferredStat": "dribbling",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PS)"
   },
@@ -4210,8 +4210,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NL)"
   },
   {
@@ -4224,7 +4224,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NL)"
   },
@@ -4238,7 +4238,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "dribbling",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NL)"
   },
@@ -4252,8 +4252,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NL)"
   },
   {
@@ -4266,7 +4266,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "pace",
+    "preferredStat": "passing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NL)"
   },
@@ -4280,7 +4280,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "finishing",
+    "preferredStat": "dribbling",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NL)"
   },
@@ -4294,8 +4294,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NL)"
   },
   {
@@ -4336,7 +4336,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "passing",
+    "preferredStat": "dribbling",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (NL)"
   },
@@ -4350,7 +4350,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
-    "preferredStat": "pace",
+    "preferredStat": "passing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (NL)"
   },
@@ -4365,7 +4365,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (NL)",
     "desc": "Ligue 1 Féminine (NL)",
     "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (NL)"
   },
   {
@@ -4379,7 +4379,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (PL)",
     "desc": "Ligue 1 Féminine (PL)",
     "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (PL)"
   },
   {
@@ -4392,7 +4392,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (PL)",
     "desc": "Ligue 1 Féminine (PL)",
-    "preferredStat": "finishing",
+    "preferredStat": "passing",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (PL)"
   },
@@ -4406,7 +4406,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (PL)",
     "desc": "Ligue 1 Féminine (PL)",
-    "preferredStat": "defense",
+    "preferredStat": "pace",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (PL)"
   },
@@ -4420,8 +4420,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (PL)",
     "desc": "Ligue 1 Féminine (PL)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PL)"
   },
   {
@@ -4434,8 +4434,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (PL)",
     "desc": "Ligue 1 Féminine (PL)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (PL)"
   },
   {
@@ -4449,7 +4449,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (PL)",
     "desc": "Ligue 1 Féminine (PL)",
     "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (PL)"
   },
   {
@@ -4462,8 +4462,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "passing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4476,8 +4476,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4490,7 +4490,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
@@ -4504,8 +4504,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4518,7 +4518,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "finishing",
+    "preferredStat": "physical",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
@@ -4532,8 +4532,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4546,8 +4546,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4560,8 +4560,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "pace",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4574,8 +4574,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4588,8 +4588,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "physical",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4602,7 +4602,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "dribbling",
+    "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
@@ -4616,8 +4616,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (PT)",
     "desc": "Ligue 1 Féminine (PT)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (PT)"
   },
   {
@@ -4630,8 +4630,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (QA)",
     "desc": "Ligue 1 Féminine (QA)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (QA)"
   },
   {
@@ -4645,7 +4645,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (QA)",
     "desc": "Ligue 1 Féminine (QA)",
     "preferredStat": "physical",
-    "lifestyleFit": "STRICT",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (QA)"
   },
   {
@@ -4658,8 +4658,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (QA)",
     "desc": "Ligue 1 Féminine (QA)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (QA)"
   },
   {
@@ -4672,7 +4672,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CD)",
     "desc": "Ligue 1 Féminine (CD)",
-    "preferredStat": "passing",
+    "preferredStat": "defense",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CD)"
   },
@@ -4686,8 +4686,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CD)",
     "desc": "Ligue 1 Féminine (CD)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CD)"
   },
   {
@@ -4700,8 +4700,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CD)",
     "desc": "Ligue 1 Féminine (CD)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CD)"
   },
   {
@@ -4714,8 +4714,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CD)",
     "desc": "Ligue 1 Féminine (CD)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CD)"
   },
   {
@@ -4729,7 +4729,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (SN)",
     "desc": "Ligue 1 Féminine (SN)",
     "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SN)"
   },
   {
@@ -4742,7 +4742,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (SN)",
     "desc": "Ligue 1 Féminine (SN)",
-    "preferredStat": "physical",
+    "preferredStat": "dribbling",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (SN)"
   },
@@ -4756,7 +4756,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (SN)",
     "desc": "Ligue 1 Féminine (SN)",
-    "preferredStat": "pace",
+    "preferredStat": "dribbling",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SN)"
   },
@@ -4770,7 +4770,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (SN)",
     "desc": "Ligue 1 Féminine (SN)",
-    "preferredStat": "physical",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (SN)"
   },
@@ -4784,8 +4784,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "physical",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CH)"
   },
   {
@@ -4798,8 +4798,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "pace",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CH)"
   },
   {
@@ -4812,8 +4812,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CH)"
   },
   {
@@ -4826,7 +4826,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "finishing",
+    "preferredStat": "dribbling",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (CH)"
   },
@@ -4840,7 +4840,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "physical",
+    "preferredStat": "defense",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CH)"
   },
@@ -4854,7 +4854,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "finishing",
+    "preferredStat": "pace",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CH)"
   },
@@ -4868,8 +4868,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "finishing",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CH)"
   },
   {
@@ -4882,7 +4882,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "physical",
+    "preferredStat": "defense",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CH)"
   },
@@ -4896,8 +4896,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "physical",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (CH)"
   },
   {
@@ -4911,7 +4911,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
     "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CH)"
   },
   {
@@ -4924,8 +4924,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CH)"
   },
   {
@@ -4938,7 +4938,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 3,
     "leagueName": "Ligue 1 Féminine (CH)",
     "desc": "Ligue 1 Féminine (CH)",
-    "preferredStat": "pace",
+    "preferredStat": "finishing",
     "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (CH)"
   },
@@ -4952,8 +4952,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (TN)",
     "desc": "Ligue 1 Féminine (TN)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "pace",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (TN)"
   },
   {
@@ -4966,8 +4966,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (TN)",
     "desc": "Ligue 1 Féminine (TN)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "passing",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (TN)"
   },
   {
@@ -4980,8 +4980,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (TN)",
     "desc": "Ligue 1 Féminine (TN)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (TN)"
   },
   {
@@ -4994,8 +4994,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (TN)",
     "desc": "Ligue 1 Féminine (TN)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "finishing",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (TN)"
   },
   {
@@ -5008,8 +5008,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (TR)",
     "desc": "Ligue 1 Féminine (TR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "BALANCED",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (TR)"
   },
   {
@@ -5037,7 +5037,7 @@ export const ALL_WOMENS_CLUBS = [
     "leagueName": "Ligue 1 Féminine (TR)",
     "desc": "Ligue 1 Féminine (TR)",
     "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (TR)"
   },
   {
@@ -5050,8 +5050,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (TR)",
     "desc": "Ligue 1 Féminine (TR)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (TR)"
   },
   {
@@ -5064,7 +5064,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (TR)",
     "desc": "Ligue 1 Féminine (TR)",
-    "preferredStat": "defense",
+    "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (TR)"
   },
@@ -5078,8 +5078,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (TR)",
     "desc": "Ligue 1 Féminine (TR)",
-    "preferredStat": "passing",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (TR)"
   },
   {
@@ -5092,8 +5092,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (UY)",
     "desc": "Ligue 1 Féminine (UY)",
-    "preferredStat": "pace",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (UY)"
   },
   {
@@ -5106,7 +5106,7 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (UY)",
     "desc": "Ligue 1 Féminine (UY)",
-    "preferredStat": "passing",
+    "preferredStat": "pace",
     "lifestyleFit": "PARTY",
     "pitch": "Ligue 1 Féminine (UY)"
   },
@@ -5120,8 +5120,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 1,
     "leagueName": "Ligue 1 Féminine (UY)",
     "desc": "Ligue 1 Féminine (UY)",
-    "preferredStat": "dribbling",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "defense",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (UY)"
   },
   {
@@ -5134,8 +5134,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (UY)",
     "desc": "Ligue 1 Féminine (UY)",
-    "preferredStat": "defense",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (UY)"
   },
   {
@@ -5148,8 +5148,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (UY)",
     "desc": "Ligue 1 Féminine (UY)",
-    "preferredStat": "physical",
-    "lifestyleFit": "PARTY",
+    "preferredStat": "defense",
+    "lifestyleFit": "STRICT",
     "pitch": "Ligue 1 Féminine (UY)"
   },
   {
@@ -5162,8 +5162,8 @@ export const ALL_WOMENS_CLUBS = [
     "tier": 2,
     "leagueName": "Ligue 1 Féminine (UY)",
     "desc": "Ligue 1 Féminine (UY)",
-    "preferredStat": "finishing",
-    "lifestyleFit": "STRICT",
+    "preferredStat": "pace",
+    "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (UY)"
   }
 ];
