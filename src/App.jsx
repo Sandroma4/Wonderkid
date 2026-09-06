@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { updateChallengeProgress } from './utils/dailyChallenges';
 import { playSound } from './utils/audio';
 import { preloadEvents } from './utils/eventsLoader';
@@ -1930,11 +1930,11 @@ export default function App() {
   };
 
   if (appView === 'cosmeticsStore') {
-    return <Suspense fallback={<PageLoader />}><CosmeticsStore onBack={handleBack} /></Suspense>;
+    return <CosmeticsStore onBack={handleBack} />;
   }
 
   if (appView === 'fiveManager') {
-    return <Suspense fallback={<PageLoader />}><FiveTeamsManager onBack={handleBack} /></Suspense>;
+    return <FiveTeamsManager onBack={handleBack} />;
   }
 
   if (appView === 'fiveLobby') {
@@ -1988,8 +1988,7 @@ export default function App() {
 
   if (appView === 'mainMenu') {
     return (
-      <Suspense fallback={<PageLoader />}>
-        <>
+      <>
           {showPseudoModal && <PseudonymModal onConfirm={handlePseudoConfirm} />}
           {showDailyChallenges && (
             <DailyChallengesModal onClose={() => setShowDailyChallenges(false)} />
@@ -2001,30 +2000,29 @@ export default function App() {
             onOpenDailyChallenges={() => { playSound('click'); setShowDailyChallenges(true); }}
           />
         </>
-      </Suspense>
+      
     );
   }
 
   if (appView === 'globalPalmares') {
-    return <Suspense fallback={<PageLoader />}><GlobalPalmares onBack={handleBack} /></Suspense>;
+    return <GlobalPalmares onBack={handleBack} />;
   }
 
   if (appView === 'achievements') {
-    return <Suspense fallback={<PageLoader />}><Achievements onBack={handleBack} /></Suspense>;
+    return <Achievements onBack={handleBack} />;
   }
 
   if (appView === 'leaderboard') {
-    return <Suspense fallback={<PageLoader />}><Leaderboard onBack={handleBack} /></Suspense>;
+    return <Leaderboard onBack={handleBack} />;
   }
 
   if (appView === 'cardCollection') {
-    return <Suspense fallback={<PageLoader />}><CardCollection onBack={handleBack} /></Suspense>;
+    return <CardCollection onBack={handleBack} />;
   }
 
   if (appView === 'clashLobby') {
     return (
-      <Suspense fallback={<PageLoader />}>
-        <ClashLobby 
+      <ClashLobby 
           clashContext={clashContext}
           setClashContext={setClashContext}
           onBack={handleBack} 
@@ -2042,14 +2040,13 @@ export default function App() {
             setAppView('fiveMatch');
           }} 
         />
-      </Suspense>
+      
     );
   }
   
   if (appView === 'multiplayerLobby' || appView === 'multiplayerLobbyCoop') {
     return (
-      <Suspense fallback={<PageLoader />}>
-        <MultiplayerLobby 
+      <MultiplayerLobby 
           initialInviteCode={inviteCode}
           multiplayerContext={multiplayerContext}
           onBack={handleBack}
@@ -2060,7 +2057,7 @@ export default function App() {
           }}
           initialCoopMode={appView === 'multiplayerLobbyCoop'}
         />
-      </Suspense>
+      
     );
   }
 
@@ -2107,9 +2104,8 @@ export default function App() {
 
   if (appView === 'career' && !gameState) {
     return (
-      <Suspense fallback={<PageLoader />}>
-        <CharacterCreation onStartGame={handleStartGame} multiplayerContext={multiplayerContext} onRestartGame={handleRestartGame} />
-      </Suspense>
+      <CharacterCreation onStartGame={handleStartGame} multiplayerContext={multiplayerContext} onRestartGame={handleRestartGame} />
+      
     );
   }
 
@@ -2155,8 +2151,7 @@ export default function App() {
   }
 
   return (
-    <Suspense fallback={<PageLoader />}>
-      <>
+    <>
         <Dashboard
           gameState={gameState}
           multiplayerContext={multiplayerContext}
@@ -2196,6 +2191,6 @@ export default function App() {
         <RoleSelectionModal onSelect={handleRoleSelection} playerPosition={gameState.player.position} />
       )}
       </>
-    </Suspense>
+    
   );
 }
