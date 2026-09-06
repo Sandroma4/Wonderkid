@@ -2896,20 +2896,7 @@ export const ALL_EVENTS = [
       { typeTag: 'AMBITION', text: 'Revendiquer ce statut : "Je vais nous ramener des trophées"', outcome: { narrative: 'Une déclaration audacieuse qui galvanise les supporters !', effects: [{ text: '+20 Confiance', style: 'positive' }, { text: '+10 Moral', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 20), morale: Math.min(100, p.morale + 10) }) } },
       { typeTag: 'COLLECTIF', text: 'Tempérer : "C\'est le collectif qui gagne"', outcome: { narrative: 'Le vestiaire national apprécie votre humilité et votre esprit d\'équipe.', effects: [{ text: '+15 Confiance', style: 'positive' }, { text: '+5 Forme', style: 'positive' }], applyStats: (p) => ({ ...p, coachTrust: Math.min(100, p.coachTrust + 15), form: Math.min(100, p.form + 5) }) } }
     ]
-  },
-  ...EXTRA_EVENTS,
-  ...EXTRA_EVENTS_2,
-  ...EXTRA_EVENTS_3,
-  ...EXTRA_EVENTS_4,
-  ...EXTRA_EVENTS_5,
-  ...EXTRA_EVENTS_6,
-  ...EXTRA_EVENTS_7,
-  ...EXTRA_EVENTS_8,
-  ...EXTRA_EVENTS_9,
-  ...EXTRA_EVENTS_10,
-  ...EXTRA_EVENTS_11,
-  ...EXTRA_EVENTS_12,
-  ...COOP_EVENTS
+  }
 ];
 
 export const PERKS_LIST = [
