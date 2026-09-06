@@ -45,6 +45,10 @@ export default defineConfig({
           if (id.includes('gameData') || id.includes('eventsLoader')) {
             return 'game-data';
           }
+          // Womens Clubs Data
+          if (id.includes('womensClubsData')) {
+            return 'womens-data';
+          }
           // Game utils
           if (id.includes('src/utils/')) {
             return 'game-utils';

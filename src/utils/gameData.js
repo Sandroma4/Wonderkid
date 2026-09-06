@@ -1,6 +1,8 @@
 import { getLoadedEvents } from './eventsLoader';
 import { getAccountData } from './storage';
+import { ALL_WOMENS_CLUBS } from './womensClubsData';
 
+export const getClubsForPlayer = (player) => (player?.gender === 'F' ? ALL_WOMENS_CLUBS : ALL_CLUBS);
 
 export const CUP_FINAL_SCENARIOS = [
   {
@@ -1750,7 +1752,8 @@ export const calculateSalaryOffer = (player, club) => {
 };
 
 export const generate6ClubOffers = (player) => {
-  if (!player || !player.attributes) return ALL_CLUBS.slice(0, 6);
+  const clubsList = getClubsForPlayer(player);
+  if (!player || !player.attributes) return clubsList.slice(0, 6);
   const highestStat = Object.keys(player.attributes).reduce((a, b) =>
     player.attributes[a] > player.attributes[b] ? a : b
   );
@@ -1773,13 +1776,13 @@ export const generate6ClubOffers = (player) => {
   if (rnd < chanceTier1) maxTier = 1;
   else if (rnd < chanceTier1 + chanceTier2) maxTier = 2;
   
-  let pool = ALL_CLUBS.filter(c => c.origin === playerOriginId && c.tier >= maxTier);
+  let pool = clubsList.filter(c => c.origin === playerOriginId && c.tier >= maxTier);
   if (pool.length < 6) {
-    pool = ALL_CLUBS.filter(c => c.origin === playerOriginId);
+    pool = clubsList.filter(c => c.origin === playerOriginId);
   }
   
   if (pool.length < 6) {
-    pool = [...pool, ...ALL_CLUBS.filter(c => c.tier >= maxTier)];
+    pool = [...pool, ...clubsList.filter(c => c.tier >= maxTier)];
   }
 
   pool = Array.from(new Set(pool.map(a => a.id))).map(id => pool.find(a => a.id === id));
@@ -1798,6 +1801,7 @@ export const generate6ClubOffers = (player) => {
 
 export const generateInterSeasonOffers = (player, currentClub, seasonStats = null, clubEvolutions = {}) => {
   if (!player || !currentClub) return [];
+  const clubsList = getClubsForPlayer(player);
   const playerOvr = player.ovr || 50;
   
   const isGreatSeason = seasonStats && seasonStats.rating >= 7.8;
@@ -1806,7 +1810,7 @@ export const generateInterSeasonOffers = (player, currentClub, seasonStats = nul
   const hasMLS = player.flags?.includes('MLS_PREFERENCE');
   const hasSaudi = player.flags?.includes('SAUDI_PREFERENCE');
 
-  const suitableClubs = ALL_CLUBS.filter(c => {
+  const suitableClubs = clubsList.filter(c => {
     if (c.id === currentClub.id) return false;
     
     // Filtre des offres exotiques
@@ -1818,31 +1822,21 @@ export const generateInterSeasonOffers = (player, currentClub, seasonStats = nul
     return diff <= maxOvrDiff && diff >= -12;
   });
   
-  let finalPool = suitableClubs;
-  if (finalPool.length < 4) {
-    if (hasMLS) {
-      finalPool = ALL_CLUBS.filter(c => c.origin === 'US' && c.id !== currentClub.id);
-    } else if (hasSaudi) {
-      finalPool = ALL_CLUBS.filter(c => c.origin === 'SA' && c.id !== currentClub.id);
-    } else {
-      const targetTier = playerOvr >= 78 ? 1 : playerOvr >= 65 ? 2 : 3;
-      finalPool = ALL_CLUBS.filter(c => c.id !== currentClub.id && Math.abs(c.tier - targetTier) <= 1);
-    }
+  let finalPool = [];
+  
+  if (hasMLS) {
+      finalPool = clubsList.filter(c => c.origin === 'US' && c.id !== currentClub.id);
+  } else if (hasSaudi) {
+      finalPool = clubsList.filter(c => c.origin === 'SA' && c.id !== currentClub.id);
+  } else if (suitableClubs.length === 0) {
+      const targetTier = currentClub.tier === 1 ? 2 : currentClub.tier;
+      finalPool = clubsList.filter(c => c.id !== currentClub.id && Math.abs(c.tier - targetTier) <= 1);
+  } else {
+      finalPool = suitableClubs;
   }
-
-  // Trier les clubs pour privilégier ceux dont l'OVR est proche de celui du joueur
-  const sortedClubs = finalPool.sort((a, b) => {
-    const aOvr = (a.ovr || (a.tier === 1 ? 82 : a.tier === 2 ? 70 : 55)) + (clubEvolutions[a.id] || 0);
-    const bOvr = (b.ovr || (b.tier === 1 ? 82 : b.tier === 2 ? 70 : 55)) + (clubEvolutions[b.id] || 0);
-    // Un joueur de 90 d'OVR a plus de chances d'être contacté par un club de 88 que de 78.
-    // L'aléatoire permet de garder des surprises.
-    let aScore = Math.abs((aOvr + (isGreatSeason ? 3 : 0)) - playerOvr) + (Math.random() * 6);
-    let bScore = Math.abs((bOvr + (isGreatSeason ? 3 : 0)) - playerOvr) + (Math.random() * 6);
-    return aScore - bScore;
-  });
-
-  const numOffers = Math.floor(Math.random() * 3) + 4; 
-  const offers = sortedClubs.slice(0, numOffers);
+  
+  const sorted = finalPool.sort(() => 0.5 - Math.random());
+  const offers = sorted.slice(0, 3);
   
   return offers.map(offer => {
     const clubOvr = offer.ovr || (offer.tier === 1 ? 82 : offer.tier === 2 ? 70 : 55);
@@ -2971,12 +2965,29 @@ export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlaye
 };
 
 export const generateRival = (player) => {
+  const clubsList = getClubsForPlayer(player);
+  let baseRival = {
+    id: `RIVAL_${Date.now()}`,
+    name: getRandomName(player.origin, player.gender),
+    ovr: Math.max(player.ovr, Math.floor(Math.random() * 5) + 65), // Le rival commence fort
+    age: player.age + Math.floor(Math.random() * 3) - 1,
+    origin: player.origin,
+    position: player.position,
+    stats: {
+      goals: 0, assists: 0, matches: 0,
+      cleansheets: 0, saves: 0, goalsConceded: 0
+    },
+    history: [],
+    trophies: { ballonDor: 0, championsLeague: 0 },
+    club: clubsList[Math.floor(Math.random() * clubsList.length)],
+    archetype: 'PRODIGY', 
+    form: 80,
+    morale: 80
+  };
+  
   const pos = (player.position || 'ATT').toUpperCase();
   const isGkRival = pos.includes('GK') || pos.includes('GB') || pos.includes('GARDIEN');
-  
-  const nationality = player.nationality || 'FR';
-  const name = getRandomName(nationality, player.gender);
-  const ovr = (player.ovr || 50) + Math.floor(Math.random() * 5); // Rival starts slightly better or equal
+  const ovr = baseRival.ovr;
   
   let baseStats = { pace: ovr, finishing: ovr, passing: ovr, dribbling: ovr, defense: ovr, physical: ovr };
   
@@ -2996,27 +3007,12 @@ export const generateRival = (player) => {
     attributes[attr] = Math.max(1, Math.min(99, baseStats[attr] + Math.floor(Math.random() * 10) - 5));
   });
 
-  const age = player.age || 18;
-  return {
-    id: `rival_${Date.now()}`,
-    name,
-    position: pos, // Le rival joue au même poste que le joueur
-    age,
-    ovr,
-    attributes,
-    avatar: player.rivalAvatar || null,
-    club: ALL_CLUBS[Math.floor(Math.random() * ALL_CLUBS.length)],
-    history: [],
-    headToHeadWins: 0,
-    headToHeadLosses: 0,
-    ballonDorCount: 0,
-    trophiesCount: 0
-  };
+  return { ...baseRival, attributes };
 };
 
 export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, playerWonCL) => {
   if (!rival) return null;
-  
+  const clubsList = getClubsForPlayer(rival);
   const newAge = (rival.age || 18) + 1;
   const isGkRival = (rival.position || '').toUpperCase().includes('GK') || (rival.position || '').toUpperCase().includes('GB');
   let newOvr = rival.ovr;
@@ -3028,7 +3024,7 @@ export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, pl
   if (newAge < peakAge) {
     newOvr += Math.floor(Math.random() * 4);
   } else if (newAge > declineStart) {
-    const declineRate = isGkRival ? 2 : 3; // Les GK déclinent plus lentement
+    const declineRate = isGkRival ? 2 : 3;
     newOvr -= Math.floor(Math.random() * declineRate) + 1;
   } else {
     newOvr += Math.floor(Math.random() * 2) - 1;
@@ -3047,7 +3043,6 @@ export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, pl
   Object.keys(newAttributes).forEach(attr => {
     let variation = ovrDiff + (Math.floor(Math.random() * 3) - 1);
     if (newAge > declineStart) {
-      // Les stats physiques chutent plus vite
       const physicalStats = isGkRival ? ['pace', 'reflexes'] : ['pace', 'physical'];
       if (physicalStats.includes(attr)) {
         variation -= Math.floor(Math.random() * 3);
@@ -3062,7 +3057,6 @@ export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, pl
   let newBallonDorCount = rival.ballonDorCount || 0;
   let newTrophiesCount = rival.trophiesCount || 0;
 
-  // Si le joueur n'a pas gagné le Ballon d'Or, le rival a une chance de le gagner s'il a un gros OVR
   if (!playerWonBallonDor && newOvr > 85) {
     if (Math.random() < (newOvr - 85) * 0.05) {
       rivalWonBallonDor = true;
@@ -3070,22 +3064,20 @@ export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, pl
     }
   }
 
-  // Trophées collectifs (LDC ou Ligue)
   if (!playerWonCL && newOvr > 80 && Math.random() < 0.2) {
     rivalWonCL = true;
     newTrophiesCount++;
   } else if (Math.random() < 0.3) {
-    newTrophiesCount++; // Gagne un championnat national par exemple
+    newTrophiesCount++;
   }
 
-  // Logique de transfert du Rival (IA)
-  let currentClub = rival.club || ALL_CLUBS[0];
+  // Logique de transfert du Rival
+  let currentClub = rival.club || clubsList[0];
   let newClub = currentClub;
   const currentTier = currentClub.tier || 3;
   let targetTier = currentTier;
   let shouldTransfer = false;
 
-  // Progression naturelle vers les tops clubs
   if (newOvr > 85 && currentTier > 1) {
     targetTier = 1;
     shouldTransfer = true;
@@ -3093,23 +3085,19 @@ export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, pl
     targetTier = 2;
     shouldTransfer = true;
   } else if (newOvr > 88 && currentTier === 1 && Math.random() < 0.15) {
-    // Top joueur qui change de top club (transfert blockbuster)
     shouldTransfer = true;
   }
 
-  // Logique de "Némésis" : Si le joueur est dans un gros club (Tier 1 ou 2), 
-  // le rival va essayer de rejoindre la même ligue/pays pour l'affronter directement !
   let targetOrigin = null;
   if (playerClub && playerClub.tier <= 2 && newOvr >= 80 && Math.random() < 0.5) {
-      targetOrigin = playerClub.origin; // Le rival veut aller dans le même championnat
+      targetOrigin = playerClub.origin;
       targetTier = playerClub.tier;
       shouldTransfer = true;
   }
 
   if (shouldTransfer) {
-      let possibleClubs = ALL_CLUBS.filter(c => c.tier === targetTier && c.id !== currentClub.id);
+      let possibleClubs = clubsList.filter(c => c.tier === targetTier && c.id !== currentClub.id);
       
-      // Filtrer par origine si on a une cible Némésis
       if (targetOrigin) {
           const nemesisClubs = possibleClubs.filter(c => c.origin === targetOrigin && c.id !== playerClub.id);
           if (nemesisClubs.length > 0) {
@@ -3119,7 +3107,6 @@ export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, pl
 
       if (possibleClubs.length > 0) {
           newClub = possibleClubs[Math.floor(Math.random() * possibleClubs.length)];
-          // Historique de transfert (optionnel, pour l'affichage plus tard)
           const transferHistory = rival.history || [];
           transferHistory.push({ age: newAge, from: currentClub.name, to: newClub.name });
           rival.history = transferHistory;
@@ -3134,7 +3121,7 @@ export const updateRival = (rival, playerOvr, playerClub, playerWonBallonDor, pl
     club: newClub,
     ballonDorCount: newBallonDorCount,
     trophiesCount: newTrophiesCount,
-    justWonBallonDor: rivalWonBallonDor, // flag for events
+    justWonBallonDor: rivalWonBallonDor,
     justWonCL: rivalWonCL,
     history: rival.history || []
   };
