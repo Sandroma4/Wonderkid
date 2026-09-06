@@ -41,30 +41,20 @@ import { InternationalTournamentModal } from './components/InternationalTourname
 import { RoleSelectionModal } from './components/RoleSelectionModal';
 import { DailyChallengesModal } from './components/DailyChallengesModal';
 
-// Composants page en lazy loading — ne se chargent que quand on les visite
-const CharacterCreation = lazy(() => import('./components/CharacterCreation').then(m => ({ default: m.CharacterCreation })));
-const Dashboard = lazy(() => import('./components/Dashboard').then(m => ({ default: m.Dashboard })));
-const MainMenu = lazy(() => import('./components/MainMenu').then(m => ({ default: m.MainMenu })));
-const MultiplayerLobby = lazy(() => import('./components/MultiplayerLobby').then(m => ({ default: m.MultiplayerLobby })));
-const FiveLobby = lazy(() => import('./components/FiveLobby').then(m => ({ default: m.FiveLobby })));
-const FiveTeamsManager = lazy(() => import('./components/FiveTeamsManager').then(m => ({ default: m.FiveTeamsManager })));
-const FiveMatch = lazy(() => import('./components/FiveMatch').then(m => ({ default: m.FiveMatch })));
-const GlobalPalmares = lazy(() => import('./components/GlobalPalmares').then(m => ({ default: m.GlobalPalmares })));
-const Achievements = lazy(() => import('./components/Achievements').then(m => ({ default: m.Achievements })));
-const Leaderboard = lazy(() => import('./components/Leaderboard').then(m => ({ default: m.Leaderboard })));
-const CardCollection = lazy(() => import('./components/CardCollection').then(m => ({ default: m.CardCollection })));
-const ClashLobby = lazy(() => import('./components/ClashLobby').then(m => ({ default: m.ClashLobby })));
-const CosmeticsStore = lazy(() => import('./components/CosmeticsStore').then(m => ({ default: m.CosmeticsStore })));
-
-// Spinner de fallback Suspense
-const PageLoader = () => (
-  <div className="fixed inset-0 bg-[#0F172A] flex items-center justify-center z-50">
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-12 h-12 border-4 border-emerald-500/30 border-t-emerald-400 rounded-full animate-spin"></div>
-      <span className="text-slate-400 text-sm font-medium tracking-widest uppercase">Chargement…</span>
-    </div>
-  </div>
-);
+// Importation synchrone des composants (plus de temps de chargement)
+import { CharacterCreation } from './components/CharacterCreation';
+import { Dashboard } from './components/Dashboard';
+import { MainMenu } from './components/MainMenu';
+import { MultiplayerLobby } from './components/MultiplayerLobby';
+import { FiveLobby } from './components/FiveLobby';
+import { FiveTeamsManager } from './components/FiveTeamsManager';
+import { FiveMatch } from './components/FiveMatch';
+import { GlobalPalmares } from './components/GlobalPalmares';
+import { Achievements } from './components/Achievements';
+import { Leaderboard } from './components/Leaderboard';
+import { CardCollection } from './components/CardCollection';
+import { ClashLobby } from './components/ClashLobby';
+import { CosmeticsStore } from './components/CosmeticsStore';
 
 
 
