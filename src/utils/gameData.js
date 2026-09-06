@@ -1623,22 +1623,24 @@ export const calculatePlayerStatus = (player, club) => {
 };
 
 export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBonus) => {
-  const targetOvr = Math.floor(Math.random() * 6) + 45;
+  const targetOvr = Math.floor(Math.random() * 6) + 45; // Objectif : 45 à 50 de général
   const statsList = (enginePos === 'GK' || enginePos === 'GB')
     ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] 
     : ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
-  let rawStats = {};
-  statsList.forEach(stat => {
-    const base = roleBaseStats[stat] || 50;
-    const noise = Math.floor(Math.random() * 7) - 3;
-    rawStats[stat] = Math.max(15, base + noise);
-  });
-  let currentOvr = calculateOVR({ position: enginePos, attributes: rawStats });
+  
+  // 1. Calculer l'OVR des stats de base du rôle pour trouver le ratio
+  let currentOvr = calculateOVR({ position: enginePos, attributes: roleBaseStats });
   const scale = targetOvr / (currentOvr || 1);
+  
   let scaledStats = {};
   statsList.forEach(stat => {
-    scaledStats[stat] = Math.max(15, Math.min(99, Math.round(rawStats[stat] * scale)));
+    const base = roleBaseStats[stat] || 50;
+    // Ajout d'un petit bruit aléatoire, puis mise à l'échelle pour conserver les proportions
+    const noise = Math.floor(Math.random() * 5) - 2; 
+    scaledStats[stat] = Math.max(15, Math.min(99, Math.round(base * scale) + noise));
   });
+
+  // 2. Appliquer les bonus d'origine sociale
   if (backgroundBonus) {
     Object.entries(backgroundBonus).forEach(([statKey, bonus]) => {
       if (scaledStats[statKey] !== undefined) {
@@ -1646,14 +1648,16 @@ export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBon
       }
     });
   }
+
+  // 3. Correction itérative fine par mise à l'échelle (pour ne pas aplatir les stats)
   let finalOvr = calculateOVR({ position: enginePos, attributes: scaledStats });
-  if (finalOvr < 45) {
-    const diff = 45 - finalOvr;
-    statsList.forEach(s => { scaledStats[s] += diff; });
-  } else if (finalOvr > 50) {
-    const diff = finalOvr - 50;
-    statsList.forEach(s => { scaledStats[s] = Math.max(15, scaledStats[s] - diff); });
+  if (finalOvr < 45 || finalOvr > 50) {
+    const correctionScale = (45 + Math.random() * 5) / finalOvr;
+    statsList.forEach(s => {
+      scaledStats[s] = Math.max(15, Math.min(99, Math.round(scaledStats[s] * correctionScale)));
+    });
   }
+  
   return scaledStats;
 };
 

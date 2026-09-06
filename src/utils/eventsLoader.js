@@ -35,6 +35,7 @@ export const preloadEvents = () => {
     import('./extraEvents10'),
     import('./extraEvents11'),
     import('./extraEvents12'),
+    import('./extraEvents13'),
     import('./coopEvents'),
   ]).then(([
     { EXTRA_EVENTS },
@@ -49,6 +50,7 @@ export const preloadEvents = () => {
     { EXTRA_EVENTS_10 },
     { EXTRA_EVENTS_11 },
     { EXTRA_EVENTS_12 },
+    { EXTRA_EVENTS_13 },
     { COOP_EVENTS },
   ]) => {
     _cachedEvents = [
@@ -64,6 +66,7 @@ export const preloadEvents = () => {
       ...EXTRA_EVENTS_10,
       ...EXTRA_EVENTS_11,
       ...EXTRA_EVENTS_12,
+      ...EXTRA_EVENTS_13,
       ...COOP_EVENTS,
     ];
     return _cachedEvents;
