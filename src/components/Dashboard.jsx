@@ -1353,56 +1353,6 @@ export function Dashboard({
               {/* ONGLET : CARRIÈRE (TROPHÉES & ÉTAT) */}
               <div className={`${activeMobileTab !== 'carriere' ? 'hidden md:flex' : 'flex'} flex-col space-y-4 md:col-span-1`}>
 
-                {/* GRAPHIQUE VALEUR MARCHANDE - desktop uniquement */}
-                {player.valueHistory && player.valueHistory.length > 0 && (
-                  <div className="hidden md:flex bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 shadow-2xl flex-col h-fit">
-                    <div className="flex justify-between items-end mb-4">
-                      <h3 className="heading-typography text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">Valeur Marchande</h3>
-                      <span className="text-emerald-600 font-black text-xl leading-none">
-                        {(player.valueHistory[player.valueHistory.length - 1].value / 1000000).toFixed(1)} M€
-                      </span>
-                    </div>
-                    <div className="h-36 w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={player.valueHistory} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
-                          <XAxis dataKey="age" tick={{ fontSize: 10, fill: '#94a3b8' }} tickLine={false} axisLine={false} padding={{ left: 20, right: 20 }} />
-                          <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} tickLine={false} axisLine={false} domain={['auto', 'auto']} tickFormatter={(val) => `${(val / 1000000).toFixed(1)}M`} />
-                          <Tooltip formatter={(value) => [`${(value / 1000000).toFixed(1)} M€`, 'Valeur']} labelFormatter={(label) => `Âge: ${label} ans`} contentStyle={{ backgroundColor: '#0f172a', borderRadius: '12px', border: '1px solid #334155', padding: '8px', color: '#f8fafc' }} />
-                          <Line type="monotone" dataKey="value" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981', strokeWidth: 2, stroke: '#fff' }} activeDot={{ r: 6, fill: '#047857' }} />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-                )}
-
-                {/* SPONSORS - desktop uniquement */}
-                <div className="hidden md:flex flex-col bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-4 shadow-2xl">
-                  <h4 className="heading-typography text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <span>💎 Sponsors Officiels</span>
-                  </h4>
-                  <div className="flex flex-col gap-2">
-                    {player.sponsor && player.sponsor !== 'Aucun' ? (
-                      <div className="flex items-center gap-3 bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/30 p-3 rounded-xl shadow-sm">
-                        <div className="flex items-center justify-center w-10 h-10 bg-indigo-500 text-white rounded-lg shadow-inner text-xl font-black">
-                          {player.sponsor.charAt(0)}
-                        </div>
-                        <div>
-                          <p className="heading-typography text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase">{player.sponsor}</p>
-                          <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">
-                            Partenaire principal {player.sponsorValue ? `• ${(player.sponsorValue).toLocaleString()} €/an` : ''}
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-slate-600 rounded-xl">
-                        <span className="text-2xl mb-1 opacity-50">🤝</span>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-400 text-center font-medium">Aucun sponsor pour le moment.<br/>Gagnez en notoriété pour attirer des offres !</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
                 {/* BLOC COMPARATIF NÉMÉSIS */}
                 {rival && (() => {
                   const rivalCountryId = rival.club ? rival.club.origin : 'FR';
@@ -1492,6 +1442,34 @@ export function Dashboard({
                     </div>
                   );
                 })()}
+
+                {/* SPONSORS - desktop uniquement */}
+                <div className="hidden md:flex flex-col bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-4 shadow-2xl">
+                  <h4 className="heading-typography text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <span>💎 Sponsors Officiels</span>
+                  </h4>
+                  <div className="flex flex-col gap-2">
+                    {player.sponsor && player.sponsor !== 'Aucun' ? (
+                      <div className="flex items-center gap-3 bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/30 p-3 rounded-xl shadow-sm">
+                        <div className="flex items-center justify-center w-10 h-10 bg-indigo-500 text-white rounded-lg shadow-inner text-xl font-black">
+                          {player.sponsor.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="heading-typography text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase">{player.sponsor}</p>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">
+                            Partenaire principal {player.sponsorValue ? `• ${(player.sponsorValue).toLocaleString()} €/an` : ''}
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-slate-600 rounded-xl">
+                        <span className="text-2xl mb-1 opacity-50">🤝</span>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 text-center font-medium">Aucun sponsor pour le moment.<br/>Gagnez en notoriété pour attirer des offres !</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
 
 
                 
