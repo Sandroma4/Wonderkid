@@ -213,41 +213,215 @@ const REAL_CLUBS = {
     { name: 'Grasshopper Club Zürich', ovr: 73, primary: '#0000FF', secondary: '#FFFFFF' },
     { name: 'BSC YB Frauen', ovr: 71, primary: '#FFFF00', secondary: '#000000' },
     { name: 'FC St. Gallen-Staad', ovr: 69, primary: '#008000', secondary: '#FFFFFF' },
+  ],
+  ZA: [
+    { name: 'Mamelodi Sundowns Ladies', ovr: 78, primary: '#FFFF00', secondary: '#000080' },
+    { name: 'UWC Ladies', ovr: 76, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'TUT Ladies', ovr: 75, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'JVW FC', ovr: 74, primary: '#000080', secondary: '#FFFFFF' },
+    { name: 'Richmond United', ovr: 72, primary: '#800000', secondary: '#FFFFFF' },
+    { name: 'Royal AM Women', ovr: 71, primary: '#FFD700', secondary: '#000000' }
+  ],
+  DZ: [
+    { name: 'Afak Relizane', ovr: 74, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'CF Akbou', ovr: 73, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'FC Constantine', ovr: 71, primary: '#FF0000', secondary: '#000000' },
+    { name: 'AS Sûreté Nationale', ovr: 70, primary: '#000080', secondary: '#FFFFFF' },
+    { name: 'JF Khroub', ovr: 68, primary: '#FFFFFF', secondary: '#FF0000' }
+  ],
+  SA: [
+    { name: 'Al Nassr Women', ovr: 75, primary: '#FFFF00', secondary: '#0000FF' },
+    { name: 'Al Hilal Women', ovr: 74, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Al Shabab Women', ovr: 73, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Al Ittihad Women', ovr: 72, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Al Ahli Women', ovr: 71, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Eastern Flames FC', ovr: 69, primary: '#FF0000', secondary: '#000000' }
+  ],
+  AR: [
+    { name: 'Boca Juniors Femenino', ovr: 77, primary: '#000080', secondary: '#FFFF00' },
+    { name: 'UAI Urquiza', ovr: 76, primary: '#800000', secondary: '#FFFFFF' },
+    { name: 'River Plate Femenino', ovr: 75, primary: '#FFFFFF', secondary: '#FF0000' },
+    { name: 'Rosario Central Femenino', ovr: 74, primary: '#0000FF', secondary: '#FFFF00' },
+    { name: 'San Lorenzo Femenino', ovr: 73, primary: '#000080', secondary: '#FF0000' },
+    { name: 'Racing Club Femenino', ovr: 72, primary: '#87CEEB', secondary: '#FFFFFF' }
+  ],
+  BE: [
+    { name: 'RSC Anderlecht Women', ovr: 78, primary: '#4B0082', secondary: '#FFFFFF' },
+    { name: 'Standard Liège Women', ovr: 77, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'OH Leuven Women', ovr: 76, primary: '#FFFFFF', secondary: '#000000' },
+    { name: 'Club YLA', ovr: 74, primary: '#0000FF', secondary: '#000000' },
+    { name: 'KRC Genk Ladies', ovr: 73, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'KAA Gent Ladies', ovr: 72, primary: '#0000FF', secondary: '#FFFFFF' }
+  ],
+  CV: [
+    { name: 'Seven Stars', ovr: 68, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Llana FC', ovr: 67, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'CS Mindelense', ovr: 66, primary: '#FF0000', secondary: '#000000' },
+    { name: 'FC Batuque', ovr: 65, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Boavista FC', ovr: 64, primary: '#000000', secondary: '#FFFFFF' }
+  ],
+  CO: [
+    { name: 'América de Cali Femenino', ovr: 77, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Deportivo Cali Femenino', ovr: 76, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Santa Fe Femenino', ovr: 75, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Atlético Nacional Femenino', ovr: 74, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Millonarios Femenino', ovr: 73, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Independiente Medellín', ovr: 72, primary: '#FF0000', secondary: '#0000FF' }
+  ],
+  KR: [
+    { name: 'Incheon Hyundai Steel', ovr: 78, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Hwacheon KSPO', ovr: 77, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Suwon FC Women', ovr: 76, primary: '#000080', secondary: '#FF0000' },
+    { name: 'Gyeongju KHNP', ovr: 75, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Seoul WFC', ovr: 74, primary: '#000000', secondary: '#FF0000' },
+    { name: 'Sejong Sportstoto', ovr: 72, primary: '#0000FF', secondary: '#000000' }
+  ],
+  CI: [
+    { name: 'Juventus de Yopougon', ovr: 73, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Inter d\'Abidjan', ovr: 72, primary: '#0000FF', secondary: '#000000' },
+    { name: 'Africa Sports', ovr: 71, primary: '#008000', secondary: '#FF0000' },
+    { name: 'ASEC Mimosas', ovr: 70, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Stella Club', ovr: 69, primary: '#008000', secondary: '#FFFFFF' }
+  ],
+  HR: [
+    { name: 'ŽNK Osijek', ovr: 74, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'ŽNK Split', ovr: 73, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'ŽNK Dinamo Zagreb', ovr: 72, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'ŽNK Hajduk Split', ovr: 71, primary: '#FFFFFF', secondary: '#0000FF' },
+    { name: 'ŽNK Agram', ovr: 69, primary: '#000000', secondary: '#FFFFFF' }
+  ],
+  EG: [
+    { name: 'Wadi Degla', ovr: 74, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Tutankhamun FC', ovr: 73, primary: '#000080', secondary: '#FFFFFF' },
+    { name: 'Al Ahly Women', ovr: 72, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Zamalek Women', ovr: 71, primary: '#FFFFFF', secondary: '#FF0000' },
+    { name: 'Pyramids FC Women', ovr: 70, primary: '#000080', secondary: '#87CEEB' }
+  ],
+  AE: [
+    { name: 'Abu Dhabi Country Club', ovr: 70, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Al Ain Women', ovr: 69, primary: '#800080', secondary: '#FFFFFF' },
+    { name: 'Dubai WFC', ovr: 68, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Sharjah Women', ovr: 67, primary: '#FFFFFF', secondary: '#0000FF' }
+  ],
+  EC: [
+    { name: 'Dragonas IDV', ovr: 75, primary: '#000000', secondary: '#0000FF' },
+    { name: 'Barcelona SC Femenino', ovr: 74, primary: '#FFFF00', secondary: '#FF0000' },
+    { name: 'Club Ñañas', ovr: 73, primary: '#FFC0CB', secondary: '#FFFFFF' },
+    { name: 'LDU Quito Femenino', ovr: 72, primary: '#FFFFFF', secondary: '#000000' },
+    { name: 'Deportivo Cuenca', ovr: 70, primary: '#FF0000', secondary: '#000000' }
+  ],
+  GH: [
+    { name: 'Ampem Darkoa Ladies', ovr: 75, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Hasaacas Ladies', ovr: 74, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Police Ladies', ovr: 73, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Prisons Ladies', ovr: 72, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'LadyStrikers', ovr: 71, primary: '#FFFF00', secondary: '#000000' }
+  ],
+  GR: [
+    { name: 'PAOK', ovr: 76, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'AEK Athens Women', ovr: 74, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Panathinaikos Women', ovr: 73, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'OFI Crete Women', ovr: 72, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Asteras Tripolis', ovr: 71, primary: '#FFFF00', secondary: '#0000FF' }
+  ],
+  IQ: [
+    { name: 'Naft Al-Shamal', ovr: 71, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Al-Quwa Al-Jawiya', ovr: 70, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Ghaz Al-Shamal', ovr: 69, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Al-Shorta Women', ovr: 68, primary: '#008000', secondary: '#FFFFFF' }
+  ],
+  IR: [
+    { name: 'Khatoon Bam', ovr: 75, primary: '#FF0000', secondary: '#000000' },
+    { name: 'Sepahan Women', ovr: 74, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Shahrdari Sirjan', ovr: 73, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Malavan Women', ovr: 72, primary: '#FFFFFF', secondary: '#0000FF' },
+    { name: 'Zob Ahan Women', ovr: 71, primary: '#008000', secondary: '#FFFFFF' }
+  ],
+  JO: [
+    { name: 'Amman Club', ovr: 73, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Orthodox Club', ovr: 72, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Etihad Club', ovr: 71, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Al-Nassr', ovr: 69, primary: '#000080', secondary: '#FFFF00' }
+  ],
+  MA: [
+    { name: 'ASFAR Women', ovr: 77, primary: '#000000', secondary: '#FF0000' },
+    { name: 'Sporting Casablanca', ovr: 75, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Wydad AC Women', ovr: 74, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Raja CA Women', ovr: 73, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'SC Chabab Mohammédia', ovr: 71, primary: '#000000', secondary: '#FF0000' }
+  ],
+  NG: [
+    { name: 'Rivers Angels', ovr: 76, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Delta Queens', ovr: 75, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Bayelsa Queens', ovr: 74, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Nasarawa Amazons', ovr: 73, primary: '#FFFF00', secondary: '#008000' },
+    { name: 'Edo Queens', ovr: 72, primary: '#FF0000', secondary: '#FFFF00' },
+    { name: 'FC Robo', ovr: 70, primary: '#0000FF', secondary: '#FFFFFF' }
+  ],
+  UZ: [
+    { name: 'Sevinch', ovr: 73, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Bunyodkor Women', ovr: 72, primary: '#000080', secondary: '#FFFFFF' },
+    { name: 'Sogdiana Women', ovr: 71, primary: '#FFFF00', secondary: '#0000FF' },
+    { name: 'Metallurg Women', ovr: 70, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Pakhtakor Women', ovr: 69, primary: '#FFFF00', secondary: '#000080' }
+  ],
+  PS: [
+    { name: 'Shabab Al-Amari', ovr: 68, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Orthodox Beit Sahour', ovr: 67, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'Diyar Bethlehem', ovr: 66, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Sareyyet Ramallah', ovr: 65, primary: '#FFFFFF', secondary: '#FF0000' }
+  ],
+  PL: [
+    { name: 'Górnik Łęczna', ovr: 75, primary: '#008000', secondary: '#000000' },
+    { name: 'UKS SMS Łódź', ovr: 74, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Czarni Sosnowiec', ovr: 73, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Śląsk Wrocław', ovr: 72, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Pogoń Szczecin', ovr: 71, primary: '#000080', secondary: '#800000' },
+    { name: 'Medyk Konin', ovr: 70, primary: '#000000', secondary: '#FFFFFF' }
+  ],
+  QA: [
+    { name: 'Qatar SC Women', ovr: 69, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Al Sadd Women', ovr: 68, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Al Rayyan Women', ovr: 67, primary: '#FF0000', secondary: '#000000' }
+  ],
+  CD: [
+    { name: 'FCF Mazembe', ovr: 74, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'CSF Bikira', ovr: 72, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'FCF Amani', ovr: 71, primary: '#FF0000', secondary: '#000000' },
+    { name: 'FCF Promesse Star', ovr: 70, primary: '#FFFF00', secondary: '#0000FF' }
+  ],
+  SN: [
+    { name: 'Dakar Sacré-Cœur', ovr: 73, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Aigles de la Médina', ovr: 72, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Sirènes de Grand Yoff', ovr: 71, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Amazones de Grand Yoff', ovr: 70, primary: '#FF0000', secondary: '#000000' }
+  ],
+  TN: [
+    { name: 'ASF Sahel', ovr: 72, primary: '#FF0000', secondary: '#FFFFFF' },
+    { name: 'AS Banque de l\'Habitat', ovr: 71, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'US Tunisienne', ovr: 70, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'ASF Gafsa', ovr: 69, primary: '#008000', secondary: '#FFFFFF' }
+  ],
+  TR: [
+    { name: 'Galatasaray Women', ovr: 77, primary: '#FF0000', secondary: '#FFFF00' },
+    { name: 'Fenerbahçe Women', ovr: 76, primary: '#000080', secondary: '#FFFF00' },
+    { name: 'Beşiktaş Women', ovr: 75, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'ALG Spor', ovr: 74, primary: '#FFFF00', secondary: '#0000FF' },
+    { name: 'Fomget Gençlik', ovr: 73, primary: '#008000', secondary: '#FFFFFF' },
+    { name: 'Hakkarigücü', ovr: 71, primary: '#FF0000', secondary: '#FFFFFF' }
+  ],
+  UY: [
+    { name: 'Peñarol Femenino', ovr: 75, primary: '#FFFF00', secondary: '#000000' },
+    { name: 'Nacional Femenino', ovr: 74, primary: '#0000FF', secondary: '#FFFFFF' },
+    { name: 'Defensor Sporting', ovr: 73, primary: '#800080', secondary: '#FFFFFF' },
+    { name: 'Montevideo Wanderers', ovr: 72, primary: '#000000', secondary: '#FFFFFF' },
+    { name: 'Liverpool Femenino', ovr: 71, primary: '#000000', secondary: '#0000FF' },
+    { name: 'Danubio Femenino', ovr: 70, primary: '#000000', secondary: '#FFFFFF' }
   ]
 };
 
 // Villes / mots aléatoires pour générer des clubs crédibles dans les autres pays
-const CITY_PREFIXES = {
-  AR: ['Boca', 'River', 'Independiente', 'Racing', 'San Lorenzo', 'Rosario'],
-  CO: ['América', 'Nacional', 'Millonarios', 'Deportivo', 'Santa Fe', 'Cali'],
-  KR: ['Seoul', 'Hyundai', 'Suwon', 'Incheon', 'Hwacheon', 'Gyeongju'],
-  ZA: ['Mamelodi', 'UWC', 'TUT', 'JVW', 'Richmond', 'Royal AM'],
-  NG: ['Rivers', 'Delta', 'Bayelsa', 'Nasarawa', 'Edo', 'Robo'],
-  EG: ['Al Ahly', 'Zamalek', 'Pyramids', 'Wadi Degla', 'Smouha', 'Ismaily'],
-  DZ: ['Afak', 'FC', 'ASE', 'JF', 'MZ', 'AS'],
-  GR: ['PAOK', 'AEK', 'Panathinaikos', 'Olympiacos', 'OFI', 'Asteras'],
-  TR: ['Galatasaray', 'Fenerbahçe', 'Beşiktaş', 'ALG', 'Fomget', 'Hakkarigücü'],
-  PL: ['Górnik', 'UKS', 'Czarni', 'Śląsk', 'Medyk', 'Pogoń'],
-  BE: ['Anderlecht', 'Standard', 'OH', 'Club YLA', 'Genk', 'Gent'],
-  UY: ['Peñarol', 'Nacional', 'Defensor', 'Wanderers', 'Danubio', 'Liverpool'],
-  EC: ['Dragonas', 'Barcelona', 'Ñañas', 'Liga', 'Espuce', 'Deportivo'],
-  CI: ['Juventus', 'Inter', 'Africa', 'ASEC', 'Stella', 'Athletic'],
-  HR: ['Osijek', 'Split', 'Dinamo', 'Hajduk', 'Agram', 'Rijeka'],
-  AE: ['Abu Dhabi', 'Dubai', 'Al Ain', 'Sharjah', 'Al Wahda', 'Shabab'],
-  QA: ['Al Sadd', 'Al Duhail', 'Al Rayyan', 'Al Gharafa', 'Al Arabi', 'Qatar SC'],
-  SA: ['Al Nassr', 'Al Hilal', 'Al Shabab', 'Al Ittihad', 'Al Ahli', 'Al Qadsiah'],
-  MA: ['ASFAR', 'Wydad', 'Raja', 'Sporting', 'Ain Harrouda', 'Chabab'],
-  TN: ['ASF', 'AS', 'US', 'CS', 'JS', 'ES'],
-  SN: ['Dakar', 'Aigles', 'Amazones', 'Sirènes', 'Dorades', 'Casa'],
-  CD: ['Mazembe', 'Bikira', 'Promesse', 'Attaque', 'Espoir', 'Vita'],
-  GH: ['Ampem', 'Hasaacas', 'Police', 'Prisons', 'LadyStrikers', 'Soccer'],
-  IQ: ['Naft', 'Al Quwa', 'Al Shorta', 'Al Talaba', 'Erbil', 'Zakho'],
-  IR: ['Khatoon', 'Bam', 'Sepahan', 'Shahrdari', 'Malavan', 'Zob Ahan'],
-  JO: ['Amman', 'Orthodox', 'Al Ahli', 'Shabab', 'Ittihad', 'Al Hussein'],
-  PS: ['Al Quds', 'Gaza', 'Hebron', 'Bethlehem', 'Ramallah', 'Nablus'],
-  UZ: ['Sevinch', 'Bunyodkor', 'Sogdiana', 'Metallurg', 'Pakhtakor', 'Navbahor'],
-  CV: ['Seven', 'Llana', 'Mindelense', 'Batuque', 'Boavista', 'Sporting']
-};
+const CITY_PREFIXES = {}; // Vide car on a défini tous les pays !
 
 const STATS = ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
 const LIFESTYLES = ['STRICT', 'PARTY', 'BALANCED'];
