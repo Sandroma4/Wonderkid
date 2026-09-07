@@ -97,9 +97,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     const enginePos = selectedPositionCat ? selectedPositionCat.engineCode : 'ATT';
 
     let baseStats;
-    if (role && role.baseStats) {
-      baseStats = { ...role.baseStats };
-    } else if (enginePos === 'ATT' || enginePos === 'ST') {
+    if (enginePos === 'ATT' || enginePos === 'ST') {
       baseStats = { pace: 80, finishing: 85, passing: 65, dribbling: 75, defense: 40, physical: 70 };
     } else if (enginePos === 'MID' || enginePos === 'MIL') {
       baseStats = { pace: 70, finishing: 65, passing: 85, dribbling: 80, defense: 60, physical: 65 };
@@ -353,13 +351,13 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
 
           {step === 4 && (
             <div>
-              {!selectedPositionCat ? (
+              {true ? (
                 <div className="grid grid-cols-2 gap-3">
                   {POSITIONS_DATA.map((posCat) => (
                     <button
                       key={posCat.id}
                       type="button"
-                      onClick={() => { playSound('click'); setSelectedPositionCat(posCat); setPositionName(posCat.name); }}
+                      onClick={() => { playSound('click'); setSelectedPositionCat(posCat); setPositionName(posCat.name); setRole(posCat.roles[0]); setStep(5); }}
                       className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-emerald-200 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-center transition-all group"
                     >
                       <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">{posCat.icon}</div>
