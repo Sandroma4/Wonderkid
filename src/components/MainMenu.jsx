@@ -350,7 +350,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
       <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
         {/* Logo positioned dynamically near the top of the screen */}
-        <div className="fixed top-0 left-0 w-full flex justify-center items-start mt-0 md:-mt-4 pointer-events-none animate-[fade-in_1s_ease-out]">
+        <div className="absolute top-0 left-0 w-full flex justify-center items-start mt-0 md:-mt-4 pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
           <div className="absolute w-[280px] h-[280px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] bg-emerald-500/40 blur-[80px] rounded-full max-h-full max-w-full"></div>
           <img 
@@ -598,8 +598,6 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             </div>
           </button>
 
-            </>
-          )}
           <button 
             onClick={() => { playSound('click'); onOpenDailyChallenges(); }}
             className="w-full relative group overflow-hidden rounded-2xl bg-gradient-to-r from-orange-500/20 to-orange-700/20 border border-orange-500/50 p-3 md:p-4 transition-all duration-300 hover:scale-[1.02] hover:bg-orange-500/30 hover:border-orange-400 hover:shadow-[0_0_20px_rgba(249,115,22,0.2)] active:scale-95"
@@ -612,6 +610,9 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
               <span className="text-orange-500 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
           </button>
+
+            </>
+          )}
         </div>
         
         {showAccountShop && (

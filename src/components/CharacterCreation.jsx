@@ -57,7 +57,7 @@ const getEthnicityFolders = (countryId) => {
 };
 const CONTINENTS = {
   'Europe': ['DE', 'EN', 'BE', 'HR', 'DK', 'SCO', 'ES', 'FR', 'GR', 'IT', 'NO', 'NL', 'PL', 'PT', 'CH', 'TR'],
-  'Afrique': ['ZA', 'DZ', 'CV', 'CI', 'EG', 'GH', 'MA', 'NG', 'CD', 'SN', 'TN'],
+  'Afrique': ['ZA', 'DZ', 'CV', 'CI', 'EG', 'GH', 'MA', 'NG', 'CD', 'SN', 'TN', 'CM'],
   'Amérique': ['AR', 'BR', 'CO', 'EC', 'US', 'MX', 'UY'],
   'Asie & Océanie': ['SA', 'AU', 'KR', 'AE', 'IQ', 'IR', 'JP', 'JO', 'UZ', 'PS', 'QA']
 };
@@ -144,9 +144,17 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     const finalLifestyle = selectedLifestyle || lifestyle;
     const enginePos = selectedPositionCat ? selectedPositionCat.engineCode : 'ATT';
 
-    let baseStats = { pace: 70, finishing: 70, passing: 70, dribbling: 70, defense: 70, physical: 70 };
-    if (enginePos === 'GB' || enginePos === 'GK') {
-      baseStats = { diving: 70, handling: 70, kicking: 70, reflexes: 70, pace: 70, positioning: 70 };
+    let baseStats;
+    if (enginePos === 'ATT' || enginePos === 'ST') {
+      baseStats = { pace: 80, finishing: 85, passing: 65, dribbling: 75, defense: 40, physical: 70 };
+    } else if (enginePos === 'MID' || enginePos === 'MIL') {
+      baseStats = { pace: 70, finishing: 65, passing: 85, dribbling: 80, defense: 60, physical: 65 };
+    } else if (enginePos === 'DEF' || enginePos === 'ARR' || enginePos === 'CB') {
+      baseStats = { pace: 70, finishing: 40, passing: 65, dribbling: 60, defense: 85, physical: 80 };
+    } else if (enginePos === 'GB' || enginePos === 'GK') {
+      baseStats = { diving: 85, handling: 80, kicking: 65, reflexes: 85, pace: 50, positioning: 80 };
+    } else {
+      baseStats = { pace: 70, finishing: 70, passing: 70, dribbling: 70, defense: 70, physical: 70 };
     }
     
     // Apply Account Perks

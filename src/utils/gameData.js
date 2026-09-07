@@ -2980,7 +2980,7 @@ export const generateRival = (player) => {
   let baseRival = {
     id: `RIVAL_${Date.now()}`,
     name: getRandomName(player.origin, player.gender),
-    ovr: Math.max(player.ovr, Math.floor(Math.random() * 5) + 65), // Le rival commence fort
+    ovr: Math.max(player.ovr, player.ovr + Math.floor(Math.random() * 3) + 1), // Le rival commence fort mais cohérent avec le joueur
     age: player.age + Math.floor(Math.random() * 3) - 1,
     origin: player.origin,
     position: player.position,
