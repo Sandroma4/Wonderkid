@@ -147,7 +147,9 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     const enginePos = selectedPositionCat ? selectedPositionCat.engineCode : 'ATT';
 
     let baseStats;
-    if (enginePos === 'ATT' || enginePos === 'ST') {
+    if (role && role.baseStats) {
+      baseStats = { ...role.baseStats };
+    } else if (enginePos === 'ATT' || enginePos === 'ST') {
       baseStats = { pace: 80, finishing: 85, passing: 65, dribbling: 75, defense: 40, physical: 70 };
     } else if (enginePos === 'MID' || enginePos === 'MIL') {
       baseStats = { pace: 70, finishing: 65, passing: 85, dribbling: 80, defense: 60, physical: 65 };

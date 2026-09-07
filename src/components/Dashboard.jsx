@@ -1297,8 +1297,6 @@ export function Dashboard({
 
                   {/* BLOC COMPARATIF NÉMÉSIS */}
                   {rival && (() => {
-                    const rivalCountryId = rival.club ? rival.club.origin : 'FR';
-
                     let playerBdOrs = 0;
                     let playerTotalTrophies = 0;
                     if (palmares) {
@@ -1325,7 +1323,7 @@ export function Dashboard({
                         {/* CARTE RIVAL SEULE */}
                         <div className="flex flex-col items-center justify-center relative z-10 mb-2 w-full">
                           <div className="inline-block" style={{ backgroundColor: 'transparent' }}>
-                            <PlayerCard player={{ ...rival, origin: rivalCountryId, avatar: gameState.player.rivalAvatar }} club={rival.club} cardType="auto" />
+                            <PlayerCard player={{ ...rival, origin: rival.origin, avatar: gameState.player.rivalAvatar }} club={rival.club} cardType="auto" />
                           </div>
                           {rival.club && (
                             <div className="mt-3 bg-white/40 dark:bg-slate-800/40 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm inline-flex items-center justify-center gap-2">

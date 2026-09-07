@@ -2982,12 +2982,15 @@ export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlaye
 
 export const generateRival = (player) => {
   const clubsList = getClubsForPlayer(player);
+  const chosenClub = clubsList[Math.floor(Math.random() * clubsList.length)];
+  const rivalOrigin = chosenClub ? chosenClub.origin : player.origin;
+  
   let baseRival = {
     id: `RIVAL_${Date.now()}`,
-    name: getRandomName(player.origin, player.gender),
+    name: getRandomName(rivalOrigin, player.gender),
     ovr: Math.max(66, player.ovr, player.ovr + Math.floor(Math.random() * 3) + 1), // Le rival commence fort mais cohérent avec le joueur (minimum 66)
     age: player.age + Math.floor(Math.random() * 3) - 1,
-    origin: player.origin,
+    origin: rivalOrigin,
     position: player.position,
     avatar: player.rivalAvatar || `player_${Math.floor(Math.random() * 10) + 1}.webp`, // Photo du rival
     stats: {
@@ -2996,7 +2999,7 @@ export const generateRival = (player) => {
     },
     history: [],
     trophies: { ballonDor: 0, championsLeague: 0 },
-    club: clubsList[Math.floor(Math.random() * clubsList.length)],
+    club: chosenClub,
     archetype: 'PRODIGY', 
     form: 80,
     morale: 80
