@@ -33,6 +33,9 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
   const [isWaitingForOpponent, setIsWaitingForOpponent] = useState(false);
   const [playerDataReady, setPlayerDataReady] = useState(null);
 
+  const [challenge, setChallenge] = useState(null);
+  const [regensList, setRegensList] = useState({});
+
   // Sync effect
   useEffect(() => {
     if (isWaitingForOpponent && multiplayerContext?.players && playerDataReady) {
@@ -42,9 +45,6 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
       }
     }
   }, [multiplayerContext?.players, isWaitingForOpponent, playerDataReady, onStartGame, regensList]);
-
-  const [challenge, setChallenge] = useState(null);
-  const [regensList, setRegensList] = useState({});
   
   // Initialize playerName on mount
   useEffect(() => {
