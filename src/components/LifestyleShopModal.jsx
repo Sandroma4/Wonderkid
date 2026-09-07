@@ -1,6 +1,10 @@
 import { LIFESTYLE_ITEMS } from '../utils/gameData';
 
+import { useTranslation } from 'react-i18next';
+
 export function LifestyleShopModal({ isOpen, onClose, bankBalance, player, onBuyItem }) {
+  const { t } = useTranslation();
+
   if (!isOpen) return null;
 
   return (
@@ -8,14 +12,14 @@ export function LifestyleShopModal({ isOpen, onClose, bankBalance, player, onBuy
       <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-2xl md:rounded-3xl max-w-3xl w-[95%] p-4 md:p-6 shadow-2xl relative text-slate-800 dark:text-white space-y-4 overflow-y-auto max-h-[95vh]">
         <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-3">
           <div>
-            <h3 className="text-lg font-black text-slate-800 dark:text-white">🛍️ Boutique & Équipements Pro</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400">Investissez vos gains pour booster vos performances</p>
+            <h3 className="text-lg font-black text-slate-800 dark:text-white">🛍️ {t('lifestyle_shop.title', 'Boutique & Équipements Pro')}</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400">{t('lifestyle_shop.subtitle', 'Investissez vos gains pour booster vos performances')}</p>
           </div>
           <button onClick={onClose} className="p-2 text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white font-bold">✕</button>
         </div>
 
         <div className="bg-emerald-200 dark:bg-slate-950 p-3 rounded-2xl flex justify-between items-center border border-slate-300 dark:border-slate-800">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400">Solde disponible</span>
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400">{t('lifestyle_shop.available_balance', 'Solde disponible')}</span>
           <span className="text-lg font-black text-emerald-600 dark:text-emerald-400">{bankBalance.toLocaleString('fr-FR')} €</span>
         </div>
 
@@ -31,8 +35,8 @@ export function LifestyleShopModal({ isOpen, onClose, bankBalance, player, onBuy
                   <h4 className="font-bold text-[9px] sm:text-xs text-slate-800 dark:text-white flex flex-col sm:flex-row flex-wrap gap-1 sm:items-center mb-1">
                     <span className="leading-tight">{item.name}</span>
                     <div className="flex gap-1">
-                      {isProfitable && <span className="text-[7px] sm:text-[9px] px-1 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">Rentable</span>}
-                      {hasUpkeep && <span className="text-[7px] sm:text-[9px] px-1 py-0.5 rounded bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/30">Frais/an</span>}
+                      {isProfitable && <span className="text-[7px] sm:text-[9px] px-1 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">{t('lifestyle_shop.profitable', 'Rentable')}</span>}
+                      {hasUpkeep && <span className="text-[7px] sm:text-[9px] px-1 py-0.5 rounded bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/30">{t('lifestyle_shop.upkeep', 'Frais/an')}</span>}
                     </div>
                   </h4>
                   <p className="text-[8px] sm:text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 leading-tight">{item.desc}</p>
@@ -52,7 +56,7 @@ export function LifestyleShopModal({ isOpen, onClose, bankBalance, player, onBuy
                         : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-500 dark:text-slate-400 cursor-not-allowed'
                     }`}
                   >
-                    {isOwned ? 'Acquis ✔️' : 'Acheter'}
+                    {isOwned ? t('lifestyle_shop.owned', 'Acquis ✔️') : t('lifestyle_shop.buy', 'Acheter')}
                   </button>
                 </div>
               </div>
