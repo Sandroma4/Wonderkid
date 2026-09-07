@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { getFiveTeams, getAccountData, saveAccountData } from '../utils/storage';
 import { playSound } from '../utils/audio';
 import { generateClashLeague } from '../utils/clashGenerator';
+import { useTranslation } from 'react-i18next';
 
 export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext }) => {
+  const { t } = useTranslation();
   const [myTeams, setMyTeams] = useState([]);
   const [selectedTeamId, setSelectedTeamId] = useState(null);
   const [rewardClaimed, setRewardClaimed] = useState(false);
@@ -45,9 +47,8 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
     if (clashContext.wins === 4) reward += 5; // Bonus Flawless
     const accountData = getAccountData();
     accountData.goldenCoins += reward;
-    saveAccountData(accountData);
     setRewardClaimed(true);
-    alert(`Félicitations ! Vous avez remporté ${reward} Golden Coins (💰) grâce à votre performance : ${clashContext.wins} V, ${clashContext.draws} N, ${clashContext.losses} D.`);
+    alert(t('clash.reward_alert', 'Félicitations ! Vous avez remporté {{reward}} Golden Coins (💰) grâce à votre performance : {{wins}} V, {{draws}} N, {{losses}} D.', { reward, wins: clashContext.wins, draws: clashContext.draws, losses: clashContext.losses }));
     setClashContext(null);
     onBack();
   };
@@ -63,16 +64,16 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
           onClick={() => { playSound('click'); onBack(); }}
           className="text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 px-4 py-2 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 shadow-lg font-bold"
         >
-          Retour
+          {t('clash.back', 'Retour')}
         </button>
       </div>
 
       <div className="relative flex flex-col items-center justify-center mb-6 md:mb-8 w-full max-w-6xl mx-auto pt-2">
         <div className="w-full text-center px-4">
           <h1 className="heading-typography text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-fuchsia-600 uppercase tracking-tight drop-shadow-lg leading-none">
-            Clash d'Équipes
+            {t('clash.title', 'Clash d\'Équipes')}
           </h1>
-          <p className="text-slate-400 mt-2 text-sm md:text-lg font-medium">Affrontez l'IA dans une série de 4 matchs pour remporter le jackpot !</p>
+          <p className="text-slate-400 mt-2 text-sm md:text-lg font-medium">{t('clash.subtitle', 'Affrontez l\'IA dans une série de 4 matchs pour remporter le jackpot !')}</p>
         </div>
       </div>
 
@@ -80,9 +81,9 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
         
         {/* Left Col: Team Selection */}
         <div className="flex flex-col bg-slate-800/50 p-6 rounded-3xl border border-slate-700 backdrop-blur-sm">
-          <h2 className="text-2xl font-bold mb-4 text-fuchsia-300">Votre Équipe</h2>
+          <h2 className="text-2xl font-bold mb-4 text-fuchsia-300">{t('clash.your_team', 'Votre Équipe')}</h2>
           {myTeams.length === 0 ? (
-            <p className="text-slate-400">Vous n'avez pas encore d'équipe Five. Allez dans l'Éditeur d'Équipe pour en créer une !</p>
+            <p className="text-slate-400">{t('clash.no_team', 'Vous n\'avez pas encore d\'équipe Five. Allez dans l\'Éditeur d\'Équipe pour en créer une !')}</p>
           ) : (
             <div className="flex-1 overflow-y-auto space-y-3">
               {myTeams.map(team => (
@@ -92,7 +93,7 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
                   className={`w-full text-left p-4 rounded-xl border transition-all ${selectedTeamId === team.id ? 'bg-fuchsia-900/40 border-fuchsia-500 shadow-[0_0_15px_rgba(217,70,239,0.3)]' : 'bg-slate-800 border-slate-600 hover:border-slate-500 hover:bg-slate-700'}`}
                 >
                   <div className="font-bold text-lg">{team.name}</div>
-                  <div className="text-sm text-slate-400">Formation : {team.formation}</div>
+                  <div className="text-sm text-slate-400">{t('clash.formation', 'Formation :')} {team.formation}</div>
                 </button>
               ))}
             </div>
@@ -101,7 +102,7 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
 
         {/* Right Col: League Path */}
         <div className="flex flex-col bg-slate-800/50 p-6 rounded-3xl border border-slate-700 backdrop-blur-sm relative">
-          <h2 className="text-2xl font-bold mb-6 text-fuchsia-300 text-center">Votre Parcours</h2>
+          <h2 className="text-2xl font-bold mb-6 text-fuchsia-300 text-center">{t('clash.your_path', 'Votre Parcours')}</h2>
           
           <div className="flex-1 flex flex-col justify-center space-y-4">
             {clashLeague.map((team, idx) => {
@@ -122,7 +123,7 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
                     </div>
                     <div>
                       <div className="font-bold text-lg">{team.name}</div>
-                      <div className="text-sm text-slate-400">Manager: {team.pseudo}</div>
+                      <div className="text-sm text-slate-400">{t('clash.manager', 'Manager:')} {team.pseudo}</div>
                     </div>
                   </div>
                   <div className={`px-3 py-1 rounded-lg text-xs font-bold uppercase ${
@@ -150,13 +151,13 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
           <div className="mt-8">
             {currentMatchIndex >= 4 ? (
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-emerald-400 mb-4">Ligue Terminée !</h3>
-                <p className="text-slate-300 mb-6">Bilan : {clashContext.wins} Victoire(s), {clashContext.draws} Nul(s), {clashContext.losses} Défaite(s)</p>
+                <h3 className="text-2xl font-bold text-emerald-400 mb-4">{t('clash.league_finished', 'Ligue Terminée !')}</h3>
+                <p className="text-slate-300 mb-6">{t('clash.record', 'Bilan : {{wins}} Victoire(s), {{draws}} Nul(s), {{losses}} Défaite(s)', { wins: clashContext.wins, draws: clashContext.draws, losses: clashContext.losses })}</p>
                 <button
                   onClick={handleClaimReward}
                   className="w-full py-4 rounded-2xl font-bold text-xl transition-all bg-amber-500 hover:bg-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.6)] active:scale-95 text-slate-900"
                 >
-                  Récupérer la Récompense 💰
+                  {t('clash.claim_reward', 'Récupérer la Récompense')} 💰
                 </button>
               </div>
             ) : (
@@ -169,7 +170,7 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
                   : 'bg-slate-700 text-slate-500 cursor-not-allowed'
                 }`}
               >
-                Lancer le Match
+                {t('clash.start_match', 'Lancer le Match')}
               </button>
             )}
           </div>
