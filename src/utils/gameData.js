@@ -250,7 +250,8 @@ export const LAST_NAMES = {
 };
 
 
-export const getRandomName = (countryId, genderId = 'male') => {
+export const getRandomName = (country, genderId = 'male') => {
+  const countryId = typeof country === 'object' ? country?.id : country;
   const isFemale = (genderId === 'female' || genderId === 'F');
   const firsts = isFemale ? (FIRST_NAMES_FEMALE[countryId] || FIRST_NAMES_FEMALE.FR) : (FIRST_NAMES_MALE[countryId] || FIRST_NAMES_MALE.FR);
   const lasts = LAST_NAMES[countryId] || LAST_NAMES.FR;
@@ -1654,19 +1655,15 @@ export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBon
     ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] 
     : ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
   
-  // 1. Calculer l'OVR des stats de base du rôle pour trouver le ratio
+  // 1. Calculer l'OVR des stats de base pour trouver le ratio
   let currentOvr = calculateOVR({ position: enginePos, attributes: roleBaseStats });
-  const ovrDrop = Math.max(1, currentOvr - targetOvr);
+  const scale = targetOvr / currentOvr; // Échelle pour préserver les proportions exactes du rôle
   
   let scaledStats = {};
   statsList.forEach(stat => {
     const base = roleBaseStats[stat] || 50;
-    // Retirer un montant proportionnel inversé pour garder les points forts forts
-    const relativeStrength = base - currentOvr; // Positif si point fort
-    const dropForThisStat = ovrDrop - (relativeStrength * 0.4); 
-    
     const noise = Math.floor(Math.random() * 5) - 2; 
-    scaledStats[stat] = Math.max(15, Math.min(99, Math.round(base - dropForThisStat) + noise));
+    scaledStats[stat] = Math.max(15, Math.min(99, Math.round(base * scale) + noise));
   });
 
   // 2. Appliquer les bonus d'origine sociale
@@ -1678,15 +1675,7 @@ export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBon
     });
   }
 
-  // 3. Correction itérative fine par mise à l'échelle (pour ne pas aplatir les stats)
-  let finalOvr = calculateOVR({ position: enginePos, attributes: scaledStats });
-  if (finalOvr < 45 || finalOvr > 50) {
-    const correctionScale = (45 + Math.random() * 5) / finalOvr;
-    statsList.forEach(s => {
-      scaledStats[s] = Math.max(15, Math.min(99, Math.round(scaledStats[s] * correctionScale)));
-    });
-  }
-  
+  // Les statistiques sont désormais intrinsèquement cohérentes avec l'OVR visé, pas besoin de sur-corriger
   return scaledStats;
 };
 
