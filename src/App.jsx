@@ -338,7 +338,7 @@ export default function App() {
     }
   }, [multiplayerContext?.players, gameState?.isWaitingForMercato]);
 
-  const handleStartGame = (playerData) => {
+  const handleStartGame = (playerData, regensList) => {
     const accountData = getAccountData();
     const hasCoachFav = accountData.unlockedPerks.includes('coach_favorite');
     const hasMediaDarling = accountData.unlockedPerks.includes('media_darling');
@@ -385,7 +385,7 @@ export default function App() {
       }
     }
     if (!rival) {
-      rival = generateRival(tempPlayer);
+      rival = generateRival(tempPlayer, regensList);
     }
 
     setGameState({

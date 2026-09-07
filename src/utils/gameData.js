@@ -51,6 +51,57 @@ export const CUP_FINAL_SCENARIOS = [
   }
 ];
 
+export const getEthnicityFolders = (countryId) => {
+  const m = {
+    'FR': ['France', 'WestAfrica', 'Maghreb', 'Afrocaribbean'],
+    'ES': ['Spain'],
+    'IT': ['Italia'],
+    'EN': ['Anglosphere', 'MixedRace', 'Afrocaribbean'],
+    'DE': ['CentralEurope', 'Turkish'],
+    'BE': ['CentralEurope', 'CentralAfrica'],
+    'HR': ['WestBalkan'],
+    'DK': ['Scandinavian'],
+    'SCO': ['Anglosphere'],
+    'GR': ['AlbanianGreek', 'EastBalkan'],
+    'NO': ['Scandinavian'],
+    'NL': ['Netherlands', 'Afrocaribbean'],
+    'PL': ['WestSlavic', 'Poland'],
+    'PT': ['Portugal', 'BrazilMixed'],
+    'CH': ['CentralEurope'],
+    'TR': ['Turkish'],
+    'ZA': ['SouthernAfrica', 'WF'],
+    'DZ': ['Maghreb'],
+    'CV': ['WestAfrica'],
+    'CI': ['WestAfrica'],
+    'EG': ['Mashriq', 'Maghreb'],
+    'GH': ['WestAfrica'],
+    'MA': ['Maghreb'],
+    'NG': ['WestAfrica'],
+    'CD': ['CentralAfrica'],
+    'SN': ['WestAfrica'],
+    'TN': ['Maghreb'],
+    'AR': ['SouthConeSA', 'Mestizo'],
+    'BR': ['BrazilMixed', 'Afroamerican'],
+    'CO': ['NorthernSA', 'Mestizo'],
+    'EC': ['NorthernSA', 'IndigenousSA'],
+    'US': ['Anglosphere', 'Afroamerican'],
+    'MX': ['Mestizo'],
+    'UY': ['SouthConeSA'],
+    'SA': ['ArabGulf'],
+    'AU': ['Anglosphere', 'PacificIslanders'],
+    'KR': ['Korea'],
+    'AE': ['ArabGulf'],
+    'IQ': ['Mashriq'],
+    'IR': ['Iran'],
+    'JP': ['Japan'],
+    'JO': ['Mashriq'],
+    'UZ': ['Uzbekistan'],
+    'PS': ['Mashriq'],
+    'QA': ['ArabGulf']
+  };
+  return m[countryId] || ['Staff'];
+};
+
 export const COUNTRIES = [
   { id: "ZA", name: "Afrique du Sud" },
   { id: "DZ", name: "Algérie" },
@@ -2980,10 +3031,21 @@ export const getRandomSeasonEvents = (player, completedEvents = [], matchesPlaye
   return [...tournamentEvents, ...selectedRegular].sort(() => 0.5 - Math.random()).slice(0, numEvents + tournamentEvents.length); 
 };
 
-export const generateRival = (player) => {
+export const generateRival = (player, regensList) => {
   const clubsList = getClubsForPlayer(player);
   const chosenClub = clubsList[Math.floor(Math.random() * clubsList.length)];
   const rivalOrigin = chosenClub ? chosenClub.origin : player.origin;
+  
+  let avatar = player.rivalAvatar || `player_${Math.floor(Math.random() * 10) + 1}.webp`;
+  
+  if (regensList) {
+    const allowedFolders = getEthnicityFolders(rivalOrigin);
+    const chosenFolder = allowedFolders[Math.floor(Math.random() * allowedFolders.length)];
+    if (regensList[chosenFolder] && regensList[chosenFolder].length > 0) {
+      const images = regensList[chosenFolder];
+      avatar = images[Math.floor(Math.random() * images.length)];
+    }
+  }
   
   let baseRival = {
     id: `RIVAL_${Date.now()}`,
@@ -2992,7 +3054,7 @@ export const generateRival = (player) => {
     age: player.age + Math.floor(Math.random() * 3) - 1,
     origin: rivalOrigin,
     position: player.position,
-    avatar: player.rivalAvatar || `player_${Math.floor(Math.random() * 10) + 1}.webp`, // Photo du rival
+    avatar: avatar, // Photo du rival
     stats: {
       goals: 0, assists: 0, matches: 0,
       cleansheets: 0, saves: 0, goalsConceded: 0

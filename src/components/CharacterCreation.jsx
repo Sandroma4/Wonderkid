@@ -1,61 +1,11 @@
 import { useState, useEffect } from 'react';
 import { FlagIcon } from './FlagIcon';
 import { playSound } from '../utils/audio';
-import { COUNTRIES, GENDERS, ORIGINS_BACKGROUNDS, POSITIONS_DATA, LIFESTYLES, CHALLENGES_LIST, getRandomName, generateYoungPlayerStats, calculateOVR } from '../utils/gameData';
+import { COUNTRIES, GENDERS, ORIGINS_BACKGROUNDS, POSITIONS_DATA, LIFESTYLES, CHALLENGES_LIST, getRandomName, generateYoungPlayerStats, calculateOVR, getEthnicityFolders } from '../utils/gameData';
 import { supabase } from '../supabaseClient';
 import { getAccountData } from '../utils/storage';
 import { useTranslation } from 'react-i18next';
 
-const getEthnicityFolders = (countryId) => {
-  const m = {
-    'FR': ['France', 'WestAfrica', 'Maghreb', 'Afrocaribbean'],
-    'ES': ['Spain'],
-    'IT': ['Italia'],
-    'EN': ['Anglosphere', 'MixedRace', 'Afrocaribbean'],
-    'DE': ['CentralEurope', 'Turkish'],
-    'BE': ['CentralEurope', 'CentralAfrica'],
-    'HR': ['WestBalkan'],
-    'DK': ['Scandinavian'],
-    'SCO': ['Anglosphere'],
-    'GR': ['AlbanianGreek', 'EastBalkan'],
-    'NO': ['Scandinavian'],
-    'NL': ['Netherlands', 'Afrocaribbean'],
-    'PL': ['WestSlavic', 'Poland'],
-    'PT': ['Portugal', 'BrazilMixed'],
-    'CH': ['CentralEurope'],
-    'TR': ['Turkish'],
-    'ZA': ['SouthernAfrica', 'WF'],
-    'DZ': ['Maghreb'],
-    'CV': ['WestAfrica'],
-    'CI': ['WestAfrica'],
-    'EG': ['Mashriq', 'Maghreb'],
-    'GH': ['WestAfrica'],
-    'MA': ['Maghreb'],
-    'NG': ['WestAfrica'],
-    'CD': ['CentralAfrica'],
-    'SN': ['WestAfrica'],
-    'TN': ['Maghreb'],
-    'AR': ['SouthConeSA', 'Mestizo'],
-    'BR': ['BrazilMixed', 'Afroamerican'],
-    'CO': ['NorthernSA', 'Mestizo'],
-    'EC': ['NorthernSA', 'IndigenousSA'],
-    'US': ['Anglosphere', 'Afroamerican'],
-    'MX': ['Mestizo'],
-    'UY': ['SouthConeSA'],
-    'SA': ['ArabGulf'],
-    'AU': ['Anglosphere', 'PacificIslanders'],
-    'KR': ['Korea'],
-    'AE': ['ArabGulf'],
-    'IQ': ['Mashriq'],
-    'IR': ['Iran'],
-    'JP': ['Japan'],
-    'JO': ['Mashriq'],
-    'UZ': ['Uzbekistan'],
-    'PS': ['Mashriq'],
-    'QA': ['ArabGulf']
-  };
-  return m[countryId] || ['Staff'];
-};
 const CONTINENTS = {
   'Europe': ['DE', 'EN', 'BE', 'HR', 'DK', 'SCO', 'ES', 'FR', 'GR', 'IT', 'NO', 'NL', 'PL', 'PT', 'CH', 'TR'],
   'Afrique': ['ZA', 'DZ', 'CV', 'CI', 'EG', 'GH', 'MA', 'NG', 'CD', 'SN', 'TN', 'CM'],
@@ -88,10 +38,10 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     if (isWaitingForOpponent && multiplayerContext?.players && playerDataReady) {
       const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
       if (opponent && (opponent.characterCreated || opponent.season >= 2026)) {
-        onStartGame(playerDataReady);
+        onStartGame(playerDataReady, regensList);
       }
     }
-  }, [multiplayerContext?.players, isWaitingForOpponent, playerDataReady, onStartGame]);
+  }, [multiplayerContext?.players, isWaitingForOpponent, playerDataReady, onStartGame, regensList]);
 
   const [challenge, setChallenge] = useState(null);
   const [regensList, setRegensList] = useState({});
@@ -183,7 +133,6 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
     if (regensList[chosenFolder] && regensList[chosenFolder].length > 0) {
       const images = regensList[chosenFolder];
       avatar = images[Math.floor(Math.random() * images.length)];
-      rivalAvatar = images[Math.floor(Math.random() * images.length)];
     }
 
     const playerData = {
@@ -226,10 +175,10 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
       // Fallback if opponent is already ready or left, will be handled by useEffect or we check directly
       const opponent = multiplayerContext.players.find(p => p.playerId !== multiplayerContext.playerId);
       if (opponent && opponent.characterCreated) {
-        onStartGame(playerData);
+        onStartGame(playerData, regensList);
       }
     } else {
-      onStartGame(playerData);
+      onStartGame(playerData, regensList);
     }
   };
 
