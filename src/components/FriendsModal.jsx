@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
+import { supabase } from '../supabaseClient';
 import { playSound } from '../utils/audio';
+import { useTranslation } from 'react-i18next';
 
 export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('friends'); // 'friends', 'requests', 'add'
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
@@ -85,9 +88,9 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
       .limit(5);
       
     if (error) {
-      setError("Erreur lors de la recherche.");
+      setError(t('friends.error_search', "Erreur lors de la recherche."));
     } else if (data.length === 0) {
-      setError("Aucun joueur trouv\u00e9.");
+      setError(t('friends.no_player_found', "Aucun joueur trouvé."));
       setSearchResults([]);
     } else {
       setSearchResults(data);
@@ -108,12 +111,12 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
       
     if (error) {
       if (error.code === '23505') {
-        setError("Demande d\u00e9j\u00e0 envoy\u00e9e ou d\u00e9j\u00e0 amis.");
+        setError(t('friends.already_sent', "Demande déjà envoyée ou déjà amis."));
       } else {
-        setError("Impossible d'envoyer la demande.");
+        setError(t('friends.error_send', "Impossible d'envoyer la demande."));
       }
     } else {
-      setSuccess("Demande envoy\u00e9e !");
+      setSuccess(t('friends.request_sent', "Demande envoyée !"));
       setTimeout(() => setSuccess(''), 2000);
     }
     setLoading(false);
@@ -134,7 +137,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
 
   const removeFriend = async (friendshipId) => {
     playSound('click');
-    if (window.confirm("Retirer cet ami ?")) {
+    if (window.confirm(t('friends.confirm_remove', "Retirer cet ami ?"))) {
       await supabase.from('friendships').delete().eq('id', friendshipId);
       fetchFriends();
     }
@@ -151,20 +154,20 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
         >
           X
         </button>
-        <h2 className="heading-typography text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 uppercase tracking-wider text-center">Liste d'Amis</h2>
+        <h2 className="heading-typography text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 uppercase tracking-wider text-center">{t('friends.title', 'Liste d\'Amis')}</h2>
         
         <div className="flex bg-white dark:bg-slate-800 rounded-lg p-1 mb-4 flex-shrink-0">
           <button 
             onClick={() => setActiveTab('friends')}
             className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors ${activeTab === 'friends' ? 'bg-emerald-600 text-slate-800 dark:text-white' : 'text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white'}`}
           >
-            Amis ({friends.length})
+            {t('friends.tab_friends', 'Amis')} ({friends.length})
           </button>
           <button 
             onClick={() => setActiveTab('requests')}
             className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors relative ${activeTab === 'requests' ? 'bg-emerald-600 text-slate-800 dark:text-white' : 'text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white'}`}
           >
-            Requêtes
+            {t('friends.tab_requests', 'Requêtes')}
             {requests.length > 0 && (
               <span className="absolute -top-1 -right-1 bg-rose-500 text-slate-800 dark:text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full">{requests.length}</span>
             )}
@@ -173,7 +176,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
             onClick={() => setActiveTab('add')}
             className={`flex-1 text-xs font-bold py-2 rounded-md uppercase tracking-wider transition-colors ${activeTab === 'add' ? 'bg-emerald-600 text-slate-800 dark:text-white' : 'text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white'}`}
           >
-            Ajouter
+            {t('friends.tab_add', 'Ajouter')}
           </button>
         </div>
 
@@ -181,7 +184,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
           {activeTab === 'friends' && (
             <div className="space-y-3">
               {friends.length === 0 ? (
-                <p className="text-center text-slate-500 dark:text-slate-500 text-sm py-8">Aucun ami pour le moment.</p>
+                <p className="text-center text-slate-500 dark:text-slate-500 text-sm py-8">{t('friends.empty', 'Aucun ami pour le moment.')}</p>
               ) : (
                 friends.map(f => (
                   <div key={f.friendshipId} className="bg-white/90 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-300 dark:border-slate-700 flex justify-between items-center">
@@ -191,12 +194,12 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
                         onClick={() => onInviteToGame(f.friend.id, f.friend.pseudonym)}
                         className="bg-emerald-600/20 hover:bg-emerald-500/40 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
                       >
-                        Inviter 1v1
+                        {t('friends.invite_1v1', 'Inviter 1v1')}
                       </button>
                       <button 
                         onClick={() => removeFriend(f.friendshipId)}
                         className="bg-rose-500/10 hover:bg-rose-500/30 text-rose-600 dark:text-rose-400 px-2 py-1.5 rounded-lg text-xs font-bold transition-colors"
-                        title="Retirer l'ami"
+                        title={t('friends.remove_friend', 'Retirer l\'ami')}
                       >
                         X
                       </button>
@@ -210,23 +213,23 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
           {activeTab === 'requests' && (
             <div className="space-y-3">
               {requests.length === 0 ? (
-                <p className="text-center text-slate-500 dark:text-slate-500 text-sm py-8">Aucune demande en attente.</p>
+                <p className="text-center text-slate-500 dark:text-slate-500 text-sm py-8">{t('friends.empty_requests', 'Aucune demande en attente.')}</p>
               ) : (
                 requests.map(req => (
                   <div key={req.id} className="bg-white/90 dark:bg-slate-800/80 p-3 rounded-xl border border-slate-300 dark:border-slate-700 flex flex-col gap-2">
-                    <span className="font-bold text-slate-800 dark:text-white text-sm">{req.sender?.pseudonym} vous a ajout\u00e9 !</span>
+                    <span className="font-bold text-slate-800 dark:text-white text-sm">{t('friends.added_you', '{{name}} vous a ajouté !', { name: req.sender?.pseudonym })}</span>
                     <div className="flex gap-2">
                       <button 
                         onClick={() => handleRequest(req.id, 'accept')}
                         className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
                       >
-                        Accepter
+                        {t('friends.accept', 'Accepter')}
                       </button>
                       <button 
                         onClick={() => handleRequest(req.id, 'reject')}
                         className="flex-1 bg-emerald-200 dark:bg-slate-700 hover:bg-rose-500/50 text-slate-800 dark:text-white py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
                       >
-                        Refuser
+                        {t('friends.reject', 'Refuser')}
                       </button>
                     </div>
                   </div>
@@ -242,7 +245,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Chercher un pseudo exact"
+                  placeholder={t('friends.search_placeholder', 'Chercher un pseudo exact')}
                   className="flex-1 bg-emerald-200 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-white text-sm focus:border-emerald-400 outline-none"
                 />
                 <button type="submit" className="bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white px-3 py-2 rounded-lg font-bold text-xs uppercase tracking-wider">
@@ -261,7 +264,7 @@ export const FriendsModal = ({ isOpen, onClose, user, onInviteToGame }) => {
                       onClick={() => sendFriendRequest(res.id)}
                       className="bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
                     >
-                      Ajouter
+                      {t('friends.add_btn', 'Ajouter')}
                     </button>
                   </div>
                 ))}
