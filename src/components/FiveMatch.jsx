@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { playSound } from '../utils/audio';
+import { useTranslation } from 'react-i18next';
 
 export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onEndMatch }) => {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState(1);
   const [score, setScore] = useState({ host: 0, guest: 0 });
   const [myAction, setMyAction] = useState(null);
@@ -113,24 +115,24 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onE
       atkScore = atkTeamStats.atk + Math.random() * 20;
       if (defenderAction === 'blocage') defScore = defTeamStats.def + 10 + Math.random() * 20;
       else defScore = defTeamStats.def + Math.random() * 20;
-      logText = "Le tireur tente une frappe lourde ! ";
+      logText = t('five.log_shoot', "Le tireur tente une frappe lourde ! ");
     } else if (attackerAction === 'passe') {
       atkScore = atkTeamStats.atk + atkTeamStats.pac + Math.random() * 20;
       if (defenderAction === 'interception') defScore = defTeamStats.def + defTeamStats.pac + 10 + Math.random() * 20;
       else defScore = defTeamStats.def + Math.random() * 20;
-      logText = "Une combinaison rapide vers le pivot ! ";
+      logText = t('five.log_pass', "Une combinaison rapide vers le pivot ! ");
     } else if (attackerAction === 'dribble') {
       atkScore = atkTeamStats.atk + atkTeamStats.pac + Math.random() * 20;
       if (defenderAction === 'tacle') defScore = defTeamStats.phy + defTeamStats.def + 10 + Math.random() * 20;
       else defScore = defTeamStats.def + Math.random() * 20;
-      logText = "Il tente de passer en un-contre-un ! ";
+      logText = t('five.log_dribble', "Il tente de passer en un-contre-un ! ");
     }
 
     if (atkScore > defScore) {
-      logText += "C'EST AU FOND !!! BUUUUT ! ⚽";
+      logText += t('five.log_goal', "C'EST AU FOND !!! BUUUUT ! ⚽");
       goalFor = phase % 2 !== 0 ? 'host' : 'guest';
     } else {
-      logText += "Belle défense, l'action est stoppée ! 🛑";
+      logText += t('five.log_save', "Belle défense, l'action est stoppée ! 🛑");
     }
 
     const isEnd = phase >= 6; // 6 actions = 3 attacks each
@@ -169,7 +171,7 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onE
     
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4">
-        <h1 className="text-4xl md:text-6xl font-black uppercase text-white mb-8">Fin du Match</h1>
+        <h1 className="text-4xl md:text-6xl font-black uppercase text-white mb-8">{t('five.match_end', 'Fin du Match')}</h1>
         <div className="bg-slate-800 p-8 rounded-3xl border-2 border-slate-700 shadow-2xl flex flex-col items-center">
            <div className="flex items-center gap-8 text-5xl font-black text-orange-500 mb-8">
              <span>{isHost ? score.host : score.guest}</span>
@@ -178,14 +180,14 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onE
            </div>
            
            <h2 className={`text-3xl font-black uppercase mb-8 ${isDraw ? 'text-slate-400' : (iWon ? 'text-emerald-500' : 'text-rose-500')}`}>
-             {isDraw ? 'Match Nul' : (iWon ? 'Victoire !' : 'Défaite')}
+             {isDraw ? t('five.draw', 'Match Nul') : (iWon ? t('five.victory', 'Victoire !') : t('five.defeat', 'Défaite'))}
            </h2>
            
            <button 
              onClick={() => { playSound('click'); onEndMatch(iWon ? 'win' : isDraw ? 'draw' : 'loss'); }}
              className="px-8 py-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl text-xl uppercase transition-transform active:scale-95"
            >
-             Quitter
+             {t('five.quit', 'Quitter')}
            </button>
         </div>
       </div>
@@ -201,7 +203,7 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onE
           <span className="text-4xl font-black">{score.host}</span>
         </div>
         <div className="flex flex-col items-center">
-           <span className="text-xs text-slate-500 uppercase font-bold tracking-widest mb-1">Phase {phase}/6</span>
+           <span className="text-xs text-slate-500 uppercase font-bold tracking-widest mb-1">{t('five.phase', 'Phase')} {phase}/6</span>
            <div className="text-2xl">⚽</div>
         </div>
         <div className={`flex flex-col items-center ${!isHost ? 'text-orange-400' : 'text-slate-400'}`}>
@@ -216,17 +218,17 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onE
         <div className="flex-1 bg-slate-800/50 rounded-2xl border border-slate-700 p-4 overflow-y-auto max-h-[300px] flex flex-col gap-2">
           {logs.map((log, i) => (
             <div key={i} className={`p-3 rounded-lg text-sm font-semibold border-l-4 ${log.goalFor ? 'bg-orange-500/20 border-orange-500 text-white' : 'bg-slate-800 border-slate-600 text-slate-300'}`}>
-              <span className="text-xs text-slate-500 mr-2">PHASE {log.phase}</span>
+              <span className="text-xs text-slate-500 mr-2">{t('five.log_phase', 'PHASE')} {log.phase}</span>
               {log.text}
             </div>
           ))}
-          {logs.length === 0 && <div className="text-slate-500 italic text-center mt-4">Le coup d'envoi est donné !</div>}
+          {logs.length === 0 && <div className="text-slate-500 italic text-center mt-4">{t('five.kickoff', 'Le coup d\'envoi est donné !')}</div>}
         </div>
 
         {/* Actions */}
         <div className="flex-1 bg-slate-800 rounded-2xl border border-slate-700 p-6 flex flex-col justify-center">
           <h3 className="text-center font-black text-2xl uppercase tracking-wider text-white mb-6">
-            {resolving ? 'Résolution en cours...' : (amIAttacking ? 'Phase Offensive ⚔️' : 'Phase Défensive 🛡️')}
+            {resolving ? t('five.resolving', 'Résolution en cours...') : (amIAttacking ? t('five.phase_attack', 'Phase Offensive ⚔️') : t('five.phase_defense', 'Phase Défensive 🛡️'))}
           </h3>
           
           {resolving ? (
@@ -236,21 +238,21 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onE
           ) : (
             myAction ? (
               <div className="text-center text-slate-400 py-8 italic font-bold">
-                En attente de l'adversaire...
+                {t('five.waiting_action_opponent', 'En attente de l\'adversaire...')}
               </div>
             ) : (
               <div className="flex flex-col gap-3">
                 {amIAttacking ? (
                   <>
-                    <button onClick={() => handleSelectAction('tir')} className="py-4 bg-orange-600 hover:bg-orange-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">Tir en force</button>
-                    <button onClick={() => handleSelectAction('passe')} className="py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">Passe au pivot</button>
-                    <button onClick={() => handleSelectAction('dribble')} className="py-4 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">Dribble / 1v1</button>
+                    <button onClick={() => handleSelectAction('tir')} className="py-4 bg-orange-600 hover:bg-orange-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">{t('five.action_shoot', 'Tir en force')}</button>
+                    <button onClick={() => handleSelectAction('passe')} className="py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">{t('five.action_pass', 'Passe au pivot')}</button>
+                    <button onClick={() => handleSelectAction('dribble')} className="py-4 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">{t('five.action_dribble', 'Dribble / 1v1')}</button>
                   </>
                 ) : (
                   <>
-                    <button onClick={() => handleSelectAction('blocage')} className="py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">Blocage du tir</button>
-                    <button onClick={() => handleSelectAction('interception')} className="py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">Couper la passe</button>
-                    <button onClick={() => handleSelectAction('tacle')} className="py-4 bg-slate-600 hover:bg-slate-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">Tacle appuyé</button>
+                    <button onClick={() => handleSelectAction('blocage')} className="py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">{t('five.action_block', 'Blocage du tir')}</button>
+                    <button onClick={() => handleSelectAction('interception')} className="py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">{t('five.action_intercept', 'Couper la passe')}</button>
+                    <button onClick={() => handleSelectAction('tacle')} className="py-4 bg-slate-600 hover:bg-slate-500 rounded-xl font-bold uppercase text-white shadow-lg transition-transform active:scale-95">{t('five.action_tackle', 'Tacle appuyé')}</button>
                   </>
                 )}
               </div>
