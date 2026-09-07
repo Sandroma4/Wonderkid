@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getFiveTeams, saveFiveTeams, getCardCollection } from '../utils/storage';
 import { playSound } from '../utils/audio';
 import { PlayerCard } from './PlayerCard';
+import { useTranslation } from 'react-i18next';
 
 const FORMATIONS = {
   '1-2-1': { name: 'Losange (1-2-1)', slots: ['GK', 'DEF', 'MIL', 'MIL', 'ATT'] },
@@ -12,6 +13,7 @@ const FORMATIONS = {
 };
 
 export const FiveTeamsManager = ({ onBack }) => {
+  const { t } = useTranslation();
   const [teams, setTeams] = useState([]);
   const [collection, setCollection] = useState([]);
   const [editingTeam, setEditingTeam] = useState(null);
@@ -26,7 +28,7 @@ export const FiveTeamsManager = ({ onBack }) => {
   const handleCreateTeam = () => {
     setEditingTeam({
       id: Date.now().toString(),
-      name: `Équipe Five ${teams.length + 1}`,
+      name: t('five_manager.default_team_name', 'Équipe Five {{number}}', { number: teams.length + 1 }),
       formation: '1-2-1',
       players: [null, null, null, null, null]
     });
@@ -36,18 +38,18 @@ export const FiveTeamsManager = ({ onBack }) => {
     // Validation
     const filledPlayers = editingTeam.players.filter(p => p !== null);
     if (filledPlayers.length < 5) {
-      alert("Votre équipe doit comporter 5 joueurs.");
+      alert(t('five_manager.need_5_players', "Votre équipe doit comporter 5 joueurs."));
       return;
     }
     const hasGK = filledPlayers.some(p => p.position === 'GB' || p.position === 'GK');
     const hasDEF = filledPlayers.some(p => p.position === 'DEF' || ['CB', 'LB', 'RB', 'LWB', 'RWB'].includes(p.position));
     
     if (!hasGK) {
-      alert("Votre équipe doit comporter au moins un Gardien (GK).");
+      alert(t('five_manager.need_gk', "Votre équipe doit comporter au moins un Gardien (GK)."));
       return;
     }
     if (!hasDEF) {
-      alert("Votre équipe doit comporter au moins un Défenseur (DEF).");
+      alert(t('five_manager.need_def', "Votre équipe doit comporter au moins un Défenseur (DEF)."));
       return;
     }
 
@@ -67,7 +69,7 @@ export const FiveTeamsManager = ({ onBack }) => {
   const handleSelectCard = (card) => {
     // Check if card is already in the team
     if (editingTeam.players.some(p => p && p.id === card.id)) {
-      alert("Ce joueur est déjà dans l'équipe.");
+      alert(t('five_manager.already_in_team', "Ce joueur est déjà dans l'équipe."));
       return;
     }
 
@@ -79,7 +81,7 @@ export const FiveTeamsManager = ({ onBack }) => {
   };
 
   const handleDeleteTeam = (id) => {
-    if (window.confirm("Supprimer cette équipe ?")) {
+    if (window.confirm(t('five_manager.confirm_delete', "Supprimer cette équipe ?"))) {
       const newTeams = teams.filter(t => t.id !== id);
       setTeams(newTeams);
       saveFiveTeams(newTeams);
@@ -95,11 +97,11 @@ export const FiveTeamsManager = ({ onBack }) => {
           onClick={() => { playSound('click'); setEditingTeam(null); }}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg -ml-2 md:-ml-4"
         >
-          ← Retour
+          ← {t('five_manager.back', 'Retour')}
         </button>
         <div className="w-full text-center px-12 md:px-16">
           <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
-            Création d'équipe
+            {t('five_manager.team_creation', 'Création d\'équipe')}
           </h2>
         </div>
       </div>
@@ -117,7 +119,7 @@ export const FiveTeamsManager = ({ onBack }) => {
 
         <div className="mb-6 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
           <div>
-            <label className="text-xs uppercase font-bold text-slate-400 mb-2 block">Formation</label>
+            <label className="text-xs uppercase font-bold text-slate-400 mb-2 block">{t('five_manager.formation', 'Formation')}</label>
             <div className="flex flex-wrap gap-2">
               {Object.keys(FORMATIONS).map(key => (
                 <button
@@ -135,7 +137,7 @@ export const FiveTeamsManager = ({ onBack }) => {
             onClick={handleSaveTeam}
             className="w-full lg:w-auto px-8 py-3 bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 uppercase tracking-wide text-sm whitespace-nowrap"
           >
-            Sauvegarder l'équipe
+            {t('five_manager.save_team', 'Sauvegarder l\'équipe')}
           </button>
         </div>
 
@@ -246,8 +248,8 @@ export const FiveTeamsManager = ({ onBack }) => {
           <div className="fixed inset-0 z-50 flex flex-col bg-slate-950/90 backdrop-blur-md p-4 pt-16 md:pt-4">
             <div className="w-full max-w-6xl mx-auto h-full flex flex-col">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="heading-typography text-2xl font-bold text-white uppercase tracking-wider">Sélectionnez une carte</h3>
-                <button onClick={() => setShowCardSelector(false)} className="px-4 py-2 bg-slate-800 text-white rounded-xl font-bold">Fermer</button>
+                <h3 className="heading-typography text-2xl font-bold text-white uppercase tracking-wider">{t('five_manager.select_card', 'Sélectionnez une carte')}</h3>
+                <button onClick={() => setShowCardSelector(false)} className="px-4 py-2 bg-slate-800 text-white rounded-xl font-bold">{t('five_manager.close', 'Fermer')}</button>
               </div>
               
               <div className="flex-1 overflow-y-auto pb-20">
@@ -267,7 +269,7 @@ export const FiveTeamsManager = ({ onBack }) => {
                   if (filteredCollection.length === 0) {
                     return (
                       <div className="text-center p-12 bg-slate-900 rounded-2xl border border-slate-800">
-                        <p className="text-slate-400">Aucun joueur ne correspond au poste de {activeRole}. Jouez d'autres carrières pour débloquer des cartes !</p>
+                        <p className="text-slate-400">{t('five_manager.no_players_position', 'Aucun joueur ne correspond au poste de {{role}}. Jouez d\'autres carrières pour débloquer des cartes !', { role: activeRole })}</p>
                       </div>
                     );
                   }
@@ -285,7 +287,7 @@ export const FiveTeamsManager = ({ onBack }) => {
                             <div className="flex justify-center w-full h-[250px] overflow-visible">
                               <PlayerCard player={card} club={card.club} className="scale-[0.6] sm:scale-75 md:scale-90 origin-top" />
                             </div>
-                            {isSelected && <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70 rounded-xl"><span className="text-white font-bold text-xl uppercase tracking-wider rotate-[-15deg]">Sélectionné</span></div>}
+                            {isSelected && <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70 rounded-xl"><span className="text-white font-bold text-xl uppercase tracking-wider rotate-[-15deg]">{t('five_manager.selected', 'Sélectionné')}</span></div>}
                           </div>
                         );
                       })}
@@ -307,11 +309,11 @@ export const FiveTeamsManager = ({ onBack }) => {
           onClick={() => { playSound('click'); onBack(); }}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg -ml-2 md:-ml-4"
         >
-          ← Retour
+          ← {t('five_manager.back', 'Retour')}
         </button>
         <div className="w-full text-center px-12 md:px-16">
           <h2 className="w-full heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 uppercase tracking-tight">
-            Gestion Five
+            {t('five_manager.title', 'Gestion Five')}
           </h2>
         </div>
       </div>
@@ -320,14 +322,14 @@ export const FiveTeamsManager = ({ onBack }) => {
         onClick={() => { playSound('click'); handleCreateTeam(); }}
         className="w-full md:w-auto self-start px-6 py-4 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95 uppercase tracking-wide flex items-center gap-2 mb-8"
       >
-        <span>+</span> Créer une nouvelle équipe
+        <span>+</span> {t('five_manager.create_new', 'Créer une nouvelle équipe')}
       </button>
 
       {teams.length === 0 ? (
         <div className="text-center p-12 bg-slate-900 rounded-2xl border border-slate-800 border-dashed">
           <div className="text-4xl mb-4">👟</div>
-          <h3 className="heading-typography text-xl font-bold text-white mb-2 uppercase">Aucune équipe</h3>
-          <p className="text-slate-400 max-w-md mx-auto">Créez votre première équipe de Five avec vos meilleures cartes du Hall of Fame pour affronter d'autres joueurs en ligne.</p>
+          <h3 className="heading-typography text-xl font-bold text-white mb-2 uppercase">{t('five_manager.no_team', 'Aucune équipe')}</h3>
+          <p className="text-slate-400 max-w-md mx-auto">{t('five_manager.no_team_desc', 'Créez votre première équipe de Five avec vos meilleures cartes du Hall of Fame pour affronter d\'autres joueurs en ligne.')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
