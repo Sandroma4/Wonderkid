@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { playSound } from '../utils/audio';
 import { FlagIcon } from './FlagIcon';
+import { useTranslation } from 'react-i18next';
 
 export const Leaderboard = ({ onBack }) => {
+  const { t } = useTranslation();
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('solo');
@@ -50,11 +52,11 @@ export const Leaderboard = ({ onBack }) => {
             onClick={() => { playSound('click'); onBack(); }}
             className="z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:px-4 md:py-2.5 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 shadow-sm flex items-center justify-center min-w-[44px] min-h-[44px]"
           >
-            <span className="text-xl leading-none">←</span> <span className="hidden md:inline font-bold ml-2 uppercase tracking-wider text-[10px] md:text-xs">Retour</span>
+            <span className="text-xl leading-none">←</span> <span className="hidden md:inline font-bold ml-2 uppercase tracking-wider text-[10px] md:text-xs">{t('leaderboard.back', 'Retour')}</span>
           </button>
           <div className="flex-1 text-center">
             <h1 className="heading-typography text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-wider">
-              CLASSEMENT
+              {t('leaderboard.title', 'CLASSEMENT')}
             </h1>
           </div>
           <div className="w-[44px] md:w-[100px] shrink-0"></div>
@@ -69,13 +71,13 @@ export const Leaderboard = ({ onBack }) => {
           {loading ? (
             <div className="flex flex-col items-center justify-center h-64 space-y-4">
               <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
-              <p className="text-amber-500 font-bold tracking-wider uppercase text-sm">Chargement des légendes...</p>
+              <p className="text-amber-500 font-bold tracking-wider uppercase text-sm">{t('leaderboard.loading', 'Chargement des légendes...')}</p>
             </div>
           ) : scores.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-64 text-center">
               <span className="text-5xl mb-4">🏆</span>
-              <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400 font-semibold text-lg">Aucun score enregistré pour le moment.</p>
-              <p className="text-slate-500 dark:text-slate-500 text-sm mt-2">Termine une carrière en étant connecté pour inaugurer le classement !</p>
+              <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400 font-semibold text-lg">{t('leaderboard.empty', 'Aucun score enregistré pour le moment.')}</p>
+              <p className="text-slate-500 dark:text-slate-500 text-sm mt-2">{t('leaderboard.empty_desc', 'Termine une carrière en étant connecté pour inaugurer le classement !')}</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -96,10 +98,10 @@ export const Leaderboard = ({ onBack }) => {
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-1 md:gap-2 truncate">
-                          <p className="font-bold text-slate-800 dark:text-white text-sm md:text-lg truncate">{entry.pseudo || entry.player_name || 'Inconnu'}</p>
+                          <p className="font-bold text-slate-800 dark:text-white text-sm md:text-lg truncate">{entry.pseudo || entry.player_name || t('leaderboard.unknown', 'Inconnu')}</p>
                         </div>
                         <p className="text-[9px] md:text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider flex items-center gap-1 md:gap-2 truncate">
-                          <span className="truncate">{entry.pseudo ? entry.player_name : 'Carrière'}</span>
+                          <span className="truncate">{entry.pseudo ? entry.player_name : t('leaderboard.career', 'Carrière')}</span>
                           <span className="hidden sm:inline">•</span>
                           <span className="hidden sm:flex items-center gap-1 md:gap-1.5">
                             OVR: <span className="text-emerald-600 dark:text-emerald-400 font-bold">{entry.ovr}</span>
@@ -124,7 +126,7 @@ export const Leaderboard = ({ onBack }) => {
                       </div>
                     </div>
                     <div className="text-right shrink-0 ml-2">
-                      <p className="text-[9px] md:text-xs text-slate-500 dark:text-slate-500 uppercase font-bold tracking-widest mb-0.5">Score</p>
+                      <p className="text-[9px] md:text-xs text-slate-500 dark:text-slate-500 uppercase font-bold tracking-widest mb-0.5">{t('leaderboard.score', 'Score')}</p>
                       <p className="text-sm md:text-xl font-black text-amber-500 drop-shadow-sm">{entry.score.toLocaleString('fr-FR')}</p>
                     </div>
                   </div>

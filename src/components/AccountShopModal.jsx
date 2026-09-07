@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { playSound } from '../utils/audio';
 import { getAccountData, saveAccountData } from '../utils/storage';
+import { useTranslation } from 'react-i18next';
 
 export const ACCOUNT_PERKS = [
   { id: 'coach_favorite', name: "Chouchou du Coach", desc: "Commence chaque carrière avec une forte Confiance du Coach.", price: 500, icon: '🫂' },
@@ -11,6 +12,7 @@ export const ACCOUNT_PERKS = [
 ];
 
 export function AccountShopModal({ onClose }) {
+  const { t } = useTranslation();
   const [accountData, setAccountData] = useState({ goldenCoins: 0, unlockedPerks: [] });
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export function AccountShopModal({ onClose }) {
     if (accountData.unlockedPerks.includes(perk.id)) return;
     
     if (accountData.goldenCoins >= perk.price) {
-      if (window.confirm(`Voulez-vous vraiment acheter ${perk.name} pour ${perk.price} Golden Coins ?`)) {
+      if (window.confirm(t('account_shop.confirm_buy', 'Voulez-vous vraiment acheter {{name}} pour {{price}} Golden Coins ?', { name: t(`account_shop.perks.${perk.id}_name`, perk.name), price: perk.price }))) {
         playSound('success');
         const newData = {
           ...accountData,
@@ -33,7 +35,7 @@ export function AccountShopModal({ onClose }) {
         saveAccountData(newData);
       }
     } else {
-      alert("Pas assez de Golden Coins ! Jouez plus de carrières pour en gagner.");
+      alert(t('account_shop.not_enough', "Pas assez de Golden Coins ! Jouez plus de carrières pour en gagner."));
     }
   };
 
@@ -42,7 +44,7 @@ export function AccountShopModal({ onClose }) {
       <div className="max-w-3xl w-full bg-slate-800 rounded-3xl border-2 border-amber-500/50 p-6 flex flex-col max-h-[90dvh]">
         <div className="flex justify-between items-center mb-6 shrink-0">
           <h2 className="text-3xl font-black text-white flex items-center gap-2 uppercase tracking-wider">
-            <span>🛍️</span> Boutique de Compte
+            <span>🛍️</span> {t('account_shop.title', 'Boutique de Compte')}
           </h2>
           <button 
             onClick={() => { playSound('click'); onClose(); }}
@@ -54,14 +56,14 @@ export function AccountShopModal({ onClose }) {
 
         <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 flex justify-between items-center mb-6 shrink-0">
           <div>
-            <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Votre Solde</p>
+            <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">{t('account_shop.balance', 'Votre Solde')}</p>
             <div className="text-3xl font-black text-amber-400 flex items-center gap-2">
               {accountData.goldenCoins} <span>🪙</span>
             </div>
           </div>
           <div className="text-right max-w-[200px]">
             <p className="text-slate-500 text-[10px] leading-tight">
-              Gagnez des Golden Coins à la fin de chaque carrière. Les améliorations achetées s'appliquent automatiquement à toutes vos futures parties.
+              {t('account_shop.desc', 'Gagnez des Golden Coins à la fin de chaque carrière. Les améliorations achetées s\'appliquent automatiquement à toutes vos futures parties.')}
             </p>
           </div>
         </div>
@@ -85,17 +87,17 @@ export function AccountShopModal({ onClose }) {
                   </div>
                   <div>
                     <h3 className="text-lg font-black text-white flex items-center gap-2">
-                      {perk.name}
-                      {isUnlocked && <span className="text-xs bg-emerald-500 text-emerald-950 px-2 py-0.5 rounded-full font-bold">ACTIF</span>}
+                      {t(`account_shop.perks.${perk.id}_name`, perk.name)}
+                      {isUnlocked && <span className="text-xs bg-emerald-500 text-emerald-950 px-2 py-0.5 rounded-full font-bold">{t('account_shop.active', 'ACTIF')}</span>}
                     </h3>
-                    <p className="text-slate-400 text-sm mt-1 leading-snug">{perk.desc}</p>
+                    <p className="text-slate-400 text-sm mt-1 leading-snug">{t(`account_shop.perks.${perk.id}_desc`, perk.desc)}</p>
                   </div>
                 </div>
 
                 <div className="shrink-0 w-full md:w-auto">
                   {isUnlocked ? (
                     <button className="w-full md:w-auto bg-slate-700 text-slate-400 px-6 py-3 rounded-xl font-bold cursor-not-allowed uppercase text-sm">
-                      Possédé
+                      {t('account_shop.owned', 'Possédé')}
                     </button>
                   ) : (
                     <button 
@@ -107,7 +109,7 @@ export function AccountShopModal({ onClose }) {
                           : 'bg-slate-700 text-slate-500 cursor-not-allowed'
                       }`}
                     >
-                      Acheter {perk.price} 🪙
+                      {t('account_shop.buy', 'Acheter')} {perk.price} 🪙
                     </button>
                   )}
                 </div>

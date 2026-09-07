@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { savePseudonym } from '../utils/storage';
+import { useTranslation } from 'react-i18next';
 
 export function PseudonymModal({ onConfirm }) {
+  const { t } = useTranslation();
   const [pseudo, setPseudo] = useState('');
   const [error, setError] = useState('');
 
   const handleConfirm = () => {
     const trimmed = pseudo.trim();
     if (trimmed.length < 3) {
-      setError('Le pseudo doit contenir au moins 3 caractères.');
+      setError(t('pseudonym_modal.error_min_length', 'Le pseudo doit contenir au moins 3 caractères.'));
       return;
     }
     if (trimmed.length > 20) {
-      setError('Le pseudo ne peut pas dépasser 20 caractères.');
+      setError(t('pseudonym_modal.error_max_length', 'Le pseudo ne peut pas dépasser 20 caractères.'));
       return;
     }
     savePseudonym(trimmed);
@@ -37,11 +39,11 @@ export function PseudonymModal({ onConfirm }) {
           {/* Title */}
           <div>
             <h2 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight">
-              Choisissez votre pseudo
+              {t('pseudonym_modal.title', 'Choisissez votre pseudo')}
             </h2>
             <p className="text-sm text-slate-500 dark:text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-              Ce nom apparaîtra dans le <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Classement Mondial</span>.
-              Choisissez-le bien — il vous représentera pour toujours.
+              {t('pseudonym_modal.desc_1', 'Ce nom apparaîtra dans le')} <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{t('pseudonym_modal.leaderboard', 'Classement Mondial')}</span>.
+              {t('pseudonym_modal.desc_2', 'Choisissez-le bien — il vous représentera pour toujours.')}
             </p>
           </div>
 
@@ -53,7 +55,7 @@ export function PseudonymModal({ onConfirm }) {
               onChange={(e) => { setPseudo(e.target.value); setError(''); }}
               onKeyDown={(e) => e.key === 'Enter' && handleConfirm()}
               maxLength={20}
-              placeholder="Ex: xX_Striker_Xx"
+              placeholder={t('pseudonym_modal.placeholder', 'Ex: xX_Striker_Xx')}
               className="w-full bg-emerald-200 dark:bg-slate-950 border-2 border-slate-300 dark:border-slate-800 focus:border-emerald-500 rounded-2xl px-5 py-3.5 text-slate-800 dark:text-white font-bold text-lg text-center outline-none transition-colors placeholder:text-slate-600"
               autoFocus
             />
@@ -61,7 +63,7 @@ export function PseudonymModal({ onConfirm }) {
               <p className="text-rose-600 dark:text-rose-400 text-xs font-semibold">{error}</p>
             )}
             <p className="text-slate-600 text-[10px] uppercase tracking-wider">
-              {pseudo.trim().length}/20 caractères • Min. 3
+              {pseudo.trim().length}/20 {t('pseudonym_modal.chars', 'caractères')} • {t('pseudonym_modal.min', 'Min.')} 3
             </p>
           </div>
 
@@ -71,7 +73,7 @@ export function PseudonymModal({ onConfirm }) {
             disabled={pseudo.trim().length < 3}
             className="w-full py-4 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-slate-800 dark:text-white font-black text-sm uppercase tracking-widest rounded-2xl shadow-lg shadow-emerald-900/50 transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-emerald-600"
           >
-            Commencer l'aventure ⚽
+            {t('pseudonym_modal.start_btn', 'Commencer l\'aventure ⚽')}
           </button>
         </div>
       </div>
