@@ -155,7 +155,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
   };
 
   return (
-    <div className="min-h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-[28vh] px-6 pb-6 relative overflow-hidden font-sans">
+    <div className="min-h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-[12vh] md:pt-[20vh] px-6 pb-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Pitch Markings - Left (Penalty Area) */}
@@ -350,7 +350,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
       <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
         {/* Logo positioned dynamically near the top of the screen */}
-        <div className="relative w-full flex justify-center items-start mt-4 md:mt-8 mb-6 pointer-events-none animate-[fade-in_1s_ease-out]">
+        <div className="relative w-full flex justify-center items-start mt-4 md:mt-8 mb-2 md:mb-6 pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
           <div className="absolute w-[180px] h-[180px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] bg-emerald-500/40 blur-[60px] rounded-full max-h-full max-w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
           <img 
@@ -652,7 +652,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           </div>
         )}
         
-        <div className="mt-12 text-slate-500 dark:text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-widest opacity-60">
+        <div className="mt-4 md:mt-12 text-slate-500 dark:text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-widest opacity-60">
           Wonderkid - Beta 0.1
         </div>
       </div>
