@@ -155,7 +155,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
   };
 
   return (
-    <div className="min-h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-[12vh] md:pt-[20vh] px-6 pb-6 relative overflow-hidden font-sans">
+    <div className="min-h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-[4vh] md:pt-[20vh] px-6 pb-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Pitch Markings - Left (Penalty Area) */}
@@ -350,13 +350,13 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
       <div className="relative z-10 w-full max-w-md flex flex-col items-center">
         {/* Logo */}
         {/* Logo positioned dynamically near the top of the screen */}
-        <div className="relative w-full flex justify-center items-start mt-4 md:mt-8 mb-2 md:mb-6 pointer-events-none animate-[fade-in_1s_ease-out]">
+        <div className="relative w-full flex justify-center items-start mt-0 md:mt-8 mb-2 md:mb-6 pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
-          <div className="absolute w-[180px] h-[180px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] bg-emerald-500/40 blur-[60px] rounded-full max-h-full max-w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute w-[220px] h-[220px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] bg-emerald-500/40 blur-[60px] rounded-full max-h-full max-w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
-            className="relative z-10 w-[180px] h-[180px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] max-h-full max-w-full object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
+            className="relative z-10 w-[220px] h-[220px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] max-h-full max-w-full object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
             onError={(e) => {
               e.target.onerror = null; 
               e.target.style.display = 'none';
