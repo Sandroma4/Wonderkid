@@ -353,13 +353,13 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
 
           {step === 4 && (
             <div>
-              {true ? (
+              {!selectedPositionCat ? (
                 <div className="grid grid-cols-2 gap-3">
                   {POSITIONS_DATA.map((posCat) => (
                     <button
                       key={posCat.id}
                       type="button"
-                      onClick={() => { playSound('click'); setSelectedPositionCat(posCat); setPositionName(posCat.name); setRole(posCat.roles[0]); setStep(5); }}
+                      onClick={() => { playSound('click'); setSelectedPositionCat(posCat); setPositionName(posCat.name); }}
                       className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-emerald-200 dark:bg-slate-950 hover:border-emerald-400 hover:bg-emerald-500/10 text-center transition-all group"
                     >
                       <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">{posCat.icon}</div>
