@@ -765,8 +765,8 @@ export function Dashboard({
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-4xl w-full bg-white rounded-3xl p-8 shadow-2xl z-10 m-4">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-slate-900">Saison Exceptionnelle !</h2>
-              <p className="text-slate-500 dark:text-slate-500 mt-2">Choisissez un nouveau talent (Perk) pour récompenser votre progression.</p>
+              <h2 className="text-3xl font-bold text-slate-900">{t('dashboard.perks.exceptional_season', 'Saison Exceptionnelle !')}</h2>
+              <p className="text-slate-500 dark:text-slate-500 mt-2">{t('dashboard.perks.choose_perk', 'Choisissez un nouveau talent (Perk) pour récompenser votre progression.')}</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {PERKS_LIST.filter(p => !player.perks.includes(p.id) && (!p.roles || p.roles.some(r => (player.position || '').toUpperCase().includes(r)))).map(perk => (
@@ -784,9 +784,9 @@ export function Dashboard({
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">
             <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-            <h2 className="heading-typography text-2xl font-black text-slate-800 dark:text-white uppercase tracking-widest">Fin de Saison</h2>
+            <h2 className="heading-typography text-2xl font-black text-slate-800 dark:text-white uppercase tracking-widest">{t('dashboard.multiplayer.end_of_season', 'Fin de Saison')}</h2>
             <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium">
-              En attente de votre coéquipier pour générer les résultats du championnat...
+              {t('dashboard.multiplayer.waiting_sync', 'En attente de votre coéquipier pour générer les résultats du championnat...')}
             </p>
           </div>
         </div>
@@ -795,8 +795,8 @@ export function Dashboard({
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">
             <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-            <h2 className="heading-typography text-2xl font-black text-slate-800 dark:text-white uppercase tracking-widest">En attente...</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-500 dark:text-slate-400">En attente de la dǸcision de votre adversaire pour le mercato d'ǸtǸ.</p>
+            <h2 className="heading-typography text-2xl font-black text-slate-800 dark:text-white uppercase tracking-widest">{t('dashboard.multiplayer.waiting', 'En attente...')}</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-500 dark:text-slate-400">{t('dashboard.multiplayer.waiting_mercato', 'En attente de la décision de votre adversaire pour le mercato d\'été.')}</p>
           </div>
         </div>
       ) : transferMarketOffers && transferMarketOffers.length > 0 ? (
@@ -804,8 +804,8 @@ export function Dashboard({
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-4xl w-full flex flex-col z-10 justify-center py-8">
             <div className="text-center shrink-0 mb-2 md:mb-6">
-              <h2 className="heading-typography text-2xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-tight drop-shadow-md">Marché des Transferts</h2>
-              <p className="text-[10px] md:text-sm text-slate-700 dark:text-slate-200 font-medium mt-1 md:mt-2">Ces clubs veulent s'attacher vos services !</p>
+              <h2 className="heading-typography text-2xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-tight drop-shadow-md">{t('dashboard.transfers.transfer_market', 'Marché des Transferts')}</h2>
+              <p className="text-[10px] md:text-sm text-slate-700 dark:text-slate-200 font-medium mt-1 md:mt-2">{t('dashboard.transfers.clubs_want_you', 'Ces clubs veulent s\'attacher vos services !')}</p>
             </div>
 
             <div className="flex flex-col md:grid md:grid-cols-2 gap-2 md:gap-5 min-h-0 shrink">
@@ -831,11 +831,11 @@ export function Dashboard({
                         onClick={() => { playSound('click'); setSelectedOfferClub(offer); }}
                         className="heading-typography md:mt-6 py-2 px-3 md:py-3 md:px-4 rounded-lg md:rounded-xl font-semibold text-[9px] md:text-xs uppercase tracking-wider text-slate-800 dark:text-white bg-emerald-600 shadow-md hover:bg-amber-500 transition-colors shrink-0"
                       >
-                        Négocier 🤝
+                        {t('dashboard.transfers.negotiate', 'Négocier 🤝')}
                       </button>
                     ) : (
                       <div className="md:mt-6 text-center py-2 px-2 md:py-3 md:px-4 rounded-lg md:rounded-xl border border-rose-200 bg-rose-50 text-[8px] md:text-xs font-bold text-rose-600 uppercase shrink-0">
-                        Bloqué
+                        {t('dashboard.transfers.blocked', 'Bloqué')}
                       </div>
                     )}
                   </div>
@@ -848,7 +848,7 @@ export function Dashboard({
                 onClick={() => { playSound('click'); onStayCurrentClub(); }}
                 className="heading-typography py-3 px-6 md:py-4 md:px-8 rounded-xl font-bold text-xs md:text-sm uppercase tracking-wider text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-700 hover:text-white transition-all shadow-lg"
               >
-                🏠 Rester à {club.name}
+                🏠 {t('dashboard.transfers.stay_at', 'Rester à {{clubName}}', { clubName: club.name })}
               </button>
             </div>
             {selectedOfferClub && (
@@ -880,12 +880,12 @@ export function Dashboard({
               <div className="flex justify-center items-center gap-2 md:gap-4 mb-1.5 md:mb-4">
                 <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-slate-300/80 dark:border-slate-700/50 px-3 py-1.5 md:px-6 md:py-2 rounded-xl md:rounded-2xl shadow-2xl flex items-center justify-center">
                   <p className="heading-typography font-bold text-slate-600 dark:text-slate-300 text-[10px] md:text-sm tracking-widest uppercase">
-                    Âge <span className="text-slate-800 dark:text-white ml-1 mr-1 md:mr-3">{player.age} ans</span>
+                    {t('dashboard.topbar.age', 'Âge')} <span className="text-slate-800 dark:text-white ml-1 mr-1 md:mr-3">{player.age} {t('dashboard.topbar.years_old', 'ans')}</span>
                     <span className="text-slate-600 mx-1">|</span>
                     <span className="md:hidden text-amber-600 dark:text-amber-400 mx-1">OVR {player.ovr}</span>
                     <span className="md:hidden text-slate-600 mx-1">|</span>
                     <span className="hidden md:inline text-slate-600 mx-1">|</span>
-                    <span className="md:ml-3 text-slate-500 dark:text-slate-500 dark:text-slate-400">Année</span> <span className="text-slate-800 dark:text-white ml-1">{player.currentYear || 2024}</span>
+                    <span className="md:ml-3 text-slate-500 dark:text-slate-500 dark:text-slate-400">{t('dashboard.topbar.year', 'Année')}</span> <span className="text-slate-800 dark:text-white ml-1">{player.currentYear || 2024}</span>
                   </p>
                 </div>
               </div>
@@ -893,8 +893,8 @@ export function Dashboard({
                 <div className="bg-rose-50 border border-rose-300 p-3 rounded-2xl text-rose-950 flex items-center gap-3 shadow-md">
                   <span className="text-2xl">🚑</span>
                   <div>
-                    <h4 className="heading-typography font-bold text-sm">Blessure en cours</h4>
-                    <p className="text-xs font-normal text-rose-800">Indisponibilité estimée à <span className="font-semibold text-rose-950">{player.injuryDuration} semaines</span>.</p>
+                    <h4 className="heading-typography font-bold text-sm">{t('dashboard.topbar.injury_ongoing', 'Blessure en cours')}</h4>
+                    <p className="text-xs font-normal text-rose-800">{t('dashboard.topbar.injury_estimate_1', 'Indisponibilité estimée à')} <span className="font-semibold text-rose-950">{player.injuryDuration} {t('dashboard.topbar.injury_weeks', 'semaines')}</span>.</p>
                   </div>
                 </div>
               )}
@@ -923,7 +923,7 @@ export function Dashboard({
                       }}
                       className="w-full mb-2 text-xs font-bold uppercase tracking-wider bg-white dark:bg-slate-800 text-slate-800 dark:text-white py-1.5 rounded-xl shadow-md hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors"
                     >
-                      📸 Exporter ma Carte
+                      📸 {t('dashboard.stats_tab.export_card', 'Exporter ma Carte')}
                     </button>
                     <div ref={playerCardRef} className="inline-block" style={{ backgroundColor: 'transparent' }}>
                       <PlayerCard player={player} club={club} cardType="auto" />
@@ -933,7 +933,7 @@ export function Dashboard({
                     {/* STATS DÉTAILLÉES */}
                     <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-3 shadow-2xl">
                       <div className="heading-typography text-[9px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider flex items-center mb-3">
-                        <span className="flex items-center gap-1.5">📊 Stats Détaillées</span>
+                        <span className="flex items-center gap-1.5">📊 {t('dashboard.stats_tab.detailed_stats', 'Stats Détaillées')}</span>
                       </div>
                       <div className="border-t border-slate-300/80 dark:border-slate-700/50 pt-3 grid grid-cols-2 gap-1.5">
                         {(isGoalkeeper ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] : ['pace', 'dribbling', 'finishing', 'defense', 'passing', 'physical']).map((attr) => {
@@ -961,13 +961,13 @@ export function Dashboard({
                   {/* TROPHÉES — en format accordéon */}
                   <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-3 shadow-2xl">
                     <button onClick={() => setIsTrophiesOpen(!isTrophiesOpen)} className="w-full heading-typography text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider flex justify-between items-center bg-white dark:bg-slate-800 p-2 rounded-xl">
-                      <span className="flex items-center gap-1.5">🏆 Vitrine à Trophées</span>
+                      <span className="flex items-center gap-1.5">🏆 {t('dashboard.stats_tab.trophy_cabinet', 'Vitrine à Trophées')}</span>
                       <span className="text-amber-500 text-sm">{isTrophiesOpen ? '▲' : '▼'}</span>
                     </button>
                     <div className={`transition-all duration-300 overflow-hidden ${isTrophiesOpen ? 'max-h-[1000px] opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'}`}>
                       <div className="space-y-3 pt-2 border-t border-slate-300/80 dark:border-slate-700/50">
                         <div>
-                          <h4 className="heading-typography text-[8px] font-bold text-emerald-500 uppercase tracking-wider mb-1.5">🛡️ Collectifs</h4>
+                          <h4 className="heading-typography text-[8px] font-bold text-emerald-500 uppercase tracking-wider mb-1.5">🛡️ {t('dashboard.stats_tab.collective_trophies', 'Collectifs')}</h4>
                           {collectiveTrophies.length > 0 ? (
                             <div className="flex flex-wrap gap-1">
                               {collectiveTrophies.map((trophy, idx) => (
@@ -979,12 +979,12 @@ export function Dashboard({
                               ))}
                             </div>
                           ) : (
-                            <p className="text-[8px] text-slate-500 dark:text-slate-500 italic mb-2">Aucun trophée collectif.</p>
+                            <p className="text-[8px] text-slate-500 dark:text-slate-500 italic mb-2">{t('dashboard.stats_tab.no_collective_trophies', 'Aucun trophée collectif.')}</p>
                           )}
                         </div>
 
                         <div>
-                          <h4 className="heading-typography text-[8px] font-bold text-amber-500 uppercase tracking-wider mb-1.5">🏅 Individuels</h4>
+                          <h4 className="heading-typography text-[8px] font-bold text-amber-500 uppercase tracking-wider mb-1.5">🏅 {t('dashboard.stats_tab.individual_trophies', 'Individuels')}</h4>
                           {individualTrophies.length > 0 ? (
                             <div className="flex flex-wrap gap-1">
                               {individualTrophies.map((trophy, idx) => (
@@ -996,7 +996,7 @@ export function Dashboard({
                               ))}
                             </div>
                           ) : (
-                            <p className="text-[8px] text-slate-500 dark:text-slate-500 italic">Aucune distinction individuelle.</p>
+                            <p className="text-[8px] text-slate-500 dark:text-slate-500 italic">{t('dashboard.stats_tab.no_individual_trophies', 'Aucune distinction individuelle.')}</p>
                           )}
                         </div>
                       </div>
@@ -1007,7 +1007,7 @@ export function Dashboard({
                     {player.valueHistory && player.valueHistory.length > 0 && (
                       <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 md:p-5 shadow-2xl flex flex-col h-fit relative">
                         <div className="flex justify-between items-end mb-4">
-                          <h3 className="heading-typography text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">Valeur Marchande</h3>
+                          <h3 className="heading-typography text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">{t('dashboard.stats_tab.market_value', 'Valeur Marchande')}</h3>
                           <span className="text-emerald-600 font-black text-xl leading-none">
                             {(player.valueHistory[player.valueHistory.length - 1].value / 1000000).toFixed(1)} M€
                           </span>
@@ -1062,7 +1062,7 @@ export function Dashboard({
                         {player.nationalStatus === 'CAPITAINE' && (
                           <div className="ml-auto flex-shrink-0">
                             <span className="heading-typography text-[8px] font-bold uppercase tracking-widest text-slate-800 dark:text-white bg-amber-600 px-2 py-1 rounded-md shadow-sm whitespace-nowrap">
-                              © Capitaine
+                              © {t('dashboard.club_choice.captain', 'Capitaine')}
                             </span>
                           </div>
                         )}
@@ -1104,7 +1104,7 @@ export function Dashboard({
                         {player.nationalStatus === 'CAPITAINE' && (
                           <div className="flex-shrink-0">
                             <span className="heading-typography text-[7px] sm:text-[8px] font-bold uppercase tracking-widest text-slate-800 dark:text-white bg-amber-600 px-1.5 py-0.5 rounded shadow-sm">
-                              © Capitaine
+                              © {t('dashboard.club_choice.captain', 'Capitaine')}
                             </span>
                           </div>
                         )}
@@ -1133,7 +1133,7 @@ export function Dashboard({
                       <div className="space-y-2">
                         <div>
                           <div className="flex justify-between text-[9px] md:text-[10px] mb-0.5 font-medium text-slate-500 dark:text-slate-500 dark:text-slate-400">
-                            <span>Forme physique</span>
+                            <span>{t('dashboard.gauges.physical_form', 'Forme physique')}</span>
                             <span className={player.form < 30 ? 'text-rose-500 font-bold' : 'text-slate-800 dark:text-white font-semibold'}>{player.form}%</span>
                           </div>
                           <div className="w-full bg-white dark:bg-slate-800 h-1.5 rounded-full overflow-hidden border border-slate-300/80 dark:border-slate-700/50">
@@ -1142,7 +1142,7 @@ export function Dashboard({
                         </div>
                         <div>
                           <div className="flex justify-between text-[9px] md:text-[10px] mb-0.5 font-medium text-slate-500 dark:text-slate-500 dark:text-slate-400">
-                            <span>Moral</span>
+                            <span>{t('dashboard.gauges.morale', 'Moral')}</span>
                             <span className="text-slate-800 dark:text-white font-semibold">{player.morale}%</span>
                           </div>
                           <div className="w-full bg-white dark:bg-slate-800 h-1.5 rounded-full overflow-hidden border border-slate-300/80 dark:border-slate-700/50">
@@ -1167,7 +1167,7 @@ export function Dashboard({
                     className="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-800 dark:text-white font-bold py-3 md:py-4 px-4 rounded-2xl shadow-lg transform transition hover:scale-[1.02] flex items-center justify-center gap-2 border border-emerald-400/50"
                   >
                     <span className="text-lg md:text-xl">💎</span>
-                    <span className="heading-typography text-[10px] md:text-xs tracking-widest uppercase">Boutique d'Investissements</span>
+                    <span className="heading-typography text-[10px] md:text-xs tracking-widest uppercase">{t('dashboard.events.investment_shop', 'Boutique d\'Investissements')}</span>
                     <span className="bg-white/50 dark:bg-slate-900/50 px-2 py-1 rounded-md text-[10px] font-black ml-2 shadow-inner">
                       {bankBalance.toLocaleString('fr-FR')} €
                     </span>
@@ -1179,7 +1179,7 @@ export function Dashboard({
                         <span className="heading-typography text-[9px] md:text-[10px] font-semibold px-2 md:px-2.5 py-0.5 md:py-1 rounded-lg uppercase tracking-wider shadow-sm bg-rose-500 text-slate-800 dark:text-white">
                           {formatEventCategory(currentEvent?.category)}
                         </span>
-                        <span className="heading-typography text-[10px] md:text-[11px] font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400">Étape {eventStep} / {totalEvents}</span>
+                        <span className="heading-typography text-[10px] md:text-[11px] font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400">{t('dashboard.events.step', 'Étape')} {eventStep} / {totalEvents}</span>
                       </div>
                       <h3 className="heading-typography text-sm md:text-xl font-bold text-slate-800 dark:text-white mb-2 leading-snug">{currentEvent?.description}</h3>
                     </div>
@@ -1204,8 +1204,8 @@ export function Dashboard({
                             <span>⚡</span>
                             <span>
                               {activeOutcome.ageBoostApplied <= 18
-                                ? `Bonus Wonderkid (${activeOutcome.ageBoostApplied} ans) — vos gains de stats sont massivement amplifiés !`
-                                : `Bonus Jeune Talent (${activeOutcome.ageBoostApplied} ans) — vos gains de stats sont amplifiés.`
+                                ? t('dashboard.events.wonderkid_bonus', 'Bonus Wonderkid ({{age}} ans) — vos gains de stats sont massivement amplifiés !', { age: activeOutcome.ageBoostApplied })
+                                : t('dashboard.events.young_talent_bonus', 'Bonus Jeune Talent ({{age}} ans) — vos gains de stats sont amplifiés.', { age: activeOutcome.ageBoostApplied })
                               }
                             </span>
                           </p>
@@ -1216,7 +1216,7 @@ export function Dashboard({
                           className="heading-typography w-full py-2 md:py-2.5 font-semibold text-slate-800 dark:text-white uppercase text-[10px] tracking-wider rounded-xl mt-2 shadow-lg transition-transform active:scale-95 hover:brightness-110"
                           style={{ backgroundColor: theme.btnBg }}
                         >
-                          Continuer la saison ➡️
+                          {t('dashboard.events.continue_season', 'Continuer la saison ➡️')}
                         </button>
                       </div>
                     ) : (
@@ -1245,7 +1245,7 @@ export function Dashboard({
                     {player.valueHistory && player.valueHistory.length > 0 && (
                       <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-2xl p-4 md:p-5 shadow-2xl flex flex-col h-fit relative">
                         <div className="flex justify-between items-end mb-4">
-                          <h3 className="heading-typography text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">Valeur Marchande</h3>
+                          <h3 className="heading-typography text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">{t('dashboard.stats_tab.market_value', 'Valeur Marchande')}</h3>
                           <span className="text-emerald-600 font-black text-xl leading-none">
                             {(player.valueHistory[player.valueHistory.length - 1].value / 1000000).toFixed(1)} M€
                           </span>
@@ -1263,8 +1263,8 @@ export function Dashboard({
                                 tickFormatter={(val) => `${(val / 1000000).toFixed(1)}M`}
                               />
                               <Tooltip
-                                formatter={(value) => [`${(value / 1000000).toFixed(1)} M€`, 'Valeur']}
-                                labelFormatter={(label) => `Âge: ${label} ans`}
+                                formatter={(value) => [`${(value / 1000000).toFixed(1)} M€`, t('dashboard.stats_tab.value_label', 'Valeur')]}
+                                labelFormatter={(label) => `${t('dashboard.stats_tab.age_label', 'Âge:')} ${label} ${t('dashboard.topbar.years_old', 'ans')}`}
                                 contentStyle={{ backgroundColor: '#0f172a', borderRadius: '12px', border: '1px solid #334155', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.5)', padding: '10px', color: '#f8fafc' }}
                               />
                               <Line type="monotone" dataKey="value" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981', strokeWidth: 2, stroke: '#fff' }} activeDot={{ r: 6, fill: '#047857' }} />
@@ -1280,13 +1280,13 @@ export function Dashboard({
                         onClick={(e) => {
                           e.stopPropagation();
                           playSound('click');
-                          if (window.confirm("Êtes-vous sûr de vouloir quitter le mode 1v1 ? Toute progression non sauvegardée de cette saison sera perdue.")) {
+                          if (window.confirm(t('dashboard.multiplayer.leave_confirm', "Êtes-vous sûr de vouloir quitter le mode 1v1 ? Toute progression non sauvegardée de cette saison sera perdue."))) {
                             onRestartGame();
                           }
                         }}
                         className="bg-rose-600/90 hover:bg-rose-500 text-slate-800 dark:text-white text-xs font-bold uppercase tracking-wider py-2 px-6 rounded-lg shadow-lg backdrop-blur-md transition-colors border border-rose-500/50 flex items-center justify-center"
                       >
-                        Quitter
+                        {t('dashboard.multiplayer.leave_btn', 'Quitter')}
                       </button>
                     </div>
                   )}
@@ -1314,11 +1314,11 @@ export function Dashboard({
                       <div className="bg-white dark:bg-slate-900 border border-rose-900/50 rounded-3xl p-4 shadow-2xl flex flex-col relative overflow-hidden gap-4">
                         <div className="absolute -top-4 -right-4 p-4 opacity-10 text-6xl transform rotate-12 pointer-events-none">⚔️</div>
                         <div className="w-full flex justify-between items-center px-1 relative z-10 mb-2">
-                          <h4 className="heading-typography text-[12px] font-black text-rose-500 uppercase tracking-widest">Némésis</h4>
+                          <h4 className="heading-typography text-[12px] font-black text-rose-500 uppercase tracking-widest">{t('dashboard.nemesis.title', 'Némésis')}</h4>
                           {player.ovr > rival.ovr ? (
-                            <span className="text-emerald-600 dark:text-emerald-400 text-[10px] font-bold bg-emerald-400/10 px-2 py-0.5 rounded shadow-sm">DOMINÉ</span>
+                            <span className="text-emerald-600 dark:text-emerald-400 text-[10px] font-bold bg-emerald-400/10 px-2 py-0.5 rounded shadow-sm">{t('dashboard.nemesis.dominated', 'DOMINÉ')}</span>
                           ) : (
-                            <span className="text-rose-600 dark:text-rose-400 text-[10px] font-bold bg-rose-400/10 px-2 py-0.5 rounded shadow-sm">MENAÇANT</span>
+                            <span className="text-rose-600 dark:text-rose-400 text-[10px] font-bold bg-rose-400/10 px-2 py-0.5 rounded shadow-sm">{t('dashboard.nemesis.threatening', 'MENAÇANT')}</span>
                           )}
                         </div>
 
@@ -1350,7 +1350,7 @@ export function Dashboard({
 
                           <div className="flex justify-between items-center w-full">
                             <span className={`font-bold text-sm w-1/3 text-center ${playerBdOrs > (rival.ballonDorCount || 0) ? 'text-emerald-500' : 'text-slate-800 dark:text-white'}`}>{playerBdOrs}</span>
-                            <span className="text-[10px] font-bold text-slate-500 uppercase w-1/3 text-center">Ballons d'Or</span>
+                            <span className="text-[10px] font-bold text-slate-500 uppercase w-1/3 text-center">{t('dashboard.nemesis.ballon_dor', 'Ballons d\'Or')}</span>
                             <span className={`font-bold text-sm w-1/3 text-center ${(rival.ballonDorCount || 0) > playerBdOrs ? 'text-rose-500' : 'text-slate-800 dark:text-white'}`}>{rival.ballonDorCount || 0}</span>
                           </div>
 
@@ -1358,7 +1358,7 @@ export function Dashboard({
 
                           <div className="flex justify-between items-center w-full">
                             <span className={`font-bold text-sm w-1/3 text-center ${playerTotalTrophies > (rival.trophiesCount || 0) ? 'text-emerald-500' : 'text-slate-800 dark:text-white'}`}>{playerTotalTrophies}</span>
-                            <span className="text-[10px] font-bold text-slate-500 uppercase w-1/3 text-center">Trophées</span>
+                            <span className="text-[10px] font-bold text-slate-500 uppercase w-1/3 text-center">{t('dashboard.nemesis.trophies', 'Trophées')}</span>
                             <span className={`font-bold text-sm w-1/3 text-center ${(rival.trophiesCount || 0) > playerTotalTrophies ? 'text-rose-500' : 'text-slate-800 dark:text-white'}`}>{rival.trophiesCount || 0}</span>
                           </div>
 
@@ -1366,10 +1366,9 @@ export function Dashboard({
 
                         {/* JAUGE H2H */}
                         <div className="w-full flex flex-col gap-1 relative z-10 mt-2">
-                          <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider mb-1">
-                            <span className="text-emerald-500">{h2hWon} Victoires</span>
-                            <span className="text-slate-400">Confrontations</span>
-                            <span className="text-rose-500">{h2hLost} Défaites</span>
+                            <span className="text-emerald-500">{h2hWon} {t('dashboard.nemesis.wins', 'Victoires')}</span>
+                            <span className="text-slate-400">{t('dashboard.nemesis.matches', 'Confrontations')}</span>
+                            <span className="text-rose-500">{h2hLost} {t('dashboard.nemesis.losses', 'Défaites')}</span>
                           </div>
                           <div className="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex shadow-inner">
                             {h2hWon > 0 && <div style={{ width: `${(h2hWon / Math.max(1, h2hWon + h2hLost + h2hDrawn)) * 100}%` }} className="h-full bg-emerald-500"></div>}
@@ -1377,7 +1376,7 @@ export function Dashboard({
                             {h2hLost > 0 && <div style={{ width: `${(h2hLost / Math.max(1, h2hWon + h2hLost + h2hDrawn)) * 100}%` }} className="h-full bg-rose-500"></div>}
                           </div>
                           {h2hWon === 0 && h2hLost === 0 && h2hDrawn === 0 && (
-                            <span className="text-center text-[9px] text-slate-500 mt-1 italic">Aucune rencontre directe pour l'instant.</span>
+                            <span className="text-center text-[9px] text-slate-500 mt-1 italic">{t('dashboard.nemesis.no_matches', 'Aucune rencontre directe pour l\'instant.')}</span>
                           )}
                         </div>
 
@@ -1389,7 +1388,7 @@ export function Dashboard({
                   {((player.perks && player.perks.length > 0) || (player.traits && player.traits.length > 0)) && (
                     <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-4 shadow-2xl">
                       <h4 className="heading-typography text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                        <span>✨ Traits & Styles de Jeu</span>
+                        <span>✨ {t('dashboard.traits_tab.title', 'Traits & Styles de Jeu')}</span>
                       </h4>
                       <div className="flex flex-col gap-2">
                         {player.perks && player.perks.map(traitId => {
@@ -1426,7 +1425,7 @@ export function Dashboard({
                   {player.sponsor && player.sponsor !== 'Aucun' && (
                     <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 rounded-3xl p-4 shadow-2xl mt-4">
                       <h4 className="heading-typography text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                        <span>💎 Sponsors Officiels</span>
+                        <span>💎 {t('dashboard.sponsors_tab.title', 'Sponsors Officiels')}</span>
                       </h4>
                       <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-3 bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/30 p-3 rounded-xl shadow-sm">
@@ -1436,7 +1435,7 @@ export function Dashboard({
                           <div>
                             <p className="heading-typography text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase">{player.sponsor}</p>
                             <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">
-                              Partenaire principal {player.sponsorValue ? `• ${(player.sponsorValue).toLocaleString()} €/an` : ''}
+                              {t('dashboard.sponsors_tab.main_partner', 'Partenaire principal')} {player.sponsorValue ? `• ${(player.sponsorValue).toLocaleString()} €/an` : ''}
                             </p>
                           </div>
                         </div>
@@ -1450,13 +1449,13 @@ export function Dashboard({
                         onClick={(e) => {
                           e.stopPropagation();
                           playSound('click');
-                          if (window.confirm("Êtes-vous sûr de vouloir quitter le mode 1v1 ? Toute progression non sauvegardée de cette saison sera perdue.")) {
+                          if (window.confirm(t('dashboard.multiplayer.leave_confirm', "Êtes-vous sûr de vouloir quitter le mode 1v1 ? Toute progression non sauvegardée de cette saison sera perdue."))) {
                             onRestartGame();
                           }
                         }}
                         className="bg-rose-600/90 hover:bg-rose-500 text-slate-800 dark:text-white text-xs font-bold uppercase tracking-wider py-3 px-6 rounded-xl shadow-lg backdrop-blur-md transition-colors border border-rose-500/50 flex items-center justify-center w-full"
                       >
-                        Quitter
+                        {t('dashboard.multiplayer.leave_btn', 'Quitter')}
                       </button>
                     </div>
                   )}
@@ -1472,21 +1471,21 @@ export function Dashboard({
               className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'terrain' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
             >
               <span className="text-xl mb-1">🏟️</span>
-              <span className="text-[9px] font-bold tracking-widest uppercase">Terrain</span>
+              <span className="text-[9px] font-bold tracking-widest uppercase">{t('dashboard.mobile_nav.pitch', 'Terrain')}</span>
             </button>
             <button
               onClick={() => { playSound('click'); setActiveMobileTab('joueur'); }}
               className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'joueur' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
             >
               <span className="text-xl mb-1">👕</span>
-              <span className="text-[9px] font-bold tracking-widest uppercase">Joueur</span>
+              <span className="text-[9px] font-bold tracking-widest uppercase">{t('dashboard.mobile_nav.player', 'Joueur')}</span>
             </button>
             <button
               onClick={() => { playSound('click'); setActiveMobileTab('carriere'); }}
               className={`flex flex-col items-center justify-center p-2 px-4 rounded-xl transition-colors ${activeMobileTab === 'carriere' ? 'bg-white text-amber-600' : 'text-slate-600 hover:bg-white/50'}`}
             >
               <span className="text-xl mb-1">⚔️</span>
-              <span className="text-[9px] font-bold tracking-widest uppercase">Rival</span>
+              <span className="text-[9px] font-bold tracking-widest uppercase">{t('dashboard.mobile_nav.rival', 'Rival')}</span>
             </button>
           </div>
         </>
