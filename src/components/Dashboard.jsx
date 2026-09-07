@@ -92,24 +92,26 @@ const LeagueLabel = ({ club }) => {
 const formatEventCategory = (cat) => {
   if (!cat) return 'Événement';
   const labels = {
-    'WORLD_CUP': 'Coupe du Monde',
-    'EURO': '🇪🇺 Euro',
-    'CHAMPIONS_LEAGUE': '🇪🇺 Ligue des Champions',
-    'CUP': 'Coupe Nationale',
-    'LIFESTYLE': 'Vie Privée',
-    'TRANSFERT': 'Transfert',
-    'VESTIAIRE': 'Vestiaire',
-    'CARRIÈRE': 'Carrière',
-    'ENTRAÎNEMENT': 'Entraînement',
-    'MÉDIAS': 'Médias',
-    'SPONSOR': 'Sponsor',
-    'FANS': 'Fans',
-    'TERRAIN': 'Terrain',
-    'RIVALITÉ': 'Rivalité',
-    'ÉQUIPE NATIONALE': 'Équipe Nationale'
+    'WORLD_CUP': t('dashboard.events.world_cup', 'Coupe du Monde'),
+    'EURO': t('dashboard.events.euro', '🇪🇺 Euro'),
+    'CHAMPIONS_LEAGUE': t('dashboard.events.champions_league', '🇪🇺 Ligue des Champions'),
+    'CUP': t('dashboard.events.national_cup', 'Coupe Nationale'),
+    'LIFESTYLE': t('dashboard.events.lifestyle', 'Vie Privée'),
+    'TRANSFERT': t('dashboard.events.transfer', 'Transfert'),
+    'VESTIAIRE': t('dashboard.events.locker_room', 'Vestiaire'),
+    'CARRIÈRE': t('dashboard.events.career', 'Carrière'),
+    'ENTRAÎNEMENT': t('dashboard.events.training', 'Entraînement'),
+    'MÉDIAS': t('dashboard.events.media', 'Médias'),
+    'SPONSOR': t('dashboard.events.sponsor', 'Sponsor'),
+    'FANS': t('dashboard.events.fans', 'Fans'),
+    'TERRAIN': t('dashboard.events.pitch', 'Terrain'),
+    'RIVALITÉ': t('dashboard.events.rivalry', 'Rivalité'),
+    'ÉQUIPE NATIONALE': t('dashboard.events.national_team', 'Équipe Nationale')
   };
   return labels[cat] || cat;
 };
+
+import { useTranslation } from 'react-i18next';
 
 export function Dashboard({
   gameState,
@@ -139,6 +141,7 @@ export function Dashboard({
   const playerCardRef = useRef(null);
   const exportCardRef = useRef(null);
   const exportPrimeCardRef = useRef(null);
+  const { t } = useTranslation();
 
   const {
     player, club, season, eventsList, eventStep, totalEvents, currentEvent,
@@ -169,7 +172,7 @@ export function Dashboard({
 
   const effectiveStats = getEffectiveStats(player);
 
-  const statLabels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique', diving: 'Plongeon', handling: 'Maniabilité', kicking: 'Jeu au pied', reflexes: 'Réflexes', positioning: 'Positionnement' };
+  const statLabels = { pace: t('dashboard.stats.pace', 'Vitesse'), finishing: t('dashboard.stats.finishing', 'Tir'), passing: t('dashboard.stats.passing', 'Passe'), dribbling: t('dashboard.stats.dribbling', 'Dribble'), defense: t('dashboard.stats.defense', 'Défense'), physical: t('dashboard.stats.physical', 'Physique'), diving: t('dashboard.stats.diving', 'Plongeon'), handling: t('dashboard.stats.handling', 'Maniabilité'), kicking: t('dashboard.stats.kicking', 'Jeu au pied'), reflexes: t('dashboard.stats.reflexes', 'Réflexes'), positioning: t('dashboard.stats.positioning', 'Positionnement') };
 
 
   const groupedPalmares = useMemo(() => {
@@ -208,7 +211,7 @@ export function Dashboard({
     <div className={`space-y-1.5 ${isMobileView ? 'md:hidden bg-white/90 border border-slate-200/50 p-2 rounded-xl mb-2 shadow-sm' : 'hidden md:block'}`}>
       <div>
         <div className="flex justify-between text-[9px] md:text-[10px] mb-0.5 font-medium text-slate-600">
-          <span>Forme physique</span>
+          <span>{t('dashboard.gauges.physical_form', 'Forme physique')}</span>
           <span className={player.form < 30 ? 'text-rose-600 font-bold' : 'text-slate-900 font-semibold'}>{player.form}%</span>
         </div>
         <div className="w-full bg-slate-200 h-1 md:h-1.5 rounded-full overflow-hidden border border-slate-200/50">
@@ -217,7 +220,7 @@ export function Dashboard({
       </div>
       <div>
         <div className="flex justify-between text-[9px] md:text-[10px] mb-0.5 font-medium text-slate-600">
-          <span>Moral</span>
+          <span>{t('dashboard.gauges.morale', 'Moral')}</span>
           <span className="text-slate-900 font-semibold">{player.morale}%</span>
         </div>
         <div className="w-full bg-slate-200 h-1 md:h-1.5 rounded-full overflow-hidden border border-slate-200/50">
@@ -226,7 +229,7 @@ export function Dashboard({
       </div>
       <div>
         <div className="flex justify-between text-[9px] md:text-[10px] mb-0.5 font-medium text-slate-600">
-          <span>Confiance Coach</span>
+          <span>{t('dashboard.gauges.coach_trust', 'Confiance Coach')}</span>
           <span className="text-slate-900 font-semibold">{player.coachTrust}%</span>
         </div>
         <div className="w-full bg-slate-200 h-1 md:h-1.5 rounded-full overflow-hidden border border-slate-200/50">
@@ -257,10 +260,10 @@ export function Dashboard({
                 {/* Header (Fixed at top) */}
                 <div className="mb-3 shrink-0 text-center">
                   <span className="heading-typography text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/40 rounded-full inline-block mb-1">
-                    Bilan Définitif de Carrière
+                    {t('dashboard.career.career_summary', 'Bilan Définitif de Carrière')}
                   </span>
                   <h1 className="heading-typography text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 tracking-wider leading-none">
-                    FIN DE CARRIÈRE
+                    {t('dashboard.career.end_of_career', 'FIN DE CARRIÈRE')}
                   </h1>
                 </div>
 
@@ -271,7 +274,7 @@ export function Dashboard({
                     {/* LEFT COLUMN: CARD & DOWNLOAD */}
                     <div className="flex flex-col items-center justify-center shrink-0 lg:w-1/3">
                       <div className="text-[11px] font-bold text-amber-400/90 uppercase tracking-widest mb-1 flex items-center gap-1.5">
-                        <span>👑</span> Version Prime ({bestVersion.player.ovr} GEN)
+                        <span>👑</span> {t('dashboard.career.prime_version', 'Version Prime')} ({bestVersion.player.ovr} GEN)
                       </div>
                       <div className="inline-block p-2 scale-90 md:scale-100 transform origin-top">
                         <div ref={playerCardRef} className="inline-block" style={{ backgroundColor: 'transparent' }}>
@@ -297,7 +300,7 @@ export function Dashboard({
                         }}
                         className="heading-typography text-[10px] md:text-xs font-black uppercase tracking-wider bg-amber-500 hover:bg-amber-400 text-slate-950 py-2 px-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center gap-2 mt-[-15px] md:mt-0 mb-1"
                       >
-                        📥 Télécharger
+                        📥 {t('dashboard.career.download', 'Télécharger')}
                       </button>
                     </div>
 
@@ -309,15 +312,15 @@ export function Dashboard({
                         {/* Stats Grid */}
                         <div className="grid grid-cols-2 gap-2 flex-1">
                           <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-2 rounded-xl md:rounded-2xl text-center shadow-inner">
-                            <p className="text-[9px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Âge final</p>
-                            <p className="text-lg md:text-xl font-black text-slate-800 dark:text-white mt-0.5 leading-none">{player.age} ans</p>
+                            <p className="text-[9px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">{t('dashboard.career.final_age', 'Âge final')}</p>
+                            <p className="text-lg md:text-xl font-black text-slate-800 dark:text-white mt-0.5 leading-none">{player.age} {t('dashboard.career.years_old', 'ans')}</p>
                           </div>
                           <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-2 rounded-xl md:rounded-2xl text-center shadow-inner">
-                            <p className="text-[9px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Gains Totaux</p>
+                            <p className="text-[9px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">{t('dashboard.career.total_earnings', 'Gains Totaux')}</p>
                             <p className="text-lg md:text-xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5 leading-none">{(bankBalance / 1000000).toFixed(1)} M€</p>
                           </div>
                           <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-2 rounded-xl md:rounded-2xl text-center shadow-inner">
-                            <p className="text-[9px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Sélections</p>
+                            <p className="text-[9px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">{t('dashboard.career.caps', 'Sélections')}</p>
                             <p className="text-lg md:text-xl font-black text-slate-800 dark:text-white mt-0.5 leading-none">{player.nationalCaps || 0}</p>
                           </div>
                           <div className="bg-white/90 dark:bg-slate-800/80 border border-slate-700/60 p-2 rounded-xl md:rounded-2xl text-center shadow-inner">
@@ -329,12 +332,12 @@ export function Dashboard({
                         {/* Score Box */}
                         <div className="w-full md:w-1/3 bg-slate-800/70 p-3 rounded-2xl border border-amber-500/30 shadow-inner text-center flex flex-col justify-center min-h-[80px] relative">
                           <h3 className="heading-typography font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-1 text-[10px] md:text-xs flex items-center justify-center gap-1.5">
-                            <span>👑</span> Score Carrière
+                            <span>👑</span> {t('dashboard.career.career_score', 'Score Carrière')}
                           </h3>
                           <div className="text-2xl md:text-3xl font-black text-amber-500 drop-shadow-md leading-none mb-1">
                             {gameState.score?.totalScore ? gameState.score.totalScore.toLocaleString('fr-FR') : "0"}
                           </div>
-                          <p className="text-[8px] md:text-[9px] text-slate-400 uppercase tracking-widest leading-none">Pts Légendaires</p>
+                          <p className="text-[8px] md:text-[9px] text-slate-400 uppercase tracking-widest leading-none">{t('dashboard.career.legendary_pts', 'Pts Légendaires')}</p>
                           {gameState.earnedCoinsThisRun > 0 && (
                             <div className="mt-2 text-[10px] md:text-xs font-bold text-yellow-300 bg-black/20 rounded-lg py-1 px-2 inline-block">
                               +{gameState.earnedCoinsThisRun} Golden Coins 🪙
@@ -351,7 +354,7 @@ export function Dashboard({
                       {/* Palmares Box */}
                       <div className="w-full bg-slate-800/70 p-3 rounded-2xl border border-amber-500/30 shadow-inner">
                         <h3 className="heading-typography font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-2 text-[10px] md:text-xs flex items-center justify-center gap-1.5">
-                          <span>🏆</span> Palmarès & Distinctions
+                          <span>🏆</span> {t('dashboard.career.palmares_distinctions', 'Palmarès & Distinctions')}
                         </h3>
                         {groupedPalmares.length > 0 ? (
                           <div className="flex flex-wrap gap-1 md:gap-1.5 justify-center">
@@ -360,10 +363,10 @@ export function Dashboard({
                                 <span>{trophy.icon}</span> {trophy.text} {trophy.count > 1 && <span className="text-amber-600 dark:text-amber-400 font-bold ml-1">×{trophy.count}</span>}
                               </span>
                             ))}
-                            {groupedPalmares.length > 10 && <span className="text-[9px] text-amber-400/80 font-bold self-center">et bien d'autres...</span>}
+                            {groupedPalmares.length > 10 && <span className="text-[9px] text-amber-400/80 font-bold self-center">{t('dashboard.career.and_many_more', "et bien d'autres...")}</span>}
                           </div>
                         ) : (
-                          <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 italic text-center">Aucun trophée majeur remporté.</p>
+                          <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 italic text-center">{t('dashboard.career.no_major_trophies', 'Aucun trophée majeur remporté.')}</p>
                         )}
                       </div>
 
@@ -372,19 +375,19 @@ export function Dashboard({
                         {player.careerHistory && player.careerHistory.length > 0 && (
                           <details className="flex-1 bg-slate-800/70 rounded-2xl border border-slate-700/60 group overflow-hidden">
                             <summary className="p-3 heading-typography font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider text-[10px] md:text-xs cursor-pointer list-none flex justify-between items-center hover:text-white transition-colors">
-                              <span className="flex items-center gap-2"><span>📜</span> Historique Saison par Saison</span>
+                              <span className="flex items-center gap-2"><span>📜</span> {t('dashboard.career.season_history', 'Historique Saison par Saison')}</span>
                               <span className="transition-transform group-open:rotate-180 text-amber-600 dark:text-amber-400">▼</span>
                             </summary>
                             <div className="overflow-x-auto px-2 pb-2 pt-0 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600">
                               <table className="w-full text-[9px] md:text-[10px] text-left">
                                 <thead className="text-[8px] text-slate-500 dark:text-slate-400 uppercase bg-white/80 dark:bg-slate-900/80 rounded-lg sticky top-0 z-10">
                                   <tr>
-                                    <th className="px-2 py-1.5">Saison</th>
-                                    <th className="px-2 py-1.5">Club</th>
-                                    <th className="px-2 py-1.5">GEN</th>
-                                    <th className="px-2 py-1.5">{isDefensivePlayer ? 'Duels %' : 'Buts'}</th>
-                                    <th className="px-2 py-1.5">{isDefensivePlayer ? 'Clean Sheets' : 'Passes'}</th>
-                                    <th className="px-2 py-1.5">Note</th>
+                                    <th className="px-2 py-1.5">{t('dashboard.career.season', 'Saison')}</th>
+                                    <th className="px-2 py-1.5">{t('dashboard.career.club', 'Club')}</th>
+                                    <th className="px-2 py-1.5">{t('dashboard.career.ovr_short', 'GEN')}</th>
+                                    <th className="px-2 py-1.5">{isDefensivePlayer ? t('dashboard.career.duels', 'Duels %') : t('dashboard.career.goals', 'Buts')}</th>
+                                    <th className="px-2 py-1.5">{isDefensivePlayer ? t('dashboard.career.clean_sheets', 'Clean Sheets') : t('dashboard.career.assists', 'Passes')}</th>
+                                    <th className="px-2 py-1.5">{t('dashboard.career.rating', 'Note')}</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -418,13 +421,13 @@ export function Dashboard({
                           <div className={`flex-1 bg-white/80 dark:bg-slate-900/80 p-3 rounded-2xl border shadow-inner text-center flex flex-col justify-center min-h-[90px] ${multiplayerContext.isCoopMode ? 'border-emerald-500/50' : 'border-cyan-500/50'}`}>
                             <h3 className={`heading-typography font-bold uppercase tracking-wider mb-2 text-[10px] md:text-xs flex items-center justify-center gap-1.5 ${multiplayerContext.isCoopMode ? 'text-emerald-600 dark:text-emerald-400' : 'text-cyan-600 dark:text-cyan-400'}`}>
                               {multiplayerContext.isCoopMode ? (
-                                <><span>🤝</span> Bilan Coop</>
+                                <><span>🤝</span> {t('dashboard.career.coop_summary', 'Bilan Coop')}</>
                               ) : (
-                                <><span>⚔️</span> Résultat Versus</>
+                                <><span>⚔️</span> {t('dashboard.career.versus_result', 'Résultat Versus')}</>
                               )}
                             </h3>
                             {!opponent.isRetired ? (
-                              <p className="text-slate-500 dark:text-slate-400 text-[10px] animate-pulse">Attente de {opponent.name}...</p>
+                              <p className="text-slate-500 dark:text-slate-400 text-[10px] animate-pulse">{t('dashboard.career.waiting_for', 'Attente de {{name}}...', { name: opponent.name })}</p>
                             ) : (
                               <div className="flex flex-col items-center">
                                 <div className="flex justify-between w-full items-center px-1">
@@ -444,14 +447,14 @@ export function Dashboard({
                                   if (multiplayerContext.isCoopMode) {
                                     return (
                                       <div className="mt-2 border-t border-slate-300/80 dark:border-slate-700/50 pt-1 w-full">
-                                        <p className="text-[8px] text-slate-500 dark:text-slate-400 uppercase font-bold mb-0.5">Score Total</p>
+                                        <p className="text-[8px] text-slate-500 dark:text-slate-400 uppercase font-bold mb-0.5">{t('dashboard.career.total_score', 'Score Total')}</p>
                                         <div className="text-emerald-600 dark:text-emerald-400 font-black text-base md:text-lg tracking-widest leading-none">{myScore + opScore}</div>
                                       </div>
                                     );
                                   } else {
-                                    if (myScore > opScore) return <div className="text-emerald-600 dark:text-emerald-400 font-black text-xs uppercase tracking-widest mt-1.5">Victoire ! 🏆</div>;
-                                    if (myScore < opScore) return <div className="text-rose-500 font-black text-xs uppercase tracking-widest mt-1.5">Défaite... 😭</div>;
-                                    return <div className="text-slate-600 dark:text-slate-300 font-black text-xs uppercase tracking-widest mt-1.5">Égalité 🤝</div>;
+                                    if (myScore > opScore) return <div className="text-emerald-600 dark:text-emerald-400 font-black text-xs uppercase tracking-widest mt-1.5">{t('dashboard.career.victory', 'Victoire ! 🏆')}</div>;
+                                    if (myScore < opScore) return <div className="text-rose-500 font-black text-xs uppercase tracking-widest mt-1.5">{t('dashboard.career.defeat', 'Défaite... 😭')}</div>;
+                                    return <div className="text-slate-600 dark:text-slate-300 font-black text-xs uppercase tracking-widest mt-1.5">{t('dashboard.career.draw', 'Égalité 🤝')}</div>;
                                   }
                                 })()}
                               </div>
@@ -470,14 +473,14 @@ export function Dashboard({
                       onClick={() => { playSound('click'); onPlayAsHeir(); }}
                       className="w-full py-3 md:py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white rounded-xl font-black text-sm md:text-base uppercase tracking-wider transition-all shadow-xl active:scale-95"
                     >
-                      Continuer avec son fils/sa fille 👶
+                      {t('dashboard.career.continue_with_heir', 'Continuer avec son fils/sa fille 👶')}
                     </button>
                   )}
                   <button
                     onClick={() => { playSound('click'); onRestartGame(); }}
                     className="w-full py-3 md:py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 rounded-xl font-black text-sm md:text-base uppercase tracking-wider transition-all shadow-xl active:scale-95"
                   >
-                    Retour au Menu Principal 🏠
+                    {t('dashboard.career.back_to_main_menu', 'Retour au Menu Principal 🏠')}
                   </button>
                 </div>
               </div>
@@ -491,19 +494,19 @@ export function Dashboard({
           <div className="max-w-4xl w-full z-10 flex flex-col justify-center py-8">
             <div className="text-center mb-2 md:mb-8 shrink-0">
               <h1 className="heading-typography text-xl md:text-4xl font-bold text-slate-800 dark:text-white tracking-tight drop-shadow-md">
-                Choisissez votre premier club
+                {t('dashboard.club_choice.choose_first_club', 'Choisissez votre premier club')}
               </h1>
               <p className="text-[10px] md:text-sm text-slate-600 dark:text-slate-300 font-normal mt-1 md:mt-2">
-                Démarrez votre carrière professionnelle
+                {t('dashboard.club_choice.start_pro_career', 'Démarrez votre carrière professionnelle')}
               </p>
             </div>
             <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-5 min-h-0 shrink">
               {(multiplayerContext?.isCoopMode && !multiplayerContext?.isHost) ? (
                 <div className="col-span-full w-full flex flex-col items-center justify-center p-8 bg-white/90 dark:bg-slate-800/80 rounded-2xl border border-slate-300 dark:border-slate-700">
                   <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                  <h2 className="text-xl font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-2">Pacte Frères d'Armes</h2>
+                  <h2 className="text-xl font-bold text-slate-800 dark:text-white uppercase tracking-wider mb-2">{t('dashboard.club_choice.coop_pact', 'Pacte Frères d\'Armes')}</h2>
                   <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400 text-center text-sm max-w-md">
-                    Votre capitaine (l'Hôte) est actuellement en train de négocier votre premier contrat avec les clubs formateurs. Préparez-vous à signer !
+                    {t('dashboard.club_choice.host_negotiating', 'Votre capitaine (l\'Hôte) est actuellement en train de négocier votre premier contrat avec les clubs formateurs. Préparez-vous à signer !')}
                   </p>
                 </div>
               ) : clubOffers.map((offer) => {
@@ -528,7 +531,7 @@ export function Dashboard({
                       className="heading-typography md:mt-6 py-2 px-3 md:py-3 md:px-4 rounded-lg md:rounded-xl font-semibold text-[9px] md:text-xs text-slate-800 dark:text-white shadow-md transition-transform active:scale-95 hover:brightness-110 tracking-wider uppercase shrink-0"
                       style={{ backgroundColor: offerTheme.btnBg }}
                     >
-                      Signer 📝
+                      {t('dashboard.club_choice.sign', 'Signer 📝')}
                     </button>
                   </div>
                 );
@@ -552,74 +555,74 @@ export function Dashboard({
             <div className="flex-1 space-y-2 md:space-y-5 w-full flex flex-col min-h-0 shrink -mt-16 md:mt-0">
               <div className="shrink-0 text-center md:text-left">
                 <span className="heading-typography text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm bg-white dark:bg-slate-900 text-slate-800 dark:text-white">
-                  Bilan de la Saison {season} • {club.name}
+                  {t('dashboard.season_summary.title', 'Bilan de la Saison {{season}} • {{clubName}}', { season, clubName: club.name })}
                 </span>
                 <h3 className="heading-typography text-lg md:text-2xl font-bold text-slate-800 dark:text-white mt-1 md:mt-4 leading-snug">{seasonStats.headline}</h3>
                 {player.injuryDuration > 0 && (
-                  <p className="text-xs font-medium text-rose-600 mt-2">🚑 Vous avez manqué quelques semaines pour cause de blessure.</p>
+                  <p className="text-xs font-medium text-rose-600 mt-2">🚑 {t('dashboard.season_summary.injury_missed_weeks', 'Vous avez manqué quelques semaines pour cause de blessure.')}</p>
                 )}
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-3">
                 <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
-                  <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Matchs</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">{t('dashboard.season_summary.matches', 'Matchs')}</span>
                   <span className="heading-typography text-lg font-bold text-slate-800 dark:text-white mt-0.5 block">{seasonStats.matches}</span>
                 </div>
 
                 {isDefensivePlayer ? (
                   <>
                     <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
-                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Duels %</span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">{t('dashboard.season_summary.duels', 'Duels %')}</span>
                       <span className="heading-typography text-lg font-bold text-blue-600 dark:text-blue-400 mt-0.5 block">{Math.min(99, Math.floor(65 + seasonStats.rating * 3.5))}%</span>
                     </div>
                     <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
-                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Clean Sheets</span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">{t('dashboard.season_summary.clean_sheets', 'Clean Sheets')}</span>
                       <span className="heading-typography text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block">{seasonStats.cleanSheets}</span>
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
-                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Buts</span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">{t('dashboard.season_summary.goals_short', 'Buts')}</span>
                       <span className="heading-typography text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block">{seasonStats.goals}</span>
                     </div>
                     <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
-                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Passes D.</span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">{t('dashboard.season_summary.assists_short', 'Passes D.')}</span>
                       <span className="heading-typography text-lg font-bold text-cyan-600 dark:text-cyan-400 mt-0.5 block">{seasonStats.assists}</span>
                     </div>
                   </>
                 )}
 
                 <div className="bg-white/90 dark:bg-slate-800/80 p-1.5 md:p-3 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 text-center shadow-inner">
-                  <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">Note Moy.</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider block">{t('dashboard.season_summary.avg_rating', 'Note Moy.')}</span>
                   <span className="heading-typography text-lg font-bold text-amber-600 dark:text-amber-400 mt-0.5 block">{seasonStats.rating}</span>
                 </div>
               </div>
 
               {seasonStats.financials && (
                 <div className="bg-white/90 dark:bg-slate-800/80 p-3 md:p-4 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 shadow-inner w-full mt-2 text-xs">
-                  <h4 className="font-bold text-amber-600 dark:text-amber-400 mb-2 uppercase tracking-wider text-[10px] md:text-xs">💰 Bilan Financier Annuel</h4>
+                  <h4 className="font-bold text-amber-600 dark:text-amber-400 mb-2 uppercase tracking-wider text-[10px] md:text-xs">💰 {t('dashboard.season_summary.financial_summary', 'Bilan Financier Annuel')}</h4>
                   <div className="space-y-1 md:space-y-1.5 font-mono text-[10px] md:text-xs">
                     <div className="flex justify-between text-slate-600 dark:text-slate-300">
-                      <span>Revenus (Salaire + Primes)</span>
+                      <span>{t('dashboard.season_summary.salary_bonuses', 'Revenus (Salaire + Primes)')}</span>
                       <span className="text-emerald-600 dark:text-emerald-400">+{(seasonStats.financials.salaryEarnings + seasonStats.financials.perfEarnings).toLocaleString()} €</span>
                     </div>
                     {(seasonStats.financials.sponsorEarnings > 0 || seasonStats.financials.inventoryEarnings > 0) && (
                       <div className="flex justify-between text-slate-600 dark:text-slate-300">
-                        <span>Sponsors & Investissements</span>
+                        <span>{t('dashboard.season_summary.sponsors', 'Sponsors & Investissements')}</span>
                         <span className="text-emerald-600 dark:text-emerald-400">+{(seasonStats.financials.sponsorEarnings + seasonStats.financials.inventoryEarnings).toLocaleString()} €</span>
                       </div>
                     )}
                     <div className="flex justify-between text-slate-600 dark:text-slate-300 border-t border-slate-300/80 dark:border-slate-700/50 pt-1 mt-1">
-                      <span>Impôts & Taxes (25%)</span>
+                      <span>{t('dashboard.season_summary.taxes', 'Impôts & Taxes (25%)')}</span>
                       <span className="text-rose-600 dark:text-rose-400">-{seasonStats.financials.taxes.toLocaleString()} €</span>
                     </div>
                     <div className="flex justify-between text-slate-600 dark:text-slate-300">
-                      <span>Train de vie (10%)</span>
+                      <span>{t('dashboard.season_summary.lifestyle_cost', 'Train de vie (10%)')}</span>
                       <span className="text-rose-600 dark:text-rose-400">-{seasonStats.financials.lifestyleCost.toLocaleString()} €</span>
                     </div>
                     <div className="flex justify-between font-bold text-slate-800 dark:text-white border-t border-slate-400 dark:border-slate-600 pt-1.5 mt-1.5 text-[11px] md:text-[13px]">
-                      <span>RÉSULTAT NET (BANQUE)</span>
+                      <span>{t('dashboard.season_summary.net_result', 'RÉSULTAT NET (BANQUE)')}</span>
                       <span className={seasonStats.financials.net >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}>
                         {seasonStats.financials.net > 0 ? "+" : ""}{seasonStats.financials.net.toLocaleString()} €
                       </span>
@@ -631,17 +634,17 @@ export function Dashboard({
 
               <div className="bg-white/90 dark:bg-slate-800/80 p-2 md:p-3.5 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 space-y-0.5 md:space-y-1 shadow-inner text-xs overflow-y-auto">
                 <p className="font-medium text-slate-800 dark:text-slate-100">📢 {seasonStats.promotionRelegationText}</p>
-                <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400">Classement final : <span className="heading-typography text-amber-600 dark:text-amber-400 font-semibold">{seasonStats.leaguePosition}e</span> | Gains : <span className="heading-typography text-emerald-600 dark:text-emerald-400 font-semibold">+{seasonStats.earnings} M€</span></p>
+                <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400">{t('dashboard.season_summary.final_rank', 'Classement final :')} <span className="heading-typography text-amber-600 dark:text-amber-400 font-semibold">{seasonStats.leaguePosition}e</span> | {t('dashboard.season_summary.earnings', 'Gains :')} <span className="heading-typography text-emerald-600 dark:text-emerald-400 font-semibold">+{seasonStats.earnings} M€</span></p>
                 {seasonStats.ballonDorRank && (
-                  <p className="text-slate-600 dark:text-slate-300 font-semibold mt-1">🌟 {seasonStats.ballonDorRank === 1 ? 'Vainqueur du Ballon d\'Or !' : `${seasonStats.ballonDorRank}ème au classement du Ballon d'Or`}</p>
+                  <p className="text-slate-600 dark:text-slate-300 font-semibold mt-1">🌟 {seasonStats.ballonDorRank === 1 ? t('dashboard.season_summary.ballon_dor_winner', 'Vainqueur du Ballon d\'Or !') : t('dashboard.season_summary.ballon_dor_rank', '{{rank}}ème au classement du Ballon d\'Or', { rank: seasonStats.ballonDorRank })}</p>
                 )}
               </div>
 
 
               {seasonStats.tournaments && (
                 <div className="bg-white/90 dark:bg-slate-800/80 p-2 md:p-3.5 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 shadow-inner text-xs space-y-1 md:space-y-1.5 hidden md:block">
-                  <p className="font-bold text-slate-800 dark:text-slate-100 mb-1 uppercase tracking-wider text-[10px]">Tournois Disputés</p>
-                  {seasonStats.tournaments.worldCup && <p className="text-slate-700 dark:text-slate-200">🌍 Coupe du Monde : <span className="font-semibold">{seasonStats.tournaments.worldCup.stage}</span></p>}
+                  <p className="font-bold text-slate-800 dark:text-slate-100 mb-1 uppercase tracking-wider text-[10px]">{t('dashboard.season_summary.tournaments_played', 'Tournois Disputés')}</p>
+                  {seasonStats.tournaments.worldCup && <p className="text-slate-700 dark:text-slate-200">🌍 {t('dashboard.season_summary.world_cup', 'Coupe du Monde')} : <span className="font-semibold">{seasonStats.tournaments.worldCup.stage}</span></p>}
                   {seasonStats.tournaments.euro && <p className="text-slate-700 dark:text-slate-200 flex items-center gap-1.5"><FlagIcon code="eu" className="w-4 h-3" /> Euro : <span className="font-semibold">{seasonStats.tournaments.euro.stage}</span></p>}
                   {seasonStats.tournaments.championsLeague && <p className="text-slate-700 dark:text-slate-200">⭐ Ligue des Champions : <span className="font-semibold">{seasonStats.tournaments.championsLeague.stage}</span></p>}
                   {seasonStats.tournaments.europaLeague && <p className="text-slate-700 dark:text-slate-200">🟠 Europa League : <span className="font-semibold">{seasonStats.tournaments.europaLeague.stage}</span></p>}
@@ -652,7 +655,7 @@ export function Dashboard({
 
               {seasonStats.statGains && Object.keys(seasonStats.statGains).length > 0 && (
                 <div className="bg-white/90 dark:bg-slate-800/80 p-2 md:p-4 rounded-2xl border border-slate-300/80 dark:border-slate-700/50 shadow-inner text-xs space-y-1.5 md:space-y-3 mt-1.5 md:mt-4">
-                  <p className="font-bold text-slate-800 dark:text-slate-100 mb-1 md:mb-2 uppercase tracking-wider text-[10px] md:text-[11px] border-b border-slate-300 dark:border-slate-700 pb-1 md:pb-2">Bilan de Progression Physique & Technique</p>
+                  <p className="font-bold text-slate-800 dark:text-slate-100 mb-1 md:mb-2 uppercase tracking-wider text-[10px] md:text-[11px] border-b border-slate-300 dark:border-slate-700 pb-1 md:pb-2">{t('dashboard.season_summary.progression_summary', 'Bilan de Progression Physique & Technique')}</p>
                   <div className="grid grid-cols-2 gap-3">
                     {Object.entries(seasonStats.statGains).map(([attr, gain]) => {
                       const labels = { pace: 'Vitesse', finishing: 'Tir', passing: 'Passe', dribbling: 'Dribble', defense: 'Défense', physical: 'Physique', diving: 'Plongeon', handling: 'Maniabilité', kicking: 'Jeu au pied', reflexes: 'Réflexes', positioning: 'Positionnement' };
@@ -682,14 +685,14 @@ export function Dashboard({
                   className="heading-typography flex-1 py-2.5 md:py-3.5 font-semibold text-slate-800 dark:text-white rounded-2xl shadow-lg transition-transform active:scale-95 hover:brightness-110 tracking-wider uppercase text-xs"
                   style={{ backgroundColor: theme.btnBg }}
                 >
-                  Continuer vers le Mercato 🚀
+                  {t('dashboard.season_summary.continue_mercato', 'Continuer vers le Mercato 🚀')}
                 </button>
                 {player.age >= 31 && (
                   <button
-                    onClick={() => { playSound('click'); if (window.confirm('Voulez-vous vraiment prendre votre retraite ?')) onRetire(); }}
+                    onClick={() => { playSound('click'); if (window.confirm(t('dashboard.season_summary.retire_confirm', 'Voulez-vous vraiment prendre votre retraite ?'))) onRetire(); }}
                     className="heading-typography flex-shrink-0 px-4 md:px-5 py-2.5 md:py-3.5 font-semibold text-slate-800 dark:text-white bg-rose-600 rounded-2xl shadow-lg transition-transform active:scale-95 hover:bg-rose-500 tracking-wider uppercase text-xs"
                   >
-                    Retraite 🛑
+                    {t('dashboard.season_summary.retire_btn', 'Retraite 🛑')}
                   </button>
                 )}
               </div>
@@ -703,18 +706,18 @@ export function Dashboard({
             {gameState.interactiveMatchFinalOutcome ? (
               <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/50 p-6 md:p-8 rounded-2xl text-center shadow-inner space-y-6">
                 <h3 className={`heading-typography text-3xl md:text-4xl font-black uppercase tracking-wider ${gameState.interactiveMatchFinalOutcome === 'win' ? 'text-emerald-500' : 'text-rose-500'}`}>
-                  {gameState.interactiveMatchFinalOutcome === 'win' ? 'Victoire !' : 'Défaite...'}
+                  {gameState.interactiveMatchFinalOutcome === 'win' ? t('dashboard.interactive_match.victory_title', 'Victoire !') : t('dashboard.interactive_match.defeat_title', 'Défaite...')}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed">
                   {gameState.interactiveMatchFinalOutcome === 'win'
-                    ? 'Vous avez brillé lors de ce match décisif. Cette performance restera dans les annales !'
-                    : 'Malheureusement, le match s\'est soldé par un échec. Il va falloir rebondir rapidement.'}
+                    ? t('dashboard.interactive_match.victory_desc', 'Vous avez brillé lors de ce match décisif. Cette performance restera dans les annales !')
+                    : t('dashboard.interactive_match.defeat_desc', 'Malheureusement, le match s\'est soldé par un échec. Il va falloir rebondir rapidement.')}
                 </p>
                 <button
                   onClick={() => { playSound('click'); onCloseInteractiveMatch(); }}
                   className="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3 md:py-4 rounded-xl transition-transform active:scale-95 shadow-lg uppercase tracking-wider text-sm"
                 >
-                  Fermer et continuer
+                  {t('dashboard.interactive_match.close_and_continue', 'Fermer et continuer')}
                 </button>
               </div>
             ) : (
@@ -725,7 +728,7 @@ export function Dashboard({
                       {interactiveMatchPhases[interactiveMatchCurrentPhaseIndex]?.time}
                     </span>
                     <span className="bg-white dark:bg-slate-800 text-amber-600 dark:text-amber-400 border border-amber-500/50 text-sm font-bold px-4 py-1 rounded-full tracking-widest">
-                      SCORE DU MATCH : {interactiveMatchScore > 0 ? `+${interactiveMatchScore}` : interactiveMatchScore}
+                      {t('dashboard.interactive_match.match_score', 'SCORE DU MATCH :')} {interactiveMatchScore > 0 ? `+${interactiveMatchScore}` : interactiveMatchScore}
                     </span>
                   </div>
                   <h2 className="text-3xl font-black mt-4">{interactiveMatchPhases[interactiveMatchCurrentPhaseIndex]?.title}</h2>
@@ -735,11 +738,11 @@ export function Dashboard({
                 {interactiveMatchResult ? (
                   <div className="bg-white dark:bg-slate-900 border border-slate-300/80 dark:border-slate-700/80 p-6 md:p-8 rounded-2xl text-center space-y-6 shadow-2xl backdrop-blur-md">
                     <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-wider ${interactiveMatchResult.success ? 'text-emerald-600 dark:text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]' : 'text-rose-600 dark:text-rose-400 drop-shadow-[0_0_15px_rgba(244,63,94,0.5)]'}`}>
-                      {interactiveMatchResult.success ? 'RÉUSSI !' : 'ÉCHEC...'}
+                      {interactiveMatchResult.success ? t('dashboard.interactive_match.success', 'RÉUSSI !') : t('dashboard.interactive_match.failed', 'ÉCHEC...')}
                     </h3>
                     <p className="text-base md:text-lg text-slate-700 dark:text-slate-200 font-semibold leading-relaxed">{interactiveMatchResult.narrative}</p>
                     <button onClick={() => { playSound('click'); onContinueFromInteractiveMatch(); }} className="w-full py-3.5 md:py-4 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-slate-800 dark:text-white rounded-xl font-bold text-base md:text-lg uppercase tracking-wider transition-all shadow-lg shadow-emerald-900/30">
-                      {interactiveMatchCurrentPhaseIndex < 2 ? 'Phase Suivante ➡️' : 'Fin du Match 🏁'}
+                      {interactiveMatchCurrentPhaseIndex < 2 ? t('dashboard.interactive_match.next_phase', 'Phase Suivante ➡️') : t('dashboard.interactive_match.end_match', 'Fin du Match 🏁')}
                     </button>
                   </div>
                 ) : (
