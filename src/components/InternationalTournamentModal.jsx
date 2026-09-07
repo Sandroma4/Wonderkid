@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const STAGES = [
   { id: 'SEIZIEMES', name: 'Seizièmes de finale', difficulty: 1.0 },
@@ -8,7 +9,7 @@ const STAGES = [
   { id: 'FINALE', name: 'Finale', difficulty: 2.2 }
 ];
 
-const getTournamentEvents = (player, tournamentName) => {
+const getTournamentEvents = (player, tournamentName, t) => {
   const pos = (player?.position || '').toUpperCase();
   const isGk = pos.includes('GK') || pos.includes('GB') || pos.includes('GARDIEN');
   const isDef = pos.includes('DEF') || pos.includes('DC') || pos.includes('DD') || pos.includes('DG');
@@ -17,69 +18,69 @@ const getTournamentEvents = (player, tournamentName) => {
 
   let events = [
     {
-      title: "Séance de tirs au but",
-      desc: "Le match s'éternise. C'est l'heure des tirs au but. Le coach vous regarde droit dans les yeux.",
+      title: t('international.events.penalties_title', "Séance de tirs au but"),
+      desc: t('international.events.penalties_desc', "Le match s'éternise. C'est l'heure des tirs au but. Le coach vous regarde droit dans les yeux."),
       options: [
-        { text: "Prendre le penalty décisif", type: 'MENTAL', baseSuccess: 0.6 },
-        { text: "Tirer en premier", type: 'LEADER', baseSuccess: 0.65 },
-        { text: "Tenter une panenka risquée", type: 'TECHNIQUE', baseSuccess: 0.4 },
-        { text: "Laisser un coéquipier tirer", type: 'NEUTRE', baseSuccess: 0.5 }
+        { text: t('international.events.penalties_opt1', "Prendre le penalty décisif"), type: 'MENTAL', baseSuccess: 0.6 },
+        { text: t('international.events.penalties_opt2', "Tirer en premier"), type: 'LEADER', baseSuccess: 0.65 },
+        { text: t('international.events.penalties_opt3', "Tenter une panenka risquée"), type: 'TECHNIQUE', baseSuccess: 0.4 },
+        { text: t('international.events.penalties_opt4', "Laisser un coéquipier tirer"), type: 'NEUTRE', baseSuccess: 0.5 }
       ]
     },
     {
-      title: "Le discours de la mi-temps",
-      desc: "L'équipe est menée 1-0 à la mi-temps. Le vestiaire est silencieux et abattu.",
+      title: t('international.events.halftime_title', "Le discours de la mi-temps"),
+      desc: t('international.events.halftime_desc', "L'équipe est menée 1-0 à la mi-temps. Le vestiaire est silencieux et abattu."),
       options: [
-        { text: "Pousser une gueulante", type: 'LEADER', baseSuccess: 0.7 },
-        { text: "Se concentrer sur sa tactique", type: 'TACTIQUE', baseSuccess: 0.6 },
-        { text: "Rassurer les jeunes", type: 'MENTAL', baseSuccess: 0.65 },
-        { text: "Se préparer physiquement", type: 'PHYSIQUE', baseSuccess: 0.55 }
+        { text: t('international.events.halftime_opt1', "Pousser une gueulante"), type: 'LEADER', baseSuccess: 0.7 },
+        { text: t('international.events.halftime_opt2', "Se concentrer sur sa tactique"), type: 'TACTIQUE', baseSuccess: 0.6 },
+        { text: t('international.events.halftime_opt3', "Rassurer les jeunes"), type: 'MENTAL', baseSuccess: 0.65 },
+        { text: t('international.events.halftime_opt4', "Se préparer physiquement"), type: 'PHYSIQUE', baseSuccess: 0.55 }
       ]
     }
   ];
 
   if (isGk) {
     events.push({
-      title: `Arrêt décisif en ${tournamentName}`,
-      desc: "L'attaquant adverse se présente seul face à vous à la 89ème minute !",
+      title: t('international.events.gk_title', "Arrêt décisif en {{tournamentName}}", { tournamentName }),
+      desc: t('international.events.gk_desc', "L'attaquant adverse se présente seul face à vous à la 89ème minute !"),
       options: [
-        { text: "Sortir vite dans ses pieds", type: 'PHYSIQUE', baseSuccess: 0.65 },
-        { text: "Rester sur ses appuis et attendre", type: 'MENTAL', baseSuccess: 0.7 },
-        { text: "Anticiper une frappe croisée", type: 'TACTIQUE', baseSuccess: 0.6 },
-        { text: "Tenter une parade réflexe", type: 'TECHNIQUE', baseSuccess: 0.65 }
+        { text: t('international.events.gk_opt1', "Sortir vite dans ses pieds"), type: 'PHYSIQUE', baseSuccess: 0.65 },
+        { text: t('international.events.gk_opt2', "Rester sur ses appuis et attendre"), type: 'MENTAL', baseSuccess: 0.7 },
+        { text: t('international.events.gk_opt3', "Anticiper une frappe croisée"), type: 'TACTIQUE', baseSuccess: 0.6 },
+        { text: t('international.events.gk_opt4', "Tenter une parade réflexe"), type: 'TECHNIQUE', baseSuccess: 0.65 }
       ]
     });
   } else if (isDef) {
     events.push({
-      title: `Sauvetage sur la ligne en ${tournamentName}`,
-      desc: "Le gardien est battu, le ballon se dirige vers le but vide...",
+      title: t('international.events.def_title', "Sauvetage sur la ligne en {{tournamentName}}", { tournamentName }),
+      desc: t('international.events.def_desc', "Le gardien est battu, le ballon se dirige vers le but vide..."),
       options: [
-        { text: "Tacle glissé désespéré", type: 'PHYSIQUE', baseSuccess: 0.6 },
-        { text: "Lecture de la trajectoire", type: 'TACTIQUE', baseSuccess: 0.75 },
-        { text: "Dégagement acrobatique", type: 'TECHNIQUE', baseSuccess: 0.5 },
-        { text: "Faire confiance au gardien", type: 'NEUTRE', baseSuccess: 0.3 }
+        { text: t('international.events.def_opt1', "Tacle glissé désespéré"), type: 'PHYSIQUE', baseSuccess: 0.6 },
+        { text: t('international.events.def_opt2', "Lecture de la trajectoire"), type: 'TACTIQUE', baseSuccess: 0.75 },
+        { text: t('international.events.def_opt3', "Dégagement acrobatique"), type: 'TECHNIQUE', baseSuccess: 0.5 },
+        { text: t('international.events.def_opt4', "Faire confiance au gardien"), type: 'NEUTRE', baseSuccess: 0.3 }
       ]
     });
   } else if (isMid) {
     events.push({
-      title: `Passe clé en ${tournamentName}`,
-      desc: "Vous récupérez le ballon au milieu. Une brèche s'ouvre dans la défense adverse.",
+      title: t('international.events.mid_title', "Passe clé en {{tournamentName}}", { tournamentName }),
+      desc: t('international.events.mid_desc', "Vous récupérez le ballon au milieu. Une brèche s'ouvre dans la défense adverse."),
       options: [
-        { text: "Lancer l'attaquant en profondeur", type: 'TACTIQUE', baseSuccess: 0.7 },
-        { text: "Percer la ligne balle au pied", type: 'TECHNIQUE', baseSuccess: 0.6 },
-        { text: "Garder la possession", type: 'NEUTRE', baseSuccess: 0.8 },
-        { text: "Tenter une frappe lointaine", type: 'PHYSIQUE', baseSuccess: 0.45 }
+        { text: t('international.events.mid_opt1', "Lancer l'attaquant en profondeur"), type: 'TACTIQUE', baseSuccess: 0.7 },
+        { text: t('international.events.mid_opt2', "Percer la ligne balle au pied"), type: 'TECHNIQUE', baseSuccess: 0.6 },
+        { text: t('international.events.mid_opt3', "Garder la possession"), type: 'NEUTRE', baseSuccess: 0.8 },
+        { text: t('international.events.mid_opt4', "Tenter une frappe lointaine"), type: 'PHYSIQUE', baseSuccess: 0.45 }
       ]
     });
   } else {
     events.push({
-      title: `Balle de match en ${tournamentName}`,
-      desc: "Dernière minute, vous recevez un centre parfait dans la surface de réparation.",
+      title: t('international.events.att_title', "Balle de match en {{tournamentName}}", { tournamentName }),
+      desc: t('international.events.att_desc', "Dernière minute, vous recevez un centre parfait dans la surface de réparation."),
       options: [
-        { text: "Reprise de volée puissante", type: 'TECHNIQUE', baseSuccess: 0.55 },
-        { text: "Tête piquée décroisée", type: 'PHYSIQUE', baseSuccess: 0.65 },
-        { text: "Contrôle et frappe placée", type: 'MENTAL', baseSuccess: 0.7 },
-        { text: "Remise pour un partenaire", type: 'TACTIQUE', baseSuccess: 0.75 }
+        { text: t('international.events.att_opt1', "Reprise de volée puissante"), type: 'TECHNIQUE', baseSuccess: 0.55 },
+        { text: t('international.events.att_opt2', "Tête piquée décroisée"), type: 'PHYSIQUE', baseSuccess: 0.65 },
+        { text: t('international.events.att_opt3', "Contrôle et frappe placée"), type: 'MENTAL', baseSuccess: 0.7 },
+        { text: t('international.events.att_opt4', "Remise pour un partenaire"), type: 'TACTIQUE', baseSuccess: 0.75 }
       ]
     });
   }
@@ -107,6 +108,7 @@ const getNationalColors = (originCode) => {
 };
 
 export const InternationalTournamentModal = ({ player, season, type, onComplete }) => {
+  const { t } = useTranslation();
   const [stageIndex, setStageIndex] = useState(0);
   const [tournamentStats, setTournamentStats] = useState({ goals: 0, assists: 0 });
   const [event, setEvent] = useState(null);
@@ -135,7 +137,7 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
   }, [stageIndex]);
 
   const generateEventForStage = () => {
-    const events = getTournamentEvents(player, tournamentName);
+    const events = getTournamentEvents(player, tournamentName, t);
     const randomEvent = events[Math.floor(Math.random() * events.length)];
     setEvent(randomEvent);
     setResultText(null);
@@ -163,14 +165,14 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
 
       if (stageIndex === STAGES.length - 1) {
         const titleName = tournamentName === 'Euro' ? "la Coupe d'Europe 🇪🇺" : `la ${tournamentName}`;
-        setResultText(`🏆 Masterclass ! Vous remportez ${titleName} !`);
+        setResultText(t('international.win', "🏆 Masterclass ! Vous remportez {{title}} !", { title: titleName }));
         setWon(true);
       } else {
-        setResultText(`✅ Succès ! L'équipe nationale se qualifie pour le tour suivant !`);
+        setResultText(t('international.progress', "✅ Succès ! L'équipe nationale se qualifie pour le tour suivant !"));
       }
     } else {
       const titleName = tournamentName === 'Euro' ? "la Coupe d'Europe 🇪🇺" : `la ${tournamentName}`;
-      setResultText(`❌ Échec. L'équipe nationale est éliminée de ${titleName}...`);
+      setResultText(t('international.eliminate', "❌ Échec. L'équipe nationale est éliminée de {{title}}...", { title: titleName }));
       setEliminated(true);
     }
     
@@ -221,7 +223,7 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
           </h2>
           <div className="inline-block bg-black/50 backdrop-blur-md px-6 py-2 rounded-full border border-white/10 shadow-inner">
             <span className="font-bold tracking-widest uppercase text-sm" style={{ color: nationalColors.secondary || '#fff' }}>
-              {STAGES[stageIndex].name}
+              {t(`tournaments.stages.${STAGES[stageIndex].id}`, STAGES[stageIndex].name)}
             </span>
           </div>
         </div>
@@ -248,7 +250,7 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <span className="relative z-10 shrink-0 flex items-center justify-center min-w-[100px] px-3 py-1.5 bg-black/60 text-slate-300 text-[10px] md:text-xs font-black uppercase tracking-wider rounded-lg mb-2 md:mb-0 md:mr-4 border border-white/5">
-                        {opt.type}
+                        {t(`international.types.${opt.type}`, opt.type)}
                       </span>
                       <span className="relative z-10 text-white font-semibold text-sm md:text-base drop-shadow-sm">
                         {opt.text}
@@ -266,15 +268,15 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
                 </h3>
                 
                 <div className="bg-black/40 backdrop-blur-md p-6 rounded-xl border border-white/10 mb-8 inline-block min-w-[250px] shadow-lg">
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Statistiques du Tournoi</p>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">{t('international.stats_title', 'Statistiques du Tournoi')}</p>
                   <div className="flex justify-center gap-10">
                     <div className="text-center">
                       <span className="block text-4xl font-black text-white drop-shadow-sm">{tournamentStats.goals}</span>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Buts</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('international.goals', 'Buts')}</span>
                     </div>
                     <div className="text-center">
                       <span className="block text-4xl font-black text-white drop-shadow-sm">{tournamentStats.assists}</span>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Passes</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{t('international.assists', 'Passes')}</span>
                     </div>
                   </div>
                 </div>
@@ -283,7 +285,7 @@ export const InternationalTournamentModal = ({ player, season, type, onComplete 
                   onClick={nextStage}
                   className={`w-full p-4 rounded-xl font-black text-lg text-white shadow-xl transition-all duration-300 hover:-translate-y-1 ${eliminated || won ? 'bg-amber-600 hover:bg-amber-500 shadow-amber-900/50' : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-900/50'}`}
                 >
-                  {eliminated || won ? 'Terminer le tournoi' : 'Passer au tour suivant'}
+                  {eliminated || won ? t('international.finish_btn', 'Terminer le tournoi') : t('international.next_btn', 'Passer au tour suivant')}
                 </button>
               </div>
             )}

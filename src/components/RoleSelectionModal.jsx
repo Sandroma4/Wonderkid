@@ -1,7 +1,9 @@
 import React from 'react';
 import { ROLES_DATA } from '../utils/rolesData';
+import { useTranslation } from 'react-i18next';
 
 export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
+  const { t } = useTranslation();
   // Déterminer la catégorie de position
   let posKey = 'ATT';
   const pos = (playerPosition || '').toUpperCase();
@@ -26,13 +28,13 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
         <div className="text-center mb-4 md:mb-8 mt-0">
           <span className="text-4xl md:text-5xl mb-2 md:mb-4 block drop-shadow-lg">👑</span>
           <h2 className="heading-typography text-lg md:text-3xl font-black text-slate-800 dark:text-white uppercase tracking-widest mb-3">
-            18 Ans : L'Âge de Raison
+            {t('role_selection.title', '18 Ans : L\'Âge de Raison')}
           </h2>
           <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
-            Il est temps de définir votre style de jeu. Choisissez votre{' '}
-            <span className="text-amber-600 dark:text-amber-400 font-bold">Rôle de prédilection</span>.
+            {t('role_selection.desc_1', 'Il est temps de définir votre style de jeu. Choisissez votre')} {' '}
+            <span className="text-amber-600 dark:text-amber-400 font-bold">{t('role_selection.role_of_choice', 'Rôle de prédilection')}</span>.
             <br/>
-            <span className="text-slate-500 dark:text-slate-500 text-xs mt-1 block">Ce bonus s'applique passivement tout au long de votre carrière.</span>
+            <span className="text-slate-500 dark:text-slate-500 text-xs mt-1 block">{t('role_selection.desc_2', 'Ce bonus s\'applique passivement tout au long de votre carrière.')}</span>
           </p>
         </div>
 
@@ -42,8 +44,12 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
             const negativeMultipliers = Object.entries(role.multipliers).filter(([, v]) => v < 1);
 
             const statLabels = {
-              pace: 'Vitesse', finishing: 'Tir', passing: 'Passe',
-              dribbling: 'Dribble', defense: 'Défense', physical: 'Physique'
+              pace: t('stats.pace', 'Vitesse'), 
+              finishing: t('stats.finishing', 'Tir'), 
+              passing: t('stats.passing', 'Passe'),
+              dribbling: t('stats.dribbling', 'Dribble'), 
+              defense: t('stats.defense', 'Défense'), 
+              physical: t('stats.physical', 'Physique')
             };
 
             return (
@@ -61,10 +67,10 @@ export const RoleSelectionModal = ({ onSelect, playerPosition }) => {
                 
                 <div className="flex flex-col flex-1 relative z-10">
                   <h3 className="heading-typography font-black text-slate-800 dark:text-white mb-0.5 sm:mb-1 text-[10px] sm:text-sm">
-                    {role.name}
+                    {t(`roles.${role.id}.name`, role.name)}
                   </h3>
                   <p className="text-[9px] sm:text-[11px] text-slate-500 dark:text-slate-500 dark:text-slate-400 mb-1.5 sm:mb-3 leading-tight hidden sm:block">
-                    {role.desc}
+                    {t(`roles.${role.id}.desc`, role.desc)}
                   </p>
                   
                   <div className="mt-1 sm:mt-auto w-full flex flex-wrap justify-center gap-1 sm:gap-1.5">
