@@ -55,10 +55,10 @@ import { Leaderboard } from './components/Leaderboard';
 import { CardCollection } from './components/CardCollection';
 import { ClashLobby } from './components/ClashLobby';
 import { CosmeticsStore } from './components/CosmeticsStore';
-
-
+import { useTranslation } from 'react-i18next';
 
 export default function App() {
+  const { t } = useTranslation();
   const [viewHistory, setViewHistory] = useState(['mainMenu']);
   const appView = viewHistory[viewHistory.length - 1];
 
@@ -158,11 +158,11 @@ export default function App() {
             multiplayerContext.roomObj.updateState({ eventsFinished: false });
           }
         } else if (payload.type === 'PLAYER_QUIT') {
-          alert("L'autre joueur a quitté la partie.");
+          alert(t('app.player_quit', "L'autre joueur a quitté la partie."));
           handleRestartGame();
         } else if (payload.type === 'COOP_CONSEQUENCE') {
           const { narrative, stats } = payload.effect;
-          alert(`📢 INTERACTION COOP :\n\n${narrative}`);
+          alert(t('app.coop_interaction', '📢 INTERACTION COOP :\n\n{{narrative}}', { narrative }));
           
           setGameState(prev => {
             if (!prev) return prev;
@@ -366,7 +366,7 @@ export default function App() {
     };
     tempPlayer.ovr = calculateOVR(tempPlayer);
     tempPlayer = updatePlayerBestCard(tempPlayer, null);
-    tempPlayer.statusText = "Joueur en phase d'intégration 🟡";
+    tempPlayer.statusText = t('app.status_integration', "Joueur en phase d'intégration 🟡");
 
     const clubOffers = generate6ClubOffers(tempPlayer);
     const initialCompletedEvents = [];
@@ -654,11 +654,11 @@ export default function App() {
     // Vérification de la confiance du coach à 0%
     if (updatedPlayer.coachTrust !== undefined && updatedPlayer.coachTrust <= 0) {
       updatedPlayer.morale = 0;
-      updatedPlayer.statusText = "Banni de l'équipe première (Transfert forcé)";
+      updatedPlayer.statusText = t('app.status_banned', "Banni de l'équipe première (Transfert forcé)");
       if (!updatedPlayer.bannedAtEventStep) {
           updatedPlayer.bannedAtEventStep = prev.eventStep;
       }
-      outcomeWithConverted.narrative = (outcomeWithConverted.narrative || "") + "\n\n🚨 RUPTURE TOTALE : Le coach ne vous fait plus aucune confiance ! Vous êtes banni de l'équipe première et placé sur la liste des transferts (Moral tombé à 0).";
+      outcomeWithConverted.narrative = (outcomeWithConverted.narrative || "") + "\n\n" + t('app.narrative_banned', "🚨 RUPTURE TOTALE : Le coach ne vous fait plus aucune confiance ! Vous êtes banni de l'équipe première et placé sur la liste des transferts (Moral tombé à 0).");
     }
 
     if (outcomeWithConverted.coopEffect && multiplayerContext?.roomObj) {
