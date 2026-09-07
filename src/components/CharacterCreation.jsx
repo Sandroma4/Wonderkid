@@ -4,6 +4,7 @@ import { playSound } from '../utils/audio';
 import { COUNTRIES, GENDERS, ORIGINS_BACKGROUNDS, POSITIONS_DATA, LIFESTYLES, CHALLENGES_LIST, getRandomName, generateYoungPlayerStats, calculateOVR } from '../utils/gameData';
 import { supabase } from '../supabaseClient';
 import { getAccountData } from '../utils/storage';
+import { useTranslation } from 'react-i18next';
 
 const getEthnicityFolders = (countryId) => {
   const m = {
@@ -70,6 +71,7 @@ const getContinentForCountry = (countryId) => {
 };
 
 export function CharacterCreation({ onStartGame, multiplayerContext }) {
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const totalSteps = 7;
 
@@ -236,17 +238,17 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
       <div className="w-full max-w-2xl bg-white/90 dark:bg-slate-900/90 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl relative overflow-hidden z-10 my-auto">
         <div className="flex flex-col items-center justify-center p-12 text-center space-y-6">
           <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-white tracking-widest uppercase">En attente du joueur 2...</h2>
-          <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400">Ton rival est encore en train de lacer ses crampons.</p>
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-white tracking-widest uppercase">{t('creation.waiting_p2')}</h2>
+          <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400">{t('creation.rival_lacing_boots')}</p>
           <button
             onClick={() => {
-              if (window.confirm("Êtes-vous sûr de vouloir quitter le 1v1 ?")) {
+              if (window.confirm(t('creation.confirm_quit_1v1'))) {
                 if (onRestartGame) onRestartGame();
               }
             }}
             className="mt-6 px-6 py-2 bg-rose-600 hover:bg-rose-500 text-slate-800 dark:text-white font-bold rounded-xl text-sm tracking-wider uppercase transition-colors border border-rose-500/50"
           >
-            Quitter le 1v1
+            {t('creation.quit_1v1')}
           </button>
         </div>
       </div>
@@ -260,21 +262,21 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
         </div>
 
         <div className="text-center mb-5 sm:mb-6 mt-1 sm:mt-2 space-y-1">
-          <span className="text-emerald-600 dark:text-emerald-400 text-[10px] font-black tracking-widest uppercase">Étape {step} sur {totalSteps}</span>
+          <span className="text-emerald-600 dark:text-emerald-400 text-[10px] font-black tracking-widest uppercase">{t('creation.step_of', { step, total: totalSteps })}</span>
           <h1 className="text-xl sm:text-3xl font-black text-slate-800 dark:text-white">
-            {step === 1 && "Nationalité"}
-            {step === 2 && "Sexe & Identité"}
-            {step === 3 && "Origine Sociale"}
-            {step === 4 && "Poste sur le terrain"}
-            {step === 5 && "Hygiène de Vie"}
-            {step === 6 && "Confirmation de Carrière"}
+            {step === 1 && t('creation.nationality_title')}
+            {step === 2 && t('creation.gender_identity_title')}
+            {step === 3 && t('creation.social_origin_title')}
+            {step === 4 && t('creation.position_title')}
+            {step === 5 && t('creation.lifestyle_title')}
+            {step === 6 && t('creation.career_confirmation_title')}
           </h1>
         </div>
 
         <div className="min-h-[300px]">
           {step === 1 && (
             <div className="space-y-4">
-              <label className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase block mb-3 text-center">Choisissez la nationalité de votre joueur</label>
+              <label className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase block mb-3 text-center">{t('creation.choose_nationality')}</label>
               <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-4">
                 {Object.keys(CONTINENTS).map((continent) => (
                   <button
@@ -306,7 +308,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
           {step === 2 && (
             <div className="space-y-5 sm:space-y-6">
               <div>
-                <label className="text-xs font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase block mb-3 text-center">Sexe du joueur</label>
+                <label className="text-xs font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase block mb-3 text-center">{t('creation.gender_label')}</label>
                 <div className="grid grid-cols-2 gap-2 sm:gap-4">
                   {GENDERS.map((g) => {
                     const isSelected = gender.id === g.id;
@@ -348,7 +350,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase block mb-2 text-center">Nom généré ({country.name})</label>
+                <label className="text-xs font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase block mb-2 text-center">{t('creation.generated_name')} ({country.name})</label>
                 <div className="flex gap-2 max-w-sm mx-auto">
                   <input
                     type="text"
@@ -371,7 +373,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                 onClick={() => { playSound('click'); setStep(3); }}
                 className="w-full max-w-sm mx-auto block py-3 mt-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-800 dark:text-slate-100 font-black text-xs uppercase tracking-wider transition-all shadow-lg active:scale-95"
               >
-                Suivant ➔
+                {t('creation.next')}
               </button>
             </div>
           )}
@@ -391,7 +393,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                   </div>
                   <p className="text-[10px] leading-tight text-slate-500 dark:text-slate-500 dark:text-slate-400 mb-2">{bg.desc}</p>
                   <div className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">
-                    💰 Budget initial : {bg.startingMoney.toLocaleString()} €
+                    {t('creation.initial_budget', { budget: bg.startingMoney.toLocaleString() })}
                   </div>
                 </button>
               ))}
@@ -418,13 +420,13 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
               ) : (
                 <div className="space-y-3">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium">Spécialité :</span>
+                    <span className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 font-medium">{t('creation.specialty')}</span>
                     <button
                       type="button"
                       onClick={() => { playSound('click'); setSelectedPositionCat(null); }}
                       className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline font-bold"
                     >
-                      ← Changer de poste
+                      {t('creation.change_position')}
                     </button>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[300px] overflow-y-auto pr-1">
@@ -481,7 +483,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                     <div>
                       <div className="font-extrabold text-sm text-slate-800 dark:text-white group-hover:text-emerald-400 flex items-center gap-2">
                         {chal.name}
-                        {chal.multiplier > 1 && <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded text-[9px] uppercase font-black">Score x{chal.multiplier}</span>}
+                        {chal.multiplier > 1 && <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded text-[9px] uppercase font-black">{t('creation.score_multiplier', { multiplier: chal.multiplier })}</span>}
                       </div>
                       <div className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{chal.desc}</div>
                     </div>
@@ -500,10 +502,10 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                 <h2 className="text-xl font-black text-slate-800 dark:text-white">{playerName}</h2>
                 <p className="text-emerald-600 dark:text-emerald-400 font-bold text-xs">{positionName} • {role ? role.name : ''}</p>
                 <div className="mt-3 pt-3 border-t border-slate-800/80 text-[11px] text-slate-600 dark:text-slate-300 grid grid-cols-2 gap-2 text-left">
-                  <p>Sexe : <strong className="text-slate-800 dark:text-white">{gender.name}</strong></p>
-                  <p>Origine : <strong className="text-slate-800 dark:text-white">{background.name}</strong></p>
-                  <p>Hygiène : <strong className="text-slate-800 dark:text-white">{lifestyle.name}</strong></p>
-                  <p>Défi : <strong className="text-slate-800 dark:text-white">{challenge ? challenge.name : 'Aucun'}</strong></p>
+                  <p>{t('creation.gender_label_summary')} <strong className="text-slate-800 dark:text-white">{gender.name}</strong></p>
+                  <p>{t('creation.origin_label_summary')} <strong className="text-slate-800 dark:text-white">{background.name}</strong></p>
+                  <p>{t('creation.hygiene_label_summary')} <strong className="text-slate-800 dark:text-white">{lifestyle.name}</strong></p>
+                  <p>{t('creation.challenge_label_summary')} <strong className="text-slate-800 dark:text-white">{challenge ? challenge.name : t('creation.none')}</strong></p>
                 </div>
               </div>
 
@@ -512,7 +514,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
                 onClick={() => handleFinish()}
                 className="w-full max-w-md mx-auto block py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-800 dark:text-slate-100 font-black text-xs uppercase tracking-wider hover:scale-[1.02] transition-all shadow-xl shadow-emerald-500/20 active:scale-95"
               >
-                Commencer ma carrière
+                {t('creation.start_career')}
               </button>
             </div>
           )}
@@ -531,7 +533,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
               }}
               className="text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white text-xs font-bold transition-colors flex items-center gap-1"
             >
-              ← Revenir à l'étape précédente
+              {t('creation.back_previous')}
             </button>
           )}
         </div>

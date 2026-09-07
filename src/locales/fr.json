@@ -43,5 +43,33 @@
     "switch_theme_light": "Passer en Mode Clair",
     "switch_theme_dark": "Passer en Mode Sombre",
     "language": "Langue"
+  },
+  "creation": {
+    "waiting_p2": "En attente du joueur 2...",
+    "rival_lacing_boots": "Ton rival est encore en train de lacer ses crampons.",
+    "confirm_quit_1v1": "Êtes-vous sûr de vouloir quitter le 1v1 ?",
+    "quit_1v1": "Quitter le 1v1",
+    "step_of": "Étape {{step}} sur {{total}}",
+    "nationality_title": "Nationalité",
+    "gender_identity_title": "Sexe & Identité",
+    "social_origin_title": "Origine Sociale",
+    "position_title": "Poste sur le terrain",
+    "lifestyle_title": "Hygiène de Vie",
+    "career_confirmation_title": "Confirmation de Carrière",
+    "choose_nationality": "Choisissez la nationalité de votre joueur",
+    "gender_label": "Sexe du joueur",
+    "generated_name": "Nom généré",
+    "next": "Suivant ➔",
+    "initial_budget": "💰 Budget initial : {{budget}} €",
+    "specialty": "Spécialité :",
+    "change_position": "← Changer de poste",
+    "score_multiplier": "Score x{{multiplier}}",
+    "gender_label_summary": "Sexe :",
+    "origin_label_summary": "Origine :",
+    "hygiene_label_summary": "Hygiène :",
+    "challenge_label_summary": "Défi :",
+    "none": "Aucun",
+    "start_career": "Commencer ma carrière",
+    "back_previous": "← Revenir à l'étape précédente"
   }
 }

@@ -43,5 +43,33 @@
     "switch_theme_light": "Switch to Light Mode",
     "switch_theme_dark": "Switch to Dark Mode",
     "language": "Language"
+  },
+  "creation": {
+    "waiting_p2": "Waiting for player 2...",
+    "rival_lacing_boots": "Your rival is still lacing their boots.",
+    "confirm_quit_1v1": "Are you sure you want to quit the 1v1?",
+    "quit_1v1": "Quit 1v1",
+    "step_of": "Step {{step}} of {{total}}",
+    "nationality_title": "Nationality",
+    "gender_identity_title": "Gender & Identity",
+    "social_origin_title": "Social Origin",
+    "position_title": "Position",
+    "lifestyle_title": "Lifestyle",
+    "career_confirmation_title": "Career Confirmation",
+    "choose_nationality": "Choose your player's nationality",
+    "gender_label": "Player's gender",
+    "generated_name": "Generated name",
+    "next": "Next ➔",
+    "initial_budget": "💰 Initial budget: €{{budget}}",
+    "specialty": "Specialty:",
+    "change_position": "← Change position",
+    "score_multiplier": "Score x{{multiplier}}",
+    "gender_label_summary": "Gender:",
+    "origin_label_summary": "Origin:",
+    "hygiene_label_summary": "Lifestyle:",
+    "challenge_label_summary": "Challenge:",
+    "none": "None",
+    "start_career": "Start my career",
+    "back_previous": "← Go back to previous step"
   }
 }
