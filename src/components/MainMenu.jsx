@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FriendsModal } from './FriendsModal';
 import { AccountShopModal } from './AccountShopModal';
+import { FlagIcon } from './FlagIcon';
 
 export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChallenges }) => {
   const { t, i18n } = useTranslation();
@@ -157,7 +158,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
   };
 
   return (
-    <div className="min-h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-[4vh] md:pt-[20vh] px-6 pb-6 relative overflow-hidden font-sans">
+    <div className="min-h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-[4vh] md:pt-[6vh] px-6 pb-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Pitch Markings - Left (Penalty Area) */}
@@ -256,9 +257,19 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             <h2 className="heading-typography text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 uppercase tracking-wider text-center">{t('menu.account_settings')}</h2>
             
             {/* Language Switcher */}
-            <div className="flex justify-center items-center gap-4 mb-4">
-              <button onClick={() => i18n.changeLanguage('fr')} className={`text-2xl transition-transform ${i18n.language === 'fr' ? 'scale-125 saturate-100' : 'saturate-50 opacity-60'}`}>🇫🇷</button>
-              <button onClick={() => i18n.changeLanguage('en')} className={`text-2xl transition-transform ${i18n.language === 'en' || i18n.language.startsWith('en') ? 'scale-125 saturate-100' : 'saturate-50 opacity-60'}`}>🇬🇧</button>
+            <div className="flex justify-center items-center gap-6 mb-6">
+              <button 
+                onClick={() => i18n.changeLanguage('fr')} 
+                className={`transition-all duration-300 ${i18n.language === 'fr' ? 'scale-125 ring-2 ring-emerald-500 rounded' : 'opacity-50 hover:opacity-80'}`}
+              >
+                <FlagIcon code="fr" className="w-8 h-6 rounded-sm shadow-md" />
+              </button>
+              <button 
+                onClick={() => i18n.changeLanguage('en')} 
+                className={`transition-all duration-300 ${i18n.language === 'en' || i18n.language.startsWith('en') ? 'scale-125 ring-2 ring-emerald-500 rounded' : 'opacity-50 hover:opacity-80'}`}
+              >
+                <FlagIcon code="gb" className="w-8 h-6 rounded-sm shadow-md" />
+              </button>
             </div>
 
             {!user ? (
