@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
-import { supabase } from '../supabaseClient';
 import { playSound } from '../utils/audio';
 import { useTranslation } from 'react-i18next';
 

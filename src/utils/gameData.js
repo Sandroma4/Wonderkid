@@ -1190,6 +1190,10 @@ export const ALL_CLUBS = [
   { id: 'SN_OUA', ovr: 59, name: 'US Ouakam', origin: 'SN', primary: '#000000', secondary: '#FFFFFF', tier: 1, leagueName: 'Ligue 1', desc: 'Ligue 1', preferredStat: 'defense', lifestyleFit: 'BALANCED', pitch: 'Ligue 1' },
   { id: 'SN_DIA', ovr: 59, name: 'Diambars FC', origin: 'SN', primary: '#005CA8', secondary: '#FDE100', tier: 1, leagueName: 'Ligue 1', desc: 'Ligue 1', preferredStat: 'dribbling', lifestyleFit: 'BALANCED', pitch: 'Ligue 1' },
   { id: 'SN_STD', ovr: 58, name: 'Stade de Mbour', origin: 'SN', primary: '#6CABDD', secondary: '#FFFFFF', tier: 1, leagueName: 'Ligue 1', desc: 'Ligue 1', preferredStat: 'dribbling', lifestyleFit: 'STRICT', pitch: 'Ligue 1' },
+  { id: 'CM_COT', ovr: 64, name: 'Coton Sport', origin: 'CM', primary: '#008040', secondary: '#FFFFFF', tier: 1, leagueName: 'Elite One', desc: 'Elite One', preferredStat: 'physical', lifestyleFit: 'STRICT', pitch: 'Elite One' },
+  { id: 'CM_CAN', ovr: 63, name: 'Canon Yaoundé', origin: 'CM', primary: '#E32221', secondary: '#008040', tier: 1, leagueName: 'Elite One', desc: 'Elite One', preferredStat: 'pace', lifestyleFit: 'PARTY', pitch: 'Elite One' },
+  { id: 'CM_UD', ovr: 62, name: 'Union Douala', origin: 'CM', primary: '#008040', secondary: '#FFFFFF', tier: 1, leagueName: 'Elite One', desc: 'Elite One', preferredStat: 'dribbling', lifestyleFit: 'BALANCED', pitch: 'Elite One' },
+  { id: 'CM_BAM', ovr: 61, name: 'Bamboutos', origin: 'CM', primary: '#000000', secondary: '#E32221', tier: 1, leagueName: 'Elite One', desc: 'Elite One', preferredStat: 'physical', lifestyleFit: 'PARTY', pitch: 'Elite One' },
   { id: 'CD_MAZ', ovr: 72, name: 'TP Mazembe', origin: 'CD', primary: '#1A5784', secondary: '#000000', tier: 1, leagueName: 'Linafoot', desc: 'Linafoot', preferredStat: 'defense', lifestyleFit: 'BALANCED', pitch: 'Linafoot' },
   { id: 'CD_VIT', ovr: 70, name: 'AS Vita Club', origin: 'CD', primary: '#FCE400', secondary: '#00508F', tier: 1, leagueName: 'Linafoot', desc: 'Linafoot', preferredStat: 'pace', lifestyleFit: 'PARTY', pitch: 'Linafoot' },
   { id: 'CD_MOT', ovr: 68, name: 'DC Motema Pembe', origin: 'CD', primary: '#005CA8', secondary: '#FDE100', tier: 1, leagueName: 'Linafoot', desc: 'Linafoot', preferredStat: 'defense', lifestyleFit: 'PARTY', pitch: 'Linafoot' },
@@ -1505,13 +1509,22 @@ export const ALL_CLUBS = [
   { id: 'NL_GRO', ovr: 66, name: 'Groningen', origin: 'NL', primary: '#DA291C', secondary: '#FFFFFF', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'passing', lifestyleFit: 'PARTY', pitch: 'Eerste Divisie' },
   { id: 'NL_ROD', ovr: 66, name: 'Roda JC', origin: 'NL', primary: '#F36C21', secondary: '#000000', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'dribbling', lifestyleFit: 'BALANCED', pitch: 'Eerste Divisie' },
   { id: 'NL_DOR', ovr: 65, name: 'Dordrecht', origin: 'NL', primary: '#5C2D91', secondary: '#FFFFFF', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'passing', lifestyleFit: 'STRICT', pitch: 'Eerste Divisie' },
+  { id: 'BR_SAN', ovr: 68, name: 'Santos', origin: 'BR', primary: '#FFFFFF', secondary: '#000000', tier: 2, leagueName: 'Série B', desc: 'Série B', preferredStat: 'dribbling', lifestyleFit: 'PARTY', pitch: 'Série B' },
+  { id: 'BR_SPO', ovr: 66, name: 'Sport Recife', origin: 'BR', primary: '#E32221', secondary: '#000000', tier: 2, leagueName: 'Série B', desc: 'Série B', preferredStat: 'pace', lifestyleFit: 'PARTY', pitch: 'Série B' },
+  { id: 'BR_CEA', ovr: 65, name: 'Ceará', origin: 'BR', primary: '#000000', secondary: '#FFFFFF', tier: 2, leagueName: 'Série B', desc: 'Série B', preferredStat: 'passing', lifestyleFit: 'STRICT', pitch: 'Série B' },
+  { id: 'BR_COR', ovr: 65, name: 'Coritiba', origin: 'BR', primary: '#008040', secondary: '#FFFFFF', tier: 2, leagueName: 'Série B', desc: 'Série B', preferredStat: 'defense', lifestyleFit: 'BALANCED', pitch: 'Série B' },
+  { id: 'BR_GOI', ovr: 64, name: 'Goiás', origin: 'BR', primary: '#008040', secondary: '#FFFFFF', tier: 2, leagueName: 'Série B', desc: 'Série B', preferredStat: 'physical', lifestyleFit: 'BALANCED', pitch: 'Série B' },
+  { id: 'AR_SMT', ovr: 65, name: 'San Martín (T)', origin: 'AR', primary: '#E32221', secondary: '#FFFFFF', tier: 2, leagueName: 'Primera Nacional', desc: 'Primera Nacional', preferredStat: 'physical', lifestyleFit: 'STRICT', pitch: 'Primera Nacional' },
+  { id: 'AR_QUI', ovr: 64, name: 'Quilmes', origin: 'AR', primary: '#FFFFFF', secondary: '#005CA8', tier: 2, leagueName: 'Primera Nacional', desc: 'Primera Nacional', preferredStat: 'passing', lifestyleFit: 'PARTY', pitch: 'Primera Nacional' },
+  { id: 'AR_FER', ovr: 63, name: 'Ferro', origin: 'AR', primary: '#008040', secondary: '#FFFFFF', tier: 2, leagueName: 'Primera Nacional', desc: 'Primera Nacional', preferredStat: 'dribbling', lifestyleFit: 'BALANCED', pitch: 'Primera Nacional' },
+  { id: 'AR_CHA', ovr: 63, name: 'Chacarita', origin: 'AR', primary: '#000000', secondary: '#E32221', tier: 2, leagueName: 'Primera Nacional', desc: 'Primera Nacional', preferredStat: 'pace', lifestyleFit: 'PARTY', pitch: 'Primera Nacional' },
+  { id: 'AR_NCH', ovr: 62, name: 'Nueva Chicago', origin: 'AR', primary: '#008040', secondary: '#000000', tier: 2, leagueName: 'Primera Nacional', desc: 'Primera Nacional', preferredStat: 'physical', lifestyleFit: 'STRICT', pitch: 'Primera Nacional' },
   { id: 'NL_ADO', ovr: 65, name: 'ADO Den Haag', origin: 'NL', primary: '#6CABDD', secondary: '#FFFFFF', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'passing', lifestyleFit: 'PARTY', pitch: 'Eerste Divisie' },
   { id: 'NL_GRA', ovr: 64, name: 'De Graafschap', origin: 'NL', primary: '#F36C21', secondary: '#000000', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'defense', lifestyleFit: 'STRICT', pitch: 'Eerste Divisie' },
   { id: 'NL_NAC', ovr: 64, name: 'NAC Breda', origin: 'NL', primary: '#DA291C', secondary: '#FFFFFF', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'defense', lifestyleFit: 'BALANCED', pitch: 'Eerste Divisie' },
   { id: 'NL_CAM', ovr: 63, name: 'Cambuur', origin: 'NL', primary: '#004D98', secondary: '#A50044', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'passing', lifestyleFit: 'STRICT', pitch: 'Eerste Divisie' },
   { id: 'NL_VVV', ovr: 63, name: 'VVV-Venlo', origin: 'NL', primary: '#004D98', secondary: '#A50044', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'dribbling', lifestyleFit: 'BALANCED', pitch: 'Eerste Divisie' },
-  { id: 'NL_EMM', ovr: 62, name: 'Emmen', origin: 'NL', primary: '#DA291C', secondary: '#FFFFFF', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'passing', lifestyleFit: 'PARTY', pitch: 'Eerste Divisie' },
-  { id: 'NL_MVV', ovr: 62, name: 'MVV Maastricht', origin: 'NL', primary: '#132257', secondary: '#FFFFFF', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'dribbling', lifestyleFit: 'STRICT', pitch: 'Eerste Divisie' },
+  { id: 'NL_ROD', ovr: 62, name: 'Roda JC', origin: 'NL', primary: '#FCE400', secondary: '#000000', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'physical', lifestyleFit: 'BALANCED', pitch: 'Eerste Divisie' },
   { id: 'NL_HEM', ovr: 61, name: 'Helmond Sport', origin: 'NL', primary: '#DA291C', secondary: '#FFFFFF', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'passing', lifestyleFit: 'PARTY', pitch: 'Eerste Divisie' },
   { id: 'NL_EID', ovr: 61, name: 'Eindhoven', origin: 'NL', primary: '#FCE400', secondary: '#00508F', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'defense', lifestyleFit: 'BALANCED', pitch: 'Eerste Divisie' },
   { id: 'NL_TOP', ovr: 60, name: 'TOP Oss', origin: 'NL', primary: '#008040', secondary: '#FFFFFF', tier: 2, leagueName: 'Eerste Divisie', desc: 'Eerste Divisie', preferredStat: 'passing', lifestyleFit: 'BALANCED', pitch: 'Eerste Divisie' },
@@ -1643,14 +1656,17 @@ export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBon
   
   // 1. Calculer l'OVR des stats de base du rôle pour trouver le ratio
   let currentOvr = calculateOVR({ position: enginePos, attributes: roleBaseStats });
-  const scale = targetOvr / (currentOvr || 1);
+  const ovrDrop = Math.max(1, currentOvr - targetOvr);
   
   let scaledStats = {};
   statsList.forEach(stat => {
     const base = roleBaseStats[stat] || 50;
-    // Ajout d'un petit bruit aléatoire, puis mise à l'échelle pour conserver les proportions
+    // Retirer un montant proportionnel inversé pour garder les points forts forts
+    const relativeStrength = base - currentOvr; // Positif si point fort
+    const dropForThisStat = ovrDrop - (relativeStrength * 0.4); 
+    
     const noise = Math.floor(Math.random() * 5) - 2; 
-    scaledStats[stat] = Math.max(15, Math.min(99, Math.round(base * scale) + noise));
+    scaledStats[stat] = Math.max(15, Math.min(99, Math.round(base - dropForThisStat) + noise));
   });
 
   // 2. Appliquer les bonus d'origine sociale
@@ -2980,10 +2996,11 @@ export const generateRival = (player) => {
   let baseRival = {
     id: `RIVAL_${Date.now()}`,
     name: getRandomName(player.origin, player.gender),
-    ovr: Math.max(player.ovr, player.ovr + Math.floor(Math.random() * 3) + 1), // Le rival commence fort mais cohérent avec le joueur
+    ovr: Math.max(66, player.ovr, player.ovr + Math.floor(Math.random() * 3) + 1), // Le rival commence fort mais cohérent avec le joueur (minimum 66)
     age: player.age + Math.floor(Math.random() * 3) - 1,
     origin: player.origin,
     position: player.position,
+    avatar: player.rivalAvatar || `player_${Math.floor(Math.random() * 10) + 1}.webp`, // Photo du rival
     stats: {
       goals: 0, assists: 0, matches: 0,
       cleansheets: 0, saves: 0, goalsConceded: 0

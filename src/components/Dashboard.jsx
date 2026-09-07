@@ -89,7 +89,7 @@ const LeagueLabel = ({ club }) => {
 };
 
 
-const formatEventCategory = (cat) => {
+const formatEventCategory = (cat, t) => {
   if (!cat) return 'Événement';
   const labels = {
     'WORLD_CUP': t('dashboard.events.world_cup', 'Coupe du Monde'),
@@ -1177,7 +1177,7 @@ export function Dashboard({
                     <div>
                       <div className="flex justify-between items-center mb-2 md:mb-3">
                         <span className="heading-typography text-[9px] md:text-[10px] font-semibold px-2 md:px-2.5 py-0.5 md:py-1 rounded-lg uppercase tracking-wider shadow-sm bg-rose-500 text-slate-800 dark:text-white">
-                          {formatEventCategory(currentEvent?.category)}
+                          {formatEventCategory(currentEvent?.category, t)}
                         </span>
                         <span className="heading-typography text-[10px] md:text-[11px] font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400">{t('dashboard.events.step', 'Étape')} {eventStep} / {totalEvents}</span>
                       </div>
@@ -1366,6 +1366,7 @@ export function Dashboard({
 
                         {/* JAUGE H2H */}
                         <div className="w-full flex flex-col gap-1 relative z-10 mt-2">
+                          <div className="flex justify-between items-center w-full px-2 text-[10px] font-bold uppercase tracking-wider mb-1">
                             <span className="text-emerald-500">{h2hWon} {t('dashboard.nemesis.wins', 'Victoires')}</span>
                             <span className="text-slate-400">{t('dashboard.nemesis.matches', 'Confrontations')}</span>
                             <span className="text-rose-500">{h2hLost} {t('dashboard.nemesis.losses', 'Défaites')}</span>

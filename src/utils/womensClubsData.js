@@ -5165,5 +5165,47 @@ export const ALL_WOMENS_CLUBS = [
     "preferredStat": "pace",
     "lifestyleFit": "BALANCED",
     "pitch": "Ligue 1 Féminine (UY)"
+  },
+  {
+    "id": "W_CM_1",
+    "ovr": 64,
+    "name": "Lekie Filles",
+    "origin": "CM",
+    "primary": "#008040",
+    "secondary": "#FFFFFF",
+    "tier": 1,
+    "leagueName": "Guinness Super League",
+    "desc": "Guinness Super League",
+    "preferredStat": "physical",
+    "lifestyleFit": "STRICT",
+    "pitch": "Guinness Super League"
+  },
+  {
+    "id": "W_CM_2",
+    "ovr": 63,
+    "name": "Amazones FAP",
+    "origin": "CM",
+    "primary": "#E32221",
+    "secondary": "#000000",
+    "tier": 1,
+    "leagueName": "Guinness Super League",
+    "desc": "Guinness Super League",
+    "preferredStat": "pace",
+    "lifestyleFit": "PARTY",
+    "pitch": "Guinness Super League"
+  },
+  {
+    "id": "W_CM_3",
+    "ovr": 61,
+    "name": "Eclair de Sa'a",
+    "origin": "CM",
+    "primary": "#005CA8",
+    "secondary": "#FDE100",
+    "tier": 1,
+    "leagueName": "Guinness Super League",
+    "desc": "Guinness Super League",
+    "preferredStat": "dribbling",
+    "lifestyleFit": "BALANCED",
+    "pitch": "Guinness Super League"
   }
 ];
