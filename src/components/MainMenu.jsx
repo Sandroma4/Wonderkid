@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { playSound } from '../utils/audio';
 import { supabase } from '../supabaseClient';
+import { useTranslation } from 'react-i18next';
 
 import { FriendsModal } from './FriendsModal';
 import { AccountShopModal } from './AccountShopModal';
 
 export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChallenges }) => {
+  const { t, i18n } = useTranslation();
   const [user, setUser] = useState(null);
   const [hasSave, setHasSave] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
@@ -183,7 +185,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
         <button
           onClick={toggleTheme}
           className="bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-white p-2.5 md:p-3 rounded-full shadow-lg border border-slate-300 dark:border-slate-700 transition-all hover:scale-110 flex items-center justify-center w-12 h-12"
-          title={theme === 'dark' ? 'Passer en Mode Clair' : 'Passer en Mode Sombre'}
+          title={theme === 'dark' ? t('menu.switch_theme_light') : t('menu.switch_theme_dark')}
         >
           {theme === 'dark' ? '☀️' : '🌙'}
         </button>
@@ -214,20 +216,20 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
       {/* Incoming Invite Popup */}
       {incomingInvite && (
         <div className="fixed top-24 right-4 z-50 bg-white dark:bg-slate-900 border border-emerald-500 rounded-xl p-4 shadow-2xl animate-bounce-in max-w-sm w-full md:w-auto">
-          <h3 className="text-emerald-600 dark:text-emerald-400 font-bold mb-2 uppercase text-sm tracking-wider">Invitation reçue !</h3>
-          <p className="text-slate-800 dark:text-white text-sm mb-4"><span className="font-bold text-amber-600 dark:text-amber-400">{incomingInvite.senderName}</span> vous invite à jouer en 1v1 !</p>
+          <h3 className="text-emerald-600 dark:text-emerald-400 font-bold mb-2 uppercase text-sm tracking-wider">{t('menu.invite_received')}</h3>
+          <p className="text-slate-800 dark:text-white text-sm mb-4"><span className="font-bold text-amber-600 dark:text-amber-400">{incomingInvite.senderName}</span>{t('menu.invites_you')}</p>
           <div className="flex gap-2">
             <button 
               onClick={() => { playSound('click'); onJoinInvite(incomingInvite.roomId); setIncomingInvite(null); }}
               className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white text-xs font-bold py-2 rounded-lg transition-colors"
             >
-              Rejoindre
+              {t('menu.join')}
             </button>
             <button 
               onClick={() => { playSound('click'); setIncomingInvite(null); }}
               className="flex-1 bg-emerald-200 dark:bg-slate-700 hover:bg-rose-500 text-slate-800 dark:text-white text-xs font-bold py-2 rounded-lg transition-colors"
             >
-              Refuser
+              {t('menu.decline')}
             </button>
           </div>
         </div>
@@ -251,8 +253,14 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             >
               ✕
             </button>
-            <h2 className="heading-typography text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 uppercase tracking-wider text-center">Paramètres du Compte</h2>
+            <h2 className="heading-typography text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 uppercase tracking-wider text-center">{t('menu.account_settings')}</h2>
             
+            {/* Language Switcher */}
+            <div className="flex justify-center items-center gap-4 mb-4">
+              <button onClick={() => i18n.changeLanguage('fr')} className={`text-2xl transition-transform ${i18n.language === 'fr' ? 'scale-125 saturate-100' : 'saturate-50 opacity-60'}`}>🇫🇷</button>
+              <button onClick={() => i18n.changeLanguage('en')} className={`text-2xl transition-transform ${i18n.language === 'en' || i18n.language.startsWith('en') ? 'scale-125 saturate-100' : 'saturate-50 opacity-60'}`}>🇬🇧</button>
+            </div>
+
             {!user ? (
               <div className="space-y-4">
                 <button 
@@ -260,12 +268,12 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                   className="w-full relative overflow-hidden rounded-xl bg-white text-slate-900 border border-slate-200 p-3 transition-all hover:bg-slate-50 flex justify-center items-center gap-3 font-bold uppercase text-sm"
                 >
                   <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
-                  Continuer avec Google
+                  {t('menu.continue_google')}
                 </button>
                 
                 <div className="flex items-center gap-2">
                   <div className="flex-1 h-px bg-emerald-200 dark:bg-slate-700"></div>
-                  <span className="text-xs text-slate-500 dark:text-slate-500 font-semibold uppercase">Ou avec Email</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-500 font-semibold uppercase">{t('menu.or_with_email')}</span>
                   <div className="flex-1 h-px bg-emerald-200 dark:bg-slate-700"></div>
                 </div>
 
@@ -273,14 +281,14 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Adresse Email"
+                  placeholder={t('menu.email_address')}
                   className="w-full bg-emerald-200 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
                 />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Mot de passe"
+                  placeholder={t('menu.password')}
                   className="w-full bg-emerald-200 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-3 text-slate-800 dark:text-white font-bold focus:border-emerald-400 outline-none text-sm text-center"
                 />
                 {settingError && <p className="text-xs text-center font-semibold text-rose-500">{settingError}</p>}
@@ -289,23 +297,23 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                   onClick={handleEmailAuth}
                   className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white font-bold rounded-xl text-sm uppercase tracking-wider transition-colors shadow-lg"
                 >
-                  {isLoginMode ? 'Se Connecter' : 'Créer un Compte'}
+                  {isLoginMode ? t('menu.login_btn') : t('menu.register_btn')}
                 </button>
                 <button
                   onClick={() => setIsLoginMode(!isLoginMode)}
                   className="w-full text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-white underline mt-2"
                 >
-                  {isLoginMode ? "Pas encore de compte ? S'inscrire" : "Déjà un compte ? Se connecter"}
+                  {isLoginMode ? t('menu.no_account') : t('menu.already_account')}
                 </button>
               </div>
             ) : (
               <div className="space-y-4">
                 <div className="mb-4">
-                  <p className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 text-center">Connecté en tant que</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 dark:text-slate-400 text-center">{t('menu.logged_in_as')}</p>
                   <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400 text-center">{user.email}</p>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 mb-2 uppercase">Pseudonyme (Classement)</label>
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 mb-2 uppercase">{t('menu.pseudonym')}</label>
                   <input
                     type="text"
                     value={newPseudonym}
@@ -324,17 +332,17 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                   onClick={handleUpdatePseudonym}
                   className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-slate-800 dark:text-white font-bold rounded-xl text-sm uppercase tracking-wider transition-colors shadow-lg"
                 >
-                  Mettre à jour
+                  {t('menu.update')}
                 </button>
                 <p className="text-[10px] text-slate-500 dark:text-slate-500 text-center leading-relaxed">
-                  Le pseudonyme ne peut être modifié qu'une seule fois par mois.
+                  {t('menu.pseudonym_change_limit')}
                 </p>
                 <div className="pt-4 mt-4 border-t border-slate-300 dark:border-slate-800">
                   <button 
                     onClick={() => { handleLogout(); setShowSettings(false); }}
                     className="w-full py-2 text-rose-500 hover:text-rose-400 text-xs font-bold uppercase tracking-wider"
                   >
-                    Se déconnecter
+                    {t('menu.logout')}
                   </button>
                 </div>
               </div>
@@ -377,7 +385,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                 onClick={() => { playSound('click'); setShowPlayOptions(false); }}
                 className="w-full relative group overflow-hidden rounded-2xl bg-white/90 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 p-3 transition-all duration-300 hover:bg-slate-300 dark:hover:bg-slate-700 active:scale-95 flex items-center gap-2 justify-center"
               >
-                <span className="heading-typography text-slate-600 dark:text-slate-300 font-bold text-sm tracking-wide uppercase">Retour</span>
+                <span className="heading-typography text-slate-600 dark:text-slate-300 font-bold text-sm tracking-wide uppercase">{t('menu.back')}</span>
               </button>
 
               <div>
@@ -389,7 +397,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-3">
                       <span className="text-xl md:text-2xl">🏆</span>
-                      <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Carrière Solo</span>
+                      <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.solo_career')}</span>
                     </div>
                     <span className={`text-emerald-200 transition-transform ${showCareerOptions ? 'rotate-90' : 'group-hover:translate-x-1'}`}>➔</span>
                   </div>
@@ -404,7 +412,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                       <div className="flex items-center justify-between relative z-10">
                         <div className="flex items-center gap-3">
                           <span className="text-lg md:text-xl">⚽</span>
-                          <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Nouvelle Carrière</span>
+                          <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">{t('menu.new_career')}</span>
                         </div>
                         <span className="text-emerald-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
                       </div>
@@ -418,7 +426,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                         <div className="flex items-center justify-between relative z-10">
                           <div className="flex items-center gap-3">
                             <span className="text-lg md:text-xl">⏳</span>
-                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Continuer la Carrière</span>
+                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">{t('menu.continue_career')}</span>
                           </div>
                           <span className="text-amber-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
                         </div>
@@ -436,7 +444,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-3">
                       <span className="text-xl md:text-2xl">⚔️</span>
-                      <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Guerre d'égos (1v1)</span>
+                      <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.ego_war')}</span>
                     </div>
                     <span className="text-cyan-600 dark:text-cyan-300 group-hover:translate-x-1 transition-transform">➔</span>
                   </div>
@@ -452,7 +460,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                   <div className="flex items-center justify-between relative z-10">
                     <div className="flex items-center gap-3">
                       <span className="text-xl md:text-2xl">🤝</span>
-                      <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Frères d'Armes (Coop)</span>
+                      <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.brothers_in_arms')}</span>
                     </div>
                     <span className="text-violet-600 dark:text-violet-300 group-hover:translate-x-1 transition-transform">➔</span>
                   </div>
@@ -467,7 +475,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                     <div className="flex items-center justify-between relative z-10">
                       <div className="flex items-center gap-3">
                         <span className="text-xl md:text-2xl">⚽</span>
-                        <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">Five</span>
+                        <span className="heading-typography text-white font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.five')}</span>
                       </div>
                       <span className={`text-orange-200 transition-transform ${showFiveOptions ? 'rotate-90' : 'group-hover:translate-x-1'}`}>➔</span>
                     </div>
@@ -482,7 +490,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                         <div className="flex items-center justify-between relative z-10">
                           <div className="flex items-center gap-3">
                             <span className="text-lg md:text-xl">👟</span>
-                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Équipes</span>
+                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">{t('menu.teams')}</span>
                           </div>
                           <span className="text-orange-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
                         </div>
@@ -495,7 +503,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                         <div className="flex items-center justify-between relative z-10">
                           <div className="flex items-center gap-3">
                             <span className="text-lg md:text-xl">⚔️</span>
-                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Match en ligne</span>
+                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">{t('menu.online_match')}</span>
                           </div>
                           <span className="text-red-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
                         </div>
@@ -508,7 +516,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                         <div className="flex items-center justify-between relative z-10">
                           <div className="flex items-center gap-3">
                             <span className="text-lg md:text-xl">🔥</span>
-                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">Clash d'Équipes (Solo)</span>
+                            <span className="heading-typography text-white font-bold text-sm md:text-base tracking-wide uppercase">{t('menu.squad_clash')}</span>
                           </div>
                           <span className="text-fuchsia-200 group-hover:translate-x-1 transition-transform text-sm">➔</span>
                         </div>
@@ -527,7 +535,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                 <div className="flex items-center justify-between relative z-10">
                   <div className="flex items-center gap-3">
                     <span className="text-xl md:text-2xl">🎮</span>
-                    <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Jouer</span>
+                    <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.play')}</span>
                   </div>
                   <span className="text-emerald-600 dark:text-emerald-300 group-hover:translate-x-1 transition-transform">➔</span>
                 </div>
@@ -540,7 +548,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">🌍</span>
-                <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Classement Mondial</span>
+                <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.world_leaderboard')}</span>
               </div>
               <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -553,7 +561,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">🏅</span>
-                <span className="heading-typography text-slate-800 dark:text-white font-bold text-lg tracking-wide uppercase">Succès</span>
+                <span className="heading-typography text-slate-800 dark:text-white font-bold text-lg tracking-wide uppercase">{t('menu.achievements')}</span>
               </div>
               <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -566,7 +574,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">🏆</span>
-                <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Palmarès Global</span>
+                <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.global_palmares')}</span>
               </div>
               <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -579,7 +587,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">🎴</span>
-                <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">Hall of Fame</span>
+                <span className="heading-typography text-slate-800 dark:text-white font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.hall_of_fame')}</span>
               </div>
               <span className="text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -592,7 +600,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">🛍️</span>
-                <span className="heading-typography text-amber-600 dark:text-amber-400 font-bold text-base md:text-lg tracking-wide uppercase">Boutique</span>
+                <span className="heading-typography text-amber-600 dark:text-amber-400 font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.shop')}</span>
               </div>
               <span className="text-amber-500 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -605,7 +613,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-xl md:text-2xl">📅</span>
-                <span className="heading-typography text-orange-600 dark:text-orange-400 font-bold text-base md:text-lg tracking-wide uppercase">Défis Quotidiens</span>
+                <span className="heading-typography text-orange-600 dark:text-orange-400 font-bold text-base md:text-lg tracking-wide uppercase">{t('menu.daily_challenges')}</span>
               </div>
               <span className="text-orange-500 group-hover:translate-x-1 transition-transform">➔</span>
             </div>
@@ -623,7 +631,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
             <div className="bg-[#0F172A] w-full max-w-md rounded-3xl p-6 border border-slate-700 shadow-2xl flex flex-col gap-4">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-black text-white">🛍️ Boutique</h2>
+                <h2 className="text-2xl font-black text-white">🛍️ {t('menu.shop')}</h2>
                 <button onClick={() => setShowShopHub(false)} className="text-slate-400 hover:text-white text-xl font-bold">✕</button>
               </div>
               
@@ -632,8 +640,8 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                 className="w-full text-left p-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 hover:border-amber-500 transition-all flex items-center justify-between group"
               >
                 <div>
-                  <div className="text-amber-400 font-bold text-lg">Améliorations de Compte</div>
-                  <div className="text-sm text-slate-400 group-hover:text-slate-300">Atouts permanents pour vos carrières</div>
+                  <div className="text-amber-400 font-bold text-lg">{t('menu.account_upgrades')}</div>
+                  <div className="text-sm text-slate-400 group-hover:text-slate-300">{t('menu.permanent_perks')}</div>
                 </div>
                 <span className="text-2xl group-hover:scale-110 transition-transform">⚡</span>
               </button>
@@ -643,8 +651,8 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
                 className="w-full text-left p-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 hover:border-pink-500 transition-all flex items-center justify-between group"
               >
                 <div>
-                  <div className="text-pink-400 font-bold text-lg">Cosmétiques de Cartes</div>
-                  <div className="text-sm text-slate-400 group-hover:text-slate-300">Designs pour le Hall of Fame</div>
+                  <div className="text-pink-400 font-bold text-lg">{t('menu.card_cosmetics')}</div>
+                  <div className="text-sm text-slate-400 group-hover:text-slate-300">{t('menu.hof_designs')}</div>
                 </div>
                 <span className="text-2xl group-hover:scale-110 transition-transform">✨</span>
               </button>
