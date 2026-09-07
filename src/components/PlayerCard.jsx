@@ -1,8 +1,10 @@
 import React from 'react';
 import { FlagIcon } from './FlagIcon';
 import { calculateOVR } from '../utils/gameData';
+import { useTranslation } from 'react-i18next';
 
 export const PlayerCard = React.memo(({ player, club, cardType = 'auto', className = '', exportMode = false }) => {
+  const { t } = useTranslation();
   if (!player) return null;
 
   const ovr = player.ovr || calculateOVR(player);
@@ -169,7 +171,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
   let countryCode = typeof player.origin === 'object' ? player.origin?.id : (player.origin || 'FR');
   if (countryCode && countryCode.length > 3) countryCode = 'FR';
   const formatPlayerName = (name) => {
-    if (!name) return 'JOUEUR';
+    if (!name) return t('player_card.default_name', 'JOUEUR');
     if (name.length <= 15) return name;
     
     const parts = name.trim().split(' ');
@@ -217,7 +219,7 @@ export const PlayerCard = React.memo(({ player, club, cardType = 'auto', classNa
             {ovr}
           </span>
           <span className={`text-[14px] font-black uppercase tracking-wider mt-0.5 ${themeStyles.textSecondary}`}>
-            {player.position === 'MID' ? 'MIL' : (player.position || 'ATT')}
+            {t(`positions.${player.position || 'ATT'}`, player.position === 'MID' ? 'MIL' : (player.position || 'ATT'))}
           </span>
           
           <div className={themeStyles.layout?.flagWrapper || 'shadow-sm mt-2 mb-1.5'}>

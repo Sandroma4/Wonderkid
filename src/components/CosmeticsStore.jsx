@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAccountData, saveAccountData } from '../utils/storage';
 import { playSound } from '../utils/audio';
+import { useTranslation } from 'react-i18next';
 
 export const COSMETICS_DATA = [
   { id: 'bronze_alt', name: 'Bronze Gravé', image: '/cosmetics/metals.png?v=2', bgPos: '0% 0%', price: 5, category: 'Métaux (<65 OVR)', minOvr: 0, maxOvr: 64 },
@@ -15,6 +16,7 @@ export const COSMETICS_DATA = [
 ];
 
 export const CosmeticsStore = ({ onBack }) => {
+  const { t } = useTranslation();
   const [account, setAccount] = useState({ goldenCoins: 0, unlockedPerks: [], cosmeticsInventory: {} });
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export const CosmeticsStore = ({ onBack }) => {
       saveAccountData(newAccount);
       setAccount(newAccount);
     } else {
-      alert("Fonds insuffisants !");
+      alert(t('cosmetics.insufficient_funds', "Fonds insuffisants !"));
     }
   };
 
@@ -50,16 +52,16 @@ export const CosmeticsStore = ({ onBack }) => {
           onClick={() => { playSound('click'); onBack(); }}
           className="text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 px-4 py-2 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 shadow-lg font-bold"
         >
-          Retour
+          {t('cosmetics.back', 'Retour')}
         </button>
       </div>
 
       <div className="relative flex flex-col items-center mb-8 w-full max-w-6xl mx-auto pt-2 z-10">
         <div className="w-full text-center px-4 mb-4">
           <h1 className="heading-typography text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 uppercase tracking-tight drop-shadow-lg leading-none">
-            Boutique Cosmétique
+            {t('cosmetics.title', 'Boutique Cosmétique')}
           </h1>
-          <p className="text-slate-400 mt-2 text-sm md:text-lg font-medium">Achetez des designs consommables pour vos cartes du Hall of Fame.</p>
+          <p className="text-slate-400 mt-2 text-sm md:text-lg font-medium">{t('cosmetics.desc', 'Achetez des designs consommables pour vos cartes du Hall of Fame.')}</p>
         </div>
         
         <div className="bg-slate-800/80 border border-amber-500/50 rounded-full px-6 py-2 shadow-[0_0_15px_rgba(245,158,11,0.3)] flex items-center gap-3">
@@ -68,7 +70,7 @@ export const CosmeticsStore = ({ onBack }) => {
         </div>
         
         <p className="text-rose-400 mt-4 text-xs max-w-lg text-center bg-rose-900/20 p-2 rounded-lg border border-rose-900/50">
-          ⚠️ Note : Les cosmétiques s'appliquent une seule fois par carte.
+          {t('cosmetics.warning', '⚠️ Note : Les cosmétiques s\'appliquent une seule fois par carte.')}
         </p>
       </div>
 
@@ -80,8 +82,8 @@ export const CosmeticsStore = ({ onBack }) => {
             <div key={cosmetic.id} className="flex flex-col bg-slate-800/50 rounded-3xl p-6 border border-slate-700 hover:border-slate-500 transition-all">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h3 className="text-xl font-bold text-white">{cosmetic.name}</h3>
-                  <span className="text-xs text-slate-400 uppercase font-bold">{cosmetic.category}</span>
+                  <h3 className="text-xl font-bold text-white">{t(`cosmetics.${cosmetic.id}`, cosmetic.name)}</h3>
+                  <span className="text-xs text-slate-400 uppercase font-bold">{t(`cosmetics.categories.${cosmetic.category}`, cosmetic.category)}</span>
                 </div>
                 <div className="flex items-center gap-1 bg-slate-900/80 px-3 py-1 rounded-lg border border-slate-700">
                   <span className="font-bold text-amber-400">{cosmetic.price}</span>
@@ -113,7 +115,7 @@ export const CosmeticsStore = ({ onBack }) => {
                   disabled={account.goldenCoins < cosmetic.price}
                   className={`w-full py-3 rounded-xl font-bold text-white transition-all ${account.goldenCoins >= cosmetic.price ? 'bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-900/50' : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'}`}
                 >
-                  {account.goldenCoins >= cosmetic.price ? 'Acheter 1x' : 'Fonds Insuffisants'}
+                  {account.goldenCoins >= cosmetic.price ? t('cosmetics.buy_1x', 'Acheter 1x') : t('cosmetics.insufficient_funds_btn', 'Fonds Insuffisants')}
                 </button>
               </div>
             </div>
