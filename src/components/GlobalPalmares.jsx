@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { getGlobalPalmares } from '../utils/storage';
 import { playSound } from '../utils/audio';
 import { AWARD_RANKS } from '../utils/awards';
+import { useTranslation } from 'react-i18next';
 
 export const GlobalPalmares = ({ onBack }) => {
+  const { t } = useTranslation();
   const [palmares, setPalmares] = useState([]);
 
   useEffect(() => {
@@ -21,11 +23,11 @@ export const GlobalPalmares = ({ onBack }) => {
             onClick={() => { playSound('click'); onBack(); }}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
           >
-            ← Retour
+            ← {t('global_palmares.back', 'Retour')}
           </button>
           <div className="w-full text-center px-16 md:px-24">
             <h2 className="w-full text-center heading-typography text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 uppercase tracking-widest drop-shadow-sm">
-              Palmarès Global
+              {t('global_palmares.title', 'Palmarès Global')}
             </h2>
           </div>
         </div>
@@ -35,8 +37,8 @@ export const GlobalPalmares = ({ onBack }) => {
           {palmares.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center opacity-50">
               <span className="text-6xl mb-4">🏆</span>
-              <p className="text-slate-800 dark:text-white text-lg font-medium">Aucun trophée remporté pour le moment.</p>
-              <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400 text-sm mt-2">Jouez une carrière et brillez sur le terrain !</p>
+              <p className="text-slate-800 dark:text-white text-lg font-medium">{t('global_palmares.empty', 'Aucun trophée remporté pour le moment.')}</p>
+              <p className="text-slate-500 dark:text-slate-500 dark:text-slate-400 text-sm mt-2">{t('global_palmares.empty_desc', 'Jouez une carrière et brillez sur le terrain !')}</p>
             </div>
           ) : (
             <div className="flex-1 overflow-y-auto pr-1 md:pr-4 pb-8 custom-scrollbar grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 content-start w-full">
@@ -53,7 +55,7 @@ export const GlobalPalmares = ({ onBack }) => {
               }).map((trophy, idx) => (
                 <div key={idx} className="bg-slate-800/60 border border-amber-500/30 p-4 rounded-2xl flex flex-col items-center justify-center text-center hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors shadow-lg relative">
                   <span className="text-4xl md:text-5xl drop-shadow-lg mb-2">{trophy.icon}</span>
-                  <h3 className="text-slate-600 dark:text-slate-300 font-bold text-[10px] md:text-xs uppercase tracking-wider mb-2 leading-tight min-h-[30px] flex items-center">{trophy.text}</h3>
+                  <h3 className="text-slate-600 dark:text-slate-300 font-bold text-[10px] md:text-xs uppercase tracking-wider mb-2 leading-tight min-h-[30px] flex items-center">{t(`awards.${trophy.text}`, trophy.text)}</h3>
                   <span className="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-800 dark:text-white font-black text-xs md:text-sm px-2.5 py-1 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)] border border-amber-300/50 z-10">
                     x{trophy.count}
                   </span>
