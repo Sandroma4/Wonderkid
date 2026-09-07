@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { ACHIEVEMENTS } from '../utils/achievementsData';
 import { getUnlockedAchievements } from '../utils/storage';
 import { playSound } from '../utils/audio';
+import { useTranslation } from 'react-i18next';
 
 export const Achievements = ({ onBack }) => {
+  const { t } = useTranslation();
   const [unlocked, setUnlocked] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
 
@@ -38,13 +40,13 @@ export const Achievements = ({ onBack }) => {
             onClick={() => { playSound('click'); onBack(); }}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-50 shrink-0 text-slate-800 dark:text-white bg-white/90 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 md:p-3 rounded-xl transition-all active:scale-95 border border-slate-300 dark:border-slate-700 whitespace-nowrap shadow-lg"
           >
-            ← Retour
+            ← {t('achievements.back', 'Retour')}
           </button>
           <div className="w-full text-center px-16 md:px-24">
             <h2 className="heading-typography text-3xl md:text-4xl font-black text-slate-800 dark:text-white uppercase tracking-widest drop-shadow-sm leading-none">
-              Succès
+              {t('achievements.title', 'Succès')}
             </h2>
-            <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-2">{completionRate}% complété</p>
+            <p className="text-emerald-600 dark:text-emerald-400 font-bold mt-2">{completionRate}% {t('achievements.completed', 'complété')}</p>
           </div>
         </div>
 
@@ -64,7 +66,7 @@ export const Achievements = ({ onBack }) => {
                   ? 'bg-emerald-200 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-500 shadow-md scale-105' 
                   : 'bg-white/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-500 dark:text-slate-400 border-slate-300/80 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-300'}`}
             >
-              {tab === 'all' ? 'Tous' : tab}
+              {tab === 'all' ? t('achievements.tab_all', 'Tous') : t(`achievements.rarity_${tab}`, tab)}
             </button>
           ))}
         </div>
@@ -95,7 +97,7 @@ export const Achievements = ({ onBack }) => {
                   </div>
                   <div>
                     <h3 className={`font-bold text-lg flex items-center gap-2 ${isUnlocked ? 'text-slate-800 dark:text-white' : 'text-slate-500 dark:text-slate-500 dark:text-slate-400'}`}>
-                      {ach.title}
+                      {t(`achievements.${ach.id}.title`, ach.title)}
                       {isUnlocked && unlockData.date && (
                         <span className="text-[10px] font-semibold tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
                           {unlockData.date}
@@ -103,7 +105,7 @@ export const Achievements = ({ onBack }) => {
                       )}
                     </h3>
                     <p className={`text-sm ${isUnlocked ? 'text-slate-600 dark:text-slate-300' : 'text-slate-500 dark:text-slate-500 dark:text-slate-400'}`}>
-                      {isUnlocked ? ach.description : 'Ce succès est verrouillé. Continuez à jouer pour le découvrir.'}
+                      {isUnlocked ? t(`achievements.${ach.id}.desc`, ach.description) : t('achievements.locked_desc', 'Ce succès est verrouillé. Continuez à jouer pour le découvrir.')}
                     </p>
                   </div>
                   
