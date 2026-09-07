@@ -354,10 +354,7 @@ export const POSITIONS_DATA = [
     icon: '🎯',
     roles: [
       { id: 'buteur', name: 'Buteur', description: 'Finisseur axial pur, obsédé par le but.', baseStats: { pace: 72, finishing: 85, passing: 58, dribbling: 65, defense: 30, physical: 75 } },
-      { id: 'bg_street', name: 'Dalleux (Origine)', desc: 'Bonus de stats dans les moments difficiles.', icon: '🔥', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
-  { id: 'bg_academy', name: 'Élève Modèle (Origine)', desc: 'La confiance du coach est plus facile à gagner', icon: '📚', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
-  { id: 'bg_five', name: 'Technique Pure (Origine)', desc: 'Augmente considérablement les dribbles et la vista', icon: '⚡', roles: ['ST', 'ATT', 'MID', 'CM', 'DEF', 'CB', 'GK'] },
-  { id: 'renard', name: 'Renard de surface', description: 'Opportuniste redoutable dans la zone de vérité.', baseStats: { pace: 68, finishing: 88, passing: 55, dribbling: 62, defense: 28, physical: 70 } },
+      { id: 'renard', name: 'Renard de surface', description: 'Opportuniste redoutable dans la zone de vérité.', baseStats: { pace: 68, finishing: 88, passing: 55, dribbling: 62, defense: 28, physical: 70 } },
       { id: 'faux9', name: 'Faux 9', description: 'Décroche pour créer le jeu et distribuer.', baseStats: { pace: 75, finishing: 74, passing: 78, dribbling: 76, defense: 35, physical: 65 } },
       { id: 'ailier', name: 'Ailier', description: 'Perpétuelle percussion sur les côtés et centres.', baseStats: { pace: 88, finishing: 70, passing: 68, dribbling: 84, defense: 35, physical: 62 } }
     ]
@@ -1702,12 +1699,16 @@ export const calculatePlayerStatus = (player, club) => {
 
 export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBonus) => {
   const targetOvr = Math.floor(Math.random() * 6) + 45; // Objectif : 45 à 50 de général
-  const statsList = (enginePos === 'GK' || enginePos === 'GB')
+  const isGK = (enginePos === 'GK' || enginePos === 'GB');
+  const statsList = isGK
     ? ['diving', 'handling', 'kicking', 'reflexes', 'pace', 'positioning'] 
     : ['pace', 'finishing', 'passing', 'dribbling', 'defense', 'physical'];
   
   // 1. Calculer l'OVR des stats de base pour trouver le ratio
-  let currentOvr = calculateOVR({ position: enginePos, attributes: roleBaseStats });
+  // On force la position reconnue par calculateOVR (ATT, MID, DEF, GK)
+  const ovrPos = isGK ? 'GK' : enginePos;
+  let currentOvr = calculateOVR({ position: ovrPos, attributes: roleBaseStats });
+  if (!currentOvr || currentOvr <= 0) currentOvr = 70; // sécurité
   const scale = targetOvr / currentOvr; // Échelle pour préserver les proportions exactes du rôle
   
   let scaledStats = {};
@@ -1726,7 +1727,26 @@ export const generateYoungPlayerStats = (enginePos, roleBaseStats, backgroundBon
     });
   }
 
-  // Les statistiques sont désormais intrinsèquement cohérentes avec l'OVR visé, pas besoin de sur-corriger
+  // 3. Garantir la cohérence du poste (un attaquant ne peut pas avoir
+  //    plus de défense que de dribble, etc.)
+  if (!isGK) {
+    if (enginePos === 'ATT' || enginePos === 'ST') {
+      // Un attaquant doit avoir dribbling > defense
+      if (scaledStats.dribbling <= scaledStats.defense) {
+        const tmp = scaledStats.dribbling;
+        scaledStats.dribbling = scaledStats.defense;
+        scaledStats.defense = tmp;
+      }
+    } else if (enginePos === 'DEF' || enginePos === 'CB') {
+      // Un défenseur doit avoir defense > dribbling
+      if (scaledStats.defense <= scaledStats.dribbling) {
+        const tmp = scaledStats.defense;
+        scaledStats.defense = scaledStats.dribbling;
+        scaledStats.dribbling = tmp;
+      }
+    }
+  }
+
   return scaledStats;
 };
 
