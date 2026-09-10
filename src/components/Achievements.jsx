@@ -30,7 +30,7 @@ export const Achievements = ({ onBack }) => {
   const completionRate = Math.round((unlocked.length / ACHIEVEMENTS.length) * 100);
 
   return (
-    <div className="min-h-screen bg-emerald-200 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
+    <div className="h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
       <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10 pt-4 md:pt-8">
         

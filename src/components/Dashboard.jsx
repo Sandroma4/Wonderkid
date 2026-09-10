@@ -249,7 +249,7 @@ export function Dashboard({
       {/* CHOIX DU PREMIER CLUB */}
       {/* ÉCRAN DE FIN DE CARRIÈRE */}
       {isRetired ? (
-        <div className="app-typography min-h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] p-4 md:p-8 text-slate-800 dark:text-slate-100 relative overflow-y-auto flex flex-col items-center justify-center font-sans">
+        <div className="app-typography h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] p-4 md:p-8 text-slate-800 dark:text-slate-100 relative overflow-y-auto flex flex-col items-center justify-center font-sans">
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -489,7 +489,7 @@ export function Dashboard({
           })()}
         </div>
       ) : !club ? (
-        <div className="app-typography min-h-[100dvh] text-slate-700 dark:text-slate-200 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto" style={clubBackgroundStyle}>
+        <div className="app-typography h-[100dvh] text-slate-700 dark:text-slate-200 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto" style={clubBackgroundStyle}>
           <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-4xl w-full z-10 flex flex-col justify-center py-8">
             <div className="text-center mb-2 md:mb-8 shrink-0">
@@ -700,7 +700,7 @@ export function Dashboard({
           </div>
         </div>
       ) : isInteractiveMatch && interactiveMatchPhases ? (
-        <div className="app-typography min-h-[100dvh] flex flex-col items-center justify-center relative overflow-hidden p-4" style={clubBackgroundStyle}>
+        <div className="app-typography h-[100dvh] flex flex-col items-center justify-center relative overflow-hidden p-4" style={clubBackgroundStyle}>
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-3xl w-full bg-white/90 dark:bg-slate-900/90 border-2 border-rose-500/50 rounded-3xl p-4 md:p-8 shadow-2xl z-10 text-slate-800 dark:text-white relative">
             {gameState.interactiveMatchFinalOutcome ? (
@@ -761,7 +761,7 @@ export function Dashboard({
           </div>
         </div>
       ) : isSelectingPerk ? (
-        <div className="app-typography min-h-[100dvh] flex flex-col items-center justify-center relative overflow-hidden" style={clubBackgroundStyle}>
+        <div className="app-typography h-[100dvh] flex flex-col items-center justify-center relative overflow-hidden" style={clubBackgroundStyle}>
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-4xl w-full bg-white rounded-3xl p-8 shadow-2xl z-10 m-4">
             <div className="text-center mb-8">
@@ -780,7 +780,7 @@ export function Dashboard({
           </div>
         </div>
       ) : isWaitingForMultiplayerSync ? (
-        <div className="app-typography min-h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-emerald-200 dark:bg-slate-950">
+        <div className="app-typography h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-emerald-200 dark:bg-slate-950">
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">
             <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
@@ -791,7 +791,7 @@ export function Dashboard({
           </div>
         </div>
       ) : isWaitingForMercato ? (
-        <div className="app-typography min-h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-emerald-200 dark:bg-slate-950">
+        <div className="app-typography h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto bg-emerald-200 dark:bg-slate-950">
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-md w-full flex flex-col z-10 justify-center py-8 items-center text-center space-y-6">
             <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
@@ -800,7 +800,7 @@ export function Dashboard({
           </div>
         </div>
       ) : transferMarketOffers && transferMarketOffers.length > 0 ? (
-        <div className="app-typography min-h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto" style={clubBackgroundStyle}>
+        <div className="app-typography h-[100dvh] text-slate-800 dark:text-slate-100 p-2 md:p-6 flex flex-col items-center justify-center relative overflow-y-auto" style={clubBackgroundStyle}>
           <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>
           <div className="max-w-4xl w-full flex flex-col z-10 justify-center py-8">
             <div className="text-center shrink-0 mb-2 md:mb-6">
@@ -872,7 +872,7 @@ export function Dashboard({
         <>
           {/* DASHBOARD PRINCIPAL EN SAISON */}
           <div
-            className="app-typography min-h-[100dvh] text-slate-900 p-1 md:p-4 pb-20 md:pb-4 relative overflow-y-auto overflow-x-hidden transition-all duration-700"
+            className="app-typography h-[100dvh] text-slate-900 p-1 md:p-4 pb-20 md:pb-4 relative overflow-y-auto overflow-x-hidden transition-all duration-700"
             style={clubBackgroundStyle}
           >
             <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-10"></div>

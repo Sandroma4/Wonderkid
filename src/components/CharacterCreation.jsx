@@ -181,7 +181,7 @@ export function CharacterCreation({ onStartGame, multiplayerContext }) {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] text-slate-800 dark:text-slate-100 flex flex-col justify-center items-center p-3 sm:p-6 relative overflow-y-auto font-sans">
+    <div className="h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] text-slate-800 dark:text-slate-100 flex flex-col justify-center items-center p-3 sm:p-6 relative overflow-y-auto font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
       {isWaitingForOpponent ? (
       <div className="w-full max-w-2xl bg-white/90 dark:bg-slate-900/90 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl relative overflow-hidden z-10 my-auto">

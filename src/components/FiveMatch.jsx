@@ -170,7 +170,7 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onE
     const isDraw = score.host === score.guest;
     
     return (
-      <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4">
+      <div className="h-[100dvh] bg-slate-900 flex flex-col items-center justify-center p-4">
         <h1 className="text-4xl md:text-6xl font-black uppercase text-white mb-8">{t('five.match_end', 'Fin du Match')}</h1>
         <div className="bg-slate-800 p-8 rounded-3xl border-2 border-slate-700 shadow-2xl flex flex-col items-center">
            <div className="flex items-center gap-8 text-5xl font-black text-orange-500 mb-8">
@@ -195,7 +195,7 @@ export const FiveMatch = ({ roomObj, playerId, players, isHost, isClashMode, onE
   }
 
   return (
-    <div className="app-typography min-h-[100dvh] bg-slate-900 flex flex-col items-center p-4">
+    <div className="app-typography h-[100dvh] bg-slate-900 flex flex-col items-center p-4">
       {/* Scoreboard */}
       <div className="w-full max-w-4xl bg-slate-800 rounded-b-3xl shadow-2xl p-4 flex justify-between items-center border-b-4 border-orange-500 mb-8">
         <div className={`flex flex-col items-center ${isHost ? 'text-orange-400' : 'text-slate-400'}`}>

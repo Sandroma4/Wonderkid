@@ -52,7 +52,7 @@ export const CardCollection = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-200 dark:bg-slate-950 p-3 md:p-8 relative overflow-hidden flex flex-col">
+    <div className="h-[100dvh] bg-emerald-200 dark:bg-slate-950 p-3 md:p-8 relative overflow-hidden flex flex-col">
       <div className="flex items-center justify-between mb-6 md:mb-8 w-full max-w-6xl mx-auto pt-2 md:pt-4">
         <button 
           onClick={() => { playSound('click'); onBack(); }}

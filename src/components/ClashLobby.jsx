@@ -57,7 +57,7 @@ export const ClashLobby = ({ onBack, onStartMatch, clashContext, setClashContext
   const nextOpponent = currentMatchIndex < 4 ? clashLeague[currentMatchIndex] : null;
 
   return (
-    <div className="min-h-screen bg-[#0F172A] p-4 md:p-8 relative overflow-hidden flex flex-col text-white">
+    <div className="h-[100dvh] bg-[#0F172A] p-4 md:p-8 relative overflow-hidden flex flex-col text-white">
       
       <div className="w-full max-w-6xl mx-auto flex justify-start mb-4 relative z-10">
         <button 

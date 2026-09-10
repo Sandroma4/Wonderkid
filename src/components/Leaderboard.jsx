@@ -43,7 +43,7 @@ export const Leaderboard = ({ onBack }) => {
   }, [activeTab]);
 
   return (
-    <div className="min-h-screen bg-emerald-200 dark:bg-[#0F172A] p-3 md:p-6 text-slate-700 dark:text-slate-200 relative overflow-hidden font-sans flex flex-col items-center">
+    <div className="h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] p-3 md:p-6 text-slate-700 dark:text-slate-200 relative overflow-hidden font-sans flex flex-col items-center">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-10"></div>
       
       <div className="w-full max-w-3xl relative z-10 pt-4 md:pt-8">

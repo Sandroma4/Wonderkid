@@ -150,7 +150,7 @@ export const MultiplayerLobby = ({ onStart, onBack, multiplayerContext, initialC
   }, [players, status, onStart, roomObj, playerId]);
 
   return (
-    <div className="app-typography min-h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
+    <div className="app-typography h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-[0.03]"></div>
       
       <div className="w-full max-w-md mx-auto flex justify-start mb-4 relative z-10">

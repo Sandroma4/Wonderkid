@@ -120,7 +120,7 @@ export const FiveLobby = ({ onStart, onBack, multiplayerContext }) => {
   const allPlayersReady = players.length === 2 && players.every(p => p.ready && p.fiveTeam);
 
   return (
-    <div className="app-typography min-h-[100dvh] bg-red-900 dark:bg-[#0F172A] flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div className="app-typography h-[100dvh] bg-red-900 dark:bg-[#0F172A] flex flex-col items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-5"></div>
       
       <div className="w-full max-w-2xl mx-auto flex justify-start mb-4 relative z-10">
