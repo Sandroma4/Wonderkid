@@ -375,14 +375,17 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
-            className="relative z-10 h-full w-auto max-h-[35vh] md:max-h-[45vh] object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
+            className="relative z-10 h-full w-auto max-h-[35vh] md:max-h-[45vh] object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125 [@media(max-height:650px)]:hidden"
             onError={(e) => {
               e.target.onerror = null; 
               e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'block';
+              if(e.target.nextSibling) {
+                e.target.nextSibling.classList.remove('hidden', '[@media(max-height:650px)]:block');
+                e.target.nextSibling.classList.add('block');
+              }
             }}
           />
-          <h1 style={{display: 'none'}} className="heading-typography text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-emerald-500 text-center tracking-tighter drop-shadow-lg">
+          <h1 className="heading-typography text-4xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-emerald-500 text-center tracking-tighter drop-shadow-lg hidden [@media(max-height:650px)]:block">
             WONDERKID
           </h1>
         </div>

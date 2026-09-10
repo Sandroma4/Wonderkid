@@ -13,7 +13,7 @@ export const GlobalPalmares = ({ onBack }) => {
   }, []);
 
   return (
-    <div className="h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-hidden">
+    <div className="h-[100dvh] bg-emerald-200 dark:bg-[#0F172A] p-4 md:p-8 font-sans flex flex-col relative overflow-y-auto">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-20"></div>
       <div className="max-w-4xl w-full mx-auto flex-1 flex flex-col relative z-10 px-2 md:px-0 pt-4 md:pt-8">
         

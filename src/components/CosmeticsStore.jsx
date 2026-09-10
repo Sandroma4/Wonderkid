@@ -44,7 +44,7 @@ export const CosmeticsStore = ({ onBack }) => {
   };
 
   return (
-    <div className="h-[100dvh] bg-[#0F172A] p-4 md:p-8 relative overflow-hidden flex flex-col text-white">
+    <div className="h-[100dvh] bg-[#0F172A] p-4 md:p-8 relative overflow-y-auto flex flex-col text-white">
       <div className="absolute inset-0 bg-football-pattern pointer-events-none opacity-[0.03]"></div>
       
       <div className="w-full max-w-6xl mx-auto flex justify-start mb-4 relative z-10">
