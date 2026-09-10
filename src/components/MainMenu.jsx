@@ -366,16 +366,16 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 dark:hidden blur-[120px] rounded-full"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-slate-400/10 dark:hidden blur-[120px] rounded-full"></div>
 
-      <div className="relative z-10 w-full max-w-md flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-md flex flex-col items-center flex-1 min-h-0 pb-2">
         {/* Logo */}
         {/* Logo positioned dynamically near the top of the screen */}
-        <div className="relative w-full flex justify-center items-start mt-0 md:mt-4 mb-2 md:mb-4 pointer-events-none animate-[fade-in_1s_ease-out]">
+        <div className="relative w-full flex-1 min-h-[120px] flex justify-center items-center mt-0 mb-2 pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
-          <div className="absolute w-[30vh] h-[30vh] md:w-[40vh] md:h-[40vh] lg:w-[45vh] lg:h-[45vh] min-w-[150px] min-h-[150px] bg-emerald-500/40 blur-[60px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute w-[80%] h-[80%] max-w-[350px] max-h-[350px] bg-emerald-500/40 blur-[60px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
-            className="relative z-10 w-[30vh] h-[30vh] md:w-[40vh] md:h-[40vh] lg:w-[45vh] lg:h-[45vh] min-w-[150px] min-h-[150px] object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
+            className="relative z-10 h-full w-auto max-h-[35vh] md:max-h-[45vh] object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
             onError={(e) => {
               e.target.onerror = null; 
               e.target.style.display = 'none';
@@ -388,7 +388,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
         </div>
 
         {/* Menu Buttons */}
-        <div className="w-full flex flex-col justify-start space-y-3 md:space-y-4 animate-[slide-up_0.8s_ease-out] mt-0 md:mt-4">
+        <div className="w-full flex flex-col justify-start space-y-2 md:space-y-3 animate-[slide-up_0.8s_ease-out] shrink-0 overflow-y-auto scrollbar-hide px-1 pb-2">
           
           {showPlayOptions ? (
             <div className="space-y-4 animate-[fade-in_0.3s_ease-out]">
