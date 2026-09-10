@@ -380,16 +380,22 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
               e.target.onerror = null; 
               e.target.style.display = 'none';
               if(e.target.nextSibling) {
-                e.target.nextSibling.classList.remove('hidden', '[@media(max-height:850px)]:block');
-                e.target.nextSibling.classList.add('block');
+                e.target.nextSibling.classList.remove('hidden', '[@media(max-height:850px)]:flex');
+                e.target.nextSibling.classList.add('flex');
               }
             }}
           />
-          <img 
-            src="/logo_horizontal.jpg" 
-            alt="Wonderkid Logo Horizontal" 
-            className="relative z-10 w-[90%] max-w-[400px] h-auto object-contain rounded-3xl shadow-[0_0_40px_rgba(16,185,129,0.3)] border border-emerald-500/30 hidden [@media(max-height:850px)]:block"
-          />
+          
+          <div className="relative z-10 hidden [@media(max-height:850px)]:flex flex-row items-center justify-center gap-3 w-full max-w-[90%] drop-shadow-2xl">
+            <img 
+              src="/logo.png" 
+              alt="Wonderkid Icon" 
+              className="h-14 sm:h-16 md:h-20 w-auto object-contain brightness-110 contrast-125 drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]" 
+            />
+            <h1 className="heading-typography text-4xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-emerald-400 text-center tracking-tighter">
+              WONDERKID
+            </h1>
+          </div>
         </div>
 
         {/* Menu Buttons */}
