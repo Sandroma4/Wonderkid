@@ -385,9 +385,11 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
               }
             }}
           />
-          <h1 className="heading-typography text-4xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-emerald-500 text-center tracking-tighter drop-shadow-lg hidden [@media(max-height:850px)]:block">
-            WONDERKID
-          </h1>
+          <img 
+            src="/logo_horizontal.jpg" 
+            alt="Wonderkid Logo Horizontal" 
+            className="relative z-10 w-[90%] max-w-[400px] h-auto object-contain rounded-3xl shadow-[0_0_40px_rgba(16,185,129,0.3)] border border-emerald-500/30 hidden [@media(max-height:850px)]:block"
+          />
         </div>
 
         {/* Menu Buttons */}
