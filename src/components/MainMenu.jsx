@@ -387,12 +387,14 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           />
           
           <div className="relative z-10 hidden [@media(max-height:850px)]:flex flex-row items-center justify-center gap-3 w-full max-w-[90%] drop-shadow-2xl">
-            <img 
-              src="/logo.png" 
-              alt="Wonderkid Icon" 
-              className="h-14 sm:h-16 md:h-20 w-auto object-contain brightness-110 contrast-125 drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]" 
-            />
-            <h1 className="heading-typography text-4xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-emerald-400 text-center tracking-tighter">
+            <div className="overflow-hidden h-12 sm:h-16 md:h-20 flex items-start justify-center pt-1">
+              <img 
+                src="/logo.png" 
+                alt="Wonderkid Icon" 
+                className="h-[140%] w-auto object-contain object-top brightness-110 contrast-125 drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]" 
+              />
+            </div>
+            <h1 className="heading-typography text-4xl sm:text-5xl md:text-6xl font-black text-white text-center tracking-tighter drop-shadow-lg">
               WONDERKID
             </h1>
           </div>
