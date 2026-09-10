@@ -158,7 +158,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
   };
 
   return (
-    <div className="h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-[4vh] md:pt-[6vh] px-6 pb-6 relative overflow-hidden font-sans">
+    <div className="h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-2 md:pt-[4vh] px-6 pb-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Pitch Markings - Left (Penalty Area) */}
@@ -369,7 +369,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
       <div className="relative z-10 w-full max-w-3xl flex flex-col items-center flex-1 min-h-0 pb-2">
         {/* Logo */}
         {/* Logo positioned dynamically near the top of the screen */}
-        <div className="relative w-full flex-1 min-h-[120px] flex justify-center items-center mt-0 mb-2 pointer-events-none animate-[fade-in_1s_ease-out]">
+        <div className="relative w-full flex-1 min-h-[120px] flex justify-center items-start mt-0 mb-2 pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
           <div className="absolute w-[80%] h-[80%] max-w-[350px] max-h-[350px] bg-emerald-500/40 blur-[60px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
           <img 
@@ -381,7 +381,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
               e.target.style.display = 'none';
               if(e.target.nextSibling) {
                 e.target.nextSibling.classList.remove('hidden', '[@media(max-height:850px)]:flex');
-                e.target.nextSibling.classList.add('flex');
+                e.target.nextSibling.classList.add('block');
               }
             }}
           />
@@ -389,7 +389,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           <img 
             src="/logo_horizontal.png" 
             alt="Wonderkid Logo Horizontal" 
-            className="relative z-10 w-full max-w-[800px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block"
+            className="relative z-10 w-[85%] max-w-[700px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block mt-2"
             onError={(e) => {
               if(!e.target.src.endsWith('.jpg')) {
                 e.target.src = '/logo_horizontal.jpg';
