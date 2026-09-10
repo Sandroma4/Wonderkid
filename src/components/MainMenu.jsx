@@ -386,18 +386,16 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
             }}
           />
           
-          <div className="relative z-10 hidden [@media(max-height:850px)]:flex flex-row items-center justify-center gap-3 w-full max-w-[90%] drop-shadow-2xl">
-            <div className="overflow-hidden h-12 sm:h-16 md:h-20 flex items-start justify-center pt-1">
-              <img 
-                src="/logo.png" 
-                alt="Wonderkid Icon" 
-                className="h-[140%] w-auto object-contain object-top brightness-110 contrast-125 drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]" 
-              />
-            </div>
-            <h1 className="heading-typography text-4xl sm:text-5xl md:text-6xl font-black text-white text-center tracking-tighter drop-shadow-lg">
-              WONDERKID
-            </h1>
-          </div>
+          <img 
+            src="/logo_horizontal.png" 
+            alt="Wonderkid Logo Horizontal" 
+            className="relative z-10 w-[90%] max-w-[450px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block"
+            onError={(e) => {
+              if(!e.target.src.endsWith('.jpg')) {
+                e.target.src = '/logo_horizontal.jpg';
+              }
+            }}
+          />
         </div>
 
         {/* Menu Buttons */}
