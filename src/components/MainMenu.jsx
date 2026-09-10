@@ -389,7 +389,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           <img 
             src="/logo_horizontal.png" 
             alt="Wonderkid Logo Horizontal" 
-            className="relative z-10 w-[90%] max-w-[450px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block"
+            className="relative z-10 w-[95%] max-w-[650px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block"
             onError={(e) => {
               if(!e.target.src.endsWith('.jpg')) {
                 e.target.src = '/logo_horizontal.jpg';
