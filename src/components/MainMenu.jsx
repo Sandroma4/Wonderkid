@@ -158,7 +158,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
   };
 
   return (
-    <div className="h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-2 md:pt-[4vh] px-6 pb-6 relative overflow-hidden font-sans">
+    <div className="h-[100dvh] bg-emerald-150 dark:bg-[#0F172A] flex flex-col items-center justify-start pt-0 md:pt-[4vh] px-6 pb-6 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-tactical-pattern pointer-events-none opacity-5 dark:opacity-10"></div>
       
       {/* Pitch Markings - Left (Penalty Area) */}
@@ -389,7 +389,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           <img 
             src="/logo_horizontal.png" 
             alt="Wonderkid Logo Horizontal" 
-            className="relative z-10 w-[85%] max-w-[700px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block mt-2"
+            className="relative z-10 w-[85%] max-w-[700px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block"
             onError={(e) => {
               if(!e.target.src.endsWith('.jpg')) {
                 e.target.src = '/logo_horizontal.jpg';
