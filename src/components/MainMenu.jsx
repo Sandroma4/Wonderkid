@@ -366,7 +366,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 dark:hidden blur-[120px] rounded-full"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-slate-400/10 dark:hidden blur-[120px] rounded-full"></div>
 
-      <div className="relative z-10 w-full max-w-md flex flex-col items-center flex-1 min-h-0 pb-2">
+      <div className="relative z-10 w-full max-w-3xl flex flex-col items-center flex-1 min-h-0 pb-2">
         {/* Logo */}
         {/* Logo positioned dynamically near the top of the screen */}
         <div className="relative w-full flex-1 min-h-[120px] flex justify-center items-center mt-0 mb-2 pointer-events-none animate-[fade-in_1s_ease-out]">
@@ -389,7 +389,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           <img 
             src="/logo_horizontal.png" 
             alt="Wonderkid Logo Horizontal" 
-            className="relative z-10 w-[95%] max-w-[650px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block"
+            className="relative z-10 w-full max-w-[800px] h-auto object-contain drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block"
             onError={(e) => {
               if(!e.target.src.endsWith('.jpg')) {
                 e.target.src = '/logo_horizontal.jpg';
@@ -399,7 +399,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
         </div>
 
         {/* Menu Buttons */}
-        <div className="w-full flex flex-col justify-start space-y-2 md:space-y-3 animate-[slide-up_0.8s_ease-out] shrink-0 overflow-y-auto scrollbar-hide px-1 pb-2">
+        <div className="w-full max-w-md mx-auto flex flex-col justify-start space-y-2 md:space-y-3 animate-[slide-up_0.8s_ease-out] shrink-0 overflow-y-auto scrollbar-hide px-1 pb-2">
           
           {showPlayOptions ? (
             <div className="space-y-4 animate-[fade-in_0.3s_ease-out]">
