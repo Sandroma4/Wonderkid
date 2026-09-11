@@ -375,7 +375,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
-            className="relative z-10 h-auto w-auto max-h-[18vh] md:max-h-[20vh] object-contain drop-shadow-[0_0_40px_rgba(16,185,129,1)] brightness-110 contrast-125"
+            className="relative z-10 h-auto w-auto max-h-[24vh] md:max-h-[28vh] object-contain drop-shadow-[0_0_40px_rgba(16,185,129,1)] brightness-110 contrast-125"
           />
         </div>
 
