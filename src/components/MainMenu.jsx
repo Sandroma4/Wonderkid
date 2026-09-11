@@ -366,16 +366,16 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 dark:hidden blur-[120px] rounded-full"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-slate-400/10 dark:hidden blur-[120px] rounded-full"></div>
 
-      <div className="relative z-10 w-full max-w-3xl flex flex-col items-center flex-1 min-h-0 pb-2">
+      <div className="relative z-10 w-full max-w-3xl flex flex-col items-center pb-2">
         {/* Logo */}
         {/* Logo positioned dynamically near the top of the screen */}
-        <div className="relative w-full flex-1 min-h-[120px] flex justify-center items-start mt-0 mb-2 pointer-events-none animate-[fade-in_1s_ease-out]">
+      <div className="relative w-full flex justify-center items-center mt-2 mb-2 pointer-events-none animate-[fade-in_1s_ease-out]">
           {/* Intense glow behind the logo */}
-          <div className="absolute w-[80%] h-[80%] max-w-[350px] max-h-[350px] bg-emerald-500/40 blur-[60px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute w-[60%] h-full max-w-[250px] max-h-[120px] bg-emerald-500/40 blur-[50px] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
-            className="relative z-10 h-full w-auto max-h-[35vh] md:max-h-[45vh] object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
+            className="relative z-10 h-auto w-auto max-h-[18vh] md:max-h-[20vh] object-contain drop-shadow-[0_0_40px_rgba(16,185,129,1)] brightness-110 contrast-125"
           />
         </div>
 
