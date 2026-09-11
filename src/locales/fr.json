@@ -71,5 +71,9 @@
     "none": "Aucun",
     "start_career": "Commencer ma carrière",
     "back_previous": "← Revenir à l'étape précédente"
+  },
+  "gacha": {
+    "title": "Tirage de Cartes",
+    "desc": "Tentez votre chance pour débloquer des designs rares !"
   }
 }

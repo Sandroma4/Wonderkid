@@ -55,6 +55,7 @@ import { Leaderboard } from './components/Leaderboard';
 import { CardCollection } from './components/CardCollection';
 import { ClashLobby } from './components/ClashLobby';
 import { CosmeticsStore } from './components/CosmeticsStore';
+import { GachaStore } from './components/GachaStore';
 import { useTranslation } from 'react-i18next';
 
 export default function App() {
@@ -1921,6 +1922,10 @@ export default function App() {
 
   if (appView === 'cosmeticsStore') {
     return <CosmeticsStore onBack={handleBack} />;
+  }
+  
+  if (appView === 'gachaStore') {
+    return <GachaStore onBack={handleBack} />;
   }
 
   if (appView === 'fiveManager') {

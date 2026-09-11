@@ -650,12 +650,23 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
               </button>
               
               <button 
+                onClick={() => { playSound('click'); setShowShopHub(false); onNavigate('gachaStore'); }}
+                className="w-full text-left p-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 hover:border-fuchsia-500 transition-all flex items-center justify-between group"
+              >
+                <div>
+                  <div className="text-fuchsia-400 font-bold text-lg">{t('menu.gacha_store', 'Tirage de Cartes')}</div>
+                  <div className="text-sm text-slate-400 group-hover:text-slate-300">{t('menu.gacha_desc', 'Packs aléatoires')}</div>
+                </div>
+                <span className="text-2xl group-hover:scale-110 transition-transform">🎰</span>
+              </button>
+
+              <button 
                 onClick={() => { playSound('click'); setShowShopHub(false); onNavigate('cosmeticsStore'); }}
                 className="w-full text-left p-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 hover:border-pink-500 transition-all flex items-center justify-between group"
               >
                 <div>
                   <div className="text-pink-400 font-bold text-lg">{t('menu.card_cosmetics')}</div>
-                  <div className="text-sm text-slate-400 group-hover:text-slate-300">{t('menu.hof_designs')}</div>
+                  <div className="text-sm text-slate-400 group-hover:text-slate-300">{t('menu.hof_designs', 'Achat Direct (Premium)')}</div>
                 </div>
                 <span className="text-2xl group-hover:scale-110 transition-transform">✨</span>
               </button>
