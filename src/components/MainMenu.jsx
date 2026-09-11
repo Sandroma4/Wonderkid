@@ -375,26 +375,7 @@ export const MainMenu = ({ onNavigate, onLoadGame, onJoinInvite, onOpenDailyChal
           <img 
             src="/logo.png" 
             alt="Wonderkid Logo" 
-            className="relative z-10 h-full w-auto max-h-[35vh] md:max-h-[45vh] object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125 [@media(max-height:850px)]:hidden"
-            onError={(e) => {
-              e.target.onerror = null; 
-              e.target.style.display = 'none';
-              if(e.target.nextSibling) {
-                e.target.nextSibling.classList.remove('hidden', '[@media(max-height:850px)]:flex');
-                e.target.nextSibling.classList.add('block');
-              }
-            }}
-          />
-          
-          <img 
-            src="/logo_horizontal.png?v=3" 
-            alt="Wonderkid Logo Horizontal" 
-            className="relative z-10 w-[85%] max-w-[700px] h-auto object-contain object-top drop-shadow-2xl mix-blend-screen hidden [@media(max-height:850px)]:block -mt-6 -translate-x-16"
-            onError={(e) => {
-              if(!e.target.src.includes('.jpg')) {
-                e.target.src = '/logo_horizontal.jpg?v=3';
-              }
-            }}
+            className="relative z-10 h-full w-auto max-h-[35vh] md:max-h-[45vh] object-contain drop-shadow-[0_0_50px_rgba(16,185,129,1)] brightness-110 contrast-125"
           />
         </div>
 
